@@ -1,0 +1,23 @@
+import React from 'react';
+import {Nav, Navbar, Form, FormControl} from 'react-bootstrap';
+
+export class Sidebar extends React.Component {
+
+    render () {
+	return (
+		<SideNav
+		className="sidenav"></SideNav>
+	);
+    }
+
+}
+
+class SideNav extends React.Component {
+
+    render () {
+	return (
+		<p>Henlo</p>
+	);
+    }
+}
+	    

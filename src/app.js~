@@ -1,0 +1,8 @@
+class View extends React.Component {
+    render () {
+        return (
+        <div className='ui large center text'>
+          Welcome.
+        </div>);
+    };
+};

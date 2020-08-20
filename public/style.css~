@@ -1,0 +1,184 @@
+/* Styles go here */
+
+#content {
+  margin-bottom: 4em;
+}
+
+.container {
+    max-width: 100%;
+}
+
+.row {
+    height: 100%;
+}
+
+.split {
+    width: 50%;
+    position: fixed;
+    text-align: center;
+}
+
+a {
+    color: black;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.sidenav {
+    position: fixed;
+    height: 100%;
+    width: 75px;
+    z-index: 1;
+    background-color: lightgrey;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.topnav {
+    position: fixed;
+    width: 100%;
+    height: 2em;
+    z-index: 1;
+    background-color: black;
+    padding-right: 10px;
+}
+
+.navlogo {
+    text-align: right;
+    color: white;
+}
+
+.mainbox {
+    position: fixed;
+    text-align: center;
+    border-color: transparent;
+    left: 25%;
+    width: 50%;
+}
+
+.maintext {
+    font-size: 30px;
+    margin-top: 2em;
+    border-color: transparent;
+    line-height: 2em;
+}
+
+.interactionbox {
+    margin-top: 2em;
+    text-align: center;
+    border-color: transparent;
+}
+
+.interactiontext {
+    font-size: 20px;
+}
+
+.vocabdisplay {
+    font-size: 50px;
+    text-align: center;
+    margin-bottom: 2em;
+}
+		
+
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 30px;
+}
+
+.centered img {
+    transform: scale(0.5, 0.5) translate(-50%, -50%);
+}
+
+.left {
+    height: 100%;
+    left: 0;
+    background-color: #048A81;
+}
+
+
+.rightHigh {
+    height: 50%;
+    right: 0;
+    top: 0;
+    
+    background-color: #D6CFCB;
+}
+
+.rightLow {
+    height: 50%;
+    right: 0;
+    bottom: 0;
+    
+    background-color: #746F72;
+}
+
+.homeread {
+    background-color: yellow;
+    width: 100%;
+    height: 100%;
+}
+
+.ui.dividing.header {
+  margin-top: 1em;
+  margin-bottom: 2em;
+}
+
+.ui.centered.card {
+    margin-top: 3em;
+    text-align: center;
+    font-size: 15px;
+    padding: 16px;
+    border: none;
+    width: 1000px;
+}
+
+.input {
+    margin-top: 1em;
+}
+
+.text {
+    font-size: large;
+}
+
+.labeltext {
+    margin-top: 5em;
+    text-align: center;
+    font-size: large;
+}
+
+.labeltext2 {
+    margin-top: 1em;
+    text-align: center;
+    font-size: 15px;
+
+
+.ui.button {
+    padding: 10px;
+    margin-bottom: 2em;
+    align: center;
+}
+
+.form {
+    margin-top: 5em;
+    text-align: center;
+    justify-content: center;
+}
+
+.testcontainer {
+    margin-top: 5em;
+    text-align: center;
+}
+
+contButton {
+    justify-content: center;
+    margin-top: 1em;
+}
+
+i.icon {
+  margin: 0;
+}
