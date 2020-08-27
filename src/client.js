@@ -1,7 +1,7 @@
 import React from 'react';
 
 export function getWord(data) {
-    return fetch('http://127.0.0.1:5000/api/getword', {
+    return fetch('http://localhost:5000/api/getword', {
 	method: 'post',
 	body: JSON.stringify(data),
 	headers: {
@@ -12,7 +12,7 @@ export function getWord(data) {
 };
 
 export function dumpResult(data) {
-    return fetch('http://127.0.0.1:5000/api/dumpresult', {
+    return fetch('http://localhost:5000/api/dumpresult', {
 	method: 'post',
 	body: JSON.stringify(data),
 	headers: {
@@ -23,7 +23,7 @@ export function dumpResult(data) {
 };
 
 export function getChunk(data) {
-    return fetch('http://127.0.0.1:5000/api/getchunk', {
+    return fetch('http://localhost:5000/api/getchunk', {
 	method: 'post',
 	body: JSON.stringify(data),
 	headers: {
