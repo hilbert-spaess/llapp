@@ -26,18 +26,22 @@ export class LearningContainer extends React.Component {
     }
 
     componentDidMount = () => {
-	getChunk({userid: this.state.userid,
+	getChunk({userId: this.state.userid,
 		  answeredCorrect: -1}).then(this.loadChunk);
 	
     };
 
     handleNext = (correct) => {
 	this.setState({isLoading: 1});
-	getChunk({userid: this.state.userid,
+	console.log("STREAK");
+	console.log(this.state.interaction[this.state.currentInteraction]["streak"]);
+	console.log(correct);
+	getChunk({userId: this.state.userid,
 		  answeredCorrect: correct,
 		  interaction: this.state.interaction,
                   currentInteraction: this.state.currentInteraction,
-		  chunkid: this.state.chunkid}).then(this.loadChunk);
+		  streak: this.state.interaction[this.state.currentInteraction]["streak"] + correct,
+		  chunkId: this.state.chunkid}).then(this.loadChunk);
     };
 
     handleCloseDialog = () => {
