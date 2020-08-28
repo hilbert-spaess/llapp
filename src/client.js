@@ -23,7 +23,7 @@ export function dumpResult(data) {
 };
 
 export function getChunk(data) {
-    return fetch('http://localhost:5000/api/getchunk', {
+    return fetch('http://52.90.25.104/api/getchunk', {
 	method: 'post',
 	body: JSON.stringify(data),
 	headers: {
