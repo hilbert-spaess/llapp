@@ -28,7 +28,8 @@ export function getChunk(data) {
 	body: JSON.stringify(data),
 	headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json',
+            'Content-Type': 'application/json',
+	    'Access-Control-Request-Method': 'POST'	    
       }
     }).then(JSONconvert)
 };
