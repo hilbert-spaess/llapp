@@ -22,8 +22,20 @@ export function dumpResult(data) {
     }).then(JSONconvert)
 };
 
+export function firstChunk(data) {
+    return fetch('http://localhost:5000/api/firstchunk', {
+        method: 'post',
+        body: JSON.stringify(data),
+        headers: {
+            'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            'Access-Control-Request-Method': 'POST'	    
+      }
+    }).then(JSONconvert)
+};
+
 export function getChunk(data) {
-    return fetch('http://52.90.25.104/api/getchunk', {
+    return fetch('http://localhost:5000/api/getchunk', {
 	method: 'post',
 	body: JSON.stringify(data),
 	headers: {
