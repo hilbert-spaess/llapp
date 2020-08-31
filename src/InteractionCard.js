@@ -8,26 +8,22 @@ export class InteractionCard extends React.Component {
     render () {
 	console.log(this.props.interaction);
 	if (this.props.done == 0) {
-	return (
-	    <Card className="interactionbox">
-		    <FillBlankExamples
-		interactionMode = {this.props.interactionMode}
-		interaction = {this.props.interaction}
-		currentInteraction={this.props.currentInteraction}
-		handleNext={this.props.handleNext}
-		answer = {this.props.answer}
-		/>
-		</Card>
-	);
-	} else if (this.props.answeredCorrect==0) {
-	    return (
-		    <Card> Correct </Card>
-	    );
-	} else {
-	    return (
-		    <Card> Incorrect </Card>
-	    );
-	}
+        return (
+            <Card className="interactionbox">
+                <FillBlankExamples
+            interactionMode = {this.props.interactionMode}
+            interaction = {this.props.interaction}
+            handleNext={this.props.handleNext}
+            answer = {this.props.answer}
+            />
+            </Card>
+        );
+        }
+    else {
+        return (
+            <div></div>
+            );
+    }
     }
 }
 
@@ -45,7 +41,10 @@ class FillBlankExamples extends React.Component {
             }
             return (
 		    <div className="interactiontext">
-		    Other examples: <br></br>
+                <InteractionText 
+                interaction = {this.props.interaction}
+                interactionMode = {this.props.interactionMode}
+        /><br></br>
 		    
 		{words1} <br></br> <br></br>
 		    {words2}
@@ -66,7 +65,10 @@ class FillBlankExamples extends React.Component {
 	    }
 	    return (
 		    <div className="interactiontext">
-		    Synonyms: <br></br>
+                <InteractionText 
+                interaction = {this.props.interaction}
+                interactionMode = {this.props.interactionMode}
+        /><br></br>
 		    {synonym1}{", "+synonym2}{", "+synonym3}
 		</div>
 	    );
@@ -90,7 +92,10 @@ class FillBlankExamples extends React.Component {
 	    }	
 	    return (
 		    <div className="interactiontext">
-		    Choose one from (remember to convert to the right tense): <br></br>
+                <InteractionText 
+                interaction = {this.props.interaction}
+                interactionMode = {this.props.interactionMode}
+        /><br></br>
 		    {synonym0} | {synonym1} | {synonym2} | {synonym3}
 		</div>
 	    );
@@ -98,3 +103,32 @@ class FillBlankExamples extends React.Component {
 	    
     }
 }
+
+class InteractionText extends React.Component {
+    
+    render () {
+    if (this.props.interactionMode == "1") {
+        return (
+            <div>
+            {this.props.interaction["tag"]}. Other examples: 
+        </div>
+        );
+    } else if (this.props.interactionMode == "2") {
+        return (
+            <div>
+            {this.props.interaction["tag"]}. Synonyms: 
+</div>  
+        );
+   } else if (this.props.interactionMode == "3") {
+       return (
+           <div>
+           {this.props.interaction["tag"]}. Choose one from:
+</div>
+       );
+}
+}
+}
+
+        
+        
+

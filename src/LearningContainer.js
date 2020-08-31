@@ -198,7 +198,6 @@ class LearningInstance extends React.Component {
 		done={this.state.done}
 		answeredCorrect={this.state.answeredCorrect}
 		interactionMode={this.state.interactionMode}
-		currentInteraction={this.state.currentInteraction}
 		interaction={this.props.interaction[this.state.currentInteraction]}
 		answer={this.state.answer}
 		    />
