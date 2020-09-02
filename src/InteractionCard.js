@@ -7,7 +7,13 @@ export class InteractionCard extends React.Component {
 
     render () {
 	console.log(this.props.interaction);
-	if (this.props.done == 0) {
+    if (this.props.limbo == true) {
+        return (
+        <Card className="interactionbox">
+            Press any key to continue.
+            </Card>
+            );
+    } else if (this.props.done == 0) {
         return (
             <Card className="interactionbox">
                 <FillBlankExamples
@@ -99,7 +105,19 @@ class FillBlankExamples extends React.Component {
 		    {synonym0} | {synonym1} | {synonym2} | {synonym3}
 		</div>
 	    );
-	}
+	} else if (this.props.interactionMode=="4") {
+        
+        return (
+            <div className="interactiontext">
+            <InteractionText
+            interaction={this.props.interaction}
+            interactionMode={this.props.interactionMode}
+            /> <br></br>
+{this.props.interaction["def"]}
+</div>
+         );
+    }
+                               
 	    
     }
 }
@@ -125,7 +143,13 @@ class InteractionText extends React.Component {
            {this.props.interaction["tag"]}. Choose one from:
 </div>
        );
-}
+    } else if (this.props.interactionMode == "4") {
+        return (
+            <div>
+            {this.props.interaction["tag"]}. Definition:
+</div>
+    );
+    }
 }
 }
 

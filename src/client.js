@@ -46,6 +46,30 @@ export function getChunk(data) {
     }).then(JSONconvert)
 };
 
+export function loadVocab(data) {
+    return fetch('http://localhost:5000/api/loadvocab', {
+	method: 'post',
+	body: JSON.stringify(data),
+	headers: {
+        'Accept': 'application/json',
+            'Content-Type': 'application/json',
+	    'Access-Control-Request-Method': 'POST'	    
+      }
+    }).then(JSONconvert)
+};
+
+export function getData(data) {
+    return fetch('http://localhost:5000/api/getdata', {
+	method: 'post',
+	body: JSON.stringify(data),
+	headers: {
+        'Accept': 'application/json',
+            'Content-Type': 'application/json',
+	    'Access-Control-Request-Method': 'POST'	    
+      }
+    }).then(JSONconvert)
+};
+
 function JSONconvert(response) {
     return response.json();
 };

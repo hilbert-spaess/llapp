@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Card, Button, Row, Col, Container, Modal} from 'react-bootstrap';
 import {InteractionCard} from './InteractionCard.js';
-import {getChunk, firstChunk} from './client.js';
+import {getChunk, firstChunk, getData} from './client.js';
 import {Sidebar, TopBar} from './sidebar.js';
 import {Text} from 'react-native';
 
@@ -11,6 +11,7 @@ export class LearningContainer extends React.Component {
     state = {
         done: 0,
         interaction: {},
+        stats: {},
         showDialog: false,
         chunkid: 0,
         isLoading: 1,
@@ -25,7 +26,8 @@ export class LearningContainer extends React.Component {
         }
 
     componentDidMount = () => {
-        firstChunk({userId: this.state.userid}).then(this.loadChunk);
+        getData({userId: this.props.userid}).then(this.loadData)
+        firstChunk({userId: this.props.userid}).then(this.loadChunk);
 
     };
 
@@ -56,6 +58,10 @@ export class LearningContainer extends React.Component {
 
         handleOpenDialog = () => {
         this.setState({showDialog: true})
+    }
+        
+    loadData = (data) => {
+        this.setState({stats: data});
     }
 
     loadChunk = (data) => {
@@ -90,6 +96,7 @@ export class LearningContainer extends React.Component {
             interaction={this.state.interaction}
             handleNext={this.handleNext}
             storeAnswer={this.storeAnswer}
+            answers={this.state.answers}
             />
                 </div>
                 );
@@ -123,6 +130,7 @@ class LearningInstance extends React.Component {
         length: this.props.interaction[0]["length"],
         showDialog: 0,
         done: 0,
+        limbo: false,
         answeredCorrect: -1
     }
 
@@ -136,7 +144,7 @@ class LearningInstance extends React.Component {
                    interactionMode: this.props.interaction[a]["mode"],
                    length: this.props.interaction[a]["length"],
                 });
-    }      
+    }
 
     handleCloseDialog = () => {
         
@@ -148,6 +156,7 @@ class LearningInstance extends React.Component {
                    answeredCorrect: -1});
             this.nextInteraction();
         } else {
+            this.setState({limbo: true})
             this.props.handleNext(this.state.answeredCorrect);
         }
     }
@@ -167,7 +176,14 @@ class LearningInstance extends React.Component {
             this.setState({done: 1,
                    answeredCorrect: 0});
         }
-        this.handleOpenDialog();
+        console.log("HEMLO KECCHAN");
+        console.log(this.props.interaction);
+        if (this.props.interaction[this.state.currentInteraction]["key"] == 1) {
+            this.handleOpenDialog();
+        } else {
+            this.handleCloseDialog();
+        }
+            
     }
     
     render () {
@@ -188,6 +204,7 @@ class LearningInstance extends React.Component {
 		interaction={this.props.interaction}
 		currentInteraction={this.state.currentInteraction}
 		answer={this.state.answer}
+        answers={this.props.answers}
 		location={this.state.location}
 		handleAnswer={this.handleAnswer}/>
 		    </Col>
@@ -200,6 +217,7 @@ class LearningInstance extends React.Component {
 		interactionMode={this.state.interactionMode}
 		interaction={this.props.interaction[this.state.currentInteraction]}
 		answer={this.state.answer}
+        limbo={this.state.limbo}
 		    />
 		    </Col>
 		    </Row>
@@ -253,7 +271,9 @@ class TextCard extends React.Component {
 	    length={this.props.length}
 	    location={this.props.location}
 	    handleChange={this.handleChange}
+        interaction={this.props.interaction}
 	    value={this.state.value}
+        answers={this.props.answers}
 	    />
 	    </Text>
 		</form>
@@ -283,9 +303,18 @@ class Words extends React.Component {
 		var tcolour = "black";
 	    }
 	    
-	    if (i!=location) {
+	    if (!("i" in context[i])) {
 		words.push(<Text>{context[i]['w']} </Text>);
-	    } else {
+	    } else if (i != location) {
+            console.log("HEMLOE");
+            console.log(this.props.answers[context[i]["i"]])
+            if (this.props.answers[context[i]["i"]] == 1) {
+                console.log("HI");
+                words.push(<Text style={{color: "green"}}>{context[i]['w']} </Text>);
+            } else {
+                words.push(<Text style={{color: "red"}}>{context[i]['w']} </Text>);
+            }
+        } else {
 		words.push(<input autoFocus ref = {(input) => {this.nameInput=input;}} value={value} onChange={this.props.handleChange} style={{backgroundColor: "transparent", borderColor: "transparent", textAlign: "center"}}/>);
 	    }
 	};

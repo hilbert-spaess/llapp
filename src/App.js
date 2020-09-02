@@ -44,7 +44,7 @@ class MainElement extends React.Component {
                 /></Route>
 		<Route path="/vocab">
 		<MyVocabContainer
-	    userid={this.state.userId}/>
+	    userId={this.state.userId}/>
 		</Route>
               </Switch>
 		</BrowserRouter>
