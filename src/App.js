@@ -1,56 +1,76 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Card, Col, Row, Button, Container, Modal} from 'react-bootstrap';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {BrowserRouter, Route, Switch, Router} from 'react-router-dom';
 import {Stylesheet, css} from 'aphrodite';
 import {Launch} from './launch.js';
 import {Sidebar, TopBar} from './sidebar.js';
-import {LearningContainer} from './LearningContainer.js';
+import {LearningSupervisor} from './LearningContainer.js';
 import {MyVocabContainer} from './MyVocabContainer.js';
 import {UserSelectContainer} from './UserSelectContainer.js';
 import {TestContainer} from './TestContainer.js';
+import {Auth0Provider, useAuth0, withAuthenticationRequired} from '@auth0/auth0-react';
+import {createBrowserHistory} from 'history';
+import {NewUser} from './newuser.js';
 
-class MainElement extends React.Component {
 
-    state = {
-        userId: 0,
-	sidebarOpen: true
-    }
+export const history = createBrowserHistory();
 
-    onUserSubmit = (value) => {
-        this.setState({userId: value});
-    }
+const ProtectedRoute = ({ component, ...args }) => (
+  <Route component={withAuthenticationRequired(component)} {...args} />
+);
 
-    onSetSidebarOpen = () => {
-	this.setState({sidebarOpen: true});
+const onRedirectCallback = (appState) => {
+  // Use the router's history module to replace the url
+  history.replace(appState?.returnTo || window.location.pathname);
+};
+
+function App() {
+    
+    return (
+         <Auth0Provider
+        domain="dev-yt8x5if8.eu.auth0.com"
+        clientId="3Quvqqshf1rWfO46Cmry14XeDjhwQMwM"
+        redirectUri="http://localhost:3000/home"
+        onRedirectCallback={onRedirectCallback}
+        useRefreshTokens={true}
+        >
+        <Router history={history}>
+        <Switch>
+        <Route path="/" exact/>
+            <ProtectedRoute path="/home" component={Launch} />
+            <ProtectedRoute path="/read" component={LearningSupervisor}/>
+            <ProtectedRoute path="/newuser" component={NewUser}/>
+        </Switch>
+        </Router>
+</Auth0Provider>
+    );
+}
+
+const Home2 = () => {
+    
+    const {user, isAuthenticated, isLoading} = useAuth0();
+    
+    if (! (isAuthenticated)) {
+        return <LoginButton/>
     }
     
-    render () {
-	
-	return (
-            <BrowserRouter>
-              <Switch>
-                <Route path="/test">
-                  <TestContainer/>
-                </Route>
-                <Route path="/home">
-                  <Home
-                    userId={this.state.userId}
-                    newUser={this.onUserSubmit}/>
-                </Route>
-                <Route path="/read">
-                  <LearningContainer
-                    userid={this.state.userId}
-                /></Route>
-		<Route path="/vocab">
-		<MyVocabContainer
-	    userId={this.state.userId}/>
-		</Route>
-              </Switch>
-		</BrowserRouter>
-        );
-    }
+    if (isLoading) {
+        return <div>Loading...</div>;
+    };
+    
+    return (
+        isAuthenticated && (
+            <div className="content">
+            {user.username}
+            <Launch
+                userId={user.username}
+            />
+            </div>
+    ));
 }
+            
+
 
 class Home extends React.Component {
 
@@ -80,6 +100,7 @@ class Home extends React.Component {
         } else {
 	    return (
                 <div className="content">
+                    <LoginButton/>
                   <UserSelectContainer
                     onSubmit={this.onUserSubmit}
                   />
@@ -88,9 +109,21 @@ class Home extends React.Component {
         }
     };
 }	
+
+const LoginButton = () => {
+        
+        const {loginWithRedirect} = useAuth0();
+        
+        return (
+            <div className="ui centered card">
+         <button onClick={()=> loginWithRedirect()} >Log In </button>
+            </div>
+        );
+}
+        
             
 ReactDOM.render(
-    <MainElement/>,
+    <App/>,
     document.getElementById('root')
 );
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import {useAuth0} from '@auth0/auth0-react';
 
 export function getWord(data) {
     return fetch('http://localhost:5000/api/getword', {
@@ -22,7 +23,7 @@ export function dumpResult(data) {
     }).then(JSONconvert)
 };
 
-export function firstChunk(data) {
+export const firstChunk = (data) => {
     return fetch('http://localhost:5000/api/firstchunk', {
         method: 'post',
         body: JSON.stringify(data),
@@ -34,14 +35,15 @@ export function firstChunk(data) {
     }).then(JSONconvert)
 };
 
-export function getChunk(data) {
+export function getChunk(data, accessToken) {
     return fetch('http://localhost:5000/api/getchunk', {
 	method: 'post',
-	body: JSON.stringify(data),
+	body: data,
 	headers: {
         'Accept': 'application/json',
             'Content-Type': 'application/json',
-	    'Access-Control-Request-Method': 'POST'	    
+	    'Access-Control-Request-Method': 'POST',
+        'Authorization': `Bearer ${accessToken}`,
       }
     }).then(JSONconvert)
 };
@@ -70,7 +72,7 @@ export function getData(data) {
     }).then(JSONconvert)
 };
 
-function JSONconvert(response) {
+export function JSONconvert(response) {
     return response.json();
 };
 

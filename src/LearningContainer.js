@@ -2,89 +2,147 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Card, Button, Row, Col, Container, Modal} from 'react-bootstrap';
 import {InteractionCard} from './InteractionCard.js';
-import {getChunk, firstChunk, getData} from './client.js';
+import {getChunk, firstChunk, getData, JSONconvert} from './client.js';
 import {Sidebar, TopBar} from './sidebar.js';
 import {Text} from 'react-native';
+import {useApi} from './use-api.js';
+import { useAuth0 } from '@auth0/auth0-react';
+import {Redirect} from 'react-router-dom';
 
-export class LearningContainer extends React.Component {
+export class LearningSupervisor extends React.Component {
+    
+    state = {
+        parcelData: {answeredCorrect: "-1"},
+        loading: 0
+    };
+
+    handleNext = async (parcelData) => {
+        console.log(parcelData);
+        this.setState({loading: 1});
+        await this.setState({parcelData});
+        this.setState({loading: 0});
+    };
+    
+    render () {
+        if (this.state.loading == 1) {
+            return (
+                <div>Loading...</div>
+                );
+        } else {
+        return (
+            <LearningContainerData
+            parcelData={this.state.parcelData}
+            handleNext={this.handleNext}
+            />
+        );
+    }
+    }
+}
+
+            
+
+const LearningContainerData = (props) => {
+    
+    console.log(props.parcelData);
+    const payload = props.parcelData;
+    console.log(payload);
+    const {login, getAccessTokenWithPopup } = useAuth0();
+    const opts = {audience: 'http://localhost:5000',
+                  scope: 'read:reviews, write:reviews',
+                  fetchOptions: {method: 'post',
+                                 body: payload,
+                                 headers: {'Access-Control-Allow-Credentials': 'true',
+                                           'Access-Control-Allow-Origin': '*',
+                                           'Accept': 'application/json',
+                                            'Content-Type': 'application/json',
+                                          'Access-Control-Request-Method': 'POST'}}};
+    const {error, loading, data, refresh} = useApi('http://localhost:5000/api/getchunk', payload, opts);
+        
+    const handleNext = async (parcelData) => {
+        await props.handleNext(parcelData);
+        refresh();
+    }
+        
+    console.log(data);
+    const getTokenAndTryAgain = async () => {
+        await getAccessTokenWithPopup(opts);
+        refresh()
+  };
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+    if (error) {
+        if (error.error === 'consent_required') {
+      return (
+        <button onClick={getTokenAndTryAgain}>Consent to reading users</button>
+      );
+    }
+    return <div>Oops {error.message}</div>;
+    }
+    if (data.displayType == "newUser") {
+        return <Redirect to="/newuser"/>;
+    }
+    console.log(data.context);
+    return (
+        <div>
+        <LearningContainer
+interaction={data.interaction}
+chunkid={data.chunkid}
+context={data.context}
+grammar={data.grammar}
+currentInteraction={data.currentInteraction}
+keyloc={data.keyloc}
+displayType={data.displayType}
+tryAgain={getTokenAndTryAgain}
+storeAnswer={props.storeAnswer}
+handleNext={handleNext}
+/>
+</div>
+    );
+}
+
+class LearningContainer extends React.Component {
 
     state = {
         done: 0,
-        interaction: {},
+        interaction: this.props.interaction,
         stats: {},
         showDialog: false,
-        chunkid: 0,
-        isLoading: 1,
-        context: {},
-        grammar: {},
+        chunkid: this.props.chunkid,
+        isLoading: 0,
+        context: this.props.context,
+        grammar: this.props.grammar,
         userid: this.props.userid,
         answeredCorrect: "-1",
-        currentInteraction: "0",
-        displayType: "sentence",
+        currentInteraction: this.props.currentInteraction,
+        displayType: this.props.displayType,
         answers: [],
-        key: 0
+        key: this.props.keyloc
         }
-
-    componentDidMount = () => {
-        getData({userId: this.props.userid}).then(this.loadData)
-        firstChunk({userId: this.props.userid}).then(this.loadChunk);
-
-    };
-
+    
     storeAnswer = (correct) => {
         this.setState(prevState => ({
             answers: [...prevState.answers, correct]
         }));
     };
-
+    loadData = (data) => {
+        this.setState({stats: data});
+    }
+    
     handleNext = (correct) => {
-        this.setState({isLoading: 1});
-        console.log("STREAK");
-        console.log(this.state.interaction[this.state.currentInteraction]["streak"]);
-        console.log(correct);
-        getChunk({userId: this.state.userid,
+        this.props.handleNext({
               answeredCorrect: correct,
               interaction: this.state.interaction,
               currentInteraction: this.state.currentInteraction,
               chunkId: this.state.chunkid,
-              key: this.state.key,
-              answers: this.state.answers}).then(this.loadChunk);
-        };
-
-        handleCloseDialog = () => {
-        this.setState({showDialog: false});
-        this.handleNext(this.state.answeredCorrect);
-        }
-
-        handleOpenDialog = () => {
-        this.setState({showDialog: true})
+              keyloc: this.props.keyloc,
+              answers: this.state.answers});
     }
-        
-    loadData = (data) => {
-        this.setState({stats: data});
-    }
-
-    loadChunk = (data) => {
-        if (data.displayType != "done") {
-            console.log("HENLO");
-            this.setState({displayType: data.displayType,
-                   context: data.context,
-                   grammar: data.grammar,
-                   interaction: data.interaction,
-                   length: data.length,
-                   currentInteraction: data.currentInteraction,
-                   chunkid: data.chunkid,
-                   isLoading: 0,
-                   done: 0,
-                   key: data.key});
-        } else {
-            console.log("HEMLO");
-            this.setState({displayType: data.displayType});
-        }
-    };
     
     render () {
+        
         console.log(this.state.displayType);
+        console.log(this.props.key);
         if (this.state.isLoading == 0 ) {
             console.log(this.state.context);
                 return (
@@ -133,6 +191,10 @@ class LearningInstance extends React.Component {
         limbo: false,
         answeredCorrect: -1
     }
+    
+    handleNext = (event) => {
+        this.props.handleNext(this.state.answeredCorrect);
+    }
 
     nextInteraction = () => {
         console.log("Loading the next interaction innit");
@@ -157,7 +219,6 @@ class LearningInstance extends React.Component {
             this.nextInteraction();
         } else {
             this.setState({limbo: true})
-            this.props.handleNext(this.state.answeredCorrect);
         }
     }
 
@@ -218,6 +279,7 @@ class LearningInstance extends React.Component {
 		interaction={this.props.interaction[this.state.currentInteraction]}
 		answer={this.state.answer}
         limbo={this.state.limbo}
+        handleNext={this.handleNext}
 		    />
 		    </Col>
 		    </Row>
@@ -349,4 +411,3 @@ class AnswerCard extends React.Component {
 	);
     }
 }
-

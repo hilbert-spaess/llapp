@@ -10,6 +10,7 @@ export class InteractionCard extends React.Component {
     if (this.props.limbo == true) {
         return (
         <Card className="interactionbox">
+            <input type="text" onKeyPress={this.props.handleNext}/>
             Press any key to continue.
             </Card>
             );
@@ -19,7 +20,6 @@ export class InteractionCard extends React.Component {
                 <FillBlankExamples
             interactionMode = {this.props.interactionMode}
             interaction = {this.props.interaction}
-            handleNext={this.props.handleNext}
             answer = {this.props.answer}
             />
             </Card>
