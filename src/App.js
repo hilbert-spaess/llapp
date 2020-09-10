@@ -41,6 +41,7 @@ function App() {
             <ProtectedRoute path="/home" component={Launch} />
             <ProtectedRoute path="/read" component={LearningSupervisor}/>
             <ProtectedRoute path="/newuser" component={NewUser}/>
+            <ProtectedRoute path="/vocab" component={MyVocabContainer}/>
         </Switch>
         </Router>
 </Auth0Provider>

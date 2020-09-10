@@ -2,8 +2,43 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Card, Button, Row, Col, Container} from 'react-bootstrap';
 import {loadVocab} from './client.js';
+import {useApi} from './use-api.js';
+import { useAuth0 } from '@auth0/auth0-react';
 
-export class MyVocabContainer extends React.Component {
+export const MyVocabContainer = () => {
+    
+     const {login, getAccessTokenWithPopup } = useAuth0();
+     const opts = {audience: 'http://localhost:5000'};
+     const {error, loading, data, refresh} = useApi('http://localhost:5000/api/loadvocab', {}, opts);
+     const getTokenAndTryAgain = async () => {
+        await getAccessTokenWithPopup(opts);
+        refresh()
+  };
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+    if (error) {
+        if (error.error === 'consent_required') {
+      return (
+        <button onClick={getTokenAndTryAgain}>Consent to reading users</button>
+      );
+    }
+    return <div>Oops {error.message}</div>;
+    }
+    
+    return (
+         <div>
+                Active Vocab: <br></br>
+                <ActiveVocab
+                activeVocabDict = {data.active}/>
+                <br></br>
+                <FutureVocab
+                futureVocabDict = {data.future}/>
+                    </div>
+        );
+}        
+
+export class MyVocabContainer2 extends React.Component {
         
     state = {
         activeVocabDict: {},
