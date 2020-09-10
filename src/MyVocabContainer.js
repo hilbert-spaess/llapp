@@ -4,12 +4,13 @@ import {Card, Button, Row, Col, Container} from 'react-bootstrap';
 import {loadVocab} from './client.js';
 import {useApi} from './use-api.js';
 import { useAuth0 } from '@auth0/auth0-react';
+import {APIHOST} from './api_config.js';
 
 export const MyVocabContainer = () => {
     
      const {login, getAccessTokenWithPopup } = useAuth0();
-     const opts = {audience: 'http://localhost:5000'};
-     const {error, loading, data, refresh} = useApi('http://localhost:5000/api/loadvocab', {}, opts);
+     const opts = {audience: APIHOST};
+     const {error, loading, data, refresh} = useApi(APIHOST + '/api/loadvocab', {}, opts);
      const getTokenAndTryAgain = async () => {
         await getAccessTokenWithPopup(opts);
         refresh()

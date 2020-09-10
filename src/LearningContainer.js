@@ -8,6 +8,7 @@ import {Text} from 'react-native';
 import {useApi} from './use-api.js';
 import { useAuth0 } from '@auth0/auth0-react';
 import {Redirect} from 'react-router-dom';
+import {APIHOST} from './api_config.js';
 
 export class LearningSupervisor extends React.Component {
     
@@ -47,7 +48,7 @@ const LearningContainerData = (props) => {
     const payload = props.parcelData;
     console.log(payload);
     const {login, getAccessTokenWithPopup } = useAuth0();
-    const opts = {audience: 'http://localhost:5000',
+    const opts = {audience: APIHOST,
                   scope: 'read:reviews, write:reviews',
                   fetchOptions: {method: 'post',
                                  body: payload,
@@ -56,7 +57,7 @@ const LearningContainerData = (props) => {
                                            'Accept': 'application/json',
                                             'Content-Type': 'application/json',
                                           'Access-Control-Request-Method': 'POST'}}};
-    const {error, loading, data, refresh} = useApi('http://localhost:5000/api/getchunk', payload, opts);
+    const {error, loading, data, refresh} = useApi(APIHOST + '/api/getchunk', payload, opts);
         
     const handleNext = async (parcelData) => {
         await props.handleNext(parcelData);

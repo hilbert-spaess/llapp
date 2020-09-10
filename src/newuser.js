@@ -3,6 +3,7 @@ import {Card, Row, Col} from 'react-bootstrap';
 import { useAuth0 } from '@auth0/auth0-react';
 import {Redirect} from 'react-router-dom';
 import {useApi} from './use-api.js';
+import {APIHOST} from './api_config.js';
 
 export class NewUser extends React.Component {
     
@@ -49,8 +50,8 @@ export class NewUser extends React.Component {
 
 const Choose = (props) => {
         const {login, getAccessTokenWithPopup } = useAuth0();
-        const opts = {audience: 'http://localhost:5000'};
-        const {error, loading, data, refresh} = useApi('http://localhost:5000/api/newuser', {courseChoice: props.id}, opts);
+        const opts = {audience: APIHOST};
+        const {error, loading, data, refresh} = useApi(APIHOST + '/api/newuser', {courseChoice: props.id}, opts);
         const getTokenAndTryAgain = async () => {
         await getAccessTokenWithPopup(opts);
         refresh()
