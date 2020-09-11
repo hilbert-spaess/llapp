@@ -12,7 +12,7 @@ import {TestContainer} from './TestContainer.js';
 import {Auth0Provider, useAuth0, withAuthenticationRequired} from '@auth0/auth0-react';
 import {createBrowserHistory} from 'history';
 import {NewUser} from './newuser.js';
-
+import {CALLBACK} from './api_config.js';
 
 export const history = createBrowserHistory();
 
@@ -31,7 +31,7 @@ function App() {
          <Auth0Provider
         domain="dev-yt8x5if8.eu.auth0.com"
         clientId="3Quvqqshf1rWfO46Cmry14XeDjhwQMwM"
-        redirectUri="http://localhost:3000/home"
+             redirectUri={CALLBACK}
         onRedirectCallback={onRedirectCallback}
         useRefreshTokens={true}
         >
