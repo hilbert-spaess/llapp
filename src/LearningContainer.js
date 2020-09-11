@@ -48,8 +48,7 @@ const LearningContainerData = (props) => {
     const payload = props.parcelData;
     console.log(payload);
     const {login, getAccessTokenWithPopup } = useAuth0();
-    const opts = {audience: APIHOST,
-                  scope: 'read:reviews, write:reviews',
+    const opts = {audience: APIHOST, 
                   fetchOptions: {method: 'post',
                                  body: payload,
                                  headers: {'Access-Control-Allow-Credentials': 'true',
