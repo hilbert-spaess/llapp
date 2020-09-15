@@ -37,8 +37,7 @@ function App() {
         >
         <Router history={history}>
         <Switch>
-        <Route path="/" exact/>
-            <ProtectedRoute path="/home" component={Launch} />
+            <ProtectedRoute path="/" component={Launch} exact/>
             <ProtectedRoute path="/read" component={LearningSupervisor}/>
             <ProtectedRoute path="/newuser" component={NewUser}/>
             <ProtectedRoute path="/vocab" component={MyVocabContainer}/>
