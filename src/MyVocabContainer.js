@@ -5,8 +5,29 @@ import {loadVocab} from './client.js';
 import {useApi} from './use-api.js';
 import { useAuth0 } from '@auth0/auth0-react';
 import {APIHOST} from './api_config.js';
+import {Sidebar, TopBar} from './sidebar.js';
 
-export const MyVocabContainer = () => {
+export class MyVocabContainer extends React.Component {
+    
+    render () {
+        return (
+        <Container fluid>
+                <Row>
+                <TopBar/>
+                </Row>
+                    <Row className="mainrow">
+                <Col xs="auto" className="sidenav">
+                </Col>
+                    <Col>
+                    <MyVocabContainer1/>
+                    </Col>
+                    </Row>
+                    </Container>
+            );
+    }
+}
+
+export const MyVocabContainer1 = () => {
     
      const {login, getAccessTokenWithPopup } = useAuth0();
      const opts = {audience: APIHOST};
