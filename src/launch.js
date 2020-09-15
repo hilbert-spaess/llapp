@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import {Link} from 'react-router-dom';
 import {Stylesheet, css} from 'aphrodite';
 import {Card, Container, Row, Col, Nav, Navbar, Form, FormControl} from 'react-bootstrap';
-import {Sidebar, TopBar} from './sidebar.js'
+import {Sidebar, TopBar} from './sidebar.js';
+import {Auth0Provider, useAuth0, withAuthenticationRequired} from '@auth0/auth0-react';
 
 export class Launch extends React.Component {
 
@@ -34,11 +35,23 @@ export class Launch extends React.Component {
                   My Words	
             
               </Link>
-              <div> Progress </div>
-            </Col>
+               <LogoutButton/>
+           </Col>
             </Row>
             </Container>
         );
     }
+}
+
+const LogoutButton = () => {
+    
+    const {logout} = useAuth0();
+    
+    return (
+        
+        <button onClick={() => logout({returnTo: window.location.origin})}>
+        Log out
+        </button>
+    );
 }
     
