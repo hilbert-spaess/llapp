@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Card, Button, Row, Col, Container, Modal} from 'react-bootstrap';
+import {Card, Button, Row, Col, Container, Modal, ProgressBar} from 'react-bootstrap';
 import {InteractionCard} from './InteractionCard.js';
 import {getChunk, firstChunk, getData, JSONconvert} from './client.js';
 import {Sidebar, TopBar} from './sidebar.js';

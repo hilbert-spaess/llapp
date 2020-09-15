@@ -1,11 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Card, Button, Row, Col, Container, CardDeck} from 'react-bootstrap';
+import {Card, Button, Row, Col, Container, CardDeck, ProgressBar} from 'react-bootstrap';
 import {loadVocab} from './client.js';
 import {useApi} from './use-api.js';
 import { useAuth0 } from '@auth0/auth0-react';
 import {APIHOST} from './api_config.js';
 import {Sidebar, TopBar} from './sidebar.js';
+
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
 
 export class MyVocabContainer extends React.Component {
     
@@ -50,15 +69,22 @@ export const MyVocabContainer1 = () => {
     
     return (
          <div>
-                Active Vocab: <br></br>
+        <div
+            style={{textAlign: "center", fontSize: "4rem", marginTop: "3rem"}}>
+                Active Vocab <br></br>
+</div>
                 <VocabGrid
                 VocabDict = {data.active}
-                size="3em"/>
+                size="3em"
+                active={true}/>
                 <br></br>
+<div style={{textAlign: "center", fontSize: "4rem", marginTop: "3rem"}}>
                 Future Vocab: <br></br>
+</div>
                 <VocabGrid
                 VocabDict = {data.future}
-                size="2em"/>
+                size="2em"
+                active={false}/>
                     </div>
         );
 }        
@@ -68,12 +94,14 @@ class VocabGrid extends React.Component {
     render () {
         
         var vocabCards = [];
-        const keys = Object.keys(this.props.VocabDict);
+        var keys = Object.keys(this.props.VocabDict);
+        shuffle(keys);
         for (var i = 0; i < keys.length; i++) {
             
             vocabCards.push(<VocabCard 
                             data = {this.props.VocabDict[keys[i]]}
                             size={this.props.size}
+                            active={this.props.active}
         ></VocabCard>);
         }
     
@@ -103,9 +131,10 @@ class VocabCard extends React.Component {
                   padding: "1rem",
                   fontSize: this.props.size}}>
             {this.props.data["w"]} <br></br>
+{this.props.active &&<ProgressBar 
+                now={this.props.data["s"]*10}
+                style={{marginTop: "1rem"}}/>}
             </div>
-    
-            Streak: {this.props.data["s"]}
 
 
             </Card>
