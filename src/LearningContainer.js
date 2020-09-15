@@ -372,23 +372,35 @@ class Words extends React.Component {
 	var words = [];
 	var tcolour = "black";
 	var answer = {};
+    var punct = [".",",",";","!","?",":", "'s"];
 	for (var i = 0; i < length; i++) {
 	    if (context[i]["u"] == 1) {
 		var tcolour = "black";
 	    } else {
 		var tcolour = "black";
 	    }
+        console.log(context[i]['w'])
+        console.log(context[i]['w']==",")
+        console.log(',' in punct);
+        console.log(punct.length);
+        if ((punct.includes(context[i]['w'])) || i == 0) {
+            console.log("PUNCT");
+            var spc = "";
+        } else {
+            console.log("NOPUNCT");
+            var spc = " ";
+        }
 	    
 	    if (!("i" in context[i])) {
-		words.push(<Text>{context[i]['w']} </Text>);
+		words.push(<Text>{spc + context[i]['w']}</Text>);
 	    } else if (i != location) {
             console.log("HEMLOE");
             console.log(this.props.answers[context[i]["i"]])
             if (this.props.answers[context[i]["i"]] == 1) {
                 console.log("HI");
-                words.push(<Text style={{color: "green"}}>{context[i]['w']} </Text>);
+                words.push(<Text style={{color: "green"}}>{spc + context[i]['w']}</Text>);
             } else {
-                words.push(<Text style={{color: "red"}}>{context[i]['w']} </Text>);
+                words.push(<Text style={{color: "red"}}>{spc + context[i]['w']}</Text>);
             }
         } else {
 		words.push(<input autoFocus ref = {(input) => {this.nameInput=input;}} value={value} onChange={this.props.handleChange} style={{backgroundColor: "transparent", borderColor: "transparent", textAlign: "center"}}/>);
