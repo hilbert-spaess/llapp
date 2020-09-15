@@ -29,8 +29,9 @@ function App() {
     
     return (
          <Auth0Provider
-        domain="dev-yt8x5if8.eu.auth0.com"
+        domain="ricecake.ai"
         clientId="3Quvqqshf1rWfO46Cmry14XeDjhwQMwM"
+                    
              redirectUri={CALLBACK}
         onRedirectCallback={onRedirectCallback}
         useRefreshTokens={true}
