@@ -17,23 +17,27 @@ export class Launch extends React.Component {
     
     render () {
         return (
-		<div>
-		<Sidebar/>
-		<TopBar/>
-              <Link to="/read" className="split left">
-                <div className = "centered"> 
+                <Container fluid>
+                <Row>
+                <TopBar/>
+                </Row>
+                    <Row className="mainrow">
+                <Col xs="auto" className="sidenav">
+                <div className="sidecontent"/>
+                </Col>
+                    <Col className="maintext">
+              <Link to="/read">
                 Start reading.
-                </div>
+            
               </Link>
-              <Link to="/vocab" className = "split rightHigh">
-                <div className = "centered">
-                  My Words
-            </div>		
+              <Link to="/vocab">
+                  My Words	
+            
               </Link>
-              <div className="split rightLow">
-<div className = "centered"> Progress </div>
-              </div>
-            </div>
+              <div> Progress </div>
+            </Col>
+            </Row>
+            </Container>
         );
     }
 }

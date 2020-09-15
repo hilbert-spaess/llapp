@@ -12,6 +12,26 @@ import {APIHOST} from './api_config.js';
 
 export class LearningSupervisor extends React.Component {
     
+    render () {
+        return (
+        <Container fluid>
+                <Row>
+                <TopBar/>
+                </Row>
+                    <Row className="mainrow">
+                <Col xs="auto" className="sidenav">
+                </Col>
+                    <Col>
+                    <LearningSupervisor1/>
+                    </Col>
+                    </Row>
+                    </Container>
+            );
+    }
+}
+
+export class LearningSupervisor1 extends React.Component {
+    
     state = {
         parcelData: {answeredCorrect: "-1"},
         loading: 0
@@ -147,8 +167,6 @@ class LearningContainer extends React.Component {
             console.log(this.state.context);
                 return (
                 <div>
-                <Sidebar />
-                <TopBar/>
                 <LearningInstance
             context={this.state.context}
             interaction={this.state.interaction}
@@ -161,12 +179,8 @@ class LearningContainer extends React.Component {
         }
         else if (this.state.displayType == "done") {
             return (
-            <div>
-                <Sidebar/>
-                <TopBar/>
                 <div className = "ui centered card">
                 No more reviews.
-                </div>
                 </div>
             );
         } else {

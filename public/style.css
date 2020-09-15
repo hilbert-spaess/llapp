@@ -6,15 +6,22 @@
 
 .container {
     max-width: 100%;
+    height: 100%;
+    overflow: hidden;
 }
 
+
 .row {
-    height: 100%;
+    overflow: hidden;
+    height: 100%; 
+}
+
+.column {
 }
 
 .split {
     width: 50%;
-    position: fixed;
+    min-height: 100vh;
     text-align: center;
 }
 
@@ -27,17 +34,27 @@ a:hover {
 }
 
 .sidenav {
-    position: fixed;
-    height: 100%;
-    width: 75px;
-    z-index: 1;
     background-color: lightgrey;
-    overflow-x: hidden;
-    padding-top: 20px;
+    width: 75px;
+    overflow: hidden;
+    min-height: 100vh;
+    margin-left: -1rem;
+    -webkit-transition: margin .25s ease-out;
+    -moz-transition: margin .25s ease-out;
+    -o-transition: margin .25s ease-out;
+    transition: margin .25s ease-out;
+}
+
+.sidecontent {
+    height: 100%;
 }
 
 .answerButtonCorrect {
     background-color: darkgreen;
+}
+
+.mainrow {
+    height: 100%;
 }
 
 .answerButtonWrong {
@@ -59,11 +76,8 @@ a:hover {
 }
 
 .mainbox {
-    position: fixed;
     text-align: center;
     border-color: transparent;
-    left: 25%;
-    width: 50%;
 }
 
 .maintext {
@@ -103,24 +117,16 @@ a:hover {
 }
 
 .left {
-    height: 100%;
-    left: 0;
     background-color: #048A81;
 }
 
 
 .rightHigh {
-    height: 50%;
-    right: 0;
-    top: 0;
     
     background-color: #D6CFCB;
 }
 
 .rightLow {
-    height: 50%;
-    right: 0;
-    bottom: 0;
     
     background-color: #746F72;
 }

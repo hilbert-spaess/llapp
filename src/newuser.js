@@ -1,9 +1,11 @@
 import React from 'react';
-import {Card, Row, Col} from 'react-bootstrap';
 import { useAuth0 } from '@auth0/auth0-react';
 import {Redirect} from 'react-router-dom';
 import {useApi} from './use-api.js';
 import {APIHOST} from './api_config.js';
+import {Card, Button, Row, Col, Container, Modal} from 'react-bootstrap';
+import {Sidebar, TopBar} from './sidebar.js';
+
 
 export class NewUser extends React.Component {
     
@@ -22,24 +24,26 @@ export class NewUser extends React.Component {
         if (this.state.choice == 0) {
 
             return (
-                    <div>
-                    <Row>
-                    <Col>
-                    <div className="maintext">
+                    <Container fluid>
+                <Row>
+                <TopBar/>
+                </Row>
+                    <Row className="mainrow">
+                <Col xs="auto" className="sidenav">
+                <div className="sidecontent"/>
+                </Col>
+                    <Col className="mainbox">
+                        <div className="maintext">
                     Welcome! Choose a course to get started.
-                    </div>
-                    </Col>
-                    </Row>
-                    <Row>
-                    <Col>
                     <CourseCard
                     name="Toefl Core 250: core TOEFL vocab and reading."
                     id="1"
                     choose={this.choose}
                     />
+                    </div>
                     </Col>
                     </Row>
-                    </div>
+                    </Container>
             );
     } else {
         return <Choose id={this.state.choice}/>;
