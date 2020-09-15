@@ -29,7 +29,7 @@ function App() {
     
     return (
          <Auth0Provider
-        domain="ricecake.ai"
+        domain="dev-yt8x5if8.eu.auth0.com"
         clientId="3Quvqqshf1rWfO46Cmry14XeDjhwQMwM"
                     
              redirectUri={CALLBACK}
