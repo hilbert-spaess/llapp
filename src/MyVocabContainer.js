@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Card, Button, Row, Col, Container} from 'react-bootstrap';
+import {Card, Button, Row, Col, Container, CardDeck} from 'react-bootstrap';
 import {loadVocab} from './client.js';
 import {useApi} from './use-api.js';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -30,84 +30,62 @@ export const MyVocabContainer = () => {
     return (
          <div>
                 Active Vocab: <br></br>
-                <ActiveVocab
-                activeVocabDict = {data.active}/>
+                <VocabGrid
+                VocabDict = {data.active}
+                size="3em"/>
                 <br></br>
-                <FutureVocab
-                futureVocabDict = {data.future}/>
+                Future Vocab: <br></br>
+                <VocabGrid
+                VocabDict = {data.future}
+                size="2em"/>
                     </div>
         );
 }        
 
-export class MyVocabContainer2 extends React.Component {
-        
-    state = {
-        activeVocabDict: {},
-        futureVocabDict: {},
-        loading: true
-    }
-
-    parseVocab = (data) => {
-        this.setState({activeVocabDict: data.active,
-                       futureVocabDict: data.future,
-                       loading: false});
-    }
-        
-    componentDidMount = () => {
-        loadVocab({userId: this.props.userId}).then(this.parseVocab);
-    };
-
-    render () { 
-        if (this.state.loading == false) {
-            return (
-                <div>
-                Active Vocab: <br></br>
-                <ActiveVocab
-                activeVocabDict = {this.state.activeVocabDict}/>
-                <br></br>
-                <FutureVocab
-                futureVocabDict = {this.state.futureVocabDict}/>
-                    </div>
-                
-            );
-        } else {
-            return (
-                <div></div>
-                );
-        }
-    }
-}
-
-class ActiveVocab extends React.Component {
+class VocabGrid extends React.Component {
     
     render () {
         
         var vocabCards = [];
-        const keys = Object.keys(this.props.activeVocabDict);
+        const keys = Object.keys(this.props.VocabDict);
         for (var i = 0; i < keys.length; i++) {
             
-            vocabCards.push(<ActiveVocabCard data = {this.props.activeVocabDict[keys[i]]}></ActiveVocabCard>);
+            vocabCards.push(<VocabCard 
+                            data = {this.props.VocabDict[keys[i]]}
+                            size={this.props.size}
+        ></VocabCard>);
         }
     
         return (
-        
-            vocabCards
+    <Container>
+    <Row 
+     style={{justifyContent: "center"}}>
+            {vocabCards}
+</Row>
+            </Container>
                 
         );
     }
 }
 
-class ActiveVocabCard extends React.Component {
+class VocabCard extends React.Component {
     
     render () {
         
         return (
             
-            <Card>
+            <Card
+            style={{height: "20rem", width: "15rem", marginRight: "1rem", marginLeft: "1rem", marginTop: "1rem"}}>
             
-            Word: {this.props.data["w"]} <br></br>
+            <div className="cardHeader"
+            style={{textAlign: "center",
+                  padding: "1rem",
+                  fontSize: this.props.size}}>
+            {this.props.data["w"]} <br></br>
+            </div>
     
             Streak: {this.props.data["s"]}
+
 
             </Card>
         );
@@ -122,7 +100,7 @@ class FutureVocab extends React.Component {
         const keys = Object.keys(this.props.futureVocabDict);
         for (var i = 0; i < keys.length; i++) {
             
-            vocabCards.push(<FutureVocabCard data = {this.props.futureVocabDict[keys[i]]}></FutureVocabCard>);
+            vocabCards.push(<VocabCard data = {this.props.futureVocabDict[keys[i]]}></VocabCard>);
         }
     
         return (
