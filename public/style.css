@@ -35,14 +35,16 @@ a:hover {
 
 .sidenav {
     background-color: lightgrey;
-    width: 75px;
+    width: 60px;
+    text-align: center;
     overflow: hidden;
     min-height: 100vh;
-    margin-left: -1rem;
+    margin-left: 0;
     -webkit-transition: margin .25s ease-out;
     -moz-transition: margin .25s ease-out;
     -o-transition: margin .25s ease-out;
     transition: margin .25s ease-out;
+    z-index:0;
 }
 
 .sidecontent {
@@ -51,6 +53,12 @@ a:hover {
 
 .answerButtonCorrect {
     background-color: darkgreen;
+}
+
+.launchcard {
+    height: 10rem;
+    border-color: transparent;
+    text-align: center;
 }
 
 .mainrow {

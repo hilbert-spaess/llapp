@@ -4,10 +4,20 @@ import {Redirect} from 'react-router-dom';
 import {useApi} from './use-api.js';
 import {APIHOST} from './api_config.js';
 import {Card, Button, Row, Col, Container, Modal} from 'react-bootstrap';
-import {Sidebar, TopBar} from './sidebar.js';
-
+import {BarWrapped} from './sidebar.js';
 
 export class NewUser extends React.Component {
+    
+    render () {
+        return (
+            <BarWrapped WrappedComponent={NewUser1}/>
+        );
+    }
+}
+            
+
+
+export class NewUser1 extends React.Component {
     
     state = {
         choice: 0
@@ -24,15 +34,7 @@ export class NewUser extends React.Component {
         if (this.state.choice == 0) {
 
             return (
-                    <Container fluid>
-                <Row>
-                <TopBar/>
-                </Row>
-                    <Row className="mainrow">
-                <Col xs="auto" className="sidenav">
-                <div className="sidecontent"/>
-                </Col>
-                    <Col className="mainbox">
+                    <div className="mainbox">
                         <div className="maintext">
                     Welcome! Choose a course to get started.
                     <CourseCard
@@ -41,9 +43,7 @@ export class NewUser extends React.Component {
                     choose={this.choose}
                     />
                     </div>
-                    </Col>
-                    </Row>
-                    </Container>
+                    </div>
             );
     } else {
         return <Choose id={this.state.choice}/>;

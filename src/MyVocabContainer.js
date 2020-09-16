@@ -5,7 +5,7 @@ import {loadVocab} from './client.js';
 import {useApi} from './use-api.js';
 import { useAuth0 } from '@auth0/auth0-react';
 import {APIHOST} from './api_config.js';
-import {Sidebar, TopBar} from './sidebar.js';
+import {BarWrapped} from './sidebar.js';
 
 function shuffle(array) {
   var currentIndex = array.length, temporaryValue, randomIndex;
@@ -27,22 +27,10 @@ function shuffle(array) {
 }
 
 export class MyVocabContainer extends React.Component {
-    
     render () {
         return (
-        <Container fluid>
-                <Row>
-                <TopBar/>
-                </Row>
-                    <Row className="mainrow">
-                <Col xs="auto" className="sidenav">
-                </Col>
-                    <Col>
-                    <MyVocabContainer1/>
-                    </Col>
-                    </Row>
-                    </Container>
-            );
+            <BarWrapped WrappedComponent={MyVocabContainer1}/>
+        );
     }
 }
 
