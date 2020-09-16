@@ -1,7 +1,8 @@
 import React from 'react';
-import {Card, Button, Row, Col, Container} from 'react-bootstrap';
-import {Home, Settings} from 'react-feather';
+import {Card, Button, Row, Col, Container, DropdownButton} from 'react-bootstrap';
+import {Home, Settings, User} from 'react-feather';
 import {Link} from 'react-router-dom';
+import {useAuth0} from '@auth0/auth0-react';
 
 export const BarWrapped = ({WrappedComponent}) => (
     
@@ -24,6 +25,17 @@ export const BarWrapped = ({WrappedComponent}) => (
                                 </Row>
                    </Container>
 );
+
+const Profile = () => {
+    const {user} = useAuth0();
+    
+    return (
+        <div>
+        {user.email}
+        <User size={20} style={{marginLeft: "0.5em"}}/>
+    </div>
+    );
+}
 
 
 export class Sidebar extends React.Component {
@@ -62,7 +74,7 @@ class TopNav extends React.Component {
 
     render () {
 	return (
-		<p className="navlogo"> RiceCake </p>
+		<p className="navlogo"> <Profile/></p>
 	);
     }
 }
