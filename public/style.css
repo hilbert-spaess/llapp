@@ -110,6 +110,11 @@ a:hover {
     text-align: center;
     margin-bottom: 2em;
 }
+
+.myvocabcard:hover {
+    border-color: blue;
+}
+    
 		
 
 .centered {
