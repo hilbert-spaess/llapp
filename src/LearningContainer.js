@@ -134,6 +134,7 @@ class LearningContainerUpdatable extends React.Component {
                 parcelData = {this.state.parcelData}
                 currentChunk = {this.props.allChunks[this.state.currentChunkNo]}
                 handleNext = {this.handleNext}
+                progress = {100*this.state.currentChunkNo/this.props.allChunks.length}
             />
         );
     } else {
@@ -158,6 +159,8 @@ const LearningContainerLogging = (props) => {
     
     const handleNext = async (parcelData) => {
         props.handleNext(parcelData);
+        console.log("WOOOOOOOW");
+        console.log("WOOOOOOOW");
         refresh();
     }
     
@@ -167,7 +170,8 @@ const LearningContainerLogging = (props) => {
         <div>
         <LearningContainer
             currentChunk = {props.currentChunk}
-            handleNext = {props.handleNext}
+            handleNext = {handleNext}
+            progress = {props.progress}
         />
         </div>
     );
@@ -238,7 +242,8 @@ class LearningContainer extends React.Component {
         answeredCorrect: this.state.answeredCorrect,
         chunkId: this.props.currentChunk["chunkid"],
         keyloc: this.props.currentChunk["keyloc"],
-        answers: this.state.answers});
+        answers: this.state.answers,
+        interaction: this.props.currentChunk["interaction"]});
         this.setState({currentInteraction: 0,
                        answers: [],
                        limbo: false});
@@ -265,6 +270,12 @@ class LearningContainer extends React.Component {
 	    handleHide={this.handleCloseDialog}
 	    specificInteraction={interaction[this.state.currentInteraction]}/>
 		    </Modal>
+            <Row>
+            <Col>
+            <ProgressBar now={this.props.progress} variant="success"
+            style={{marginTop: "4rem"}}/>
+            </Col>
+            </Row>
 		    <Row>
 		    <Col>
 		    <TextCard
