@@ -10,6 +10,10 @@ import { useAuth0 } from '@auth0/auth0-react';
 import {Redirect} from 'react-router-dom';
 import {APIHOST} from './api_config.js';
 
+function range(start, end) {
+  return Array(end - start + 1).fill().map((_, idx) => start + idx)
+}
+
 export class LearningSupervisor extends React.Component {
     
     render () {
@@ -201,12 +205,11 @@ class LearningContainer extends React.Component {
     handleAnswer = (correct) => {
         this.storeAnswer(correct);
         if (correct) {
-            this.setState({done: 1,
-                   answeredCorrect: 1});
+            this.setState({answeredCorrect: 1});
         } else {
-            this.setState({done: 1,
-                   answeredCorrect: 0});
+            this.setState({answeredCorrect: 0});
         }
+        console.log("HANDLING NOW");
         if (this.props.currentChunk["interaction"][this.state.currentInteraction]["key"] == 1) {
             this.handleOpenDialog();
         } else {
@@ -237,7 +240,8 @@ class LearningContainer extends React.Component {
         }
     }
     
-    handleNext = (correct) => {
+    
+    handleNext = (event) => {
         this.props.handleNext({
         answeredCorrect: this.state.answeredCorrect,
         chunkId: this.props.currentChunk["chunkid"],
@@ -250,26 +254,28 @@ class LearningContainer extends React.Component {
     }
 
     
-    render () {
+    render () {   
         const context = this.props.currentChunk["context"];
         const interaction = this.props.currentChunk["interaction"];
         const location = this.props.currentChunk["interaction"][this.state.currentInteraction]["location"];
         const answer= this.props.currentChunk["context"][this.props.currentChunk["interaction"][this.state.currentInteraction]["location"]]['w'];
         const interactionMode= this.props.currentChunk["interaction"][this.state.currentInteraction]["mode"];
         const length = this.props.currentChunk["interaction"][this.state.currentInteraction]["length"];
-        console.log(interaction);
-        console.log(interactionMode);
         
         if (this.state.isLoading == 0 ) {
                 return (
 	    <Container fluid="lg">
+                    <div id="myModal">
 		<Modal centered show={this.state.showDialog} onHide={this.handleCloseDialog}>
+                    
 		<AnswerCard
+        show={this.state.showDialog}
 	    word={context[location]['vw']}
 	    answeredCorrect={this.state.answeredCorrect}
 	    handleHide={this.handleCloseDialog}
 	    specificInteraction={interaction[this.state.currentInteraction]}/>
 		    </Modal>
+</div>
             <Row>
             <Col>
             <ProgressBar now={this.props.progress} variant="success"
@@ -286,7 +292,10 @@ class LearningContainer extends React.Component {
 		answer={answer}
         answers={this.state.answers}
 		location={location}
-		handleAnswer={this.handleAnswer}/>
+		handleAnswer={this.handleAnswer}
+        limbo={this.state.limbo}
+        showDialog={this.state.showDialog}/>
+            
 		    </Col>
 		    </Row>
 		    <Row>
@@ -321,77 +330,47 @@ class LearningContainer extends React.Component {
 }
 
 class TextCard extends React.Component {
-
-    constructor(props) {
-	super(props);
-	this.textInput = React.createRef();
-    }
-
-    state = {value: this.props.context[this.props.location]['w'][0]}
-
-    componentDidMount() {
-	console.log("MOUNTING!");
+    
+    componentDidMount () {
+	setTimeout(() => {try {this.nameInput.focus();} catch (e) {console.log("Error");}}, 200);
     }
     
     componentDidUpdate = (prevProps) => {
-        if (prevProps.context !== this.props.context) {
-            this.setState({value: this.props.context[this.props.location]['w'][0]});
-        }
+            if (prevProps.interaction !== this.props.interaction) {
+                this.setState({values: range(0, Object.keys(this.props.interaction).length - 1).map((thing) => this.props.context[this.props.interaction[thing]["location"]]["w"][0])});
+            }
+            setTimeout(() => {try {this.nameInput.focus();} catch (e) {console.log("Error");}}, 200);
     }
+    
     
     handleChange = (event) => {
-	this.setState({value: event.target.value});
+        var newvalues = this.state.values;
+        newvalues[this.props.currentInteraction] = event.target.value;
+        this.setState({values: newvalues});
+        event.preventDefault();
     }
+    
+    state = {values: range(0, Object.keys(this.props.interaction).length - 1).map((thing) => this.props.context[this.props.interaction[thing]["location"]]["w"][0])}
 
     handleSubmit = (event) => {
-	console.log("hemlo");
-	if (this.props.currentInteraction + 1 < Object.keys(this.props.interaction).length) {
-	    this.setState({value: this.props.context[this.props.interaction[this.props.currentInteraction+1]["location"]]['w'][0]});
-	}
-	if (this.state.value.toLowerCase() == this.props.answer.toLowerCase()) {
-            this.props.handleAnswer(1);
-	} else {
-            this.props.handleAnswer(0);
-	}
-	event.preventDefault();
-	
+        console.log("hemlo");
+        var a = this.state.values[this.props.currentInteraction];
+        if (a.toLowerCase() == this.props.answer.toLowerCase()) {
+                this.props.handleAnswer(1);
+        } else {
+                this.props.handleAnswer(0);
+        }
+        event.preventDefault();
     }
    
-    
+        
     render () {
-	
-        return (
-		<Card className="maintext">
-		<form className="commentForm" onSubmit={this.handleSubmit}>		
-		<Text style={{fontSize: "30px"}}>
-
-           
-		<Words
-	    context={this.props.context}
-	    length={this.props.length}
-	    location={this.props.location}
-	    handleChange={this.handleChange}
-        interaction={this.props.interaction}
-	    value={this.state.value}
-        answers={this.props.answers}
-	    />
-	    </Text>
-		</form>
-		</Card>
-        );
-    };
-};
-
-class Words extends React.Component {
-
-    componentDidMount () {
-	this.nameInput.focus();
-    }
-    
-    render () {
+            
 	var context = this.props.context;
 	var location = this.props.location;
-	var value= this.props.value;
+	var value= this.state.values[this.props.currentInteraction];
+    var x = this.props.showDialog;
+    console.log(x);
 	var length = this.props.length;
 	var words = [];
 	var tcolour = "black";
@@ -411,7 +390,83 @@ class Words extends React.Component {
 	    
 	    if (!("i" in context[i])) {
 		words.push(<Text>{spc + context[i]['w']}</Text>);
-	    } else if (i != location) {
+	    } else if (this.props.limbo || i != location) {
+            if (this.props.answers[context[i]["i"]] == 1) {
+                words.push(<Text style={{color: "green"}}>{spc + context[i]["w"]}</Text>);
+            } else {
+                words.push(<Text style={{color: "red"}}>{spc + context[i]["w"]}</Text>);
+            }
+        } else {
+		words.push(<input key = {this.props.showDialog} autoFocus ref = {(input) => {this.nameInput=input;}} value={value} onChange={this.handleChange} style={{backgroundColor: "transparent", borderColor: "transparent", textAlign: "center"}}/>);
+	    }
+	};    
+        return (
+		<Card className="maintext"
+            key={this.props.showDialog}>
+		<Text style={{fontSize: "30px", lineHeight: "2em"}}>
+        <form className="commentForm" onSubmit={this.handleSubmit}>
+           
+            {words}
+        </form>
+	    </Text>
+		</Card>
+        );
+    };
+};
+
+class Words extends React.Component {
+        
+    componentDidUpdate = (prevProps) => {
+        if (prevProps.context !== this.props.context) {
+            this.setState({value: this.props.context[this.props.location]['w'][0]});
+        }
+    }
+    
+    state = {value: this.props.context[this.props.location]['w'][0]}
+
+    componentDidMount () {
+	this.nameInput.focus();
+    }
+    
+    handleChange = (event) => {
+	this.setState({value: event.target.value});
+    }
+    
+    handleSubmit = (event) => {
+        this.props.handleSubmit(this.state.value);
+        event.preventDefault();
+    }
+    
+    componentDidUpdate (prevProps) {
+        if ((prevProps.showDialog == true) && (this.props.showDialog==false)) {
+            
+        }
+    }
+    
+    render () {
+	var context = this.props.context;
+	var location = this.props.location;
+	var value= this.state.value;
+	var length = this.props.length;
+	var words = [];
+	var tcolour = "black";
+	var answer = {};
+    var punct = [".",",",";","!","?",":", "'s"];
+	for (var i = 0; i < length; i++) {
+	    if (context[i]["u"] == 1) {
+		var tcolour = "black";
+	    } else {
+		var tcolour = "black";
+	    }
+        if ((punct.includes(context[i]['w'])) || i == 0) {
+            var spc = "";
+        } else {
+            var spc = " ";
+        }
+	    
+	    if (!("i" in context[i])) {
+		words.push(<Text>{spc + context[i]['w']}</Text>);
+	    } else if (this.props.limbo || i != location) {
             console.log(this.props.answers[context[i]["i"]])
             if (this.props.answers[context[i]["i"]] == 1) {
                 words.push(<Text style={{color: "green"}}>{spc + context[i]['w']}</Text>);
@@ -419,7 +474,7 @@ class Words extends React.Component {
                 words.push(<Text style={{color: "red"}}>{spc + context[i]['w']}</Text>);
             }
         } else {
-		words.push(<input autoFocus ref = {(input) => {this.nameInput=input;}} value={value} onChange={this.props.handleChange} style={{backgroundColor: "transparent", borderColor: "transparent", textAlign: "center"}}/>);
+		words.push(<form className="commentForm" onSubmit={this.handleSubmit}><input key = {this.props.showDialog} autoFocus ref = {(input) => {this.nameInput=input;}} value={value} onChange={this.handleChange} style={{backgroundColor: "transparent", borderColor: "transparent", textAlign: "center"}}/></form>);
 	    }
 	};
 	return words
@@ -428,6 +483,17 @@ class Words extends React.Component {
 
 
 class AnswerCard extends React.Component {
+    
+    componentDidUpdate (prevProps) {
+        
+        console.log("small FAT HEMLO");
+        console.log(this.props.show);
+        
+        if (prevProps.show == false && this.props.show == true) {
+            console.log("big FAT HEMLO");
+            setTimeout(() => {this.nameInput.focus();}, 200);
+        }
+    }
 
     render () {
 	if (this.props.answeredCorrect == 1) {
@@ -440,16 +506,53 @@ class AnswerCard extends React.Component {
     } else {
         var streak = "";
     }
+    if (this.props.show == true) {
 	return (
-	    <div>
+	    <div key={this.props.show}>
 	    <div className="vocabdisplay">
 		    {this.props.word}
 	    </div>
 		<div>
 		<p>{streak}</p>
 		</div>
-		<Button className={"answerButton" + styling} onClick={this.props.handleHide}>Continue</Button>
+<div>
+        <form className="commentForm" onSubmit={this.props.handleHide}>
+		<FirstInput 
+handleHide={this.props.handleHide}
+styling={styling}
+/>
+        </form>
+</div>
 		</div>
 	);
+    } else {
+        return (
+            <div>
+             <div className="vocabdisplay">
+		    {this.props.word}
+	    </div>
+		<div>
+		<p>{streak}</p>
+		</div>
+    </div>);
+}
     }
+}
+
+class FirstInput extends React.Component {
+  constructor(props) {
+    super(props);
+    this.innerRef = React.createRef();
+  }
+
+  componentDidMount() {
+    // Add a timeout here
+    setTimeout(() => {
+      this.innerRef.current.focus();
+    }, 500)
+  }
+
+  render() {
+    return <button type="submit" id="myInput" onClick={this.props.handleHide} ref={this.innerRef} className={"answerButton" + this.props.styling}>Continue</button>;
+  }
 }

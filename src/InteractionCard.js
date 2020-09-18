@@ -4,14 +4,22 @@ import {Card, Button, Row, Col, Container} from 'react-bootstrap';
 import {showWordsBasicBlank} from './helpers.js';
 
 export class InteractionCard extends React.Component {
+    
+    componentDidUpdate () {
+        
+        if (this.props.limbo==true) {
+	setTimeout(() => {this.nameInput.focus();}, 200);
+        }
+    }
 
     render () {
 	console.log(this.props.interaction);
     if (this.props.limbo == true) {
         return (
         <Card className="interactionbox">
-            <input type="text" onKeyPress={this.props.handleNext}/>
-            Press any key to continue.
+            <form onSubmit={this.props.handleNext}>
+              <button style={{backgroundColor: "green", width: "100px", height: "50px"}} type="submit" autoFocus ref = {(c) => {this.nameInput=c;}} onClick={this.props.handleNext}></button>
+            </form>
             </Card>
             );
     } else if (this.props.done == 0) {
