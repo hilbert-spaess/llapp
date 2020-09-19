@@ -391,29 +391,29 @@ class TextCard extends React.Component {
 	    } else {
 		var tcolour = "black";
 	    }
-        if ((punct.includes(context[i]['w'])) || i == 0) {
+        if ((punct.includes(context[i]['w']))) {
             var spc = "";
         } else {
             var spc = " ";
         }
 	    
 	    if (!("i" in context[i])) {
-		words.push(<Text>{spc + context[i]['w']}</Text>);
+		words.push(<Text style={{wordBreak: "keep-all", display: "inline-block", overflowWrap: "normal"}}>{spc + context[i]['w']}</Text>);
 	    } else if (this.props.limbo || i != location) {
             if (this.props.answers[context[i]["i"]] == 1) {
-                words.push(<Text style={{color: "green"}}>{spc + context[i]["w"]}</Text>);
+                words.push(<Text style={{color: "green", overflowWrap: "normal"}}>{spc + context[i]["w"]}</Text>);
             } else {
-                words.push(<Text style={{color: "red"}}>{spc + context[i]["w"]}</Text>);
+                words.push(<Text style={{color: "red", overflowWrap: "normal"}}>{spc + context[i]["w"]}</Text>);
             }
         } else {
             words.push(spc);
-		words.push(<input key = {this.props.showDialog} autoFocus ref = {(input) => {this.nameInput=input;}} value={value} onChange={this.handleChange} style={{backgroundColor: "transparent", outline: "0", border: "0", width: this.props.answerlength.toString() + "ch", height: "1em", borderBottom: "2px dotted blue", textAlign: "left"}}/>);
+		words.push(<input key = {this.props.showDialog} autoFocus ref = {(input) => {this.nameInput=input;}} value={value} onChange={this.handleChange} style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", display: "inline-block", border: "0", width: this.props.answerlength.toString() + "ch", height: "1em", borderBottom: "2px dotted blue", textAlign: "left"}}/>);
 	    }
 	};    
         return (
 		<Card className="maintext"
             key={this.props.showDialog}>
-		<Text style={{fontSize: "30px", lineHeight: "2em", display: "inline-block"}}>
+		<Text style={{fontSize: "30px", lineHeight: "2em", display: "inline-block", wordBreak: "keep-all"}}>
         <form className="commentForm" onSubmit={this.handleSubmit}>
            
             {words}

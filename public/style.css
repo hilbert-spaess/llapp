@@ -86,6 +86,7 @@ a:hover {
 .mainbox {
     text-align: center;
     border-color: transparent;
+    word-break: keep-all;
 }
 
 .maintext {
@@ -93,6 +94,7 @@ a:hover {
     margin-top: 2em;
     border-color: transparent;
     line-height: 2em;
+    word-break: keep-all;
 }
 
 .interactionbox {
