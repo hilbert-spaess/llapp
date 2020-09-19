@@ -8,7 +8,7 @@ export class InteractionCard extends React.Component {
     componentDidUpdate () {
         
         if (this.props.limbo==true) {
-	setTimeout(() => {this.nameInput.focus();}, 200);
+	setTimeout(() => {try {this.nameInput.focus();} catch (e) {console.log("Error");}}, 200);
         }
     }
 
@@ -160,6 +160,7 @@ class InteractionText extends React.Component {
     }
 }
 }
+
 
         
         

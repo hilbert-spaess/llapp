@@ -139,6 +139,7 @@ class LearningContainerUpdatable extends React.Component {
                 handleNext = {this.handleNext}
                 progress = {100*this.state.currentChunkNo/this.props.allChunks.length}
                 done = {this.state.done}
+                allChunks = {this.props.allChunks}
             />
         );
     }
@@ -180,7 +181,8 @@ const LearningContainerLogging = (props) => {
     );
 } else {
     return (
-        <div> Henlo </div>
+        <div> <LearningSummary
+                allChunks={props.allChunks}/></div>
         );
 }
 }
@@ -237,11 +239,12 @@ class LearningContainer extends React.Component {
                       done: 0});
         console.log("CURRENT INTERACTION");
         console.log(this.state.currentInteraction);
-        if (Object.keys(this.props.currentChunk["interaction"]).length > this.state.currentInteraction+1) {
+        setTimeout(() => {if (Object.keys(this.props.currentChunk["interaction"]).length > this.state.currentInteraction+1) {
             this.nextInteraction();
         } else {
-            this.setState({limbo: true})
-        }
+            this.setState({limbo: true});
+        }}, 200);
+        
     }
     
     
@@ -488,6 +491,8 @@ class Words extends React.Component {
 
 class AnswerCard extends React.Component {
     
+    state = {barLevel: 100*this.props.specificInteraction["streak"]/10}
+                                                         
     componentDidUpdate (prevProps) {
         
         console.log("small FAT HEMLO");
@@ -496,10 +501,16 @@ class AnswerCard extends React.Component {
         if (prevProps.show == false && this.props.show == true) {
             console.log("big FAT HEMLO");
             setTimeout(() => {this.nameInput.focus();}, 200);
+            
+                                                                                          
         }
     }
+    
 
     render () {
+    console.log(this.props.specificInteraction["mode"])
+    console.log("samples" in this.props.specificInteraction)
+    console.log(this.state.barLevel);
 	if (this.props.answeredCorrect == 1) {
 	    var styling = "Correct";
 	} else {
@@ -516,9 +527,17 @@ class AnswerCard extends React.Component {
 	    <div className="vocabdisplay">
 		    {this.props.word}
 	    </div>
-		<div>
-		<p>{streak}</p>
-		</div>
+        <div className="chinesedef">
+            Chinese definition here.
+        </div>
+        <div className="cardprogress">
+            <MyProgressBar now={10*(this.props.specificInteraction["streak"])}
+                        next={100*(this.props.specificInteraction["streak"] + this.props.answeredCorrect)/10}
+                        />
+        </div>
+        <div className="samplesentences">
+            {("samples" in this.props.specificInteraction) && <SampleSentences samples={this.props.specificInteraction["samples"]}/>}
+    </div>
 <div>
         <form className="commentForm" onSubmit={this.props.handleHide}>
 		<FirstInput 
@@ -528,19 +547,36 @@ styling={styling}
         </form>
 </div>
 		</div>
-	);
-    } else {
+	); } else {
         return (
-            <div>
-             <div className="vocabdisplay">
+            <div key={this.props.show}>
+	    <div className="vocabdisplay">
 		    {this.props.word}
 	    </div>
-		<div>
-		<p>{streak}</p>
+        <div className="chinesedef">
+            Chinese definition here.
+        </div>
+        <div className="cardprogress">
+            <MyProgressBar now={10*(this.props.specificInteraction["streak"])}
+                        next={100*(this.props.specificInteraction["streak"] + this.props.answeredCorrect)/10}
+                        />
+        </div>
+        <div className="samplesentences">
+            {("samples" in this.props.specificInteraction) && <SampleSentences samples={this.props.specificInteraction["samples"]}/>}
+    </div>
+<div>
+        <form className="commentForm" onSubmit={this.props.handleHide}>
+		<FirstInput 
+handleHide={this.props.handleHide}
+styling={styling}
+/>
+    </form>
+</div>
 		</div>
-    </div>);
-}
+    );
+    
     }
+}
 }
 
 class FirstInput extends React.Component {
@@ -548,15 +584,69 @@ class FirstInput extends React.Component {
     super(props);
     this.innerRef = React.createRef();
   }
+    
+    state = {value: ""}
+    
+    handleChange = (event) => {
+        this.setState({value: event.target.value});
+    }
+       
 
   componentDidMount() {
     // Add a timeout here
     setTimeout(() => {
-      this.innerRef.current.focus();
-    }, 500)
+        try {this.innerRef.current.focus();} catch (e) {console.log("Error");}}, 500);
   }
 
   render() {
-    return <button type="submit" id="myInput" onClick={this.props.handleHide} ref={this.innerRef} className={"answerButton" + this.props.styling}>Continue</button>;
+    return (
+        <div style={{textAlign: "center"}}>
+        <input type="text" autoFocus style={{width: "80%", textAlign: "center", fontSize: "30px", marginTop: "1em", marginBottom: "0.5em"}} id="myInput" ref={this.innerRef} value={this.state.value} onChange={this.handleChange}/>
+            </div>
+    );
   }
 }
+
+class MyProgressBar extends React.Component {
+    
+    state = {now: this.props.now}
+    
+    componentDidMount () {
+        
+        setTimeout(() => {this.setState({now: this.props.next});}, 200);
+        
+    }
+    
+    render () {
+        return (
+            <ProgressBar now={this.state.now}
+                        variant="success"/>
+    );
+    }
+}
+      
+
+class SampleSentences extends React.Component {
+    
+    render () {
+        
+        return (
+            <div>
+            {this.props.samples.length > 0 && this.props.samples[0][0].split("#").join(" ")}
+    </div>
+        );
+    }
+}
+
+class LearningSummary extends React.Component {
+    
+    render () {
+        
+        return (
+            
+            <div style={{marginTop: "5em"}}> Reviewed vocab here. </div>
+            );
+    }
+}
+        
+        

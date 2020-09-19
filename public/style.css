@@ -108,7 +108,32 @@ a:hover {
 .vocabdisplay {
     font-size: 50px;
     text-align: center;
-    margin-bottom: 2em;
+}
+
+.chinesedef {
+    font-size: 20px;
+    color: grey;
+    text-align: center;
+    margin-bottom: 0.5em;
+}
+
+.cardprogress {
+    margin-left: 1em;
+    margin-right: 1em;
+    margin-bottom: 1.5em;
+}
+
+.samplesentences {
+    margin-right: 1em;
+    margin-left: 1em;
+    font-size: 20px;
+    text-align: center;
+}
+
+.cardconfirminput {
+    text-align: center;
+    font-size: 50px;
+    width: 30%;
 }
 
 .myvocabcard:hover {
