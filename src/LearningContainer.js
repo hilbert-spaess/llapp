@@ -122,14 +122,13 @@ class LearningContainerUpdatable extends React.Component {
             var i = this.state.currentChunkNo;
             this.setState({currentChunkNo: i + 1});
         } else {
+            console.log("DONE")
             this.setState({done: 1});
         }
         console.log(this.state.currentChunkNo);
     }
     
     render () {
-        
-        if (this.state.done == 0) {
             
             console.log(this.props.allChunks[this.state.currentChunkNo]);
     
@@ -139,11 +138,9 @@ class LearningContainerUpdatable extends React.Component {
                 currentChunk = {this.props.allChunks[this.state.currentChunkNo]}
                 handleNext = {this.handleNext}
                 progress = {100*this.state.currentChunkNo/this.props.allChunks.length}
+                done = {this.state.done}
             />
         );
-    } else {
-        return (0);
-    }
     }
 }   
 
@@ -169,6 +166,8 @@ const LearningContainerLogging = (props) => {
     }
     
     console.log(props.currentChunk)
+    
+    if (props.done == 0) {
 
     return (
         <div>
@@ -179,6 +178,11 @@ const LearningContainerLogging = (props) => {
         />
         </div>
     );
+} else {
+    return (
+        <div> Henlo </div>
+        );
+}
 }
 
     
