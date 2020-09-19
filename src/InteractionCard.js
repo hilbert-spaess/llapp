@@ -148,13 +148,11 @@ class InteractionText extends React.Component {
    } else if (this.props.interactionMode == "3") {
        return (
            <div>
-           {this.props.interaction["tag"]}. Choose one from:
 </div>
        );
     } else if (this.props.interactionMode == "4") {
         return (
             <div>
-            {this.props.interaction["tag"]}. Definition:
 </div>
     );
     }

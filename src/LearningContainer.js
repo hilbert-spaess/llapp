@@ -266,6 +266,7 @@ class LearningContainer extends React.Component {
         const interaction = this.props.currentChunk["interaction"];
         const location = this.props.currentChunk["interaction"][this.state.currentInteraction]["location"];
         const answer= this.props.currentChunk["context"][this.props.currentChunk["interaction"][this.state.currentInteraction]["location"]]['w'];
+        const answerlength = answer.length;
         const interactionMode= this.props.currentChunk["interaction"][this.state.currentInteraction]["mode"];
         const length = this.props.currentChunk["interaction"][this.state.currentInteraction]["length"];
         
@@ -301,7 +302,8 @@ class LearningContainer extends React.Component {
 		location={location}
 		handleAnswer={this.handleAnswer}
         limbo={this.state.limbo}
-        showDialog={this.state.showDialog}/>
+        showDialog={this.state.showDialog}
+        answerlength={answerlength}/>
             
 		    </Col>
 		    </Row>
@@ -404,13 +406,14 @@ class TextCard extends React.Component {
                 words.push(<Text style={{color: "red"}}>{spc + context[i]["w"]}</Text>);
             }
         } else {
-		words.push(<input key = {this.props.showDialog} autoFocus ref = {(input) => {this.nameInput=input;}} value={value} onChange={this.handleChange} style={{backgroundColor: "transparent", borderColor: "transparent", textAlign: "center"}}/>);
+            words.push(spc);
+		words.push(<input key = {this.props.showDialog} autoFocus ref = {(input) => {this.nameInput=input;}} value={value} onChange={this.handleChange} style={{backgroundColor: "transparent", outline: "0", border: "0", width: this.props.answerlength.toString() + "ch", height: "1em", borderBottom: "2px dotted blue", textAlign: "left"}}/>);
 	    }
 	};    
         return (
 		<Card className="maintext"
             key={this.props.showDialog}>
-		<Text style={{fontSize: "30px", lineHeight: "2em"}}>
+		<Text style={{fontSize: "30px", lineHeight: "2em", display: "inline-block"}}>
         <form className="commentForm" onSubmit={this.handleSubmit}>
            
             {words}
@@ -421,72 +424,6 @@ class TextCard extends React.Component {
     };
 };
 
-class Words extends React.Component {
-        
-    componentDidUpdate = (prevProps) => {
-        if (prevProps.context !== this.props.context) {
-            this.setState({value: this.props.context[this.props.location]['w'][0]});
-        }
-    }
-    
-    state = {value: this.props.context[this.props.location]['w'][0]}
-
-    componentDidMount () {
-	this.nameInput.focus();
-    }
-    
-    handleChange = (event) => {
-	this.setState({value: event.target.value});
-    }
-    
-    handleSubmit = (event) => {
-        this.props.handleSubmit(this.state.value);
-        event.preventDefault();
-    }
-    
-    componentDidUpdate (prevProps) {
-        if ((prevProps.showDialog == true) && (this.props.showDialog==false)) {
-            
-        }
-    }
-    
-    render () {
-	var context = this.props.context;
-	var location = this.props.location;
-	var value= this.state.value;
-	var length = this.props.length;
-	var words = [];
-	var tcolour = "black";
-	var answer = {};
-    var punct = [".",",",";","!","?",":", "'s"];
-	for (var i = 0; i < length; i++) {
-	    if (context[i]["u"] == 1) {
-		var tcolour = "black";
-	    } else {
-		var tcolour = "black";
-	    }
-        if ((punct.includes(context[i]['w'])) || i == 0) {
-            var spc = "";
-        } else {
-            var spc = " ";
-        }
-	    
-	    if (!("i" in context[i])) {
-		words.push(<Text>{spc + context[i]['w']}</Text>);
-	    } else if (this.props.limbo || i != location) {
-            console.log(this.props.answers[context[i]["i"]])
-            if (this.props.answers[context[i]["i"]] == 1) {
-                words.push(<Text style={{color: "green"}}>{spc + context[i]['w']}</Text>);
-            } else {
-                words.push(<Text style={{color: "red"}}>{spc + context[i]['w']}</Text>);
-            }
-        } else {
-		words.push(<form className="commentForm" onSubmit={this.handleSubmit}><input key = {this.props.showDialog} autoFocus ref = {(input) => {this.nameInput=input;}} value={value} onChange={this.handleChange} style={{backgroundColor: "transparent", borderColor: "transparent", textAlign: "center"}}/></form>);
-	    }
-	};
-	return words
-    }
-}
 
 
 class AnswerCard extends React.Component {
@@ -644,7 +581,7 @@ class LearningSummary extends React.Component {
         
         return (
             
-            <div style={{marginTop: "5em"}}> Reviewed vocab here. </div>
+            <div style={{marginTop: "5em"}}> Henlo </div>
             );
     }
 }
