@@ -100,6 +100,7 @@ const LearningContainerData = (props) => {
         <div>
         <LearningContainerUpdatable
             allChunks = {data.allChunks}
+            displayType= {data.displayType}
         />          
 </div>
     );
@@ -110,13 +111,12 @@ class LearningContainerUpdatable extends React.Component {
     state = {
         parcelData: {},
         currentChunkNo: 0,
-        done: 0,
+        displayType: this.props.displayType,
         allChunks: this.props.allChunks
     }
     
     handleNext = (parcelData) => {
         console.log(parcelData)
-        this.setState({parcelData});
         console.log("updatein");
         if ((parcelData.interaction[parcelData.keyloc]["streak"] == 0 && parcelData.first == 1) || (parcelData.answers[parcelData.keyloc] == 0)) {
             var nowChunk = this.state.allChunks[this.state.currentChunkNo];
@@ -149,23 +149,23 @@ class LearningContainerUpdatable extends React.Component {
                 var i = this.state.currentChunkNo;
                 this.setState({currentChunkNo: i + 1});
             } else {
+                parcelData["done"] = 1;
                 this.setState({done: 1});
             }
         }
+        this.setState({parcelData});
         console.log(this.state.currentChunkNo);
     }
     
     render () {
-            
-            console.log(this.props.allChunks[this.state.currentChunkNo]);
-    
         return (
+    
             <LearningContainerLogging
                 parcelData = {this.state.parcelData}
                 currentChunk = {this.props.allChunks[this.state.currentChunkNo]}
                 handleNext = {this.handleNext}
                 progress = {100*this.state.currentChunkNo/this.props.allChunks.length}
-                done = {this.state.done}
+                displayType = {this.state.displayType}
                 allChunks = {this.props.allChunks}
             />
         );
@@ -195,7 +195,7 @@ const LearningContainerLogging = (props) => {
     
     console.log(props.currentChunk)
     
-    if (props.done == 0) {
+    if (props.displayType != "done") {
 
     return (
         <div>
@@ -208,8 +208,7 @@ const LearningContainerLogging = (props) => {
     );
 } else {
     return (
-        <div> <LearningSummary
-                allChunks={props.allChunks}/></div>
+        <div> <LearningSummaryContainer/></div>
         );
 }
 }
@@ -282,6 +281,7 @@ class LearningContainer extends React.Component {
         keyloc: this.props.currentChunk["keyloc"],
         first: this.props.currentChunk["first"],
         answers: this.state.answers,
+        done: 0,
         interaction: this.props.currentChunk["interaction"]});
         this.setState({currentInteraction: 0,
                        answers: [],
@@ -608,13 +608,62 @@ class SampleSentences extends React.Component {
     }
 }
 
+const LearningSummaryContainer = (props) => {
+    
+    const payload = {}
+    
+    const {login, getAccessTokenWithPopup } = useAuth0();
+    const opts = {audience: APIHOST, 
+                  fetchOptions: {method: 'post',
+                                 headers: {'Access-Control-Allow-Credentials': 'true',
+                                           'Access-Control-Allow-Origin': '*',
+                                           'Accept': 'application/json',
+                                            'Content-Type': 'application/json',
+                                          'Access-Control-Request-Method': 'POST'}}};
+    const {error, data, loading, refresh} = useApi(APIHOST + '/api/todaywords', payload, opts);
+    
+    const getTokenAndTryAgain = async () => {
+        await getAccessTokenWithPopup(opts);
+        refresh()
+  };
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+    if (error) {
+        if (error.error === 'consent_required') {
+      return (
+        <button onClick={getTokenAndTryAgain}>Consent to reading users</button>
+      );
+    }
+    return <div>Oops {error.message}</div>;
+    }
+
+    return (
+        
+        <LearningSummary
+        words={data.words}
+        />
+    );
+
+}
+
 class LearningSummary extends React.Component {
     
     render () {
         
+        var words = []
+        
+        for (var i = 0; i < this.props.words.length; i++) {
+            words.push(<div style={{textAlign: "center", fontSize: "20px"}}>{this.props.words[i]}</div>);
+        };
+             
         return (
+            <div>
+            <div style={{marginTop: "5em", fontSize: "30px", textAlign: "center"}}> Today's work is done. New words learned: </div>
             
-            <div style={{marginTop: "5em"}}> Henlo </div>
+            <div style={{marginTop: "3em"}}> {words} </div>
+            <div style={{marginTop: "2em", fontSize: "30px", textAlign: "center"}}> Check in tomorrow for new reviews. </div>
+            </div>
             );
     }
 }
