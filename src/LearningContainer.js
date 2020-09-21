@@ -151,6 +151,7 @@ class LearningContainerUpdatable extends React.Component {
             } else {
                 parcelData["done"] = 1;
                 this.setState({done: 1});
+                this.setState({displayType: "done"});
             }
         }
         this.setState({parcelData});
