@@ -118,12 +118,39 @@ class LearningContainerUpdatable extends React.Component {
         console.log(parcelData)
         this.setState({parcelData});
         console.log("updatein");
-        if (this.state.currentChunkNo < this.props.allChunks.length - 1) {
+        if ((parcelData.interaction[parcelData.keyloc]["streak"] == 0 && parcelData.first == 1) || (parcelData.answers[parcelData.keyloc] == 0)) {
+            var nowChunk = this.state.allChunks[this.state.currentChunkNo];
+            nowChunk["first"] = 0;
+            if (parcelData.first == 1) {
+                var lower = parcelData.interaction[parcelData.keyloc]["lower_upper"][0];
+                var upper = parcelData.interaction[parcelData.keyloc]["lower_upper"][1];
+                var int = {};
+                int['0'] = parcelData.interaction[parcelData.keyloc];
+                var loc = int['0']["location"] - lower;
+                var len = int['0']["length"] - lower;
+                int['0']["location"] = loc;
+                int['0']["length"] = len;
+                nowChunk["keyloc"] = 0;
+                nowChunk["interaction"] = int;
+                var cont = {};
+                for (var i = lower; i < upper; i++) {
+                    cont[i-lower] = this.state.allChunks[this.state.currentChunkNo]['context'][i];
+                };
+                cont[loc]["i"] = 0;
+                nowChunk["context"] = cont;
+            }
+            var nowChunks = this.state.allChunks;
+            nowChunks.push(nowChunk);
+            this.setState({allChunks: nowChunks});
             var i = this.state.currentChunkNo;
-            this.setState({currentChunkNo: i + 1});
+            this.setState({currentChunkNo: i+1});
         } else {
-            console.log("DONE")
-            this.setState({done: 1});
+            if (this.state.currentChunkNo < this.props.allChunks.length - 1) {
+                var i = this.state.currentChunkNo;
+                this.setState({currentChunkNo: i + 1});
+            } else {
+                this.setState({done: 1});
+            }
         }
         console.log(this.state.currentChunkNo);
     }
@@ -253,6 +280,7 @@ class LearningContainer extends React.Component {
         answeredCorrect: this.state.answeredCorrect,
         chunkId: this.props.currentChunk["chunkid"],
         keyloc: this.props.currentChunk["keyloc"],
+        first: this.props.currentChunk["first"],
         answers: this.state.answers,
         interaction: this.props.currentChunk["interaction"]});
         this.setState({currentInteraction: 0,
@@ -266,6 +294,7 @@ class LearningContainer extends React.Component {
         const interaction = this.props.currentChunk["interaction"];
         const location = this.props.currentChunk["interaction"][this.state.currentInteraction]["location"];
         const answer= this.props.currentChunk["context"][this.props.currentChunk["interaction"][this.state.currentInteraction]["location"]]['w'];
+        console.log(answer);
         const answerlength = answer.length;
         const interactionMode= this.props.currentChunk["interaction"][this.state.currentInteraction]["mode"];
         const length = this.props.currentChunk["interaction"][this.state.currentInteraction]["length"];
@@ -293,6 +322,7 @@ class LearningContainer extends React.Component {
 		    <Row>
 		    <Col>
 		    <TextCard
+        first={this.props.currentChunk["first"]}
 		context={context}
 		length={length}
 		interaction={interaction}
@@ -364,6 +394,8 @@ class TextCard extends React.Component {
     handleSubmit = (event) => {
         console.log("hemlo");
         var a = this.state.values[this.props.currentInteraction];
+        console.log(this.props.answer.toLowerCase())
+        console.log(a.toLowerCase())
         if (a.toLowerCase() == this.props.answer.toLowerCase()) {
                 this.props.handleAnswer(1);
         } else {
@@ -385,21 +417,21 @@ class TextCard extends React.Component {
 	var tcolour = "black";
 	var answer = {};
     var punct = [".",",",";","!","?",":", "'s"];
-	for (var i = 0; i < length; i++) {
-	    if (context[i]["u"] == 1) {
-		var tcolour = "black";
-	    } else {
-		var tcolour = "black";
-	    }
+    for (var i = 0; i < length; i++) {
+        if (context[i]["u"] == 1) {
+        var tcolour = "black";
+        } else {
+        var tcolour = "black";
+        }
         if ((punct.includes(context[i]['w']))) {
             var spc = "";
         } else {
             var spc = " ";
         }
-	    
-	    if (!("i" in context[i])) {
-		words.push(<Text style={{wordBreak: "keep-all", display: "inline-block", overflowWrap: "normal"}}>{spc + context[i]['w']}</Text>);
-	    } else if (this.props.limbo || i != location) {
+        
+        if (!("i" in context[i])) {
+    words.push(<Text style={{wordBreak: "keep-all", display: "inline-block", overflowWrap: "normal"}}>{spc + context[i]['w']}</Text>);
+        } else if (this.props.limbo || i != location) {
             if (this.props.answers[context[i]["i"]] == 1) {
                 words.push(<Text style={{color: "green", overflowWrap: "normal"}}>{spc + context[i]["w"]}</Text>);
             } else {
@@ -407,9 +439,10 @@ class TextCard extends React.Component {
             }
         } else {
             words.push(spc);
-		words.push(<input key = {this.props.showDialog} autoFocus ref = {(input) => {this.nameInput=input;}} value={value} onChange={this.handleChange} style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", display: "inline-block", border: "0", width: this.props.answerlength.toString() + "ch", height: "1em", borderBottom: "2px dotted blue", textAlign: "left"}}/>);
-	    }
-	};    
+        words.push(<input key = {this.props.showDialog} autoFocus ref = {(input) => {this.nameInput=input;}} value={value} onChange={this.handleChange} style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", display: "inline-block", border: "0", width: this.props.answerlength.toString() + "ch", height: "1em", borderBottom: "2px dotted blue", textAlign: "left"}}/>);
+        }
+    };
+
         return (
 		<Card className="maintext"
             key={this.props.showDialog}>
