@@ -14,6 +14,15 @@ export class InteractionCard extends React.Component {
 
     render () {
 	console.log(this.props.interaction);
+    var choice = this.props.interactionMode;
+    console.log(choice);
+    if (choice == "6") {
+        if (this.props.first == 1) {
+            choice = "3";
+        } else {
+            choice = "4";
+        }
+    }
     if (this.props.limbo == true) {
         return (
         <Card className="interactionbox">
@@ -26,9 +35,10 @@ export class InteractionCard extends React.Component {
         return (
             <Card className="interactionbox">
                 <FillBlankExamples
-            interactionMode = {this.props.interactionMode}
+            interactionMode = {choice}
             interaction = {this.props.interaction}
             answer = {this.props.answer}
+            first = {this.props.first}
             />
             </Card>
         );

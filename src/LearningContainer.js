@@ -271,7 +271,11 @@ class LearningContainer extends React.Component {
         setTimeout(() => {if (Object.keys(this.props.currentChunk["interaction"]).length > this.state.currentInteraction+1) {
             this.nextInteraction();
         } else {
-            this.setState({limbo: true});
+            if (this.props.currentChunk['first'] == 0) {
+                this.handleNext();
+            } else {
+                this.setState({limbo: true});
+            }
         }}, 200);
         
     }
@@ -313,7 +317,8 @@ class LearningContainer extends React.Component {
 	    word={context[location]['vw']}
 	    answeredCorrect={this.state.answeredCorrect}
 	    handleHide={this.handleCloseDialog}
-	    specificInteraction={interaction[this.state.currentInteraction]}/>
+	    specificInteraction={interaction[this.state.currentInteraction]}
+        first={this.props.currentChunk["first"]}/>
 		    </Modal>
 </div>
             <Row>
@@ -350,6 +355,7 @@ class LearningContainer extends React.Component {
 		answer={answer}
         limbo={this.state.limbo}
         handleNext={this.handleNext}
+        first={this.props.currentChunk["first"]}
 		    />
 		    </Col>
 		    </Row>
@@ -468,7 +474,6 @@ class AnswerCard extends React.Component {
                                                          
     componentDidUpdate (prevProps) {
         
-        console.log("small FAT HEMLO");
         console.log(this.props.show);
         
         if (prevProps.show == false && this.props.show == true) {
@@ -490,10 +495,11 @@ class AnswerCard extends React.Component {
 	    var styling = "Wrong";
 	}
     if (this.props.specificInteraction["key"] == "1") {
-        var streak = "Streak: " + (this.props.specificInteraction["streak"] + this.props.answeredCorrect).toString();
+        var streak = (this.props.specificInteraction["streak"]).toString();
     } else {
         var streak = "";
     }
+    var full = ((streak == "0" && this.props.first == 1) || this.props.answeredCorrect == 0);
     if (this.props.show == true) {
 	return (
 	    <div key={this.props.show}>
@@ -501,7 +507,10 @@ class AnswerCard extends React.Component {
 		    {this.props.word}
 	    </div>
         <div className="chinesedef">
-            Chinese definition here.
+            {"chinesedef" in this.props.specificInteraction && <div>Chinese definition here.</div>}
+        </div>
+        <div className="chinesedef">
+            {"def" in this.props.specificInteraction && this.props.specificInteraction["def"]}
         </div>
         <div className="cardprogress">
             <MyProgressBar now={10*(this.props.specificInteraction["streak"])}
@@ -509,14 +518,15 @@ class AnswerCard extends React.Component {
                         />
         </div>
         <div className="samplesentences">
-            {("samples" in this.props.specificInteraction) && <SampleSentences samples={this.props.specificInteraction["samples"]}/>}
+            {full && ("samples" in this.props.specificInteraction) && <SampleSentences samples={this.props.specificInteraction["samples"]}/>}
     </div>
 <div>
         <form className="commentForm" onSubmit={this.props.handleHide}>
-		<FirstInput 
+            {full && <FirstInput 
 handleHide={this.props.handleHide}
 styling={styling}
-/>
+/>}
+{!full && <SecondInput handlehide={this.props.handleHide} styling={styling}/>}
         </form>
 </div>
 		</div>
@@ -579,6 +589,27 @@ class FirstInput extends React.Component {
     );
   }
 }
+
+class SecondInput extends React.Component {
+  constructor(props) {
+    super(props);
+    this.innerRef = React.createRef();
+  }
+
+  componentDidMount() {
+    // Add a timeout here
+    setTimeout(() => {
+        try {this.innerRef.current.focus();} catch (e) {console.log("Error");}}, 500);
+    }
+
+  render() {
+      
+    return (
+        <button type="submit" autoFocus ref={this.innerRef}/>
+    );
+  }
+}
+
 
 class MyProgressBar extends React.Component {
     
