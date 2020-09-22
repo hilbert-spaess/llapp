@@ -296,11 +296,17 @@ class LearningContainer extends React.Component {
     }
 
     
-    render () {   
+    render () {
+        if ("alternatives" in this.props.currentChunk["interaction"][this.state.currentInteraction]) {
+            var alternatives = this.props.currentChunk["interaction"][this.state.currentInteraction]["alternatives"];
+        } else {
+            var alternatives = [];
+        }     
         const context = this.props.currentChunk["context"];
         const interaction = this.props.currentChunk["interaction"];
         const location = this.props.currentChunk["interaction"][this.state.currentInteraction]["location"];
         const answer= this.props.currentChunk["context"][this.props.currentChunk["interaction"][this.state.currentInteraction]["location"]]['w'];
+        alternatives.push(answer.toLowerCase())
         console.log(answer);
         const answerlength = answer.length;
         const interactionMode= this.props.currentChunk["interaction"][this.state.currentInteraction]["mode"];
@@ -331,6 +337,7 @@ class LearningContainer extends React.Component {
 		    <Col>
 		    <TextCard
         first={this.props.currentChunk["first"]}
+        alternatives={alternatives}
 		context={context}
 		length={length}
 		interaction={interaction}
@@ -405,7 +412,10 @@ class TextCard extends React.Component {
         var a = this.state.values[this.props.currentInteraction];
         console.log(this.props.answer.toLowerCase())
         console.log(a.toLowerCase())
-        if (a.toLowerCase() == this.props.answer.toLowerCase()) {
+        console.log(this.props.alternatives);
+        console.log(a.toLowerCase() in this.props.alternatives)
+        if (this.props.alternatives.includes(a.toLowerCase())) {
+                console.log("hemloe");
                 this.props.handleAnswer(1);
         } else {
                 this.props.handleAnswer(0);
