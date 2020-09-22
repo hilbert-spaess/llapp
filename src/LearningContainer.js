@@ -129,6 +129,7 @@ class LearningContainerUpdatable extends React.Component {
                 var loc = int['0']["location"] - lower;
                 var len = int['0']["length"] - lower;
                 int['0']["location"] = loc;
+                console.log(loc);
                 int['0']["length"] = len;
                 nowChunk["keyloc"] = 0;
                 nowChunk["interaction"] = int;
@@ -136,6 +137,7 @@ class LearningContainerUpdatable extends React.Component {
                 for (var i = lower; i < upper; i++) {
                     cont[i-lower] = this.state.allChunks[this.state.currentChunkNo]['context'][i];
                 };
+                console.log(cont)
                 cont[loc]["i"] = 0;
                 nowChunk["context"] = cont;
             }
