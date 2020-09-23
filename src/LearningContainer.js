@@ -93,7 +93,7 @@ const LearningContainerData = (props) => {
     return <div>Oops {error.message}</div>;
     }
     if (data.displayType == "newUser") {
-        return <Redirect to="/newuser"/>;
+        return <Redirect to="/newusertest"/>;
     }
     console.log(data);
     return (
@@ -263,15 +263,16 @@ class LearningContainer extends React.Component {
     }
 
     handleCloseDialog = () => {
-        
-        this.setState({showDialog: 0,
+
+        this.setState({showDialog: false,
                       done: 0});
         console.log("CURRENT INTERACTION");
         console.log(this.state.currentInteraction);
         setTimeout(() => {if (Object.keys(this.props.currentChunk["interaction"]).length > this.state.currentInteraction+1) {
+            console.log("hehe");
             this.nextInteraction();
         } else {
-            if (this.props.currentChunk['first'] == 0) {
+        if (this.props.currentChunk['first'] == 0) {
                 this.handleNext();
             } else {
                 this.setState({limbo: true});
@@ -531,13 +532,11 @@ class AnswerCard extends React.Component {
             {full && ("samples" in this.props.specificInteraction) && <SampleSentences samples={this.props.specificInteraction["samples"]}/>}
     </div>
 <div>
-        <form className="commentForm" onSubmit={this.props.handleHide}>
             {full && <FirstInput 
 handleHide={this.props.handleHide}
 styling={styling}
 />}
-{!full && <SecondInput handlehide={this.props.handleHide} styling={styling}/>}
-        </form>
+{!full && <SecondInput handleHide={this.props.handleHide} styling={styling}/>}
 </div>
 		</div>
 	); } else {
@@ -555,15 +554,13 @@ styling={styling}
                         />
         </div>
         <div className="samplesentences">
-            {("samples" in this.props.specificInteraction) && <SampleSentences samples={this.props.specificInteraction["samples"]}/>}
+            {("samples" in this.props.specificInteraction) && (this.props.specificInteraction["samples"].length > 0) && <SampleSentences samples={this.props.specificInteraction["samples"]}/>}
     </div>
 <div>
-        <form className="commentForm" onSubmit={this.props.handleHide}>
 		<FirstInput 
 handleHide={this.props.handleHide}
 styling={styling}
 />
-    </form>
 </div>
 		</div>
     );
@@ -583,6 +580,11 @@ class FirstInput extends React.Component {
     handleChange = (event) => {
         this.setState({value: event.target.value});
     }
+    
+    handleHide = (event) => {
+        this.props.handleHide();
+        event.preventDefault();
+    }
        
 
   componentDidMount() {
@@ -593,9 +595,11 @@ class FirstInput extends React.Component {
 
   render() {
     return (
+        <form className="commentForm" onSubmit={this.handleHide}>
         <div style={{textAlign: "center"}}>
         <input type="text" autoFocus style={{width: "80%", textAlign: "center", fontSize: "30px", marginTop: "1em", marginBottom: "0.5em"}} id="myInput" ref={this.innerRef} value={this.state.value} onChange={this.handleChange}/>
             </div>
+</form>
     );
   }
 }
@@ -611,11 +615,18 @@ class SecondInput extends React.Component {
     setTimeout(() => {
         try {this.innerRef.current.focus();} catch (e) {console.log("Error");}}, 500);
     }
+    
+    handleHide = (event) => {
+        this.props.handleHide();
+        event.preventDefault();
+    }
 
   render() {
       
     return (
+        <form className="commentForm" onSubmit={this.handleHide}>
         <button type="submit" autoFocus ref={this.innerRef}/>
+            </form>
     );
   }
 }
@@ -644,10 +655,26 @@ class SampleSentences extends React.Component {
     
     render () {
         
+        var sentencearray = this.props.samples[0][0].split("#");
+        var loc = this.props.samples[0][1];
+        console.log(sentencearray);
+        console.log(loc);
+        
+        var words = []
+        for (var i =0; i < sentencearray.length; i++) {
+            if (i == loc) {
+                words.push(<Text style={{fontWeight: "bold"}}>{sentencearray[i]} </Text>);
+            } else {
+                words.push(<Text>{sentencearray[i]} </Text>);
+            }
+        };
+
+        
         return (
-            <div>
-            {this.props.samples.length > 0 && this.props.samples[0][0].split("#").join(" ")}
-    </div>
+            <Text style={{fontSize: "25px", textAlign: "center"}}>
+            
+            {this.props.samples.length > 0 && words}
+    </Text>
         );
     }
 }

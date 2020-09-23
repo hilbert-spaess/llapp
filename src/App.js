@@ -12,6 +12,7 @@ import {TestContainer} from './TestContainer.js';
 import {Auth0Provider, useAuth0, withAuthenticationRequired} from '@auth0/auth0-react';
 import {createBrowserHistory} from 'history';
 import {NewUser} from './newuser.js';
+import {NewUserTest} from './newusertest.js';
 import {CALLBACK} from './api_config.js';
 
 export const history = createBrowserHistory();
@@ -42,6 +43,7 @@ function App() {
             <ProtectedRoute path="/read" component={LearningSupervisor}/>
             <ProtectedRoute path="/newuser" component={NewUser}/>
             <ProtectedRoute path="/vocab" component={MyVocabContainer}/>
+            <ProtectedRoute path="/newusertest" component={NewUserTest}/>
         </Switch>
         </Router>
 </Auth0Provider>

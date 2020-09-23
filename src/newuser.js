@@ -71,7 +71,7 @@ const Choose = (props) => {
         }
         return <div>Oops {error.message}</div>;
         }
-        return (<Redirect to="/read"/>);
+        return (<Redirect to="/newusertest"/>);
     }
 
 
