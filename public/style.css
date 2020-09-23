@@ -10,6 +10,9 @@
     overflow: hidden;
 }
 
+body {
+    font-family: 'Open Sans';
+}
 
 .row {
     overflow: hidden;

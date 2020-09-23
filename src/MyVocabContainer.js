@@ -6,6 +6,7 @@ import {useApi} from './use-api.js';
 import { useAuth0 } from '@auth0/auth0-react';
 import {APIHOST} from './api_config.js';
 import {BarWrapped} from './sidebar.js';
+import {Text} from 'react-native';
 
 function shuffle(array) {
   var currentIndex = array.length, temporaryValue, randomIndex;
@@ -185,7 +186,8 @@ class VocabCard extends React.Component {
             
             <div>
             <Modal centered show={this.state.showDialog} onHide={this.onHide}>
-    {this.props.data['w']}
+        <VocabDetail
+            data={this.props.data}/>
             </Modal>
             <Card
             onClick={this.handleClick}
@@ -206,6 +208,67 @@ class VocabCard extends React.Component {
 
             </Card>
 </div>
+        );
+    }
+}
+
+class VocabDetail extends React.Component {
+
+    render () {
+
+	return (
+        <div>
+	    <div className="vocabdisplay">
+		    {this.props.data["w"]}
+	    </div>
+        <div className="chinesedef">
+            {"chinesedef" in this.props.data && <div>{this.props.data["chinesedef"]}</div>}
+        </div>
+        <div className="chinesedef">
+            {"d" in this.props.data && this.props.data["d"]}
+        </div>
+        <div className="cardprogress">
+            {"s" in this.props.data && <ProgressBar variant="success" now={10*(this.props.data["s"])}/>}
+        </div>
+        <div className="samplesentences" style={{marginBottom: "2em"}}>
+            {("samples" in this.props.data) && <SampleSentences samples={this.props.data["samples"]}/>}
+    </div>
+		</div>
+	); 
+    
+    }
+}
+
+class SampleSentences extends React.Component {
+    
+    render () {
+        
+        var words = []
+        
+        if (this.props.samples.length > 0) {
+            
+            
+        
+            var sentencearray = this.props.samples[0][0].split("#");
+            var loc = this.props.samples[0][1];
+            console.log(sentencearray);
+            console.log(loc);
+            
+            for (var i =0; i < sentencearray.length; i++) {
+                if (i == loc) {
+                    words.push(<Text style={{fontWeight: "bold"}}>{sentencearray[i]} </Text>);
+                } else {
+                    words.push(<Text>{sentencearray[i]} </Text>);
+                }
+            };
+        }
+
+        
+        return (
+            <Text style={{fontSize: "25px", textAlign: "center"}}>
+            
+            {this.props.samples.length > 0 && words}
+    </Text>
         );
     }
 }

@@ -261,24 +261,33 @@ class LearningContainer extends React.Component {
     handleOpenDialog = () => {
         this.setState({showDialog: true});
     }
+    
+    handleHide = (answer) => {
+        
+        console.log(answer);
+        const target= this.props.currentChunk["context"][this.props.currentChunk["interaction"][this.state.currentInteraction]["location"]]['vw']
+        console.log(target);
+        console.log(answer==target);
+        if (answer == target) {
+            this.handleCloseDialog();
+        }
+    }
 
     handleCloseDialog = () => {
-
-        this.setState({showDialog: false,
-                      done: 0});
-        console.log("CURRENT INTERACTION");
-        console.log(this.state.currentInteraction);
-        setTimeout(() => {if (Object.keys(this.props.currentChunk["interaction"]).length > this.state.currentInteraction+1) {
-            console.log("hehe");
-            this.nextInteraction();
-        } else {
-        if (this.props.currentChunk['first'] == 0) {
-                this.handleNext();
+            this.setState({showDialog: false,
+                          done: 0});
+            console.log("CURRENT INTERACTION");
+            console.log(this.state.currentInteraction);
+            setTimeout(() => {if (Object.keys(this.props.currentChunk["interaction"]).length > this.state.currentInteraction+1) {
+                console.log("hehe");
+                this.nextInteraction();
             } else {
-                this.setState({limbo: true});
-            }
-        }}, 200);
-        
+            if (this.props.currentChunk['first'] == 0) {
+                    this.handleNext();
+                } else {
+                    this.setState({limbo: true});
+                }
+            }}, 200);
     }
     
     
@@ -323,9 +332,10 @@ class LearningContainer extends React.Component {
         show={this.state.showDialog}
 	    word={context[location]['vw']}
 	    answeredCorrect={this.state.answeredCorrect}
-	    handleHide={this.handleCloseDialog}
+	    handleHide={this.handleHide}
 	    specificInteraction={interaction[this.state.currentInteraction]}
-        first={this.props.currentChunk["first"]}/>
+        first={this.props.currentChunk["first"]}
+        handleClose={this.handleCloseDialog}/>
 		    </Modal>
 </div>
             <Row>
@@ -466,7 +476,7 @@ class TextCard extends React.Component {
         return (
 		<Card className="maintext"
             key={this.props.showDialog}>
-		<Text style={{fontSize: "30px", lineHeight: "2em", display: "inline-block", wordBreak: "keep-all"}}>
+		<Text style={{fontSize: "30px", lineHeight: "2em", display: "inline-block", wordBreak: "keep-all", fontFamily: "roboto"}}>
         <form className="commentForm" onSubmit={this.handleSubmit}>
            
             {words}
@@ -536,7 +546,7 @@ class AnswerCard extends React.Component {
 handleHide={this.props.handleHide}
 styling={styling}
 />}
-{!full && <SecondInput handleHide={this.props.handleHide} styling={styling}/>}
+{!full && <SecondInput handleHide={this.props.handleClose} styling={styling}/>}
 </div>
 		</div>
 	); } else {
@@ -582,7 +592,7 @@ class FirstInput extends React.Component {
     }
     
     handleHide = (event) => {
-        this.props.handleHide();
+        this.props.handleHide(this.state.value);
         event.preventDefault();
     }
        
@@ -655,19 +665,25 @@ class SampleSentences extends React.Component {
     
     render () {
         
-        var sentencearray = this.props.samples[0][0].split("#");
-        var loc = this.props.samples[0][1];
-        console.log(sentencearray);
-        console.log(loc);
-        
         var words = []
-        for (var i =0; i < sentencearray.length; i++) {
-            if (i == loc) {
-                words.push(<Text style={{fontWeight: "bold"}}>{sentencearray[i]} </Text>);
-            } else {
-                words.push(<Text>{sentencearray[i]} </Text>);
-            }
-        };
+        
+        if (this.props.samples.length > 0) {
+            
+            
+        
+            var sentencearray = this.props.samples[0][0].split("#");
+            var loc = this.props.samples[0][1];
+            console.log(sentencearray);
+            console.log(loc);
+            
+            for (var i =0; i < sentencearray.length; i++) {
+                if (i == loc) {
+                    words.push(<Text style={{fontWeight: "bold"}}>{sentencearray[i]} </Text>);
+                } else {
+                    words.push(<Text>{sentencearray[i]} </Text>);
+                }
+            };
+        }
 
         
         return (
