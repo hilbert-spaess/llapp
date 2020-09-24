@@ -82,7 +82,7 @@ const LearningContainerData = (props) => {
         refresh()
   };
     if (loading) {
-        return <div>Loading...</div>;
+        return <div></div>;
     }
     if (error) {
         if (error.error === 'consent_required') {
