@@ -5,7 +5,7 @@ import {loadVocab} from './client.js';
 import {useApi} from './use-api.js';
 import { useAuth0 } from '@auth0/auth0-react';
 import {APIHOST} from './api_config.js';
-import {BarWrapped} from './sidebar.js';
+import {BarWrapped, FreeBarWrapped} from './sidebar.js';
 import {Text} from 'react-native';
 
 function shuffle(array) {

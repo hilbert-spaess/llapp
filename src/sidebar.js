@@ -3,6 +3,22 @@ import {Card, Button, Row, Col, Container, DropdownButton, Navbar, Nav, NavDropd
 import {Home, Settings, User} from 'react-feather';
 import {Link} from 'react-router-dom';
 import {useAuth0} from '@auth0/auth0-react';
+import bookshelf from './bookshelf.png';
+
+export const FreeBarWrapped = ({WrappedComponent}) => (
+    <div>
+    <TopBar/>
+                <Container fluid>
+                                <Row className="mainrow">
+                                <Col>
+                            <WrappedComponent/>
+                                </Col>
+                                </Row>
+                   </Container>
+    <Navbar bg = "yellow" style={{backgroundColor: "#edeee8"}}>
+    {'\u00A9'} RiceCake 2020 </Navbar>
+</div>
+);
 
 export const BarWrapped = ({WrappedComponent}) => (
     <div>
@@ -14,6 +30,9 @@ export const BarWrapped = ({WrappedComponent}) => (
                                 </Col>
                                 </Row>
                    </Container>
+     <Navbar bg = "yellow" style={{backgroundColor: "#edeee8"}} fixed="bottom">
+    {'\u00A9'} RiceCake 2020 </Navbar>
+    
 </div>
 );
 
