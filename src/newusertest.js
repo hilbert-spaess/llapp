@@ -275,9 +275,9 @@ export class Ready extends React.Component {
 }
 
 const Choose = (props) => {
-        const {login, getAccessTokenWithPopup } = useAuth0();
+        const {login, getAccessTokenWithPopup, user} = useAuth0();
         const opts = {audience: APIHOST};
-        const {error, loading, data, refresh} = useApi(APIHOST + '/api/newuser', props.data, opts);
+        const {error, loading, data, refresh} = useApi(APIHOST + '/api/newuser', {course: props.data.course, native: props.data.native, answers: props.data.answers, email: user.email}, opts);
         const getTokenAndTryAgain = async () => {
         await getAccessTokenWithPopup(opts);
         refresh()
