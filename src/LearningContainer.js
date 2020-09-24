@@ -469,7 +469,7 @@ class TextCard extends React.Component {
             }
         } else {
             words.push(spc);
-        words.push(<input key = {this.props.showDialog} autoFocus ref = {(input) => {this.nameInput=input;}} value={value} onChange={this.handleChange} style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", display: "inline-block", border: "0", width: this.props.answerlength.toString() + "ch", height: "1em", borderBottom: "2px dotted blue", textAlign: "left"}}/>);
+        words.push(<input key = {this.props.showDialog} autocomplete="off" autoFocus ref = {(input) => {this.nameInput=input;}} value={value} onChange={this.handleChange} style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", display: "inline-block", border: "0", width: this.props.answerlength.toString() + "ch", height: "1em", borderBottom: "2px dotted blue", textAlign: "left"}}/>);
         }
     };
 
@@ -607,7 +607,7 @@ class FirstInput extends React.Component {
     return (
         <form className="commentForm" onSubmit={this.handleHide}>
         <div style={{textAlign: "center"}}>
-        <input type="text" autoFocus style={{width: "80%", textAlign: "center", fontSize: "30px", marginTop: "1em", marginBottom: "0.5em"}} id="myInput" ref={this.innerRef} value={this.state.value} onChange={this.handleChange}/>
+        <input type="text" autoFocus autocomplete="off" style={{width: "80%", textAlign: "center", fontSize: "30px", marginTop: "1em", marginBottom: "0.5em"}} id="myInput" ref={this.innerRef} value={this.state.value} onChange={this.handleChange}/>
             </div>
 </form>
     );
