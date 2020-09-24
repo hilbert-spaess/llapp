@@ -49,9 +49,6 @@ class Launch1 extends React.Component {
             My Progress
             </Link>
             </Card>
-            <Card className="launchcard">
-               <LogoutButton/>
-            </Card>
             </div>
         );
     }
