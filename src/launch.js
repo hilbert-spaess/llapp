@@ -5,7 +5,7 @@ import {Stylesheet, css} from 'aphrodite';
 import {Card, Container, Row, Col, Nav, Navbar, Form, FormControl} from 'react-bootstrap';
 import {BarWrapped} from './sidebar.js';
 import {Auth0Provider, useAuth0, withAuthenticationRequired} from '@auth0/auth0-react';
-import {BookOpen, Type} from 'react-feather';
+import {BookOpen, Type, FastForward} from 'react-feather';
 
 export class Launch extends React.Component {
     
@@ -42,6 +42,12 @@ class Launch1 extends React.Component {
                   My Words	
             
               </Link>
+            </Card>
+            <Card className="launchcard">
+                <Link to="/progress">
+                  <FastForward/> <br></br>
+            My Progress
+            </Link>
             </Card>
             <Card className="launchcard">
                <LogoutButton/>
