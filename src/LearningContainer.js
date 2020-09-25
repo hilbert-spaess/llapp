@@ -9,6 +9,7 @@ import {useApi} from './use-api.js';
 import { useAuth0 } from '@auth0/auth0-react';
 import {Redirect} from 'react-router-dom';
 import {APIHOST} from './api_config.js';
+import {Tutorial} from './tutorial.js';
 
 function range(start, end) {
   return Array(end - start + 1).fill().map((_, idx) => start + idx)
@@ -26,7 +27,7 @@ export class LearningSupervisor extends React.Component {
 export class LearningSupervisor1 extends React.Component {
     
     state = {
-        parcelData: {answeredCorrect: "-1"},
+        parcelData: {answeredCorrect: "-1", tutorial: "0"},
         loading: 0
     };
 
@@ -75,6 +76,11 @@ const LearningContainerData = (props) => {
         await props.handleNext(parcelData);
         refresh();
     }
+    
+    const handleTutorialNext = async () => {
+        await props.handleNext({tutorial: "done", answeredCorrect: "-1"});
+        refresh();
+    }
         
     console.log(data);
     const getTokenAndTryAgain = async () => {
@@ -95,6 +101,13 @@ const LearningContainerData = (props) => {
     if (data.displayType == "newUser") {
         return <Redirect to="/newusertest"/>;
     }
+    if (data.displayType == "tutorial") {
+        return <Tutorial
+                currentChunk={data.tutorialchunk}
+                handleNext={handleTutorialNext}
+                />;
+    }
+        
     console.log(data);
     return (
         <div>
@@ -754,5 +767,6 @@ class LearningSummary extends React.Component {
             );
     }
 }
+
         
         

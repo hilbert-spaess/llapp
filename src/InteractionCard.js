@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Card, Button, Row, Col, Container} from 'react-bootstrap';
+import {Card, Button, Row, Col, Container, Popover} from 'react-bootstrap';
 import {showWordsBasicBlank} from './helpers.js';
 
 export class InteractionCard extends React.Component {
@@ -13,6 +13,7 @@ export class InteractionCard extends React.Component {
     }
 
     render () {
+       
 	console.log(this.props.interaction);
     var choice = this.props.interactionMode;
     console.log(choice);
@@ -33,7 +34,7 @@ export class InteractionCard extends React.Component {
             );
     } else if (this.props.done == 0) {
         return (
-            <Card className="interactionbox">
+           <Card className="interactionbox">
                 <FillBlankExamples
             interactionMode = {choice}
             interaction = {this.props.interaction}
@@ -54,6 +55,15 @@ export class InteractionCard extends React.Component {
 class FillBlankExamples extends React.Component {
 
     render () {
+        const popover = (
+              <Popover id="popover-basic" placement="bottom">
+                <Popover.Title as="h3">Popover right</Popover.Title>
+                <Popover.Content>
+                  And here's some <strong>amazing</strong> content. It's very engaging.
+                  right?
+                </Popover.Content>
+              </Popover>
+            );
 	if (this.props.interactionMode=="1") {
             var words1 = "";
             var words2 = "";

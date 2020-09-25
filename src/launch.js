@@ -1,19 +1,59 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import ReactDOM from 'react-dom';
 import {Link} from 'react-router-dom';
 import {Stylesheet, css} from 'aphrodite';
-import {Card, Container, Row, Col, Nav, Navbar, Form, FormControl} from 'react-bootstrap';
+import {Card, Container, Row, Col, Nav, Navbar, Form, FormControl, Popover, OverlayTrigger, Overlay, Toast} from 'react-bootstrap';
 import {BarWrapped} from './sidebar.js';
 import {Auth0Provider, useAuth0, withAuthenticationRequired} from '@auth0/auth0-react';
 import {BookOpen, Type, FastForward} from 'react-feather';
+import {useApi} from './use-api.js';
+import {Redirect} from 'react-router-dom';
+import {APIHOST} from './api_config.js';
 
 export class Launch extends React.Component {
     
     render () {
         return (
-            <BarWrapped WrappedComponent={Launch1}/>
+            <BarWrapped WrappedComponent={LaunchLoader}/>
         );
     }
+}
+
+const LaunchLoader = () => {
+    
+    
+    
+     const {login, getAccessTokenWithPopup } = useAuth0();
+     const opts = {audience: APIHOST};
+     const {error, loading, data, refresh} = useApi(APIHOST + '/api/notificationno', {}, opts);
+     const getTokenAndTryAgain = async () => {
+        await getAccessTokenWithPopup(opts);
+        refresh()
+  };
+    if (loading) {
+        return <div></div>;
+    }
+    if (error) {
+        if (error.error === 'consent_required') {
+      return (
+        <button onClick={getTokenAndTryAgain}>Consent to reading users</button>
+      );
+    }
+    return <div></div>;
+    }
+    if (data.displayType == "newUser") {
+        return <Redirect to="/newusertest"/>;
+    }
+    if (data.notification == 0) {
+        return (<div></div>);
+    }
+    console.log(data.notification);
+    
+    return (
+            <Launch1
+        data={data}/>
+    );
+
 }
 
 class Launch1 extends React.Component {
@@ -30,6 +70,10 @@ class Launch1 extends React.Component {
         return (
                     <div className="maintext">
             <Card className="launchcard">
+            <Notification
+            no={this.props.data.notification}
+            tutorial ={this.props.data.tutorial}
+            />
               <Link to="/read">
                 <BookOpen/> <br></br>
                 Start reading.
@@ -50,6 +94,78 @@ class Launch1 extends React.Component {
             </Link>
             </Card>
             </div>
+        );
+    }
+}
+
+const NotificationLoader = () => {
+    
+    
+    
+     const {login, getAccessTokenWithPopup } = useAuth0();
+     const opts = {audience: APIHOST};
+     const {error, loading, data, refresh} = useApi(APIHOST + '/api/notificationno', {}, opts);
+     const getTokenAndTryAgain = async () => {
+        await getAccessTokenWithPopup(opts);
+        refresh()
+  };
+    if (loading) {
+        return <div></div>;
+    }
+    if (error) {
+        if (error.error === 'consent_required') {
+      return (
+        <button onClick={getTokenAndTryAgain}>Consent to reading users</button>
+      );
+    }
+    return <div></div>;
+    }
+    if (data.notification == 0) {
+        return (<div></div>);
+    }
+    console.log(data.notification);
+    
+    return (
+            <Notification
+            no={data.notification}
+            tutorial ={data.tutorial}
+            />
+    );
+
+}
+
+class Notification extends React.Component {
+    
+    state = {show: false}
+    
+    componentDidMount () {
+        
+        setTimeout(() => {this.setState({show: this.props.tutorial});}, 500);
+    }
+    
+    handleClose = () => {
+        this.setState({show: !this.state.show});
+    }
+    
+    render () {
+        if (this.props.notification == 0) {
+            return (<div></div>);
+        }
+
+        return (
+            <div>
+            
+<Toast onClose={this.handleClose} show={this.state.show} animation={true} style={{position: 'absolute', top: "-30%", right: 0}}>
+  <Toast.Header style={{fontSize: "large"}}>
+    <strong className="mr-auto">Tutorial</strong>
+    <small>Just now</small>
+  </Toast.Header>
+  <Toast.Body style={{fontSize: "12px"}}>The notification means that you've got {this.props.no} new reviews!</Toast.Body>
+</Toast>
+                     <div className="notification">
+            <div className="centerno">{this.props.no}</div>
+</div>
+</div>
         );
     }
 }

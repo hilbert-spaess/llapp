@@ -7,6 +7,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import {APIHOST} from './api_config.js';
 import {BarWrapped, FreeBarWrapped} from './sidebar.js';
 import {Text} from 'react-native';
+import {Redirect} from 'react-router-dom';
 
 function shuffle(array) {
   var currentIndex = array.length, temporaryValue, randomIndex;
@@ -59,6 +60,9 @@ export const LoadingVocabContainer = () => {
       );
     }
     return <div>Oops {error.message}</div>;
+    }
+    if (data.displayType == "newUser") {
+        return <Redirect to="/newusertest"/>;
     }
     
     return (

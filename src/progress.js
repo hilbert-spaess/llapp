@@ -7,6 +7,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import {APIHOST} from './api_config.js';
 import {BarWrapped} from './sidebar.js';
 import {Text} from 'react-native';
+import {Redirect} from 'react-router-dom';
 
 export class ProgressContainer extends React.Component {
     
@@ -40,6 +41,9 @@ export const LoadingProgressContainer = () => {
       );
     }
     return <div>Oops {error.message}</div>;
+    }
+     if (data.displayType == "newUser") {
+        return <Redirect to="/newusertest"/>;
     }
     
     return (
