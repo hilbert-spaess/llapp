@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {Card, Button, Row, Col, Container, Modal, ProgressBar} from 'react-bootstrap';
 import {InteractionCard} from './InteractionCard.js';
 import {getChunk, firstChunk, getData, JSONconvert} from './client.js';
-import {BarWrapped} from './sidebar.js';
+import {FreeBarWrapped} from './sidebar.js';
 import {Text} from 'react-native';
 import {useApi} from './use-api.js';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -19,7 +19,7 @@ export class LearningSupervisor extends React.Component {
     
     render () {
         return (
-            <BarWrapped WrappedComponent={LearningSupervisor1}/>
+            <FreeBarWrapped WrappedComponent={LearningSupervisor1}/>
             );
     }
 }

@@ -15,8 +15,6 @@ export const FreeBarWrapped = ({WrappedComponent}) => (
                                 </Col>
                                 </Row>
                    </Container>
-    <Navbar bg = "yellow" style={{backgroundColor: "#edeee8"}}>
-    {'\u00A9'} RiceCake 2020 </Navbar>
 </div>
 );
 
