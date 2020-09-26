@@ -44,9 +44,6 @@ const LaunchLoader = () => {
     if (data.displayType == "newUser") {
         return <Redirect to="/newusertest"/>;
     }
-    if (data.notification == 0) {
-        return (<div></div>);
-    }
     console.log(data.notification);
     
     return (
@@ -148,7 +145,7 @@ class Notification extends React.Component {
     }
     
     render () {
-        if (this.props.notification == 0) {
+        if (this.props.no == 0) {
             return (<div></div>);
         }
 

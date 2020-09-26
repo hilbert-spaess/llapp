@@ -114,6 +114,7 @@ const LearningContainerData = (props) => {
         <LearningContainerUpdatable
             allChunks = {data.allChunks}
             displayType= {data.displayType}
+            progress={data.today_progress}
         />          
 </div>
     );
@@ -125,13 +126,17 @@ class LearningContainerUpdatable extends React.Component {
         parcelData: {},
         currentChunkNo: 0,
         displayType: this.props.displayType,
-        allChunks: this.props.allChunks
+        allChunks: this.props.allChunks,
+        progress: this.props.progress
     }
     
     handleNext = (parcelData) => {
         console.log(parcelData)
         console.log("updatein");
         if ((parcelData.interaction[parcelData.keyloc]["streak"] == 0 && parcelData.first == 1) || (parcelData.answers[parcelData.keyloc] == 0)) {
+            if (parcelData.interaction[parcelData.keyloc]["streak"] == 0 && parcelData.first == 1) {
+                this.setState({progress: {"done": this.state.progress["done"] + 1, "yet": this.state.progress["yet"]-1}});
+            }
             var nowChunk = this.state.allChunks[this.state.currentChunkNo];
             nowChunk["first"] = 0;
             if (parcelData.first == 1) {
@@ -144,7 +149,7 @@ class LearningContainerUpdatable extends React.Component {
                 int['0']["location"] = loc;
                 console.log(loc);
                 int['0']["length"] = len;
-                nowChunk["keyloc"] = 0;
+                nowChunk["keyloc"] = '0';
                 nowChunk["interaction"] = int;
                 var cont = {};
                 for (var i = lower; i < upper; i++) {
@@ -160,13 +165,14 @@ class LearningContainerUpdatable extends React.Component {
             var i = this.state.currentChunkNo;
             this.setState({currentChunkNo: i+1});
         } else {
+            this.setState({progress: {"done": this.state.progress["done"] + 1, "yet": this.state.progress["yet"]-1}});
+            console.log(this.state.progress);
             if (this.state.currentChunkNo < this.props.allChunks.length - 1) {
                 var i = this.state.currentChunkNo;
                 this.setState({currentChunkNo: i + 1});
             } else {
                 parcelData["done"] = 1;
-                this.setState({done: 1});
-                this.setState({displayType: "done"});
+                this.setState({done: 1, displayType: "done"});
             }
         }
         this.setState({parcelData});
@@ -174,13 +180,14 @@ class LearningContainerUpdatable extends React.Component {
     }
     
     render () {
+        console.log(this.state.progress);
         return (
     
             <LearningContainerLogging
                 parcelData = {this.state.parcelData}
                 currentChunk = {this.props.allChunks[this.state.currentChunkNo]}
                 handleNext = {this.handleNext}
-                progress = {100*this.state.currentChunkNo/this.props.allChunks.length}
+                progress = {100*this.state.progress["done"]/(this.state.progress["done"] + this.state.progress["yet"])}
                 displayType = {this.state.displayType}
                 allChunks = {this.props.allChunks}
             />
@@ -189,6 +196,7 @@ class LearningContainerUpdatable extends React.Component {
 }   
 
 const LearningContainerLogging = (props) => {
+    
     
     const payload = props.parcelData;
     const {login, getAccessTokenWithPopup } = useAuth0();
@@ -200,7 +208,7 @@ const LearningContainerLogging = (props) => {
                                            'Accept': 'application/json',
                                             'Content-Type': 'application/json',
                                           'Access-Control-Request-Method': 'POST'}}};
-    const {error, loading, refresh} = useApi(APIHOST + '/api/getchunk', payload, opts);
+    const {error, loading, data, refresh} = useApi(APIHOST + '/api/getchunk', payload, opts);
     
     const handleNext = async (parcelData) => {
         props.handleNext(parcelData);
@@ -222,6 +230,8 @@ const LearningContainerLogging = (props) => {
         />
         </div>
     );
+} else if (loading) {
+    return <div></div>;
 } else {
     return (
         <div> <LearningSummaryContainer/></div>
@@ -320,6 +330,7 @@ class LearningContainer extends React.Component {
 
     
     render () {
+        console.log(this.props.progress);
         if ("alternatives" in this.props.currentChunk["interaction"][this.state.currentInteraction]) {
             var alternatives = this.props.currentChunk["interaction"][this.state.currentInteraction]["alternatives"];
         } else {
