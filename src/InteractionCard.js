@@ -28,7 +28,7 @@ export class InteractionCard extends React.Component {
         return (
         <Card className="interactionbox">
             <form onSubmit={this.props.handleNext}>
-              <button style={{backgroundColor: "green", width: "100px", height: "50px"}} type="submit" autoFocus ref = {(c) => {this.nameInput=c;}} onClick={this.props.handleNext}></button>
+              <button className="nextbutton" type="submit" autoFocus ref = {(c) => {this.nameInput=c;}} onClick={this.props.handleNext}></button>
             </form>
             </Card>
             );

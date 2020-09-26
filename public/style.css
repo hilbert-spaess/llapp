@@ -147,6 +147,8 @@ a:hover {
 
 .nextbutton {
     
+    margin-top: 2em;
+    
     background-color: green;
     position: absolute;
     right: 0;

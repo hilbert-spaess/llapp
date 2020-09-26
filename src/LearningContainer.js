@@ -171,6 +171,7 @@ class LearningContainerUpdatable extends React.Component {
                 var i = this.state.currentChunkNo;
                 this.setState({currentChunkNo: i + 1});
             } else {
+                console.log("DONEDONE");
                 parcelData["done"] = 1;
                 this.setState({done: 1, displayType: "done"});
             }
@@ -659,7 +660,7 @@ class SecondInput extends React.Component {
       
     return (
         <form className="commentForm" onSubmit={this.handleHide}>
-        <button type="submit" autoFocus ref={this.innerRef}/>
+        <button className="nextbutton" type="submit" autoFocus ref={this.innerRef}/>
             </form>
     );
   }
