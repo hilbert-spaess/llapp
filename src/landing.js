@@ -9,9 +9,9 @@ import {BookOpen, Type, FastForward} from 'react-feather';
 import {useApi} from './use-api.js';
 import {Redirect} from 'react-router-dom';
 import {APIHOST} from './api_config.js';
-import img2 from '/home/jc2062/llapp/src/images/img2.png';
-import img1 from '/home/jc2062/llapp/src/images/img1.png';
-import img3 from '/home/jc2062/llapp/src/images/img3.png';
+import img2 from './images/img2.png';
+import img1 from './images/img1.png';
+import img3 from './images/img3.png';
 
 export class Landing2 extends React.Component {
     
