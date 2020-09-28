@@ -8,6 +8,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "aphrodite": "^2.4.0",
+    "auth0-js": "^9.14.0",
     "jest-environment-jsdom": "^26.3.0",
     "jquery": "^3.5.1",
     "metro-babel-register": "^0.62.0",

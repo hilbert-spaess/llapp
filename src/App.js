@@ -15,6 +15,9 @@ import {NewUser} from './newuser.js';
 import {NewUserTest} from './newusertest.js';
 import {CALLBACK} from './api_config.js';
 import {ProgressContainer} from './progress.js';
+import {Landing} from './landing.js';
+import {Login} from './login.js';
+import {Signup} from './signup.js';
 
 export const history = createBrowserHistory();
 
@@ -40,12 +43,15 @@ function App() {
         >
         <Router history={history}>
         <Switch>
-            <ProtectedRoute path="/" component={Launch} exact/>
+            <ProtectedRoute path="/home" component={Launch} exact/>
             <ProtectedRoute path="/read" component={LearningSupervisor}/>
             <ProtectedRoute path="/newuser" component={NewUser}/>
             <ProtectedRoute path="/vocab" component={MyVocabContainer}/>
             <ProtectedRoute path="/newusertest" component={NewUserTest}/>
             <ProtectedRoute path="/progress" component={ProgressContainer}/>
+            <Route path="/login" component={Login}/>
+            <Route path="/signup" component={Signup}/>
+            <Route path="/" component={Landing} exact/>
         </Switch>
         </Router>
 </Auth0Provider>

@@ -84,12 +84,12 @@ export class TopBar extends React.Component {
         return (
 
             <Navbar bg="dark" variant="dark" expand="lg">
-  <Link to="/"><Navbar.Brand href="/">RiceCake</Navbar.Brand></Link>
+  <Link to="/"><Navbar.Brand href="/home">RiceCake</Navbar.Brand></Link>
   <Navbar.Toggle aria-controls="basic-navbar-nav" />
   <Navbar.Collapse id="basic-navbar-nav">
     <Nav className="mr-auto">
-      <Nav.Link href="/"><Home/></Nav.Link>
-      <Nav.Link href="/vocab"><Settings/></Nav.Link>
+      <Link to="/home"><Nav.Link href="/home"><Home/></Nav.Link></Link>
+      <Link to="/vocab"><Nav.Link href="/vocab"><Settings/></Nav.Link></Link>
     </Nav>
     <Nav className ="mr-sm-2">
             <ProfileDropDown/>

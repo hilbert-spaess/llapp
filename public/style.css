@@ -58,6 +58,47 @@ a:hover {
   transform: translate(-50%, -50%);
 }
 
+.login-box {
+      justify-content: center;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 15px;
+      border-radius: 5px;
+      border-color: #fefeee;
+      color: #746f72;
+    }
+
+.logininput {
+    border: 0;
+    background: transparent;
+    border-bottom: 1px solid black;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    
+}
+
+.logininput:focus {
+    outline: 0;
+}
+
+.loginsubs {
+    margin-top: 1.5rem;
+    color: gray;
+    
+}
+
+.loginerror {
+    color: red;
+    margin-bottom: 2em;
+        
+}
+
+.formgroup {
+    text-align: center;
+}
+
 
 .launchpopover {
     position: absolute;
