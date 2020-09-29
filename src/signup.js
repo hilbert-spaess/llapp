@@ -65,10 +65,17 @@ class SignUpForm extends React.Component {
             this.props.webAuth.signup({
             connection: "Username-Password-Authentication",
             email: this.state.email,
-            password: this.state.password},  (err) => {
-          if (err) {console.log(err); this.setState({err});}
-        })
+            password: this.state.password},  (err) => { 
+          if (err) {console.log(err); this.setState({err});
+                   }
+          if (!err) {this.props.webAuth.login({realm: "Username-Password-Authentication",
+            email: this.state.email,
+            password: this.state.password},  (err) => { 
+          if (err) {console.log(err); this.setState({err});
+                   }
+        })}
             
+        });
         }
     }
     
