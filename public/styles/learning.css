@@ -10,4 +10,19 @@
     margin-top: 5em;
     text-align: center;
     position: relative;
+    margin-bottom: 3em;
+
+    border-color: transparent;
+    border-radius: 20px;
+}
+
+.launchcard {
+    height: 10em;
+}
+
+.launchcontent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

@@ -69,33 +69,41 @@ class Launch1 extends React.Component {
                     <div>
                       <Row>
                         <Col>
-            <Card className="launchcardtwo">
+            <Card className="launchcardtwo"
+            style={{backgroundColor: "lightgreen"}}>
             <Notification
             no={this.props.data.notification}
             tutorial ={this.props.data.tutorial}
             />
+            <div className="launchcontent">
               <Link to="/read">
                 <BookOpen/> <br></br>
                 Start reading.
             
               </Link>
+            </div>
             </Card>
             </Col>
             <Col>
-            <Card className="launchcardtwo">
+            <Card className="launchcardtwo"
+            style={{backgroundColor: "lightblue"}}>
+              <div className="launchcontent">
               <Link to="/vocab">
                 <Type/> <br></br>
                   My Words	
             
               </Link>
+              </div>
             </Card>
             </Col>
             </Row>
             <Card className="launchcard">
+              <div className="launchcontent">
                 <Link to="/progress">
                   <FastForward/> <br></br>
             My Progress
             </Link>
+            </div>
             </Card>
             </div>
             </Container>

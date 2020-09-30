@@ -130,6 +130,7 @@ a:hover {
 
 .workinput {
     -webkit-user-select: text;
+    -webkit-
 }
 
 .notification {
@@ -145,7 +146,7 @@ a:hover {
    color: white;
     
     position: absolute;
-    top: 0;
+    top: 35%;
     right: 38%;
 }
 
