@@ -111,10 +111,6 @@ a:hover {
     margin-bottom: 20px;
 }
 
-.workinput {
-    -webkit-appearance: none;
-}
-
 @keyframes pulse {
     0% {
 		transform: scale(1);
@@ -130,6 +126,10 @@ a:hover {
 		transform: scale(1);
 		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
 	}
+}
+
+.workinput {
+    -webkit-user-select: text;
 }
 
 .notification {
