@@ -1,0 +1,355 @@
+/* Styles go here */
+
+#content {
+  margin-bottom: 4em;
+}
+
+.container {
+    max-width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    font-family: 'Open Sans';
+}
+
+.row {
+    overflow: hidden;
+    height: 100%; 
+}
+
+.column {
+}
+
+.split {
+    width: 50%;
+    min-height: 100vh;
+    text-align: center;
+}
+
+a {
+    color: black;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.sidenav {
+    background-color: lightgrey;
+    width: 60px;
+    text-align: center;
+    overflow: hidden;
+    min-height: 100vh;
+    margin-left: 0;
+    -webkit-transition: margin .25s ease-out;
+    -moz-transition: margin .25s ease-out;
+    -o-transition: margin .25s ease-out;
+    transition: margin .25s ease-out;
+    z-index:0;
+}
+
+.centerno {
+    position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+
+.launchpopover {
+    position: absolute;
+    top: 0;
+    left: 50%:
+}
+
+.box1 {
+  width: 20%;
+  height: 30%
+  margin: auto;
+  border: 4px solid;
+  padding: 20px;
+  text-align: center;
+  position: absolute;
+  left: 15%;
+  bottom: 5%;
+}
+
+.sb5:before {
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 10px solid;
+  border-right: 10px solid transparent;
+  border-top: 10px solid;
+  border-bottom: 10px solid transparent;
+  right: -20px;
+  top: 6px;
+}
+
+.sb5:after {
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 7px solid #fff;
+  border-right: 7px solid;
+  border-top: 7px solid #fff;
+  border-bottom: 7px solid;
+  right: -11px;
+  top: 10px;
+}
+
+.tutorialtext {
+    
+    font-size: 30px;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+@keyframes pulse {
+    0% {
+		transform: scale(1);
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+	}
+
+	90% {
+		transform: scale(1);
+		box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+	}
+
+	100% {
+		transform: scale(1);
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+	}
+}
+
+.notification {
+    
+    font-size: 20px;
+    
+    width: 30px;
+    height: 30px;
+    
+    
+   border-radius: 50%;
+   background: red;
+   color: white;
+    
+    position: absolute;
+    top: 0;
+    right: 38%;
+}
+
+.nextbutton {
+    
+    margin-top: 2em;
+    
+    background-color: green;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin-top: 1em;
+    width: 50px;
+    height: 50px;
+    border-color: transparent;
+    border-top-left-radius: 100%;
+    
+    animation: pulse 1.5s infinite;
+}
+
+.nextbutton:focus {
+    
+    border-color: transparent;
+    outline: none;
+    
+}
+
+.sidecontent {
+    height: 100%;
+}
+
+.answerButtonCorrect {
+    background-color: darkgreen;
+}
+
+.mainrow {
+    height: 100%;
+}
+
+.answerButtonWrong {
+    background-color: darkred;
+}
+
+.topnav {
+    position: fixed;
+    width: 100%;
+    height: 2em;
+    z-index: 1;
+    background-color: black;
+    padding-right: 10px;
+}
+
+.navlogo {
+    text-align: right;
+    color: white;
+}
+
+.mainbox {
+    text-align: center;
+    border-color: transparent;
+    word-break: keep-all;
+}
+
+.maintext {
+    font-size: 30px;
+    margin-top: 2em;
+    border-color: transparent;
+    line-height: 2em;
+    word-break: keep-all;
+}
+
+.interactionbox {
+    margin-top: 2em;
+    text-align: center;
+    border-color: transparent;
+}
+
+.interactiontext {
+    font-size: 30px;
+    color: grey;
+}
+
+.vocabdisplay {
+    font-size: 50px;
+    text-align: center;
+}
+
+.chinesedef {
+    font-size: 30px;
+    color: grey;
+    text-align: center;
+    margin-bottom: 0.5em;
+}
+
+.cardprogress {
+    margin-left: 1em;
+    margin-right: 1em;
+    margin-bottom: 1.5em;
+}
+
+.samplesentences {
+    margin-right: 1em;
+    margin-left: 1em;
+    font-size: 20px;
+    text-align: center;
+}
+
+.cardconfirminput {
+    text-align: center;
+    font-size: 50px;
+    width: 30%;
+}
+
+.myvocabcard:hover {
+    border-color: blue;
+}
+    
+		
+
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 30px;
+}
+
+.centered img {
+    transform: scale(0.5, 0.5) translate(-50%, -50%);
+}
+
+.left {
+    background-color: #048A81;
+}
+
+
+.rightHigh {
+    
+    background-color: #D6CFCB;
+}
+
+.rightLow {
+    
+    background-color: #746F72;
+}
+
+.homeread {
+    background-color: yellow;
+    width: 100%;
+    height: 100%;
+}
+
+.ui.dividing.header {
+  margin-top: 1em;
+  margin-bottom: 2em;
+}
+
+.ui.centered.card {
+    margin-top: 3em;
+    text-align: center;
+    font-size: 15px;
+    padding: 16px;
+    border: none;
+    width: 1000px;
+}
+
+.input {
+    margin-top: 1em;
+}
+
+.text {
+    font-size: large;
+}
+
+.labeltext {
+    margin-top: 5em;
+    text-align: center;
+    font-size: large;
+}
+
+.labeltext2 {
+    margin-top: 1em;
+    text-align: center;
+    font-size: 15px;
+
+
+.ui.button {
+    padding: 10px;
+    margin-bottom: 2em;
+    align: center;
+}
+
+.form {
+    margin-top: 5em;
+    text-align: center;
+    justify-content: center;
+}
+
+.testcontainer {
+    margin-top: 5em;
+    text-align: center;
+}
+
+contButton {
+    justify-content: center;
+    margin-top: 1em;
+}
+
+i.icon {
+  margin: 0;
+}

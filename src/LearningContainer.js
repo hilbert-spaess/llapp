@@ -10,6 +10,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import {Redirect} from 'react-router-dom';
 import {APIHOST} from './api_config.js';
 import {Tutorial} from './tutorial.js';
+import {CheckCircle, Type, AlignLeft, Eye} from 'react-feather';
 
 function range(start, end) {
   return Array(end - start + 1).fill().map((_, idx) => start + idx)
@@ -28,7 +29,8 @@ export class LearningSupervisor1 extends React.Component {
     
     state = {
         parcelData: {answeredCorrect: "-1", tutorial: "0"},
-        loading: 0
+        loading: 0,
+        runningProgress: [0, 0]
     };
 
     handleNext = async (parcelData) => {
@@ -48,6 +50,7 @@ export class LearningSupervisor1 extends React.Component {
             <LearningContainerData
             parcelData={this.state.parcelData}
             handleNext={this.handleNext}
+            runningProgress={this.state.runningProgress}
             />
         );
     }
@@ -109,12 +112,20 @@ const LearningContainerData = (props) => {
     }
         
     console.log(data);
+    var reviewyet = 0;
+    for (var i=0; i < data.allChunks.length; i++) {
+        if (data.allChunks[i]["first"] == 0) {
+            reviewyet += 1;
+        }
+    }
     return (
         <div>
         <LearningContainerUpdatable
             allChunks = {data.allChunks}
             displayType= {data.displayType}
             progress={data.today_progress}
+            runningProgress = {props.runningProgress}
+            reviewyet = {reviewyet}
         />          
 </div>
     );
@@ -127,16 +138,24 @@ class LearningContainerUpdatable extends React.Component {
         currentChunkNo: 0,
         displayType: this.props.displayType,
         allChunks: this.props.allChunks,
-        progress: this.props.progress
+        progress: this.props.progress,
+        runningProgress: this.props.runningProgress,
+        yet: this.props.progress["yet"],
+        reviewProgress: {yet: this.props.reviewyet, done: 0},
+        reviews: 0
     }
     
     handleNext = (parcelData) => {
         console.log(parcelData)
         console.log("updatein");
+        if (parcelData.first == 1) {
+            this.setState({progress: {"done": this.state.progress["done"] + 1, "yet": this.state.progress["yet"]-1}});
+        } else {
+            this.setState({reviewProgress: {"done": this.state.reviewProgress["done"] + 1, "yet": this.state.reviewProgress["yet"]-1}});
+        }
+        this.setState({runningProgress: parcelData.runningProgress});
         if ((parcelData.interaction[parcelData.keyloc]["streak"] == 0 && parcelData.first == 1) || (parcelData.answers[parcelData.keyloc] == 0)) {
-            if (parcelData.interaction[parcelData.keyloc]["streak"] == 0 && parcelData.first == 1) {
-                this.setState({progress: {"done": this.state.progress["done"] + 1, "yet": this.state.progress["yet"]-1}});
-            }
+            this.setState({reviewyet: this.state.reviewyet + 1});
             var nowChunk = this.state.allChunks[this.state.currentChunkNo];
             nowChunk["first"] = 0;
             if (parcelData.first == 1) {
@@ -165,7 +184,6 @@ class LearningContainerUpdatable extends React.Component {
             var i = this.state.currentChunkNo;
             this.setState({currentChunkNo: i+1});
         } else {
-            this.setState({progress: {"done": this.state.progress["done"] + 1, "yet": this.state.progress["yet"]-1}});
             console.log(this.state.progress);
             if (this.state.currentChunkNo < this.props.allChunks.length - 1) {
                 var i = this.state.currentChunkNo;
@@ -173,15 +191,29 @@ class LearningContainerUpdatable extends React.Component {
             } else {
                 console.log("DONEDONE");
                 parcelData["done"] = 1;
+                var i = this.state.currentChunkNo;
                 this.setState({done: 1, displayType: "done"});
             }
         }
+        var reviewyet = 0;
+        for (var j= i+1; j < this.props.allChunks.length; j++) {
+            if (this.props.allChunks[i]["first"] == 0) {
+                reviewyet += 1;
+            }
+        }
+        this.setState({reviewProgress: {"done": this.state.reviewProgress["done"], "yet": reviewyet}})
         this.setState({parcelData});
         console.log(this.state.currentChunkNo);
     }
     
     render () {
         console.log(this.state.progress);
+        var reviewyet = 0;
+        for (var i=this.state.currentChunkNo; i < this.props.allChunks.length; i++) {
+            if (this.props.allChunks[i]["first"] == 0) {
+                reviewyet += 1;
+            }
+        }
         return (
     
             <LearningContainerLogging
@@ -191,6 +223,11 @@ class LearningContainerUpdatable extends React.Component {
                 progress = {100*this.state.progress["done"]/(this.state.progress["done"] + this.state.progress["yet"])}
                 displayType = {this.state.displayType}
                 allChunks = {this.props.allChunks}
+                runningProgress = {this.state.runningProgress}
+                reviews = {this.props.allChunks[this.state.currentChunkNo]["first"]}
+                currentChunkNo = {this.state.currentChunkNo}
+                yet={this.state.yet}
+                reviewProgress={100*this.state.reviewProgress["done"]/(this.state.reviewProgress["done"] + this.state.reviewProgress["yet"])}
             />
         );
     }
@@ -228,6 +265,12 @@ const LearningContainerLogging = (props) => {
             currentChunk = {props.currentChunk}
             handleNext = {handleNext}
             progress = {props.progress}
+            yet={props.yet}
+            runningProgress = {props.runningProgress}
+            reviews = {props.reviews}
+            currentChunkNo = {props.currentChunkNo}
+            reviewyet={props.reviewyet}
+            reviewProgress={props.reviewProgress}
         />
         </div>
     );
@@ -252,7 +295,8 @@ class LearningContainer extends React.Component {
         answeredCorrect: "-1",
         answers: [],
         currentInteraction: 0,
-        limbo: false
+        limbo: false,
+        runningProgress: this.props.runningProgress
         }
     
     storeAnswer = (correct) => {
@@ -265,8 +309,10 @@ class LearningContainer extends React.Component {
         this.storeAnswer(correct);
         if (correct) {
             this.setState({answeredCorrect: 1});
+            this.setState({runningProgress: [this.state.runningProgress[0]+1, this.state.runningProgress[1]] });
         } else {
             this.setState({answeredCorrect: 0});
+            this.setState({runningProgress: [this.state.runningProgress[0], this.state.runningProgress[1]+1] });
         }
         console.log("HANDLING NOW");
         if (this.props.currentChunk["interaction"][this.state.currentInteraction]["key"] == 1) {
@@ -322,6 +368,7 @@ class LearningContainer extends React.Component {
         keyloc: this.props.currentChunk["keyloc"],
         first: this.props.currentChunk["first"],
         answers: this.state.answers,
+        runningProgress: this.state.runningProgress,
         done: 0,
         interaction: this.props.currentChunk["interaction"]});
         this.setState({currentInteraction: 0,
@@ -347,6 +394,14 @@ class LearningContainer extends React.Component {
         const interactionMode= this.props.currentChunk["interaction"][this.state.currentInteraction]["mode"];
         const length = this.props.currentChunk["interaction"][this.state.currentInteraction]["length"];
         
+        if (this.props.currentChunk["first"] == 1) {
+            var progress = this.props.progress;
+        } else {
+            var progress = this.props.reviewProgress;
+        }
+
+        console.log(progress);
+        
         if (this.state.isLoading == 0 ) {
                 return (
 	    <Container fluid="lg">
@@ -363,12 +418,16 @@ class LearningContainer extends React.Component {
         handleClose={this.handleCloseDialog}/>
 		    </Modal>
 </div>
+            <RunningProgressTracker
+                runningProgress={this.state.runningProgress}
+                yet={this.props.yet}
+                reviewyet={this.props.reviewyet}/>
             <Row>
-            <Col>
-            <ProgressBar now={this.props.progress} variant="success"
-            style={{marginTop: "4rem"}}/>
-            </Col>
+		    <Col>
+            <ProgressBar now={progress} variant="success"
+            style={{marginTop: "2em"}}/></Col>
             </Row>
+           
 		    <Row>
 		    <Col>
 		    <TextCard
@@ -388,6 +447,7 @@ class LearningContainer extends React.Component {
             
 		    </Col>
 		    </Row>
+            
 		    <Row>
 		    <Col>
 		    <InteractionCard
@@ -494,7 +554,7 @@ class TextCard extends React.Component {
             }
         } else {
             words.push(spc);
-        words.push(<input key = {this.props.showDialog} autocomplete="off" autoFocus ref = {(input) => {this.nameInput=input;}} value={value} onChange={this.handleChange} style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", display: "inline-block", border: "0", width: this.props.answerlength.toString() + "ch", height: "1em", borderBottom: "2px dotted blue", textAlign: "left"}}/>);
+        words.push(<input type="text" style={{color: "black"}} key = {this.props.showDialog} autocomplete="off" autoFocus ref = {(input) => {this.nameInput=input;}} value={value} onChange={this.handleChange} style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", display: "inline-block", border: "0", width: this.props.answerlength.toString() + "ch", height: "1em", borderBottom: "2px dotted blue", textAlign: "left"}}/>);
         }
     };
 
@@ -720,6 +780,30 @@ class SampleSentences extends React.Component {
     }
 }
 
+class RunningProgressTracker extends React.Component {
+
+    render () {
+
+        if (this.props.runningProgress[0] + this.props.runningProgress[1] == 0) {
+            return (
+                <div className="runningprogresstracker">
+                    <CheckCircle 
+                    style={{marginRight: "0.5em",
+                            marginLeft: "1em"}}/>100%
+                </div>
+            )
+        }
+ 
+        return (
+            <div className="runningprogresstracker">
+                <CheckCircle
+                style={{marginRight: "0.5em",
+                marginLeft: "1em"}}/> {Math.round(this.props.runningProgress[0]*100/(this.props.runningProgress[0] + this.props.runningProgress[1]))}%
+            </div>
+        )
+    }
+}
+
 const LearningSummaryContainer = (props) => {
     
     const payload = {}
@@ -739,7 +823,7 @@ const LearningSummaryContainer = (props) => {
         refresh()
   };
     if (loading) {
-        return <div>Loading...</div>;
+        return <div></div>;
     }
     if (error) {
         if (error.error === 'consent_required') {

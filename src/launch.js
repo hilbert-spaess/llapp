@@ -65,8 +65,11 @@ class Launch1 extends React.Component {
     
     render () {
         return (
-                    <div className="maintext">
-            <Card className="launchcard">
+          <Container fluid="lg">
+                    <div>
+                      <Row>
+                        <Col>
+            <Card className="launchcardtwo">
             <Notification
             no={this.props.data.notification}
             tutorial ={this.props.data.tutorial}
@@ -77,13 +80,17 @@ class Launch1 extends React.Component {
             
               </Link>
             </Card>
-            <Card className="launchcard">
+            </Col>
+            <Col>
+            <Card className="launchcardtwo">
               <Link to="/vocab">
                 <Type/> <br></br>
                   My Words	
             
               </Link>
             </Card>
+            </Col>
+            </Row>
             <Card className="launchcard">
                 <Link to="/progress">
                   <FastForward/> <br></br>
@@ -91,6 +98,7 @@ class Launch1 extends React.Component {
             </Link>
             </Card>
             </div>
+            </Container>
         );
     }
 }
