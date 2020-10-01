@@ -18,9 +18,13 @@
 
 .launchcard {
     height: 10em;
+    text-align: center;
+
+    border-radius: 20px;
 }
 
 .launchcontent {
+    font-size: 30px;
     position: absolute;
     top: 50%;
     left: 50%;
