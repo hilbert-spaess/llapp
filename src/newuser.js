@@ -14,10 +14,34 @@ export class NewUser extends React.Component {
         );
     }
 }
+
+const NewUser1 = (props) => {
+        const {login, getAccessTokenWithPopup } = useAuth0();
+        const opts = {audience: APIHOST};
+        const {error, loading, data, refresh} = useApi(APIHOST + '/api/newuser', {}, opts);
+        const getTokenAndTryAgain = async () => {
+        await getAccessTokenWithPopup(opts);
+        refresh()
+      };
+        if (loading) {
+            return <div></div>;
+        }
+        if (error) {
+            if (error.error === 'consent_required') {
+          return (
+            <button onClick={getTokenAndTryAgain}>Consent to reading users</button>
+          );
+        }
+        return <div>Oops {error.message}</div>;
+        }
+        return (<NewUser2 
+                choices = {data.choices}/>);
+}
+
             
 
 
-export class NewUser1 extends React.Component {
+export class NewUser2 extends React.Component {
     
     state = {
         choice: 0
@@ -31,17 +55,23 @@ export class NewUser1 extends React.Component {
     
     render () {
         
+        var choices = [];
+        
+        for (var i = 0; i < this.props.choices.length; i++) {
+            
+            choices.push(<CourseCard
+                         name={this.props.choices[i]["name"]}
+                         id={this.props.choices[i]["id"]}
+                         choose={this.choose}/>);
+        }
+        
         if (this.state.choice == 0) {
 
             return (
                     <div className="mainbox">
                         <div className="maintext">
                     Welcome! Choose a course to get started.
-                    <CourseCard
-                    name="Toefl Core 250: core TOEFL vocab and reading."
-                    id="1"
-                    choose={this.choose}
-                    />
+                    choices
                     </div>
                     </div>
             );

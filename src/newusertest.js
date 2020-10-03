@@ -191,9 +191,49 @@ export class LevelTest extends React.Component {
     }
 }
 
-export class CourseChoice extends React.Component {
+const CourseChoice = (props) => {
+        const {login, getAccessTokenWithPopup } = useAuth0();
+        const opts = {audience: APIHOST};
+        const {error, loading, data, refresh} = useApi(APIHOST + '/api/newuser', {}, opts);
+        const getTokenAndTryAgain = async () => {
+        await getAccessTokenWithPopup(opts);
+        refresh()
+      };
+        if (loading) {
+            return <div></div>;
+        }
+        if (error) {
+            if (error.error === 'consent_required') {
+          return (
+            <button onClick={getTokenAndTryAgain}>Consent to reading users</button>
+          );
+        }
+        return <div>Oops {error.message}</div>;
+        }
+        return (<CourseChoice1 
+                choices = {data.choices}
+                handleSubmit={props.handleSubmit}/>);
+}
+
+export class CourseChoice1 extends React.Component {
     
     render () {
+        
+        var choices = [];
+        
+        var keys = Object.keys(this.props.choices);
+        
+        for (var i = 0; i < keys.length; i++) {
+            
+            
+            choices.push(<CourseCard
+                         name={this.props.choices[keys[i]]["name"]}
+                         id={keys[i]}
+                         variant="outline-success"
+                         buttonText="Choose"
+                         handleClick = {this.props.handleSubmit}
+                        />);
+        }
     
          return (
 
@@ -202,11 +242,7 @@ export class CourseChoice extends React.Component {
                         Now choose one of our tailored reading courses to get started.
                         </div>
                        <Row style={{marginTop: "3em", justifyContent: "space-evenly"}}>
-                        <CourseCard 
-                            id = {1}
-                            variant="outline-success"
-                            text="Choose"
-                            handleClick = {this.props.handleSubmit}/>
+             {choices}
                         </Row>
                         </div>
 
@@ -225,9 +261,9 @@ export class CourseCard extends React.Component {
         return (
             
              <Card style={{height: "30rem", width: "20rem"}}>
-            <div style={{textAlign: "center", marginTop: "1em", fontSize: "30px"}}>Core Vocabulary Improvement</div>
+            <div style={{textAlign: "center", marginTop: "1em", fontSize: "30px"}}>{this.props.name}</div>
             <div style={{position: "absolute", bottom: "10%", left: "50%", transform: "translate(-50%,0%)"}}>
-            <Button style={{fontSize: "20px"}} block onClick={this.onClick} variant={this.props.variant}>{this.props.text}</Button>
+            <Button style={{fontSize: "20px"}} block onClick={this.onClick} variant={this.props.variant}>{this.props.buttonText}</Button>
 </div>
             
             </Card>
