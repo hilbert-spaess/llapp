@@ -97,8 +97,8 @@ class Launch1 extends React.Component {
             </Card>
             </Col>
             </Row>
-            <Card className="launchcard">
-              <div className="launchcontent">
+            <Card className="messagecard">
+              <div className="messagetext">
                   {this.props.data.message}
             </div>
             </Card>

@@ -577,7 +577,7 @@ class TextCard extends React.Component {
             }
         } else {
             words.push(spc);
-        words.push(<input className="workinput" type="text"  key = {this.props.showDialog} autocomplete="off" autoFocus ref = {(input) => {this.nameInput=input;}} value={value} onChange={this.handleChange} style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", flex: "none", display: "inline-block", border: "0", width: this.props.answerlength.toString() + "ch", borderTop: "0", outlineTop: "0", borderBottom: "2px dotted blue", textAlign: "left"}}/>);
+        words.push(<input className="workinput" type="text"  key = {this.props.showDialog} autocomplete="off" autoFocus ref = {(input) => {this.nameInput=input;}} value={value} onChange={this.handleChange} style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", flex: "none", display: "inline-block", border: "0", width: this.props.answerlength.toString() + "ch", borderTop: "0", outlineTop: "0", lineHeight: "20px", borderBottom: "2px dotted blue", textAlign: "left"}}/>);
         }
     };
 

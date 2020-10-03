@@ -16,9 +16,9 @@
     border-radius: 20px;
 }
 
-.launchcard {
+.messagecard {
     height: 10em;
-    text-align: center;
+    text-align: left;
 
     background-color: lightyellow;
 
@@ -31,4 +31,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.messagetext {
+    font-size: 25px;
 }
