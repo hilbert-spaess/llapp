@@ -173,7 +173,7 @@ export class Tutorial extends React.Component {
                 </Modal>
                 <Modal centered show={this.state.showTut3} onHide={this.handleCloseTut3}>
                 <TutorialCard
-                text="That's now in your vocabulary! Core vocab words are tested every now then until we're sure you've mastered them."
+                text="That's now in your vocabulary! Core vocab words are tested until we're sure you've mastered them."
                 handleHide={this.handleCloseTut3}/>
                 </Modal>
                 <Modal centered show={this.state.showDialog} onHide={this.handleCloseDialog}>

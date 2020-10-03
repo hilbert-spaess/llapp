@@ -144,7 +144,17 @@ class LearningContainerUpdatable extends React.Component {
         reviewProgress: {yet: this.props.reviewyet, done: 0},
         reviews: 0
     }
+
+    bottomRef = React.createRef();
     
+    componentDidUpdate () {
+        this.scrollToBottom();
+    }
+
+    scrollToBottom = () => {
+        this.bottomRef.current.scrollIntoView({behaviour: 'smooth'});
+    }
+
     handleNext = (parcelData) => {
         console.log(parcelData)
         console.log("updatein");
@@ -216,6 +226,7 @@ class LearningContainerUpdatable extends React.Component {
         }
         return (
     
+            <div>
             <LearningContainerLogging
                 parcelData = {this.state.parcelData}
                 currentChunk = {this.props.allChunks[this.state.currentChunkNo]}
@@ -229,6 +240,7 @@ class LearningContainerUpdatable extends React.Component {
                 yet={this.state.yet}
                 reviewProgress={100*this.state.reviewProgress["done"]/(this.state.reviewProgress["done"] + this.state.reviewProgress["yet"])}
             />
+            <div ref={this.bottomRef}/></div>
         );
     }
 }   
@@ -297,6 +309,16 @@ class LearningContainer extends React.Component {
         currentInteraction: 0,
         limbo: false,
         runningProgress: this.props.runningProgress
+        }
+
+    bottomRef = React.createRef();
+    
+    componentDidUpdate () {
+            this.scrollToBottom();
+        }
+    
+    scrollToBottom = () => {
+            this.bottomRef.current.scrollIntoView({behaviour: 'smooth'});
         }
     
     storeAnswer = (correct) => {
@@ -462,6 +484,7 @@ class LearningContainer extends React.Component {
 		    />
 		    </Col>
 		    </Row>
+            <div style={{marginTop: "2em"}} ref={this.bottomRef}/>
 		</Container>
 	);
         }
