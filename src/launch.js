@@ -25,7 +25,7 @@ const LaunchLoader = () => {
     
      const {login, getAccessTokenWithPopup } = useAuth0();
      const opts = {audience: APIHOST};
-     const {error, loading, data, refresh} = useApi(APIHOST + '/api/notificationno', {}, opts);
+     const {error, loading, data, refresh} = useApi(APIHOST + '/api/launchscreen', {}, opts);
      const getTokenAndTryAgain = async () => {
         await getAccessTokenWithPopup(opts);
         refresh()
@@ -99,10 +99,7 @@ class Launch1 extends React.Component {
             </Row>
             <Card className="launchcard">
               <div className="launchcontent">
-                <Link to="/progress">
-                  <FastForward/> <br></br>
-            My Progress
-            </Link>
+                  {this.props.data.message}
             </div>
             </Card>
             </div>
