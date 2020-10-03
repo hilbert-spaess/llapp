@@ -97,33 +97,53 @@ class MyVocabContainer1 extends React.Component {
     
     render () {
         
+        var keys = Object.keys(this.props.data.vocab);
+        var levels = [];
+        
+        for (var i = 0; i < keys.length; i++) {
+            
+            levels.push(<Level
+                        userlevel={this.props.data.level}
+                        data={this.props.data.vocab[keys[i]]}
+                        showDetail={this.props.showDetail}
+                        level={keys[i]}/>);
+        }
+        
         return (
             <div>
             <Modal centered show={this.state.showDialog} onHide={this.onHide}>
             {this.state.detailActive && this.props.data.active[this.state.detailId]['w']}
     </Modal>
-        <div
-        style={{textAlign: "center", fontSize: "4rem", marginTop: "3rem"}}>
-                Active Vocab <br></br>
-</div>
-                <VocabGrid
-                VocabDict = {this.props.data.active}
-                showDetail={this.showDetail}
-                size="2em"
-                active={true}/>
-                <br></br>
-<div style={{textAlign: "center", fontSize: "4rem", marginTop: "3rem"}}>
-                Future Vocab: <br></br>
-</div>
-                <VocabGrid
-                VocabDict = {this.props.data.future}
-                size="2em"
-                active={false}/>
+        <div>
+{levels}</div>
                     </div>
     );
 
     }
 }
+
+class Level extends React.Component {
+    
+    render () {
+        console.log(this.props.data);
+        
+        return (
+            <>
+            
+            <div
+        style={{textAlign: "center", fontSize: "4rem", marginTop: "3rem"}}>
+            {"Level " + this.props.level} <br></br>
+            </div>
+             <VocabGrid
+                VocabDict = {this.props.data}
+                showDetail={this.props.showDetail}
+                size="2em"
+                active={this.props.level <= this.props.userlevel}/>
+            </>
+        );
+    }
+}
+            
 
 class VocabGrid extends React.Component {
     
