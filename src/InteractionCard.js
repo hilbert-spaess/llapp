@@ -116,13 +116,13 @@ class FillBlankExamples extends React.Component {
 		synonym0 = this.props.interaction["0"]["s"];
 	    }
 	    if ("1" in this.props.interaction) {
-		synonym1 = this.props.interaction["1"]["s"];
+		synonym1 = " | " + this.props.interaction["1"]["s"];
 	    }
 	    if ("2" in this.props.interaction) {
-		synonym2 = this.props.interaction["2"]["s"];
+		synonym2 = " | " + this.props.interaction["2"]["s"];
 	    }
 	    if ("3" in this.props.interaction) {
-		synonym3 = this.props.interaction["3"]["s"];
+		synonym3 = " | " + this.props.interaction["3"]["s"];
 	    }	
 	    return (
 		    <div className="interactiontext">
@@ -130,7 +130,7 @@ class FillBlankExamples extends React.Component {
                 interaction = {this.props.interaction}
                 interactionMode = {this.props.interactionMode}
         /><br></br>
-		    {synonym0} | {synonym1} | {synonym2} | {synonym3}
+		    {synonym0 + synonym1 + synonym2 + synonym3}
 		</div>
 	    );
 	} else if (this.props.interactionMode=="4") {

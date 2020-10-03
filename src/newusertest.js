@@ -48,10 +48,6 @@ export class NewUserTest1 extends React.Component {
             return <NativeChoice
                     handleClick = {this.handleNativeClick}/>;
         } 
-        if (this.state.answers==null) {
-            return <LevelTestLoader
-                    handleSubmit = {this.handleLevelTestSubmit}/>;
-        }
         if (this.state.course==null) {
             return <CourseChoice
                     handleSubmit = {this.handleCourseChoiceSubmit}/>;
