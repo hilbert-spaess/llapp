@@ -17,6 +17,9 @@
 }
 
 .messagecard {
+    
+    margin-top: 2em;
+    
     height: 10em;
     text-align: left;
 

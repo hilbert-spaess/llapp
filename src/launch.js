@@ -67,18 +67,22 @@ class Launch1 extends React.Component {
         return (
           <Container fluid="lg">
                     <div>
+            <Card className="messagecard">
+              <div className="messagetext">
+                  {this.props.data.message}
+            </div>
+            </Card>
                       <Row>
                         <Col>
             <Card className="launchcardtwo"
             style={{backgroundColor: "lightgreen"}}>
             <Notification
-            no={this.props.data.notification}
-            tutorial ={this.props.data.tutorial}
+            no={this.props.data.read_notification}
             />
             <div className="launchcontent">
               <Link to="/read">
                 <BookOpen/> <br></br>
-                Start reading.
+                Start Reading
             
               </Link>
             </div>
@@ -86,76 +90,24 @@ class Launch1 extends React.Component {
             </Col>
             <Col>
             <Card className="launchcardtwo"
-            style={{backgroundColor: "lightblue"}}>
-              <div className="launchcontent">
+            style={{backgroundColor: "lightpink"}}>
+            <div className="launchcontent">
               <Link to="/vocab">
                 <Type/> <br></br>
-                  My Words	
+                My Vocab
             
               </Link>
-              </div>
-            </Card>
-            </Col>
-            </Row>
-            <Card className="messagecard">
-              <div className="messagetext">
-                  {this.props.data.message}
             </div>
             </Card>
+            </Col>
+           </Row>
             </div>
             </Container>
         );
     }
 }
 
-const NotificationLoader = () => {
-    
-    
-    
-     const {login, getAccessTokenWithPopup } = useAuth0();
-     const opts = {audience: APIHOST};
-     const {error, loading, data, refresh} = useApi(APIHOST + '/api/notificationno', {}, opts);
-     const getTokenAndTryAgain = async () => {
-        await getAccessTokenWithPopup(opts);
-        refresh()
-  };
-    if (loading) {
-        return <div></div>;
-    }
-    if (error) {
-        if (error.error === 'consent_required') {
-      return (
-        <button onClick={getTokenAndTryAgain}>Consent to reading users</button>
-      );
-    }
-    return <div></div>;
-    }
-    if (data.notification == 0) {
-        return (<div></div>);
-    }
-    console.log(data.notification);
-    
-    return (
-            <Notification
-            no={data.notification}
-            tutorial ={data.tutorial}
-            />
-    );
-
-}
-
 class Notification extends React.Component {
-    
-    state = {show: false}
-    
-    componentDidMount () {
-        
-        setTimeout(() => {this.setState({show: this.props.tutorial});}, 500);
-    }
-    
-    handleClose = () => {
-        this.setState({show: !this.state.show});
-    }
     
     render () {
         if (this.props.no == 0) {
@@ -163,19 +115,9 @@ class Notification extends React.Component {
         }
 
         return (
-            <div>
-            
-<Toast onClose={this.handleClose} show={this.state.show} animation={true} style={{position: 'absolute', top: "-30%", right: 0}}>
-  <Toast.Header style={{fontSize: "large"}}>
-    <strong className="mr-auto">Tutorial</strong>
-    <small>Just now</small>
-  </Toast.Header>
-  <Toast.Body style={{fontSize: "12px"}}>The notification means that you've got {this.props.no} new reviews!</Toast.Body>
-</Toast>
                      <div className="notification">
             <div className="centerno">{this.props.no}</div>
-</div>
-</div>
+            </div>
         );
     }
 }

@@ -5,7 +5,8 @@ import {BrowserRouter, Route, Switch, Router} from 'react-router-dom';
 import {Stylesheet, css} from 'aphrodite';
 import {Launch} from './launch.js';
 import {Sidebar, TopBar} from './sidebar.js';
-import {LearningSupervisor} from './LearningContainer.js';
+import {LearningSupervisor} from './ReadingSupervisor.js';
+import {LessonsSupervisor} from './LessonsSupervisor.js';
 import {MyVocabContainer} from './MyVocabContainer.js';
 import {UserSelectContainer} from './UserSelectContainer.js';
 import {TestContainer} from './TestContainer.js';
@@ -45,6 +46,7 @@ function App() {
         <Switch>
             <ProtectedRoute path="/home" component={Launch} exact/>
             <ProtectedRoute path="/read" component={LearningSupervisor}/>
+            <ProtectedRoute path="/lessons" component={LessonsSupervisor}/>
             <ProtectedRoute path="/newuser" component={NewUser}/>
             <ProtectedRoute path="/vocab" component={MyVocabContainer}/>
             <ProtectedRoute path="/newusertest" component={NewUserTest}/>

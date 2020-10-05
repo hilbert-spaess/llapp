@@ -131,14 +131,16 @@ class Level extends React.Component {
             <>
             
             <div
-        style={{textAlign: "center", fontSize: "4rem", marginTop: "3rem"}}>
+        style={{textAlign: "center", fontSize: "4rem", marginTop: "1.5rem"}}>
             {"Level " + this.props.level} <br></br>
             </div>
+<div style= {{marginBottom: "3em"}}>
              <VocabGrid
                 VocabDict = {this.props.data}
                 showDetail={this.props.showDetail}
                 size="2em"
                 active={this.props.level <= this.props.userlevel}/>
+                    </div>
             </>
         );
     }

@@ -160,6 +160,30 @@ a:hover {
     right: 38%;
 }
 
+.nextbuttonlimbo {
+    
+    margin-top: 2em;
+    
+    background-color: green;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin-top: 1em;
+    width: 100px;
+    height: 100px;
+    border-color: transparent;
+    border-top-left-radius: 100%;
+    
+    animation: pulse 1.5s infinite;
+}
+
+.nextbuttonlimbo:focus {
+    
+    border-color: transparent;
+    outline: none;
+    
+}
+
 .nextbutton {
     
     margin-top: 2em;

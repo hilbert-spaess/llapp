@@ -28,7 +28,9 @@ export class InteractionCard extends React.Component {
         return (
         <Card className="interactionbox">
             <form onSubmit={this.props.handleNext}>
-              <button className="nextbutton" type="submit" autoFocus ref = {(c) => {this.nameInput=c;}} onClick={this.props.handleNext}></button>
+            <div style={{position: "fixed", bottom: "0", right: "0"}}>
+              <button className="nextbuttonlimbo" type="submit" autoFocus ref = {(c) => {this.nameInput=c;}} onClick={this.props.handleNext}></button>
+            </div>
             </form>
             </Card>
             );
@@ -172,7 +174,7 @@ class InteractionText extends React.Component {
        );
     } else if (this.props.interactionMode == "4") {
         return (
-            <div>
+            <div>Definition: 
 </div>
     );
     }
