@@ -66,15 +66,9 @@ class Launch1 extends React.Component {
     render () {
         return (
           <Container fluid="lg">
-                    <div>
-            <Card className="messagecard">
-              <div className="messagetext">
-                  {this.props.data.message}
-            </div>
-            </Card>
                       <Row>
                         <Col>
-            <Card className="launchcardtwo"
+            <Card className="launchcardtwotop"
             style={{backgroundColor: "lightgreen"}}>
             <Notification
             no={this.props.data.read_notification}
@@ -89,7 +83,7 @@ class Launch1 extends React.Component {
             </Card>
             </Col>
             <Col>
-            <Card className="launchcardtwo"
+            <Card className="launchcardtwotop"
             style={{backgroundColor: "lightpink"}}>
             <div className="launchcontent">
               <Link to="/vocab">
@@ -101,7 +95,26 @@ class Launch1 extends React.Component {
             </Card>
             </Col>
            </Row>
+             <Row>
+                        <Col>
+            <Card className="launchcardtwo"
+            style={{backgroundColor: "lightyellow"}}>
+            <div className="messagetext">
+                {this.props.data.message}
             </div>
+            </Card>
+            </Col>
+            <Col>
+            <Card className="launchcardtwo"
+            style={{backgroundColor: "#aaf8ff"}}>
+            <div className="launchcontent">
+              <Progress
+                data={this.props.data}
+                />
+            </div>
+            </Card>
+            </Col>
+           </Row>
             </Container>
         );
     }
@@ -119,6 +132,27 @@ class Notification extends React.Component {
             <div className="centerno">{this.props.no}</div>
             </div>
         );
+    }
+}
+
+class Progress extends React.Component {
+    
+    render () {
+        
+        var levelprogress = this.props.data.levelprogress;
+        console.log(levelprogress);
+        
+        var displayprogress = (90.0 + (360.0 * levelprogress)).toString();
+        console.log(displayprogress)
+        
+        return (
+        <div className="outercircle" style={{backgroundImage: "linear-gradient(" + displayprogress + "deg, transparent 50%, #00ffff 50%), linear-gradient(90deg, #00ffff 50%, transparent 50%)"}}>
+        <div className="innercircle">
+        <div className="progressLevel">{this.props.data.level}</div>
+        </div> 
+        </div>
+        )
+        
     }
 }
 

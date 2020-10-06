@@ -134,6 +134,12 @@ export class LearningContainer extends React.Component {
         const answerlength = answer.length;
         const interactionMode= this.props.currentChunk["interaction"][this.state.currentInteraction]["mode"];
         const length = this.props.currentChunk["interaction"][this.state.currentInteraction]["length"];
+        console.log(interactionMode);
+        if ((interactionMode == "6" && this.props.currentChunk["first"] != 1) || (interactionMode=="4")) {
+            var letterNo = 2;
+        } else {
+            var letterNo = 1;
+        }
         
         if (this.props.currentChunk["first"] == 1) {
             var progress = this.props.progress;
@@ -184,8 +190,8 @@ export class LearningContainer extends React.Component {
 		handleAnswer={this.handleAnswer}
         limbo={this.state.limbo}
         showDialog={this.state.showDialog}
-        answerlength={answerlength}/>
-            
+        answerlength={answerlength}
+        letterNo={letterNo}/>   
 		    </Col>
 		    </Row>
             
@@ -230,7 +236,7 @@ class TextCard extends React.Component {
     
     componentDidUpdate = (prevProps) => {
             if (prevProps.interaction !== this.props.interaction) {
-                this.setState({values: range(0, Object.keys(this.props.interaction).length - 1).map((thing) => this.props.context[this.props.interaction[thing]["location"]]["w"][0])});
+                this.setState({values: range(0, Object.keys(this.props.interaction).length - 1).map((thing) => this.props.context[this.props.interaction[thing]["location"]]["w"].slice(0, this.props.letterNo))});
             }
             setTimeout(() => {try {this.nameInput.focus();} catch (e) {console.log("Error");}}, 200);
     }
@@ -243,7 +249,7 @@ class TextCard extends React.Component {
         event.preventDefault();
     }
     
-    state = {values: range(0, Object.keys(this.props.interaction).length - 1).map((thing) => this.props.context[this.props.interaction[thing]["location"]]["w"][0])}
+    state = {values: range(0, Object.keys(this.props.interaction).length - 1).map((thing) => this.props.context[this.props.interaction[thing]["location"]]["w"].slice(0,this.props.letterNo))}
 
     handleSubmit = (event) => {
         console.log("hemlo");
@@ -336,6 +342,7 @@ class AnswerCard extends React.Component {
     render () {
     console.log(this.props.specificInteraction["mode"])
     console.log("samples" in this.props.specificInteraction)
+    console.log(this.props.specificInteraction["samples"]);
     console.log(this.state.barLevel);
 	if (this.props.answeredCorrect == 1) {
 	    var styling = "Correct";
