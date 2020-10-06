@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {useLocation} from 'react-router-dom';
+import {useLocation, Link} from 'react-router-dom';
 import {Card, Button, Row, Col, Container, Modal, ProgressBar} from 'react-bootstrap';
 import {InteractionCard} from './InteractionCard.js';
 import {getChunk, firstChunk, getData, JSONconvert} from './client.js';
@@ -353,7 +353,7 @@ class LearningSummary extends React.Component {
             <div style={{marginTop: "5em", fontSize: "30px", textAlign: "center"}}> Today's work is done. New words learned: </div>
             
             <div style={{marginTop: "3em"}}> {words} </div>
-            <div style={{marginTop: "2em", fontSize: "30px", textAlign: "center"}}> Check in tomorrow for new reviews. </div>
+            <div style={{marginTop: "2em", fontSize: "30px", textAlign: "center"}}> Check in tomorrow for new reviews. Or check your <Link style={{color: "blue"}} to="/vocab">vocab</Link> progress here.</div>
             </div>
             );
     }

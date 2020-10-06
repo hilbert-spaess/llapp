@@ -258,6 +258,10 @@ a:hover {
     border-color: transparent;
 }
 
+::placeholder {
+    color: lightgrey;
+}
+
 .interactiontext {
     font-size: 30px;
     color: grey;
@@ -284,6 +288,7 @@ a:hover {
 .samplesentences {
     margin-right: 1em;
     margin-left: 1em;
+    margin-bottom: 1em;
     font-size: 20px;
     text-align: center;
 }

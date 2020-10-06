@@ -302,14 +302,14 @@ class TextCard extends React.Component {
             }
         } else {
             words.push(spc);
-        words.push(<input className="workinput" type="text"  key = {this.props.showDialog} autocomplete="off" autoFocus ref = {(input) => {this.nameInput=input;}} value={value} onChange={this.handleChange} style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", flex: "none", display: "inline-block", border: "0", width: this.props.answerlength.toString() + "ch", borderTop: "0", outlineTop: "0", lineHeight: "20px", borderBottom: "2px dotted blue", textAlign: "left"}}/>);
+        words.push(<input spellcheck="false" className="workinput" type="text"  key = {this.props.showDialog} autocomplete="off" autoFocus ref = {(input) => {this.nameInput=input;}} value={value} onChange={this.handleChange} style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", flex: "none", display: "inline-block", border: "0", width: this.props.answerlength.toString() + "ch", borderTop: "0", outlineTop: "0", lineHeight: "20px", borderBottom: "2px dotted blue", textAlign: "left"}}/>);
         }
     };
 
         return (
 		<Card className="maintext"
             key={this.props.showDialog}>
-		<Text style={{fontSize: "30px", lineHeight: "2em", display: "inline-block", wordBreak: "keep-all", fontFamily: "roboto"}}>
+		<Text spellcheck="false" style={{fontSize: "30px", lineHeight: "2em", display: "inline-block", wordBreak: "keep-all", fontFamily: "roboto"}}>
         <form className="commentForm" onSubmit={this.handleSubmit}>
            
             {words}
@@ -358,9 +358,14 @@ class AnswerCard extends React.Component {
     if (this.props.show == true) {
 	return (
 	    <div key={this.props.show}>
-	    <div className="vocabdisplay">
-		    {this.props.word}
-	    </div>
+	    <div>
+            {full && <FirstInput 
+handleHide={this.props.handleHide}
+styling={styling}
+        word={this.props.word}
+/>}
+{!full && <div><div className="vocabdisplay">{this.props.word}</div><SecondInput handleHide={this.props.handleClose} styling={styling}/></div>}
+</div>
         <div className="chinesedef">
             {"chinesedef" in this.props.specificInteraction && <div>Chinese definition here.</div>}
         </div>
@@ -375,13 +380,6 @@ class AnswerCard extends React.Component {
         <div className="samplesentences">
             {full && ("samples" in this.props.specificInteraction) && <SampleSentences samples={this.props.specificInteraction["samples"]}/>}
     </div>
-<div>
-            {full && <FirstInput 
-handleHide={this.props.handleHide}
-styling={styling}
-/>}
-{!full && <SecondInput handleHide={this.props.handleClose} styling={styling}/>}
-</div>
 		</div>
 	); } else {
         return (
@@ -441,7 +439,7 @@ class FirstInput extends React.Component {
     return (
         <form className="commentForm" onSubmit={this.handleHide}>
         <div style={{textAlign: "center"}}>
-        <input type="text" autoFocus autocomplete="off" style={{width: "80%", textAlign: "center", fontSize: "30px", marginTop: "1em", marginBottom: "0.5em"}} id="myInput" ref={this.innerRef} value={this.state.value} onChange={this.handleChange}/>
+        <input type="text" autoFocus autocomplete="off" style={{fontSize: "50px", outline: "0", border: "0", borderBottom: "2px dotted black", width: "80%", textAlign: "center", marginTop: "0.5em", marginBottom: "0.5em"}} placeholder={this.props.word} id="myInput" ref={this.innerRef} value={this.state.value} onChange={this.handleChange}/>
             </div>
 </form>
     );

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {useLocation} from 'react-router-dom';
+import {useLocation, Link} from 'react-router-dom';
 import {Card, Button, Row, Col, Container, Modal, ProgressBar} from 'react-bootstrap';
 import {InteractionCard} from './InteractionCard.js';
 import {getChunk, firstChunk, getData, JSONconvert} from './client.js';
@@ -161,7 +161,7 @@ const LessonsContainerLogging = (props) => {
     return <div></div>;
 } else {
     return (
-        <div> <LessonsOverContainer/></div>
+        <div> <Redirect to="/vocab"/></div>
         );
 }
 }
