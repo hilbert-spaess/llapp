@@ -139,20 +139,31 @@ class Progress extends React.Component {
     
     render () {
         
-        var levelprogress = this.props.data.levelprogress;
+        var levelprogress = this.props.data.progress;
         console.log(levelprogress);
         
         var displayprogress = (90.0 + (360.0 * levelprogress)).toString();
-        console.log(displayprogress)
+        console.log(displayprogress);
         
-        return (
-        <div className="outercircle" style={{backgroundImage: "linear-gradient(" + displayprogress + "deg, transparent 50%, #00ffff 50%), linear-gradient(90deg, #00ffff 50%, transparent 50%)"}}>
-        <div className="innercircle">
-        <div className="progressLevel">{this.props.data.level}</div>
-        </div> 
-        </div>
-        )
-        
+        if (levelprogress <= 0.5) {
+
+            return (
+            <div className="outercircle" style={{backgroundColor: "darkblue", backgroundImage: "linear-gradient(" + displayprogress + "deg, transparent 50%, #00ffff 50%), linear-gradient(90deg, #00ffff 50%, transparent 50%)"}}>
+            <div className="innercircle">
+            <div className="progressLevel">{this.props.data.level}</div>
+            </div> 
+            </div>
+            );
+        } else {
+            
+             return (
+            <div className="outercircle" style={{backgroundColor: "#00ffff", backgroundImage: "linear-gradient(" + displayprogress + "deg, darkblue 50%, transparent 50%), linear-gradient(90deg, transparent 50%, darkblue 50%)"}}>
+            <div className="innercircle">
+            <div className="progressLevel">{this.props.data.level}</div>
+            </div> 
+            </div>
+            );
+        }
     }
 }
 
