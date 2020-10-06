@@ -100,10 +100,6 @@
 
 .innercircle {
     
-    background-image: 
-        linear-gradient(126ged, transparent 50%, #aaf8ff 50%),
-        linear-gradient(90ged,  #aaf8ff 50%, transparent 50%);
-    
     z-index: 0;
     
     position: absolute;

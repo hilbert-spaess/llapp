@@ -139,7 +139,7 @@ class Progress extends React.Component {
     
     render () {
         
-        var levelprogress = this.props.data.progress;
+        var levelprogress = this.props.data.levelprogress;
         console.log(levelprogress);
         
         var displayprogress = (90.0 + (360.0 * levelprogress)).toString();
