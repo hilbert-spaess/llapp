@@ -439,7 +439,7 @@ class FirstInput extends React.Component {
     return (
         <form className="commentForm" onSubmit={this.handleHide}>
         <div style={{textAlign: "center"}}>
-        <input type="text" autoFocus autocomplete="off" style={{fontSize: "50px", outline: "0", border: "0", borderBottom: "2px dotted black", width: "80%", textAlign: "center", marginTop: "0.5em", marginBottom: "0.5em"}} placeholder={this.props.word} id="myInput" ref={this.innerRef} value={this.state.value} onChange={this.handleChange}/>
+        <input className="answercardinput" type="text" autoFocus autocomplete="off" style={{fontSize: "50px", outline: "0", border: "0", borderBottom: "2px dotted black", width: "80%", textAlign: "center", marginTop: "0.5em", marginBottom: "0.5em"}} placeholder={this.props.word} id="myInput" ref={this.innerRef} value={this.state.value} onChange={this.handleChange}/>
             </div>
 </form>
     );
