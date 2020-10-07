@@ -188,10 +188,8 @@ class VocabCard extends React.Component {
                       padding: "1rem",
                       fontSize: this.props.size}}>
                 {this.props.data["w"]} <br></br> 
-    {this.props.active && <ProgressBar 
-                    now={this.props.data["s"]*10}
-                    variant="success"
-                    style={{marginTop: "1rem"}}/>}
+    {this.props.active && <StreakShow 
+                    streak={this.props.data["s"]}/>}
                 </div>
 </Card>
 </div>
@@ -208,7 +206,7 @@ class VocabCard extends React.Component {
                 <Card
                 onClick={this.handleClick}
                 className="myvocabcard"
-                style={{height: "10rem", width: "15rem", marginRight: "1rem", marginLeft: "1rem", marginTop: "1rem", backgroundColor: "darkgrey"}}>
+                style={{height: "10rem", width: "15rem", marginRight: "1rem", marginLeft: "1rem", marginTop: "1rem", backgroundColor: "grey"}}>
 
                 <div className="cardHeader"
                 style={{textAlign: "center",
@@ -220,6 +218,30 @@ class VocabCard extends React.Component {
 </div>
 );
     }
+    }
+}
+
+class StreakShow extends React.Component {
+    
+    render () {
+        
+        var pips = []
+        
+        for (var i = 0; i < (this.props.streak % 3); i++) {
+            console.log("Hi1");
+            pips.push(<div className="pip-green"/>);
+        }
+        
+        for (var i = 0; i < (3 - (this.props.streak % 3)); i++) {
+            console.log("Hi2");
+            pips.push(<div className="pip-grey"/>);
+        }
+        
+        return (
+            <div style={{marginTop: "0.5em"}}>
+            {pips}
+            </div>
+        );
     }
 }
 
