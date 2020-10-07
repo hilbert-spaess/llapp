@@ -139,12 +139,14 @@ class Level extends React.Component {
 </Col><Col>
 <div style= {{marginBottom: "3em", marginLeft: "0"}}>
              <VocabGrid
+                level={this.props.level}
                 VocabDict = {this.props.data}
                 showDetail={this.props.showDetail}
                 size="2em"
                 active={this.props.level <= this.props.userlevel}/>
                     </div>
 </Col></Row>
+    <hr style={{marginBottom: "2em"}}/>
             </>
         );
     }
