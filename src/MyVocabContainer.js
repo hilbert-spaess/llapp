@@ -97,58 +97,21 @@ class MyVocabContainer1 extends React.Component {
     
     render () {
         
-        var keys = Object.keys(this.props.data.vocab);
-        var levels = [];
-        
-        for (var i = 0; i < keys.length; i++) {
-            
-            levels.push(<Level
-                        userlevel={this.props.data.level}
-                        data={this.props.data.vocab[keys[i]]}
-                        showDetail={this.props.showDetail}
-                        level={keys[i]}/>);
-        }
-        
         return (
             <div>
+            <div style={{marginTop: "1em", textAlign: "center", fontSize: "50px"}}>My Vocab</div>
             <Modal centered show={this.state.showDialog} onHide={this.onHide}>
             {this.state.detailActive && this.props.data.active[this.state.detailId]['w']}
     </Modal>
         <div style={{marginTop: "1em"}}>
-{levels}</div>
+<VocabGrid
+VocabDict={this.props.data.vocab}
+showDetail={this.props.showDetail}
+userlevel={this.props.data.level}
+size="2em"/></div>
                     </div>
     );
 
-    }
-}
-
-class Level extends React.Component {
-    
-    render () {
-        console.log(this.props.data);
-        
-        return (
-            <>
-            
-            <Row>
-            <Col xs = "auto" md = "auto" lg = "auto">
-            <div
-        style={{textAlign: "center", fontSize: "4rem", marginTop: "1.5rem", marginLeft: "0.5em"}}>
-            {this.props.level} <br></br>
-            </div>
-</Col><Col>
-<div style= {{marginBottom: "3em", marginLeft: "0"}}>
-             <VocabGrid
-                level={this.props.level}
-                VocabDict = {this.props.data}
-                showDetail={this.props.showDetail}
-                size="2em"
-                active={this.props.level <= this.props.userlevel}/>
-                    </div>
-</Col></Row>
-    <hr style={{marginBottom: "2em"}}/>
-            </>
-        );
     }
 }
             
@@ -159,26 +122,18 @@ class VocabGrid extends React.Component {
         keys: null
     }
     
-    componentDidMount = () => {
-        var keys = Object.keys(this.props.VocabDict);
-        shuffle(keys);
-        this.state.keys = keys
-    }
-        
-    
     render () {
         
         var vocabCards = [];
-         var keys = Object.keys(this.props.VocabDict);
-        shuffle(keys);
-        for (var i = 0; i < keys.length; i++) {
+        
+        for (var i = 0; i <this.props.VocabDict.length; i++) {
             
             vocabCards.push(<VocabCard
-                            id = {keys[i]}
-                            data = {this.props.VocabDict[keys[i]]}
+                            id = {i}
+                            data = {this.props.VocabDict[i]}
                             size={this.props.size}
-                            active={this.props.active}
                             showDetail={this.props.showDetail}
+                            active={this.props.VocabDict[i]['l'] <= this.props.userlevel}
         ></VocabCard>);
         }
     
@@ -214,33 +169,57 @@ class VocabCard extends React.Component {
     
     render () {
         
+        if (this.props.active) {
+            
+            return (
+
+                     <div>
+                <Modal centered show={this.state.showDialog} onHide={this.onHide}>
+            <VocabDetail
+                data={this.props.data}/>
+                </Modal>
+                <Card
+                onClick={this.handleClick}
+                className="myvocabcard"
+                style={{height: "10rem", width: "15rem", marginRight: "1rem", marginLeft: "1rem", marginTop: "1rem"}}>
+
+                <div className="cardHeader"
+                style={{textAlign: "center",
+                      padding: "1rem",
+                      fontSize: this.props.size}}>
+                {this.props.data["w"]} <br></br> 
+    {this.props.active && <ProgressBar 
+                    now={this.props.data["s"]*10}
+                    variant="success"
+                    style={{marginTop: "1rem"}}/>}
+                </div>
+</Card>
+</div>
+            );
+    }  else {
+        
         return (
             
-            <div>
-            <Modal centered show={this.state.showDialog} onHide={this.onHide}>
-        <VocabDetail
-            data={this.props.data}/>
-            </Modal>
-            <Card
-            onClick={this.handleClick}
-            className="myvocabcard"
-            style={{height: "10rem", width: "15rem", marginRight: "1rem", marginLeft: "1rem", marginTop: "1rem"}}>
-            
-            <div className="cardHeader"
-            style={{textAlign: "center",
-                  padding: "1rem",
-                  fontSize: this.props.size}}>
-            {this.props.data["w"]} <br></br>
-{this.props.active &&<ProgressBar 
-                now={this.props.data["s"]*10}
-                variant="success"
-                style={{marginTop: "1rem"}}/>}
-            </div>
+           <div>
+                <Modal centered show={this.state.showDialog} onHide={this.onHide}>
+            <VocabDetail
+                data={this.props.data}/>
+                </Modal>
+                <Card
+                onClick={this.handleClick}
+                className="myvocabcard"
+                style={{height: "10rem", width: "15rem", marginRight: "1rem", marginLeft: "1rem", marginTop: "1rem"}}>
 
-
-            </Card>
+                <div className="cardHeader"
+                style={{textAlign: "center",
+                      padding: "1rem",
+                      fontSize: this.props.size}}>
+                {this.props.data["w"]} <br></br> 
+                </div>
+</Card>
 </div>
-        );
+);
+    }
     }
 }
 
