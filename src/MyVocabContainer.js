@@ -114,7 +114,7 @@ class MyVocabContainer1 extends React.Component {
             <Modal centered show={this.state.showDialog} onHide={this.onHide}>
             {this.state.detailActive && this.props.data.active[this.state.detailId]['w']}
     </Modal>
-        <div>
+        <div style={{marginTop: "1em"}}>
 {levels}</div>
                     </div>
     );
@@ -130,17 +130,21 @@ class Level extends React.Component {
         return (
             <>
             
+            <Row>
+            <Col xs = "auto" md = "auto" lg = "auto">
             <div
-        style={{textAlign: "center", fontSize: "4rem", marginTop: "1.5rem"}}>
-            {"Level " + this.props.level} <br></br>
+        style={{textAlign: "center", fontSize: "4rem", marginTop: "1.5rem", marginLeft: "0.5em"}}>
+            {this.props.level} <br></br>
             </div>
-<div style= {{marginBottom: "3em"}}>
+</Col><Col>
+<div style= {{marginBottom: "3em", marginLeft: "0"}}>
              <VocabGrid
                 VocabDict = {this.props.data}
                 showDetail={this.props.showDetail}
                 size="2em"
                 active={this.props.level <= this.props.userlevel}/>
                     </div>
+</Col></Row>
             </>
         );
     }
