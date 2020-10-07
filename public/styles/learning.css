@@ -115,33 +115,36 @@
     border-color: black;
 }
 
-.pip-green {
+.pip {
     
-    width: 25%;
-    
-    display: inline-block;
-    
-    height: 30px;
-    
-    background-color: green;
+    width: 1em;
+    height: 1em;
     
     margin-right: 5%;
     border-radius: 50%;
+    
+    display: inline-block;
+}    
+    
+
+.pip-green {
+    
+    background-color: green;
+}
+
+.pip-blue {
+    
+    background-color: blue;
+}
+
+.pip-green-hollow {
+    
+    border: 1px solid green;   
     
 }
 
-.pip-grey {
+.pip-green-blue {
     
-    width: 25%;
-    
-    display: inline-block;
-        
-    height: 30px;
-    
-    margin-right: 5%;
-    
-    border: 1px solid black;
-    border-radius: 50%;
-    
+    border: 1px solid green;   
     
 }
