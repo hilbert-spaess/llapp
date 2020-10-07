@@ -245,7 +245,7 @@ class StreakShow extends React.Component {
                 pips.push(<div className="pip pip-blue"/>);
             }
 
-            for (var i = 0; i < (4 - (this.props.streak % 4)); i++) {
+            for (var i = 0; i < (8 - (this.props.streak % 4)); i++) {
                 console.log("Hi2");
                 pips.push(<div className="pip pip-blue-hollow"/>);
             }
