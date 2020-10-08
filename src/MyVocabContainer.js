@@ -169,6 +169,14 @@ class VocabCard extends React.Component {
     
     render () {
         
+        if (this.props.data['s'] < 4) {
+            var colour = "lightgreen";
+        } else if (this.props.data['s'] < 8) {
+            var colour = "lightblue";
+        } else {
+            var colour = "white";
+        }
+        
         if (this.props.active) {
             
             return (
@@ -182,7 +190,7 @@ class VocabCard extends React.Component {
                 <Card
                 onClick={this.handleClick}
                 className="myvocabcard"
-                style={{height: "10rem", width: "15rem", marginRight: "1rem", marginLeft: "1rem", marginTop: "1rem"}}>
+                style={{height: "10rem", width: "15rem", marginRight: "1rem", marginLeft: "1rem", marginTop: "1rem", backgroundColor: colour}}>
 
                 <div className="cardHeader"
                 style={{textAlign: "center",
