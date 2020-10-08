@@ -149,6 +149,12 @@
     background-color: blue;
 }
 
+.pip-blue-hollow {
+    
+    border: 1px solid blue;
+    
+}
+
 .pip-green-hollow {
     
     border: 1px solid green;   
