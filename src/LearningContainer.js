@@ -12,6 +12,7 @@ import {Redirect} from 'react-router-dom';
 import {APIHOST} from './api_config.js';
 import {Tutorial} from './tutorial.js';
 import {CheckCircle, Type, AlignLeft, Eye} from 'react-feather';
+import {StreakShow} from './MyVocabContainer.js';
 
 function range(start, end) {
   return Array(end - start + 1).fill().map((_, idx) => start + idx)
@@ -236,7 +237,7 @@ class TextCard extends React.Component {
     
     componentDidUpdate = (prevProps) => {
             if (prevProps.interaction !== this.props.interaction) {
-                this.setState({values: range(0, Object.keys(this.props.interaction).length - 1).map((thing) => this.props.context[this.props.interaction[thing]["location"]]["w"].slice(0, this.props.letterNo))});
+                this.setState({values: range(0, Object.keys(this.props.interaction).length - 1).map((thing) => this.props.context[this.props.interaction[thing]["location"]]["w"][0])});
             }
             setTimeout(() => {try {this.nameInput.focus();} catch (e) {console.log("Error");}}, 200);
     }
@@ -249,7 +250,7 @@ class TextCard extends React.Component {
         event.preventDefault();
     }
     
-    state = {values: range(0, Object.keys(this.props.interaction).length - 1).map((thing) => this.props.context[this.props.interaction[thing]["location"]]["w"].slice(0,this.props.letterNo))}
+    state = {values: range(0, Object.keys(this.props.interaction).length - 1).map((thing) => this.props.context[this.props.interaction[thing]["location"]]["w"][0])}
 
     handleSubmit = (event) => {
         console.log("hemlo");
@@ -373,9 +374,9 @@ styling={styling}
             {"def" in this.props.specificInteraction && this.props.specificInteraction["def"]}
         </div>
         <div className="cardprogress">
-            <MyProgressBar now={10*(this.props.specificInteraction["streak"])}
-                        next={100*(this.props.specificInteraction["streak"] + this.props.answeredCorrect)/10}
-                        />
+            <AnimatedStreakShow 
+                streak2={this.props.specificInteraction["streak"] + this.props.answeredCorrect}
+                streak1={this.props.specificInteraction["streak"]}/>
         </div>
         <div className="samplesentences">
             {full && ("samples" in this.props.specificInteraction) && <SampleSentences samples={this.props.specificInteraction["samples"]}/>}
@@ -391,9 +392,9 @@ styling={styling}
             Chinese definition here.
         </div>
         <div className="cardprogress">
-            <MyProgressBar now={10*(this.props.specificInteraction["streak"])}
-                        next={100*(this.props.specificInteraction["streak"] + this.props.answeredCorrect)/10}
-                        />
+            <AnimatedStreakShow 
+                streak2={this.props.specificInteraction["streak"] + this.props.answeredCorrect}
+                streak1={this.props.specificInteraction["streak"]}/>
         </div>
         <div className="samplesentences">
             {("samples" in this.props.specificInteraction) && (this.props.specificInteraction["samples"].length > 0) && <SampleSentences samples={this.props.specificInteraction["samples"]}/>}
@@ -409,6 +410,53 @@ styling={styling}
     
     }
 }
+}
+
+class AnimatedStreakShow extends React.Component {
+    
+    state = {streak: this.props.streak1}
+    
+    componentDidMount () {
+        
+        setTimeout(() => {this.setState({streak: this.props.streak2});}, 200);
+        
+    }
+    
+    render () {
+        
+        var pips = []
+        
+        if (this.state.streak < 4) {
+        
+            for (var i = 0; i < (this.state.streak % 4); i++) {
+                console.log("Hi1");
+                pips.push(<div className="pipbig pip-green"/>);
+            }
+
+            for (var i = 0; i < (4 - (this.state.streak % 4)); i++) {
+                console.log("Hi2");
+                pips.push(<div className="pipbig pip-green-hollow"/>);
+            }
+        } else if (this.props.streak < 8) {
+            
+            for (var i = 0; i < (this.state.streak % 4); i++) {
+                console.log("Hi1");
+                pips.push(<div className="pipbig pip-blue"/>);
+            }
+
+            for (var i = 0; i < (8 - (this.state.streak % 4)); i++) {
+                console.log("Hi2");
+                pips.push(<div className="pipbig pip-blue-hollow"/>);
+            }
+        }
+
+        return (
+            <div style={{marginTop: "0.5em"}}>
+            {pips}
+            </div>
+        );
+
+    }
 }
 
 class FirstInput extends React.Component {

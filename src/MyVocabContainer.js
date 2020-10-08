@@ -176,7 +176,8 @@ class VocabCard extends React.Component {
                      <div>
                 <Modal centered show={this.state.showDialog} onHide={this.onHide}>
             <VocabDetail
-                data={this.props.data}/>
+                data={this.props.data}
+                active={this.props.active}/>
                 </Modal>
                 <Card
                 onClick={this.handleClick}
@@ -201,7 +202,8 @@ class VocabCard extends React.Component {
            <div>
                 <Modal centered show={this.state.showDialog} onHide={this.onHide}>
             <VocabDetail
-                data={this.props.data}/>
+                data={this.props.data}
+                active={this.props.active}/>
                 </Modal>
                 <Card
                 onClick={this.handleClick}
@@ -221,7 +223,7 @@ class VocabCard extends React.Component {
     }
 }
 
-class StreakShow extends React.Component {
+export class StreakShow extends React.Component {
     
     render () {
         
@@ -275,8 +277,9 @@ class VocabDetail extends React.Component {
         <div className="chinesedef">
             {"d" in this.props.data && this.props.data["d"]}
         </div>
-        <div className="cardprogress">
-            {"s" in this.props.data && <ProgressBar variant="success" now={10*(this.props.data["s"])}/>}
+        <div style={{textAlign: "center", fontSize: "2em", marginTop: "1em"}}>
+            {this.props.active && <StreakShow 
+                streak={this.props.data['s']}/>}
         </div>
         <div className="samplesentences" style={{marginBottom: "2em"}}>
             {("samples" in this.props.data) && <SampleSentences samples={this.props.data["samples"]}/>}
