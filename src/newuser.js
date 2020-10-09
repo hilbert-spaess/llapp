@@ -57,7 +57,7 @@ export class NewUser2 extends React.Component {
         
         var choices = [];
         
-        for (var i = 0; i < this.props.choices.length; i++) {
+        for (var i = 0; i < 2; i++) {
             
             choices.push(<CourseCard
                          name={this.props.choices[i]["name"]}
