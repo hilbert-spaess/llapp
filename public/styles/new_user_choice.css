@@ -1,0 +1,65 @@
+.newuserinput {
+    
+    width: 40%;
+    
+    
+}
+
+.newuserinputcontainer {
+    
+    margin-top: 3em;
+    text-align: center;
+    
+}
+
+.vocabchoicecontainer {
+    
+    text-align: center;
+    margin-top: 2em;
+}
+
+.floatingemptycard {
+    border: 1px dashed black;
+    
+}
+
+.selectdonebutton {
+    
+  border-radius: 2rem;
+  padding: 1rem 2rem;
+  font-size: 30px;
+  background-color: #ccffcc;
+    
+}
+
+
+.crossbackground {
+  
+  border: none;
+  margin-right: 10px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 25px;
+  height: 25px;
+  background-color: white;
+    
+}
+
+.cross1 {
+  height: 25px;
+  width: 2px;
+  margin-left: 12px;
+  margin-right: 12px;
+  background-color: red;
+  transform: translateX(-50%) rotate(45deg);
+  Z-index: 1;
+}
+
+.cross2 {
+  height: 25px;
+  width: 2px;
+  background-color: red;
+  transform: rotate(90deg);
+  Z-index: 2;
+}

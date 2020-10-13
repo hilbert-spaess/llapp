@@ -47,9 +47,8 @@ function App() {
             <ProtectedRoute path="/home" component={Launch} exact/>
             <ProtectedRoute path="/read" component={LearningSupervisor}/>
             <ProtectedRoute path="/lessons" component={LessonsSupervisor}/>
-            <ProtectedRoute path="/newuser" component={NewUser}/>
             <ProtectedRoute path="/vocab" component={MyVocabContainer}/>
-            <ProtectedRoute path="/newusertest" component={NewUserTest}/>
+            <ProtectedRoute path="/newuser" component={NewUserTest}/>
             <ProtectedRoute path="/progress" component={ProgressContainer}/>
             <Route path="/login" component={Login}/>
             <Route path="/signup" component={Signup}/>

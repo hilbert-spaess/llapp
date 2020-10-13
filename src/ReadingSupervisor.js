@@ -106,7 +106,7 @@ const LearningContainerData = (props) => {
     return <div>Oops {error.message}</div>;
     }
     if (data.displayType == "newUser") {
-        return <Redirect to="/newusertest"/>;
+        return <Redirect to="/newuser"/>;
     }
     if (data.displayType == "tutorial") {
         return <Tutorial

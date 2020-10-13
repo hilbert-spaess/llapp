@@ -5,6 +5,7 @@ import {useApi} from './use-api.js';
 import {APIHOST} from './api_config.js';
 import {Card, Button, Row, Col, Container, Modal, ProgressBar} from 'react-bootstrap';
 import {BarWrapped} from './sidebar.js';
+import {VocabSelectContainer} from './VocabSelect.js';
 
 export class NewUserTest extends React.Component {
     
@@ -43,11 +44,6 @@ export class NewUserTest1 extends React.Component {
     
     render () {
         
-        
-        if (this.state.native==null) {
-            return <NativeChoice
-                    handleClick = {this.handleNativeClick}/>;
-        } 
         if (this.state.course==null) {
             return <CourseChoice
                     handleSubmit = {this.handleCourseChoiceSubmit}/>;
@@ -55,7 +51,7 @@ export class NewUserTest1 extends React.Component {
 
         return (
             
-            <Choose
+            <VocabSelectLoader
             data={this.state}/>
             
             );
@@ -238,7 +234,7 @@ export class CourseChoice1 extends React.Component {
 
                 <div className="mainbox">
                             <div className="maintext">
-                        Now choose one of our tailored reading courses to get started.
+                        Choose your reading level.
                         </div>
                        <Row style={{marginTop: "3em", justifyContent: "space-evenly"}}>
              {choices}
@@ -309,10 +305,12 @@ export class Ready extends React.Component {
     }
 }
 
-const Choose = (props) => {
+        
+const VocabSelectLoader = (props) => {
+    
         const {login, getAccessTokenWithPopup, user} = useAuth0();
         const opts = {audience: APIHOST};
-        const {error, loading, data, refresh} = useApi(APIHOST + '/api/newuser', {course: props.data.course, native: props.data.native, answers: props.data.answers, email: user.email}, opts);
+        const {error, loading, data, refresh} = useApi(APIHOST + '/api/coursevocab', {course: props.data.course, email: user.email}, opts);
         const getTokenAndTryAgain = async () => {
         await getAccessTokenWithPopup(opts);
         refresh()
@@ -328,9 +326,11 @@ const Choose = (props) => {
         }
         return <div>Oops {error.message}</div>;
         }
-        return (<Redirect to="/"/>);
+        return (<VocabSelectContainer
+                data={data}/>);
     }
 
+    
 
             
              

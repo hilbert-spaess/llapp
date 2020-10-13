@@ -42,7 +42,7 @@ const LaunchLoader = () => {
     return <div></div>;
     }
     if (data.displayType == "newUser") {
-        return <Redirect to="/newusertest"/>;
+        return <Redirect to="/newuser"/>;
     }
     console.log(data.notification);
     
