@@ -18,6 +18,31 @@ function range(start, end) {
   return Array(end - start + 1).fill().map((_, idx) => start + idx)
 }
 
+function get_second_streak(streak1, first) {
+    
+    console.log(first);
+    console.log(streak1);
+    
+    if (first == 1) {
+        
+        return streak1 + 1;
+        
+    } else {
+        
+        if (streak1 < 5) {
+            
+            return 1;
+            
+        }
+        
+        if (streak1 < 9) {
+            
+            return 5;
+            
+        }
+    }
+}
+
 export class LearningContainer extends React.Component {
 
     state = {
@@ -104,12 +129,16 @@ export class LearningContainer extends React.Component {
     
     
     handleNext = (event) => {
+        
+        console.log(get_second_streak(this.props.currentChunk["interaction"][this.props.currentChunk["keyloc"]]["streak"], this.props.currentChunk["first"]));
+        
         this.props.handleNext({
         answeredCorrect: this.state.answeredCorrect,
         chunkId: this.props.currentChunk["chunkid"],
         keyloc: this.props.currentChunk["keyloc"],
         first: this.props.currentChunk["first"],
         answers: this.state.answers,
+        streak: get_second_streak(this.props.currentChunk["interaction"][this.props.currentChunk["keyloc"]]["streak"], this.props.currentChunk["first"]),
         runningProgress: this.state.runningProgress,
         done: 0,
         interaction: this.props.currentChunk["interaction"]});
@@ -355,7 +384,22 @@ class AnswerCard extends React.Component {
     } else {
         var streak = "";
     }
+    var streak1 = this.props.specificInteraction["streak"];
+    if (this.props.answeredCorrect == 0 || this.props.first == 0) {
+        if (streak1 == 0 && this.props.answeredCorrect == 0) {
+            var streak2 = 0;
+        } else if (streak1 < 5) {
+            var streak2 = 1;
+        } else if (streak2 < 9) {
+            var streak2 = 5;
+        }
+    } else {
+        var streak2 = streak1 + 1;
+    }   
     var full = ((streak == "0" && this.props.first == 1) || this.props.answeredCorrect == 0);
+    if (this.props.first == 0) {
+        streak1 = streak2;
+    }
     if (this.props.show == true) {
 	return (
 	    <div key={this.props.show}>
@@ -375,8 +419,8 @@ styling={styling}
         </div>
         <div className="cardprogress">
             <AnimatedStreakShow 
-                streak2={this.props.specificInteraction["streak"] + this.props.answeredCorrect}
-                streak1={this.props.specificInteraction["streak"]}/>
+                streak2={streak2}
+                streak1={streak1}/>
         </div>
         <div className="samplesentences">
             {full && ("samples" in this.props.specificInteraction) && <SampleSentences samples={this.props.specificInteraction["samples"]}/>}
@@ -393,8 +437,8 @@ styling={styling}
         </div>
         <div className="cardprogress">
             <AnimatedStreakShow 
-                streak2={this.props.specificInteraction["streak"] + this.props.answeredCorrect}
-                streak1={this.props.specificInteraction["streak"]}/>
+                streak2={streak2}
+                streak1={streak2}/>
         </div>
         <div className="samplesentences">
             {("samples" in this.props.specificInteraction) && (this.props.specificInteraction["samples"].length > 0) && <SampleSentences samples={this.props.specificInteraction["samples"]}/>}

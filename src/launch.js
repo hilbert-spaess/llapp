@@ -96,7 +96,7 @@ class Launch1 extends React.Component {
             <Card className="launchcardtwotop launchtopright"
             style={{}}>
                 <Link to="/vocab">
-            <div className="launchcontent" style={{color: "red"}}>
+            <div className="launchcontent" style={{color: "#261447"}}>
                 <Type/> <br></br>
                 My Vocab
             </div>

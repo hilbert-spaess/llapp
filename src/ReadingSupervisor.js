@@ -347,6 +347,17 @@ class LearningSummary extends React.Component {
         for (var i = 0; i < this.props.words.length; i++) {
             words.push(<div style={{textAlign: "center", fontSize: "20px"}}>{this.props.words[i]}</div>);
         };
+
+        if (this.props.words.length == 0) {
+            
+            return (
+                
+                <div>
+            <div style={{marginTop: "5em", fontSize: "30px", textAlign: "center"}}> No reviews needed today. Take a break and let your memory do its work! </div>
+                </div>
+            );
+        }
+
              
         return (
             <div>
