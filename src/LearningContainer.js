@@ -426,9 +426,9 @@ class AnimatedStreakShow extends React.Component {
         
         var pips = []
         
-        if (this.state.streak < 4) {
+        if (this.state.streak < 5) {
         
-            for (var i = 0; i < (this.state.streak % 4); i++) {
+            for (var i = 0; i < (this.state.streak % 5); i++) {
                 console.log("Hi1");
                 pips.push(<div className="pipbig pip-green"/>);
             }
@@ -437,14 +437,14 @@ class AnimatedStreakShow extends React.Component {
                 console.log("Hi2");
                 pips.push(<div className="pipbig pip-green-hollow"/>);
             }
-        } else if (this.props.streak < 8) {
+        } else if (this.props.streak < 9) {
             
             for (var i = 0; i < (this.state.streak % 4); i++) {
                 console.log("Hi1");
                 pips.push(<div className="pipbig pip-blue"/>);
             }
 
-            for (var i = 0; i < (8 - (this.state.streak % 4)); i++) {
+            for (var i = 0; i < (4 - (this.state.streak % 4)); i++) {
                 console.log("Hi2");
                 pips.push(<div className="pipbig pip-blue-hollow"/>);
             }

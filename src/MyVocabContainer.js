@@ -374,18 +374,18 @@ export class StreakShow extends React.Component {
         
         var pips = []
         
-        if (this.props.streak < 4) {
+        if (this.props.streak <= 4) {
         
-            for (var i = 0; i < (this.props.streak % 4); i++) {
+            for (var i = 0; i < (this.props.streak % 5); i++) {
                 console.log("Hi1");
                 pips.push(<div className="pip pip-green"/>);
             }
 
-            for (var i = 0; i < (4 - (this.props.streak % 4)); i++) {
+            for (var i = 0; i < (4 - (this.props.streak % 5)); i++) {
                 console.log("Hi2");
                 pips.push(<div className="pip pip-green-hollow"/>);
             }
-        } else if (this.props.streak < 8) {
+        } else if (this.props.streak < 9) {
             
             for (var i = 0; i < (this.props.streak % 4); i++) {
                 console.log("Hi1");
