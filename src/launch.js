@@ -5,7 +5,7 @@ import {Stylesheet, css} from 'aphrodite';
 import {Card, Container, Row, Col, Nav, Navbar, Form, FormControl, Popover, OverlayTrigger, Overlay, Toast} from 'react-bootstrap';
 import {BarWrapped} from './sidebar.js';
 import {Auth0Provider, useAuth0, withAuthenticationRequired} from '@auth0/auth0-react';
-import {BookOpen, Type, FastForward} from 'react-feather';
+import {BookOpen, Type, FastForward, Info} from 'react-feather';
 import {useApi} from './use-api.js';
 import {Redirect} from 'react-router-dom';
 import {APIHOST} from './api_config.js';
@@ -66,47 +66,49 @@ class Launch1 extends React.Component {
     render () {
         return (
           <Container fluid="lg">
-                      <Row>
+             <Row>
                         <Col>
-            <Card className="launchcardtwotop"
-            style={{backgroundColor: "lightgreen"}}>
-            <Notification
-            no={this.props.data.read_notification}
-            />
-            <div className="launchcontent">
-              <Link to="/read">
-                <BookOpen/> <br></br>
-                Start Reading
-            
-              </Link>
+            <Card className="launchnotification"
+            style={{backgroundColor: "lightyellow"}}>
+            <div className="messagetext">
+                <Info size={30}/> <br></br>{this.props.data.message}
             </div>
             </Card>
             </Col>
+            </Row>
+                      <Row>
+                        <Col>
+            <Card className="launchcardtwotop launchtopleft"
+            style={{}}>
+            <Notification
+            no={this.props.data.read_notification}
+            />
+              <Link to="/read">
+                   <div className="launchcontent" style={{color: "green"}}>
+                <BookOpen/> <br></br>
+    
+                Start Reading
+               </div>
+              </Link>
+            </Card>
+            </Col>
             <Col>
-            <Card className="launchcardtwotop"
-            style={{backgroundColor: "lightpink"}}>
-            <div className="launchcontent">
-              <Link to="/vocab">
+            <Card className="launchcardtwotop launchtopright"
+            style={{}}>
+                <Link to="/vocab">
+            <div className="launchcontent" style={{color: "red"}}>
                 <Type/> <br></br>
                 My Vocab
-            
-              </Link>
             </div>
+ </Link>
             </Card>
             </Col>
            </Row>
              <Row>
-                        <Col>
-            <Card className="launchcardtwo"
-            style={{backgroundColor: "lightyellow"}}>
-            <div className="messagetext">
-                {this.props.data.message}
-            </div>
-            </Card>
-            </Col>
+                        
             <Col>
             <Card className="launchcardtwo"
-            style={{backgroundColor: "#aaf8ff"}}>
+            style={{borderColor: "#aaf8ff"}}>
             <div className="launchcontent">
               <Progress
                 data={this.props.data}

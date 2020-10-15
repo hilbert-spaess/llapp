@@ -10,8 +10,8 @@
     overflow: hidden;
 }
 
-body {
-    font-family: raleway;
+#root {
+    font-family: "Helvetica";
 }
 
 .row {
