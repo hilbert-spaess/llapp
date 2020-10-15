@@ -163,7 +163,7 @@ class Progress extends React.Component {
              return (
             <div className="outercircle" style={{backgroundColor: "#00ffff", backgroundImage: "linear-gradient(" + displayprogress + "deg, darkblue 50%, transparent 50%), linear-gradient(90deg, transparent 50%, darkblue 50%)"}}>
             <div className="innercircle">
-            <div className="progressLevel">{this.props.data.level}</div>
+            <div className="progressLevel"><div style={{fontSize: "25px", display: "inline-block"}}>LVL</div>{this.props.data.level}</div>
             </div> 
             </div>
             );
