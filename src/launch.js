@@ -106,16 +106,18 @@ class Launch1 extends React.Component {
            </Row>
              <Row>
                         
-            <Col>
             <Card className="launchcardtwo"
             style={{borderColor: "#aaf8ff"}}>
-            <div className="launchcontent">
+            <div className="launchprogress">
               <Progress
                 data={this.props.data}
                 />
+                    </div>
+            <div style={{position: "absolute", width: "70%", right: 0, marginTop: "2em"}}>
+              <VocabGrid
+                words={this.props.data.levelwords}/>
             </div>
             </Card>
-            </Col>
            </Row>
             </Container>
         );
@@ -168,6 +170,62 @@ class Progress extends React.Component {
         }
     }
 }
+
+class VocabGrid extends React.Component {
+    
+    render () {
+        
+        var vocabCards = [];
+        
+        for (var i = 0; i <this.props.words.length; i++) {
+            
+            vocabCards.push(<VocabCard
+                            word={this.props.words[i]["w"]}
+                            streak={this.props.words[i]["s"]}/>);
+        }
+        
+        return (
+            <Container justifyContent="center">
+<Row style={{justifyContent:"center"}}>
+            {vocabCards}
+</Row>
+           </Container>     
+        );
+    }
+}
+
+class VocabCard extends React.Component {
+    
+    render () {
+    
+         if (this.props.streak < 4) {
+                var colour = "lightgreen";
+            } else if (this.props.streak < 8) {
+                var colour = "lightblue";
+            } else {
+                var colour = "white";
+            }
+        
+        return (
+            
+            <div>
+                <Card
+                style={{height: "4rem", width: "9rem", marginRight: "0.3rem", marginLeft: "0.3rem", marginTop: "0.5rem", borderColor: colour}}>
+
+                <div className="cardHeader"
+                style={{textAlign: "center",
+                      padding: "1rem"}}>
+                {this.props.word} <br></br> 
+                </div>
+            </Card>
+            </div>
+        
+        );
+    }
+}
+
+
+            
 
 const LogoutButton = () => {
     
