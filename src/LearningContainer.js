@@ -433,7 +433,7 @@ class AnimatedStreakShow extends React.Component {
                 pips.push(<div className="pipbig pip-green"/>);
             }
 
-            for (var i = 0; i < (4 - (this.state.streak % 4)); i++) {
+            for (var i = 0; i < (4 - (this.state.streak % 5)); i++) {
                 console.log("Hi2");
                 pips.push(<div className="pipbig pip-green-hollow"/>);
             }
