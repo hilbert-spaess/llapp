@@ -306,7 +306,7 @@ class VocabCard extends React.Component {
     
     render () {
         
-        if (this.props.data['s'] < 4) {
+        if (this.props.data['s'] < 5) {
             var colour = "lightgreen";
         } else if (this.props.data['s'] < 8) {
             var colour = "lightblue";
@@ -374,7 +374,7 @@ export class StreakShow extends React.Component {
         
         var pips = []
         
-        if (this.props.streak <= 4) {
+        if (this.props.streak < 5) {
         
             for (var i = 0; i < (this.props.streak % 5); i++) {
                 console.log("Hi1");
