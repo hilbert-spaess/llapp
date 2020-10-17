@@ -214,8 +214,9 @@ class VocabCard extends React.Component {
 
                 <div className="cardHeader"
                 style={{textAlign: "center",
-                      padding: "1rem"}}>
-                {this.props.word} <br></br> 
+                      padding: "0.5rem"}}>
+                {this.props.word} <br></br>
+                <StreakShow streak={this.props.streak}/>
                 </div>
             </Card>
             </div>
@@ -225,7 +226,44 @@ class VocabCard extends React.Component {
 }
 
 
+class StreakShow extends React.Component {
+    
+    render () {
+        
+        var pips = []
+        
+        if (this.props.streak < 5) {
+        
+            for (var i = 0; i < (this.props.streak % 5); i++) {
+                console.log("Hi1");
+                pips.push(<div className="pip pip-green"/>);
+            }
+
+            for (var i = 0; i < (4 - (this.props.streak % 5)); i++) {
+                console.log("Hi2");
+                pips.push(<div className="pip pip-green-hollow"/>);
+            }
+        } else if (this.props.streak < 9) {
             
+            for (var i = 0; i < (this.props.streak % 4); i++) {
+                console.log("Hi1");
+                pips.push(<div className="pip pip-blue"/>);
+            }
+
+            for (var i = 0; i < (4 - (this.props.streak % 4)); i++) {
+                console.log("Hi2");
+                pips.push(<div className="pip pip-blue-hollow"/>);
+            }
+        }
+
+        return (
+            <div style={{marginTop: "0.1em"}}>
+            {pips}
+            </div>
+        );
+
+    }
+}      
 
 const LogoutButton = () => {
     
