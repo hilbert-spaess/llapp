@@ -19,6 +19,7 @@ import {ProgressContainer} from './progress.js';
 import {Landing} from './landing.js';
 import {Login} from './login.js';
 import {Signup} from './signup.js';
+import {ReviewToday} from './review_today.js';
 
 export const history = createBrowserHistory();
 
@@ -50,6 +51,7 @@ function App() {
             <ProtectedRoute path="/vocab" component={MyVocabContainer}/>
             <ProtectedRoute path="/newuser" component={NewUserTest}/>
             <ProtectedRoute path="/progress" component={ProgressContainer}/>
+            <ProtectedRoute path="/reviewtoday" component={ReviewToday}/>
             <Route path="/login" component={Login}/>
             <Route path="/signup" component={Signup}/>
             <Route path="/" component={Landing} exact/>

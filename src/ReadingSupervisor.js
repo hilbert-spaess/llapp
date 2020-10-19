@@ -271,6 +271,12 @@ const LearningContainerLogging = (props) => {
         refresh();
     }
     
+    const handleSummary = () => {
+        return (
+            <Redirect to="/reviewtoday"/>
+            );
+    }
+    
     console.log(props.currentChunk)
     
     if (props.displayType != "done") {
@@ -294,7 +300,8 @@ const LearningContainerLogging = (props) => {
     return <div></div>;
 } else {
     return (
-        <div> <LearningSummaryContainer/></div>
+        <div> <LearningSummaryContainer
+            handleSummary={handleSummary}/></div>
         );
 }
 }
@@ -302,6 +309,7 @@ const LearningContainerLogging = (props) => {
 const LearningSummaryContainer = (props) => {
     
     const payload = {}
+
     
     const {login, getAccessTokenWithPopup } = useAuth0();
     const opts = {audience: APIHOST, 
@@ -317,6 +325,12 @@ const LearningSummaryContainer = (props) => {
         await getAccessTokenWithPopup(opts);
         refresh()
   };
+    
+    const handleSummary = (event) => {
+        
+        return <Redirect to="/reviewtoday"/>;
+        
+    }
     if (loading) {
         return <div></div>;
     }
@@ -333,6 +347,7 @@ const LearningSummaryContainer = (props) => {
         
         <LearningSummary
         words={data.words}
+        handleSummary={handleSummary}
         />
     );
 
@@ -340,7 +355,20 @@ const LearningSummaryContainer = (props) => {
 
 class LearningSummary extends React.Component {
     
+    state = {done: 0}
+    
+    handleSummary = () => {
+        
+        this.setState({done: 1});
+    }
+    
     render () {
+        
+        if (this.state.done == 1) {
+            
+            return <Redirect to="/reviewtoday"/>;
+                
+        }
         
         var words = []
         
@@ -360,11 +388,9 @@ class LearningSummary extends React.Component {
 
              
         return (
-            <div>
-            <div style={{marginTop: "5em", fontSize: "30px", textAlign: "center"}}> Today's work is done. New words learned: </div>
-            
-            <div style={{marginTop: "3em"}}> {words} </div>
-            <div style={{marginTop: "2em", fontSize: "30px", textAlign: "center"}}> Check in tomorrow for new reviews. Or check your <Link style={{color: "blue"}} to="/vocab">vocab</Link> progress here.</div>
+            <div style={{textAlign: "center"}}>
+            <div style={{marginTop: "5em", fontSize: "30px"}}> You're done for today!</div>
+            <button style={{borderColor: "green", padding: "15px", color: "green", borderRadius: "30px", marginTop: "2em", backgroundColor: "white"}} onClick={this.handleSummary}>Review today's progress</button>
             </div>
             );
     }
