@@ -22,7 +22,7 @@ export class LearningSupervisor extends React.Component {
     
     render () {
         return (
-            <FreeBarWrapped WrappedComponent={LearningSupervisor1}/>
+            <FreeBarWrapped WrappedComponent={LearningSupervisor1} displayType={this.props.displayType}/>
             );
     }
 }
@@ -30,7 +30,7 @@ export class LearningSupervisor extends React.Component {
 export class LearningSupervisor1 extends React.Component {
     
     state = {
-        parcelData: {answeredCorrect: "-1"},
+        parcelData: {answeredCorrect: "-1", displayType: this.props.displayType},
         loading: 0,
         runningProgress: [0, 0]
     };
@@ -284,6 +284,7 @@ const LearningContainerLogging = (props) => {
     return (
         <div>
         <LearningContainer
+            displayType={props.displayType}
             currentChunk = {props.currentChunk}
             handleNext = {handleNext}
             progress = {props.progress}
@@ -348,6 +349,7 @@ const LearningSummaryContainer = (props) => {
         <LearningSummary
         words={data.words}
         handleSummary={handleSummary}
+        permissions={data.permissions}
         />
     );
 
@@ -355,11 +357,18 @@ const LearningSummaryContainer = (props) => {
 
 class LearningSummary extends React.Component {
     
-    state = {done: 0}
+    state = {done: 0,
+            readForFun: 0}
     
     handleSummary = () => {
         
         this.setState({done: 1});
+    }
+    
+    readForFun = () => {
+        
+        this.setState({readForFun: 1});
+        
     }
     
     render () {
@@ -368,6 +377,18 @@ class LearningSummary extends React.Component {
             
             return <Redirect to="/reviewtoday"/>;
                 
+        }
+        
+        if (this.state.readForFun == 1) {
+            
+            return <LearningSupervisor1 displayType="readforfun"/>;
+            
+        }
+        
+        if (this.props.permissions.includes("b")) {
+            var readforfun = true;
+        } else {
+            var readforfun = false;
         }
         
         var words = []
@@ -390,7 +411,11 @@ class LearningSummary extends React.Component {
         return (
             <div style={{textAlign: "center"}}>
             <div style={{marginTop: "5em", fontSize: "30px"}}> You're done for today!</div>
+            <div>
             <button style={{borderColor: "green", padding: "15px", color: "green", borderRadius: "30px", marginTop: "2em", backgroundColor: "white"}} onClick={this.handleSummary}>Review today's progress</button>
+            </div><div>
+{readforfun && <button style={{borderColor: "darkpurple", padding: "15px", color: "darkpurple", borderRadius: "30px", marginTop: "2em", backgroundColor: "white"}} onClick={this.readForFun}>Read for fun!</button>}
+            </div>
             </div>
             );
     }

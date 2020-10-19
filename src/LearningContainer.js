@@ -131,12 +131,19 @@ export class LearningContainer extends React.Component {
     handleNext = (event) => {
         
         console.log(get_second_streak(this.props.currentChunk["interaction"][this.props.currentChunk["keyloc"]]["streak"], this.props.currentChunk["first"]));
+        console.log(this.props.displayType); 
+        if (this.props.displayType == "readforfun") {
+            var x = "readforfunlogging";
+        } else {
+            var x = this.props.displayType;
+        }
         
         this.props.handleNext({
         answeredCorrect: this.state.answeredCorrect,
         chunkId: this.props.currentChunk["chunkid"],
         keyloc: this.props.currentChunk["keyloc"],
         first: this.props.currentChunk["first"],
+        displayType: x,
         answers: this.state.answers,
         streak: get_second_streak(this.props.currentChunk["interaction"][this.props.currentChunk["keyloc"]]["streak"], this.props.currentChunk["first"]),
         runningProgress: this.state.runningProgress,
@@ -192,6 +199,7 @@ export class LearningContainer extends React.Component {
 	    handleHide={this.handleHide}
 	    specificInteraction={interaction[this.state.currentInteraction]}
         first={this.props.currentChunk["first"]}
+        displayType={this.props.displayType}
         handleClose={this.handleCloseDialog}/>
 		    </Modal>
 </div>
@@ -332,7 +340,7 @@ class TextCard extends React.Component {
             }
         } else {
             words.push(spc);
-        words.push(<input spellcheck="false" className="workinput" type="text"  key = {this.props.showDialog} autocomplete="off" autoFocus ref = {(input) => {this.nameInput=input;}} value={value} onChange={this.handleChange} style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", flex: "none", display: "inline-block", border: "0", width: this.props.answerlength.toString() + "ch", borderTop: "0", outlineTop: "0", lineHeight: "20px", borderBottom: "2px dotted blue", textAlign: "left"}}/>);
+        words.push(<input spellcheck="false" className="workinput" type="text"  key = {this.props.showDialog} autocomplete="off" autoFocus ref = {(input) => {this.nameInput=input;}} value={value} onChange={this.handleChange} style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", flex: "none", display: "inline-block", border: "0", width: (this.props.answerlength+1).toString() + "ch", borderTop: "0", outlineTop: "0", lineHeight: "20px", borderBottom: "2px dotted blue", textAlign: "left"}}/>);
         }
     };
 
@@ -418,9 +426,9 @@ styling={styling}
             {"def" in this.props.specificInteraction && this.props.specificInteraction["def"]}
         </div>
         <div className="cardprogress">
-            <AnimatedStreakShow 
+            {(this.props.displayType != "readforfun") && <AnimatedStreakShow 
                 streak2={streak2}
-                streak1={streak1}/>
+                streak1={streak1}/>}
         </div>
         <div className="samplesentences">
             {full && ("samples" in this.props.specificInteraction) && <SampleSentences samples={this.props.specificInteraction["samples"]}/>}

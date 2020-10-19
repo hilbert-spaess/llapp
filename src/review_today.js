@@ -110,9 +110,9 @@ class ReviewChunk extends React.Component {
             console.log(sentencearray[i] == "n't");
             console.log(spc == "");
             if (i == loc) {
-                words.push(<Text style={{color: "green"}}>{spc + sentencearray[i]}</Text>);
+                words.push(<Text style={{color: "green",  overflowWrap: "normal"}}>{spc + sentencearray[i]}</Text>);
             } else {
-                words.push(<Text>{spc + sentencearray[i]}</Text>);
+                words.push(<Text style={{ overflowWrap: "normal"}}>{spc + sentencearray[i]}</Text>);
             }
         };
 
@@ -120,7 +120,7 @@ class ReviewChunk extends React.Component {
             return (
                 <div style={{marginTop: "1em", marginBottom: "1em", border: "1px solid lightgrey", borderRadius: "50px", padding: "1em"}}>
                 <div style={{fontSize: "35px"}}>{wd}</div>
-                <Text style={{fontSize: "25px", lineHeight: "2em", textAlign: "center",fontFamily: "roboto"}}>
+                <Text style={{fontSize: "25px", lineHeight: "2em", textAlign: "center",fontFamily: "roboto", wordBreak: "keep-all", display: "inline-wrap"}}>
 
                 {words}
                 </Text>

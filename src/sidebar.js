@@ -5,13 +5,13 @@ import {Link} from 'react-router-dom';
 import {useAuth0} from '@auth0/auth0-react';
 import bookshelf from './bookshelf.png';
 
-export const FreeBarWrapped = ({WrappedComponent}) => (
+export const FreeBarWrapped = ({WrappedComponent, ...args}) => (
     <div>
     <TopBar/>
                 <Container fluid>
                                 <Row className="mainrow">
                                 <Col>
-                            <WrappedComponent/>
+                            <WrappedComponent {...args}/>
                                 </Col>
                                 </Row>
                    </Container>
