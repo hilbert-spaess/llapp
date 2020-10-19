@@ -88,7 +88,9 @@ class ReviewChunk extends React.Component {
      render () {
         
         var words = []
-        var punct = [".",",",";","!","?",":", "'s"];
+        var punct = [".",",",";","!","?",":", "'s", "’s", "n't", "n’t"];
+         
+        console.log(punct.includes("n't"));
             
         
         var sentencearray = this.props.data[0].split("#");
@@ -104,6 +106,9 @@ class ReviewChunk extends React.Component {
             } else {
                 var spc = " ";
             }
+            console.log(sentencearray[i]);
+            console.log(sentencearray[i] == "n't");
+            console.log(spc == "");
             if (i == loc) {
                 words.push(<Text style={{color: "green"}}>{spc + sentencearray[i]}</Text>);
             } else {

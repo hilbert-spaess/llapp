@@ -309,7 +309,7 @@ class TextCard extends React.Component {
 	var words = [];
 	var tcolour = "black";
 	var answer = {};
-    var punct = [".",",",";","!","?",":", "'s"];
+    var punct = [".",",",";","!","?",":", "'s", "n't"];
     for (var i = 0; i < length; i++) {
         if (context[i]["u"] == 1) {
         var tcolour = "black";
