@@ -476,7 +476,9 @@ class AnimatedStreakShow extends React.Component {
     
     render () {
         
-        var pips = []
+        var pips = [];
+        
+        console.log(this.state.streak);
         
         if (this.state.streak < 5) {
         
@@ -489,7 +491,7 @@ class AnimatedStreakShow extends React.Component {
                 console.log("Hi2");
                 pips.push(<div className="pipbig pip-green-hollow"/>);
             }
-        } else if (this.props.streak < 9) {
+        } else if (this.state.streak < 9) {
             
             for (var i = 0; i < (this.state.streak % 4); i++) {
                 console.log("Hi1");
