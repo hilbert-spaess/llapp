@@ -87,7 +87,7 @@ class Launch1 extends React.Component {
                    <div className="launchcontent" style={{color: "green"}}>
                 <BookOpen/> <br></br>
     
-                Start Reading
+                Daily Reading
                </div>
               </Link>
             </Card>

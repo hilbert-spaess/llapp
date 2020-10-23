@@ -19,6 +19,7 @@ export class NewUserTest extends React.Component {
 export class NewUserTest1 extends React.Component {
     
     state = {native: null,
+             readingacademic: null,
              answers: null,
             course: null}
     
@@ -27,6 +28,12 @@ export class NewUserTest1 extends React.Component {
         console.log("henlo");
         
         this.setState({native: id});
+        
+    }
+    
+    handleReadingChoiceSubmit = (id) => {
+        
+        this.setState({readingacademic: id});
         
     }
     
@@ -44,8 +51,14 @@ export class NewUserTest1 extends React.Component {
     
     render () {
         
+        if (this.state.readingacademic==null) {
+            return <ReadingChoice
+                    handleSubmit = {this.handleReadingChoiceSubmit}/>;
+        }
+        
         if (this.state.course==null) {
             return <CourseChoice
+                    readingacademic={this.state.readingacademic}
                     handleSubmit = {this.handleCourseChoiceSubmit}/>;
         }
 
@@ -203,6 +216,7 @@ const CourseChoice = (props) => {
         return <div>Oops {error.message}</div>;
         }
         return (<CourseChoice1 
+                readingacademic = {props.readingacademic}
                 choices = {data.choices}
                 handleSubmit={props.handleSubmit}/>);
 }
@@ -215,9 +229,20 @@ export class CourseChoice1 extends React.Component {
         
         var keys = Object.keys(this.props.choices);
         
+        if (this.props.readingacademic == "2") {
+            
+            var ids = ["1", "2", "6"]
+            
+        } 
+        if (this.props.readingacademic=="1") {
+            
+            var ids = ["5", "7"]
+            
+        }
+        
         for (var i = 0; i < keys.length; i++) {
             
-            if (keys[i] == "1" || keys[i] == "2" || keys[i] == "5" || keys[i] == "6" || keys[i] == "7") {
+            if (ids.includes(keys[i])) {
             
             
             choices.push(<CourseCard
@@ -244,6 +269,42 @@ export class CourseChoice1 extends React.Component {
             );
     }
 }
+
+class ReadingChoice extends React.Component {
+    
+    render () {
+        
+        var choices = [];
+        
+        choices.push(<CourseCard 
+                     name="General Reading"
+                     id={1}
+                     variant="outline-success"
+                     buttonText="Choose"
+                     handleClick={this.props.handleSubmit}/>);
+    
+        choices.push(<CourseCard 
+                     name="Academic Reading"
+                     id={2}
+                     variant="outline-success"
+                     buttonText="Choose"
+                     handleClick={this.props.handleSubmit}/>);
+        
+        return (
+            
+             <div className="mainbox">
+                            <div className="maintext">
+                        Welcome! What are you working on?
+                        </div>
+                       <Row style={{marginTop: "3em", justifyContent: "space-evenly"}}>
+             {choices}
+                        </Row>
+                        </div>
+        );
+    }
+}
+            
+            
 
 export class CourseCard extends React.Component {
     

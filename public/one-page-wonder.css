@@ -24,7 +24,6 @@ h2 {
 
 .rounded-pill {
   border-radius: 2rem;
-  margin-left: 5rem;
 }
 
 .login-rounded-pill {
@@ -85,12 +84,10 @@ header.masthead .masthead-content .masthead-heading {
   font-size: 3rem;
   font-weight: 900;
   text-align: left;
-  margin-left: 5rem;
 }
 
 header.masthead .masthead-content .masthead-subheading {
   font-size: 2rem;
-   margin-left: 5rem;
    color: black;
     text-align: left;
 }

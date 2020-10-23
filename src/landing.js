@@ -37,7 +37,81 @@ export const Landing = () => {
     
     return <Landing1/>;
 }
+
+export class WhyWorks extends React.Component {
+        
+    render () {
+            
+        var contentlist = [{"t": "Daily Reviews", "c": "Our Spaced Repetition System shows you exactly the text you need to see every day. Practise recalling words at regular intervals until you don't even need to think about it. Once you see a word with RiceCake, we guarantee you'll never forget it."}, {"t": "Real Text", "c": "Learn your vocab in the context of real English writing. From academic essays to newspaper articles, improve with real content at your level."}, {"t": "Your Words", "c": "We suggest new words to meet your English goals. Alternatively, enter new words daily and watch them turn up in your reading like magic!"}, {"t": "Interactive Reading", "c": "You get better at what you practise. Actively recalling words with interactive exercises means you'll be reaching for your new English skills whenever you write or speak."}, {"t": "Rapid Progress", "c": "Track your progress on your personal dashboard. Watch your vocabulary and grammar increase and solidify with every day's reviews."}]
+
+        var contents = [];
+
+        for (var i =0; i < contentlist.length; i++) {
+            
+            if (i==2) {
+                var width="65%";
+            } else {
+                var width="40%";
+            }
+
+            contents.push(<WhyWorksCard data={contentlist[i]} width={width}/>);
+        
+        }
+
+        return (
+            <>
+            <div style={{fontSize: "40px", marginTop: "2em"}}>Improve your English skills like never before.</div>
+<Container>
+    <Row 
+     style={{justifyContent: "space-around"}}>
+            {contents}
+</Row>
+            </Container>
+<div style={{marginBottom: "5em"}}/>
+</>
+            
+        );
+    }
+}
+
+class WhyWorksCard extends React.Component {
     
+    render () {
+        
+        return (
+            <Card className="whyworkscard" style={{width: this.props.width, zIndex: "0"}}>
+                 <FadeInSection style={{display: "inline-block", zIndex: "1"}}>
+                <div className="whyworkstitle">{this.props.data.t}</div>
+                <div className="whyworksbody">{this.props.data.c}</div>
+</FadeInSection>
+</Card>
+        );
+    }
+}
+
+
+
+function FadeInSection(props) {
+  const [isVisible, setVisible] = React.useState(true);
+  const domRef = React.useRef();
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => setVisible(entry.isIntersecting));
+    });
+    observer.observe(domRef.current);
+    return () => observer.unobserve(domRef.current);
+  }, []);
+  return (
+    <div
+      className={`fade-in-section ${isVisible ? 'is-visible' : ''}`}
+      ref={domRef}
+    >
+      {props.children}
+    </div>
+  );
+}
+
+
 
 export class Landing1 extends React.Component {
     
@@ -45,7 +119,6 @@ export class Landing1 extends React.Component {
         return (
             <>
               <nav class="navbar navbar-expand-sm navbar-dark navbar-custom fixed-top">
-    <div class="container">
       <a class="navbar-brand" href="/">RiceCake</a>
         <ul class="navbar-nav ml-auto">
           <li class="nav-item signloglink">
@@ -55,86 +128,27 @@ export class Landing1 extends React.Component {
             <Link style={{color: "white"}} to="/login">Log In</Link>
           </li>
         </ul>
-    </div>
   </nav>
 <header className="masthead text-center text-white">
     <div className="masthead-content">
-      <div className="container">
-        <h2 className="masthead-heading mb-0">Read Smarter</h2>
-        <h3 className="masthead-subheading mb-0">Interactive, targeted text.</h3>
-        <h3 className="masthead-subheading mb-0">The vocab you want to learn.</h3>
+      <Container fluid="lg">
+        <h2 className="masthead-heading mb-0" style={{fontSize: "90px"}}>Read Smarter</h2>
+        <h3 className="masthead-subheading mb-0" style={{fontSize: "70px"}}>Interactive targeted text.</h3>
+        <h3 className="masthead-subheading mb-0" style={{fontSize: "70px"}}>The vocab you want.</h3>
             <div align="left">
         <Link align="left" to="/signup" className="btn btn-primary btn-xl rounded-pill mt-5">Sign up now</Link>
             </div>
-      </div>
+      </Container>
     </div>
     <div className="bg-circle-1 bg-circle"></div>
     <div className="bg-circle-2 bg-circle"></div>
     <div className="bg-circle-3 bg-circle"></div>
     <div className="bg-circle-4 bg-circle"></div>
   </header>
-
-  <section>
-    <div className="container">
-            
-     <div className="row align-items-center">
-            <div className="col-lg-6 order-lg-1">
-          <div className="p-5">
-            <h2 className="display-4">Your goals. Our text.</h2>
-            <p style={{fontSize: "20px", marginTop: "2rem"}}>We generate unlimited pieces of text at the level you want, featuring the words you need to learn.
-                Helping your child advance their reading age? Studying for the TOEFL exam?
-Decide on a personal curriculum, and we'll give you the daily reading sessions you need to master it. <br></br><br></br>
-                    Or, show us your level and we'll suggest an ideal curriculum for you.</p>
-          </div>
-        </div>
-        <div className="col-lg-6 order-lg-2">
-          <div className="p-5">
-            <img style={{padding: "5px"}} className="img-fluid" src={img2}/>
-          </div>
-        </div>
-        
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div className="container">
-      <div className="row align-items-center">
-        
-        <div className="col-lg-6 order-lg-2">
-          <div className="p-5">
-            <h2 className="display-4">Interactive reading guarantees progress</h2>
-            <p style={{fontSize: "20px", marginTop: "2rem"}}>Without intentional repetition, you forget most words you read. Our reading platform is interactive, improving your reading, writing, typing and spelling skills. Interacting with the text is perfect preparation for test-taking.
-                </p>
-          </div>
-        </div>
-<div className="col-lg-6 order-lg-1">
-          <div className="p-5">
-            <img className="img-fluid" src={img1} alt=""/>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div className="container">
-      <div className="row align-items-center">
-      
-        <div className="col-lg-6 order-lg-1">
-          <div className="p-5">
-            <h2 className="display-4">Learn vocab in context. Not with decks.</h2>
-            <p style={{fontSize: "20px", marginTop: "2rem"}}>Drilling vocab cards is effective for memorisation, but is less helpful for recognising and using words in context. Our cutting-edge SRS algorithm schedules words to appear naturally in your daily reading. You won't even notice your vocabulary increasing, but you can watch your level grow with our vocabulary tracking tool.</p>
-          </div>
-        </div>
- <div className="col-lg-6 order-lg-2">
-          <div className="p-5">
-            <img className="img-fluid" src={img3} alt=""/>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+<Container fluid="lg">
+<WhyWorks/>
+</Container>
+  
             
            
 
