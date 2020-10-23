@@ -130,7 +130,7 @@ export class Landing1 extends React.Component {
     render () {
         return (
             <>
-              <nav class="navbar navbar-expand-sm navbar-dark navbar-custom fixed-top">
+              <nav class="navbar navbar-expand-sm navbar-dark navbar-custom ">
     <Container fluid="lg">
       <a class="navbar-brand" href="/">RiceCake</a>
         <ul class="navbar-nav ml-auto">

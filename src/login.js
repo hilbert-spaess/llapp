@@ -23,11 +23,6 @@ export const Login = () => {
     
     
     return (<div>
-            <nav className="navbar navbar-expand-sm navbar-dark navbar-custom fixed-top">
-    <div className="container">
-      <Link className="navbar-brand" to="/">RiceCake</Link>
-    </div>
-  </nav>
             <LoginForm
             webAuth={webAuth}/>
             </div>);
@@ -71,7 +66,8 @@ class LoginForm extends React.Component {
         return (
             <div className="fill">
             <header className="loginmasthead text-center text-white">
-    <div className="masthead-content">
+            <Row style={{justifyContent: "space-around"}}>
+    <Card className="login-content">
             <div className="loginerror">
             {this.state.err && this.state.err["description"]}
     </div>
@@ -94,14 +90,15 @@ class LoginForm extends React.Component {
     </div>
         </form>
         <button onClick={this.handleSubmit} className="btn btn-primary btn-xl login-rounded-pill mt-4">Login</button>  </div>
-    </div>
 
     <div className="loginsubs">
             New user? <Link to="/signup">Sign up </Link>here.
             
     </div>
-    
+    </Card>
+            </Row>
   </header>
+          
 </div>
           
             );

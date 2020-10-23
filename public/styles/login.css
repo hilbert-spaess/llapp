@@ -11,12 +11,13 @@
   }
 
 .logininput {
-  border: 0;
   background: transparent;
-  border-bottom: 1px solid black;
+  border: border: 1px solid #ccc;
+  border-radius: 5px;
   margin-top: 0.5em;
-  margin-bottom: 0.5em;
-  
+  margin-bottom: 2em;
+  width: 75%;
+  padding: 0.5em;
 }
 
 .logininput:focus {
@@ -24,7 +25,7 @@
 }
 
 .loginsubs {
-    margin-top: 1.5rem;
+    margin-top: 3em;
     color: gray;
     
 }

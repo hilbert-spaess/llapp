@@ -22,12 +22,7 @@ export const Signup = () => {
         responseType: "token"});
     
     return (<div>
-            <nav className="navbar navbar-expand-sm navbar-dark navbar-custom fixed-top">
-    <div className="container">
-      <Link className="navbar-brand" to="/">RiceCake</Link>
-        
-    </div>
-  </nav>
+            
             <SignUpForm
             webAuth={webAuth}/>
             </div>);
@@ -93,7 +88,8 @@ class SignUpForm extends React.Component {
         return (
             <div className="fill">
             <header className="loginmasthead text-center text-white">
-    <div className="masthead-content">
+    <Row style={{justifyContent: "space-around"}}>
+    <Card className="login-content">
             <div className="loginerror">
             {this.state.err && this.convert(this.state.err["description"])}
     </div>
@@ -123,13 +119,13 @@ class SignUpForm extends React.Component {
     </div>
         </form>
         <button onClick={this.handleSubmit} className="btn btn-primary btn-xl login-rounded-pill mt-4">Sign up</button>  </div>
-    </div>
 
     <div className="loginsubs">
             Already signed up? <Link to="/login">Log in </Link>here.
             
     </div>
-    
+    </Card>
+            </Row>
   </header>
 </div>
           
