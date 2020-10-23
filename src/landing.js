@@ -5,7 +5,7 @@ import {Stylesheet, css} from 'aphrodite';
 import {Card, Container, Row, Col, Nav, Navbar, Form, FormControl, Popover, OverlayTrigger, Overlay, Toast} from 'react-bootstrap';
 import {BarWrapped} from './sidebar.js';
 import {Auth0Provider, useAuth0, withAuthenticationRequired} from '@auth0/auth0-react';
-import {BookOpen, Type, FastForward} from 'react-feather';
+import {BookOpen, Type, FastForward, Clock, Edit} from 'react-feather';
 import {useApi} from './use-api.js';
 import {Redirect} from 'react-router-dom';
 import {APIHOST} from './api_config.js';
@@ -42,11 +42,18 @@ export class WhyWorks extends React.Component {
         
     render () {
             
-        var contentlist = [{"t": "Daily Reviews", "c": "Our Spaced Repetition System shows you exactly the text you need to see every day. Practise recalling words at regular intervals until you don't even need to think about it. Once you see a word with RiceCake, we guarantee you'll never forget it."}, {"t": "Real Text", "c": "Learn your vocab in the context of real English writing. From academic essays to newspaper articles, improve with real content at your level."}, {"t": "Your Words", "c": "We suggest new words to meet your English goals. Alternatively, enter new words daily and watch them turn up in your reading like magic!"}, {"t": "Interactive Reading", "c": "You get better at what you practise. Actively recalling words with interactive exercises means you'll be reaching for your new English skills whenever you write or speak."}, {"t": "Rapid Progress", "c": "Track your progress on your personal dashboard. Watch your vocabulary and grammar increase and solidify with every day's reviews."}]
+        var contentlist = [{"t": "Daily Reviews", "c": "Our Spaced Repetition System shows you exactly the text you need to see every day. Practise recalling words at regular intervals until you don't even need to think about it. Once you see a word with RiceCake, we guarantee you'll never forget it."}, {"t": "Real Text", "c": "Learn your vocab in the context of real English writing. From academic essays to newspaper articles, improve with real content at your level. We have a huge database of curated text samples."}, {"t": "Your Words", "c": "We suggest new words to meet your English goals. Alternatively, enter new words yourself and watch them turn up in your reading like magic!"}, {"t": "Interactive Reading", "c": "You get better at what you practise. Actively recalling words with interactive exercises means you'll be reaching for your new English skills whenever you write or speak."}, {"t": "Rapid Progress", "c": "Track your progress on your personal dashboard. Watch your vocabulary and grammar increase and solidify with every day's reviews."}]
 
         var contents = [];
 
         for (var i =0; i < contentlist.length; i++) {
+            
+            if (i==0) {
+                var icon = {Clock};
+            }
+            else {
+                var icon = <div></div>;
+                }
             
             if (i==2) {
                 var width="65%";
@@ -54,13 +61,13 @@ export class WhyWorks extends React.Component {
                 var width="40%";
             }
 
-            contents.push(<WhyWorksCard data={contentlist[i]} width={width}/>);
+            contents.push(<WhyWorksCard data={contentlist[i]} width={width} id={i}/>);
         
         }
 
         return (
             <>
-            <div style={{fontSize: "40px", marginTop: "2em"}}>Improve your English skills like never before.</div>
+            <div style={{fontSize: "40px", marginTop: "2em"}}>Improve your English skills systematically and efficiently.</div>
 <Container>
     <Row 
      style={{justifyContent: "space-around"}}>
@@ -81,6 +88,11 @@ class WhyWorksCard extends React.Component {
         return (
             <Card className="whyworkscard" style={{width: this.props.width, zIndex: "0"}}>
                  <FadeInSection style={{display: "inline-block", zIndex: "1"}}>
+                     {this.props.id==0 && <div style={{textAlign: "center"}}><Clock size={40} color="green"/></div>}
+{this.props.id==1 && <div style={{textAlign: "center"}}><BookOpen size={40} color="green"/></div>}
+{this.props.id==2 && <div style={{textAlign: "center"}}><Type size={40} color="green"/></div>}
+{this.props.id==3 && <div style={{textAlign: "center"}}><Edit size={40} color="green"/></div>}
+{this.props.id==4 && <div style={{textAlign: "center"}}><FastForward size={40} color="green"/></div>}
                 <div className="whyworkstitle">{this.props.data.t}</div>
                 <div className="whyworksbody">{this.props.data.c}</div>
 </FadeInSection>
@@ -119,6 +131,7 @@ export class Landing1 extends React.Component {
         return (
             <>
               <nav class="navbar navbar-expand-sm navbar-dark navbar-custom fixed-top">
+    <Container fluid="lg">
       <a class="navbar-brand" href="/">RiceCake</a>
         <ul class="navbar-nav ml-auto">
           <li class="nav-item signloglink">
@@ -128,6 +141,7 @@ export class Landing1 extends React.Component {
             <Link style={{color: "white"}} to="/login">Log In</Link>
           </li>
         </ul>
+</Container>
   </nav>
 <header className="masthead text-center text-white">
     <div className="masthead-content">
@@ -146,7 +160,7 @@ export class Landing1 extends React.Component {
     <div className="bg-circle-4 bg-circle"></div>
   </header>
 <Container fluid="lg">
-<WhyWorks/>
+<WhyWorks style={{fontFamily: "roboto"}}/>
 </Container>
   
             

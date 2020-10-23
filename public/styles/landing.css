@@ -21,13 +21,14 @@
 
 .whyworkstitle {
     margin-top: 0.5em;
+    color: green;
     font-size: 40px;
     text-align: center;
 }
 
 .whyworksbody {
     margin-top: 1em;
-    font-size: 20px;
+    font-size: 17px;
     text-align: center;
 }
     
