@@ -92,7 +92,8 @@ class LoginForm extends React.Component {
         <button onClick={this.handleSubmit} className="btn btn-primary btn-xl login-rounded-pill mt-4">Login</button>  </div>
 
     <div className="loginsubs">
-            New user? <Link to="/signup">Sign up </Link>here.
+          <div>  New user? <Link to="/signup">Sign up </Link>here.</div>
+          <div style={{marginTop: "0.5em"}}> Return to <Link to="/">Landing Page</Link>.</div>
             
     </div>
     </Card>
