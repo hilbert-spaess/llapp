@@ -102,7 +102,7 @@ class Launch1 extends React.Component {
             <Col>
             <Card className="launchcardtwotop launchtopright"
             style={{}}>
-                <Link to="/vocab">
+                <Link to={{pathname: "/vocab", data: this.props.data}}>
             <div className="launchcontent" style={{color: "#261447"}}>
                 <Type/> <br></br>
                 My Vocab

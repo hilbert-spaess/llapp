@@ -36,13 +36,15 @@ export class MyVocabContainer extends React.Component {
     }
     
     render () {
+        const {data} = this.props.location;
+        console.log(data);
         return (
-            <BarWrapped WrappedComponent={LoadingVocabContainer}/>
+            <FreeBarWrapped WrappedComponent={LoadingVocabContainer} data={data}/>
         );
     }
 }
 
-export const LoadingVocabContainer = () => {
+export const LoadingVocabContainer = (props) => {
     
      const {login, getAccessTokenWithPopup } = useAuth0();
      const opts = {audience: APIHOST};
@@ -51,6 +53,11 @@ export const LoadingVocabContainer = () => {
         await getAccessTokenWithPopup(opts);
         refresh()
   };
+    console.log(props.data);
+    if (props.data !== undefined) {
+        return <MyVocabContainerSubmit
+                data={props.data.vocab_data}/>;
+    }
     if (loading) {
         return <div></div>;
     }
