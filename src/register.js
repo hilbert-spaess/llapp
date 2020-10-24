@@ -2,6 +2,7 @@ import {parse} from 'query-string';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Row, Card} from 'react-bootstrap';
+
 import {Redirect} from 'react-router-dom';
 
 export class Register extends React.Component {

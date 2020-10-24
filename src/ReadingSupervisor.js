@@ -21,8 +21,10 @@ function range(start, end) {
 export class LearningSupervisor extends React.Component {
     
     render () {
+        
+        const {data} = this.props.location;
         return (
-            <FreeBarWrapped WrappedComponent={LearningSupervisor1} displayType={this.props.displayType}/>
+            <FreeBarWrapped WrappedComponent={LearningSupervisor1} displayType={this.props.displayType} data={data}/>
             );
     }
 }
@@ -53,6 +55,7 @@ export class LearningSupervisor1 extends React.Component {
             parcelData={this.state.parcelData}
             handleNext={this.handleNext}
             runningProgress={this.state.runningProgress}
+            data={this.props.data}
             />
         );
     }
@@ -94,6 +97,16 @@ const LearningContainerData = (props) => {
         await getAccessTokenWithPopup(opts);
         refresh()
   };
+    
+    if ("read_data" in props.data) {
+        return <LearningContainerUpdatable
+            allChunks = {props.data.read_data.allChunks}
+            displayType= {props.data.read_data.displayType}
+            progress={props.data.read_data.today_progress}
+            runningProgress = {props.runningProgress}
+            reviewyet = {reviewyet}
+        />  
+    }
     if (loading) {
         return <div></div>;
     }

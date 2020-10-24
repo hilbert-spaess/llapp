@@ -83,7 +83,7 @@ class Launch1 extends React.Component {
             <Notification
             no={this.props.data.read_notification}
             />
-              <Link to="/read">
+              <Link to={{pathname: "/read", data: this.props.data}}>
                    <div className="launchcontent" style={{color: "green"}}>
                 <BookOpen/> <br></br>
     
