@@ -31,7 +31,8 @@ export const Login = () => {
 
 class LoginForm extends React.Component {
     
-    state = {err: null}
+    state = {err: null,
+            forgotPassword: null}
     
     handleInputChange = (event) => {
     const target = event.target;
@@ -61,7 +62,33 @@ class LoginForm extends React.Component {
         }
     }
     
+    forgotPassword = () => {
+        
+        this.setState({forgottenPassword: true});
+        
+    }
+    
+    handleCancelPassword = () => {
+        
+        this.setState({forgottenPassword: false});
+        
+    }
+    
+    handlePasswordSent = () => {
+        
+        this.setState({forgottenPassword: "sent"});
+        
+    }
     render () {
+        
+        if (this.state.forgottenPassword == true) {
+            
+            return (
+                <ForgotPassword
+                handleCancel={this.handleCancelPassword}
+                passwordSent={this.handlePasswordSent}/>
+                );
+        }
         
         return (
             <div className="fill">
@@ -93,6 +120,7 @@ class LoginForm extends React.Component {
 
     <div className="loginsubs">
           <div>  New user? <Link to="/signup">Sign up </Link>here.</div>
+          <div style={{marginTop: "0.5em"}}> <Link onClick={this.forgotPassword}> Forgot your password? </Link></div>
           <div style={{marginTop: "0.5em"}}> Return to <Link to="/">Landing Page</Link>.</div>
             
     </div>
@@ -105,3 +133,96 @@ class LoginForm extends React.Component {
             );
     }
 }
+
+class ForgotPassword extends React.Component {
+    
+    state = {err: null,
+            responsedata: null,
+            passwordSent: false}
+    
+    handleInputChange = (event) => {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+    this.setState({
+      [name]: value    , err: null});
+    }
+    
+    handleSubmit = () => {
+        
+        const requestOptions = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({client_id:"3Quvqqshf1rWfO46Cmry14XeDjhwQMwM", email: this.state.email, connection: "Username-Password-Authentication"})
+    }
+        fetch("https://dev-yt8x5if8.eu.auth0.com/dbconnections/change_password", requestOptions).then(data => this.setState({responsedata: data}));
+        console.log(this.state.responsedata);
+        
+        this.setState({passwordSent: true});
+    }
+    
+    handleTryAgain = () => {
+        
+        this.setState({email: "", err: null, responsedata: null, passwordSent: false});
+        
+    }
+    
+    render () {
+        
+        if (this.state.passwordSent) {
+            
+            return (
+                
+                 <>
+            <header className="loginmasthead text-center">
+            <Row style={{justifyContent: "space-around"}}>
+    <Card style={{paddingBottom: "100px"}} className="login-content">
+        <div style={{fontSize: "30px"}}>Verification Email Sent.</div>
+        <div style={{textAlign: "center"}}>
+<button onClick={this.handleTryAgain} style={{width: "60%", marginTop: "1em"}} className="btn btn-primary btn-xl login-rounded-pill mt-4">Try Again</button> </div>
+            </Card>
+            </Row>
+            </header>
+            </>
+
+            );
+        }
+        
+        return (
+            
+            <>
+            <header className="loginmasthead text-center">
+            <Row style={{justifyContent: "space-around"}}>
+    <Card style={{paddingBottom: "100px"}} className="login-content">
+            <div style={{fontSize: "30px"}}>Confirm Email</div>
+            <div className="loginerror">
+            {this.state.err && this.state.err["description"]}
+    </div>
+      <div className="container">
+        <form
+            autoComplete="off">
+            <div className="formgroup">
+            <input className="logininput"
+            name="email"
+            type="text"
+            onChange={this.handleInputChange}
+            placeholder="Email"/>
+    </div>
+        </form>
+        </div>
+<div style={{textAlign: "center"}}>
+<button onClick={this.handleSubmit} style={{width: "60%", marginTop: "1em"}} className="btn btn-primary btn-xl login-rounded-pill mt-4">Send Reset Email </button> </div>
+ <div className="loginsubs">
+          <div> <Link onClick={this.props.handleCancel}>Go Back</Link></div>
+              </div>
+        </Card>
+        </Row>
+</header>
+</>
+ 
+);
+}
+}
+            
+        
+        
