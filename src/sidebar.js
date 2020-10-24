@@ -6,8 +6,23 @@ import {useAuth0} from '@auth0/auth0-react';
 import bookshelf from './bookshelf.png';
 
 export const FreeBarWrapped = ({WrappedComponent, data, ...args}) => (
+    
     <div>
     <TopBar data={data}/>
+                <Container fluid>
+                                <Row className="mainrow">
+                                <Col>
+                            <WrappedComponent {...args} data={data}/>
+                                </Col>
+                                </Row>
+                   </Container>
+</div>
+);
+
+export const FreeBarWrapped2 = ({WrappedComponent, data, ...args}) => (
+    
+    <div>
+    <TopBar2 data={data}/>
                 <Container fluid>
                                 <Row className="mainrow">
                                 <Col>
@@ -85,6 +100,31 @@ export class TopBar extends React.Component {
 
             <Navbar bg="dark" variant="dark" expand="lg">
   <Link to={{pathname: "/home", data: this.props.data}}><Navbar.Brand>RiceCake</Navbar.Brand></Link>
+  <Navbar.Toggle aria-controls="basic-navbar-nav" />
+  <Navbar.Collapse id="basic-navbar-nav">
+    <Nav className="mr-auto">
+      <Link to="/home"><Nav.Link href="/home"><Home/></Nav.Link></Link>
+      <Link to="/vocab"><Nav.Link href="/vocab"><Settings/></Nav.Link></Link>
+    </Nav>
+    <Nav className ="mr-sm-2">
+            <ProfileDropDown/>
+     
+    </Nav>
+  </Navbar.Collapse>
+</Navbar>
+            
+            );
+    }
+}
+
+export class TopBar2 extends React.Component {
+    
+    render () {
+        
+        return (
+
+            <Navbar bg="dark" variant="dark" expand="lg">
+  <Link to="/home"><Navbar.Brand>RiceCake</Navbar.Brand></Link>
   <Navbar.Toggle aria-controls="basic-navbar-nav" />
   <Navbar.Collapse id="basic-navbar-nav">
     <Nav className="mr-auto">

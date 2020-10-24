@@ -4,7 +4,7 @@ import {useLocation, Link} from 'react-router-dom';
 import {Card, Button, Row, Col, Container, Modal, ProgressBar} from 'react-bootstrap';
 import {InteractionCard} from './InteractionCard.js';
 import {getChunk, firstChunk, getData, JSONconvert} from './client.js';
-import {FreeBarWrapped} from './sidebar.js';
+import {FreeBarWrapped2} from './sidebar.js';
 import {Text} from 'react-native';
 import {useApi} from './use-api.js';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -24,7 +24,7 @@ export class LearningSupervisor extends React.Component {
         
         const {data} = this.props.location;
         return (
-            <FreeBarWrapped WrappedComponent={LearningSupervisor1} data={data} displayType={this.props.displayType}/>
+            <FreeBarWrapped2 WrappedComponent={LearningSupervisor1} data={data} displayType={this.props.displayType}/>
             );
     }
 }
@@ -105,6 +105,7 @@ const LearningContainerData = (props) => {
             progress={props.data.read_data.today_progress}
             runningProgress = {props.runningProgress}
             reviewyet = {reviewyet}
+            review_data={props.data.review_data}
         />  
     }
     if (loading) {
@@ -245,6 +246,7 @@ class LearningContainerUpdatable extends React.Component {
     
             <div>
             <LearningContainerLogging
+                review_data={this.props.review_data}
                 parcelData = {this.state.parcelData}
                 currentChunk = {this.props.allChunks[this.state.currentChunkNo]}
                 handleNext = {this.handleNext}
@@ -291,6 +293,7 @@ const LearningContainerLogging = (props) => {
     }
     
     console.log(props.currentChunk)
+    console.log(props.review_data);
     
     if (props.displayType != "done") {
 
@@ -313,6 +316,9 @@ const LearningContainerLogging = (props) => {
 } else if (loading) {
     return <div></div>;
 } else {
+    if (props.review_data !== undefined) {
+        return <div> <LearningSummary words={props.review_data.words} permissions={props.review_data.permissions}/></div>;
+    }
     return (
         <div> <LearningSummaryContainer
             handleSummary={handleSummary}/></div>
@@ -361,7 +367,6 @@ const LearningSummaryContainer = (props) => {
         
         <LearningSummary
         words={data.words}
-        handleSummary={handleSummary}
         permissions={data.permissions}
         />
     );
@@ -404,12 +409,6 @@ class LearningSummary extends React.Component {
             var readforfun = false;
         }
         
-        var words = []
-        
-        for (var i = 0; i < this.props.words.length; i++) {
-            words.push(<div style={{textAlign: "center", fontSize: "20px"}}>{this.props.words[i]}</div>);
-        };
-
         if (this.props.words.length == 0) {
             
             return (
