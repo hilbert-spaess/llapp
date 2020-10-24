@@ -11,7 +11,7 @@ export const FreeBarWrapped = ({WrappedComponent, data, ...args}) => (
                 <Container fluid>
                                 <Row className="mainrow">
                                 <Col>
-                            <WrappedComponent {...args}/>
+                            <WrappedComponent {...args} data={data}/>
                                 </Col>
                                 </Row>
                    </Container>
@@ -84,7 +84,7 @@ export class TopBar extends React.Component {
         return (
 
             <Navbar bg="dark" variant="dark" expand="lg">
-  <Link to="/home"><Navbar.Brand>RiceCake</Navbar.Brand></Link>
+  <Link to={{pathname: "/home", data: this.props.data}}><Navbar.Brand>RiceCake</Navbar.Brand></Link>
   <Navbar.Toggle aria-controls="basic-navbar-nav" />
   <Navbar.Collapse id="basic-navbar-nav">
     <Nav className="mr-auto">

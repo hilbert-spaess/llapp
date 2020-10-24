@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {Link} from 'react-router-dom';
 import {Stylesheet, css} from 'aphrodite';
 import {Card, Container, Row, Col, Nav, Navbar, Form, FormControl, Popover, OverlayTrigger, Overlay, Toast} from 'react-bootstrap';
-import {BarWrapped} from './sidebar.js';
+import {FreeBarWrapped} from './sidebar.js';
 import {Auth0Provider, useAuth0, withAuthenticationRequired} from '@auth0/auth0-react';
 import {BookOpen, Type, FastForward, Info} from 'react-feather';
 import {useApi} from './use-api.js';
@@ -13,13 +13,15 @@ import {APIHOST} from './api_config.js';
 export class Launch extends React.Component {
     
     render () {
+        const {data} = this.props.location;
+        console.log(data);
         return (
-            <BarWrapped WrappedComponent={LaunchLoader}/>
+            <FreeBarWrapped WrappedComponent={LaunchLoader} data={data}/>
         );
     }
 }
 
-const LaunchLoader = () => {
+const LaunchLoader = (props) => {
     
     
     
@@ -30,6 +32,11 @@ const LaunchLoader = () => {
         await getAccessTokenWithPopup(opts);
         refresh()
   };
+    console.log(props.data);
+    if (props.data !== undefined) {
+        return <Launch1
+                data={props.data}/>
+    }
     if (loading) {
         return <div></div>;
     }

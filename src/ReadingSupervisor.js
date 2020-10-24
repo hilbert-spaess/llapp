@@ -24,7 +24,7 @@ export class LearningSupervisor extends React.Component {
         
         const {data} = this.props.location;
         return (
-            <FreeBarWrapped WrappedComponent={LearningSupervisor1} displayType={this.props.displayType} data={data}/>
+            <FreeBarWrapped WrappedComponent={LearningSupervisor1} data={data} displayType={this.props.displayType}/>
             );
     }
 }
@@ -92,7 +92,7 @@ const LearningContainerData = (props) => {
         refresh();
     }
         
-    console.log(data);
+    console.log(props.data);
     const getTokenAndTryAgain = async () => {
         await getAccessTokenWithPopup(opts);
         refresh()
