@@ -12,7 +12,9 @@ export class Register extends React.Component {
         
         return (
             <div>
+            <header className="loginmasthead text-center text-white">
             {message}
+            </header>
             </div>
             );
     }
