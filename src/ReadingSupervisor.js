@@ -98,7 +98,7 @@ const LearningContainerData = (props) => {
         refresh()
   };
     
-    if ("read_data" in props.data) {
+    if (props.data !== undefined) {
         return <LearningContainerUpdatable
             allChunks = {props.data.read_data.allChunks}
             displayType= {props.data.read_data.displayType}

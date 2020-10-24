@@ -5,9 +5,9 @@ import {Link} from 'react-router-dom';
 import {useAuth0} from '@auth0/auth0-react';
 import bookshelf from './bookshelf.png';
 
-export const FreeBarWrapped = ({WrappedComponent, ...args}) => (
+export const FreeBarWrapped = ({WrappedComponent, data, ...args}) => (
     <div>
-    <TopBar/>
+    <TopBar data={data}/>
                 <Container fluid>
                                 <Row className="mainrow">
                                 <Col>
@@ -84,7 +84,7 @@ export class TopBar extends React.Component {
         return (
 
             <Navbar bg="dark" variant="dark" expand="lg">
-  <Link to="/"><Navbar.Brand href="/home">RiceCake</Navbar.Brand></Link>
+  <Link to="/home"><Navbar.Brand>RiceCake</Navbar.Brand></Link>
   <Navbar.Toggle aria-controls="basic-navbar-nav" />
   <Navbar.Collapse id="basic-navbar-nav">
     <Nav className="mr-auto">
