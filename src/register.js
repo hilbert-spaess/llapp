@@ -1,6 +1,7 @@
 import {parse} from 'query-string';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {Row, Card} from 'react-bootstrap';
 
 export class Register extends React.Component {
     
