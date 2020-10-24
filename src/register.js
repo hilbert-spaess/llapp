@@ -13,7 +13,11 @@ export class Register extends React.Component {
         return (
             <div>
             <header className="loginmasthead text-center text-white">
+             <Row style={{justifyContent: "space-around"}}>
+    <Card className="login-content">
             {message}
+            </Card>
+            </Row>
             </header>
             </div>
             );
