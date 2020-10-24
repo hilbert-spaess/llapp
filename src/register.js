@@ -6,7 +6,7 @@ export class Register extends React.Component {
     
     render () {
         
-        var params = parse(this.location.search);
+        var params = parse(this.props.location.search);
         
         var message = params.message;
         
