@@ -316,9 +316,7 @@ const LearningContainerLogging = (props) => {
 } else if (loading) {
     return <div></div>;
 } else {
-    if (props.review_data !== undefined) {
-        return <div> <LearningSummary words={props.review_data.words} permissions={props.review_data.permissions}/></div>;
-    }
+    
     return (
         <div> <LearningSummaryContainer
             handleSummary={handleSummary}/></div>
