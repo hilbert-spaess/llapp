@@ -374,7 +374,8 @@ const LearningSummaryContainer = (props) => {
 class LearningSummary extends React.Component {
     
     state = {done: 0,
-            readForFun: 0}
+            readForFun: 0,
+            stepTime: 0}
     
     handleSummary = () => {
         
@@ -384,6 +385,18 @@ class LearningSummary extends React.Component {
     readForFun = () => {
         
         this.setState({readForFun: 1});
+        
+    }
+    
+    resetAccount = () => {
+        
+        this.setState({resetAccount: 1});
+        
+    }
+    
+    skipToTomorrow = () => {
+        
+        this.setState({stepTime: 1});
         
     }
     
@@ -401,10 +414,34 @@ class LearningSummary extends React.Component {
             
         }
         
+        if (this.state.resetAccount == 1) {
+            
+            return <ResetAccount/>;
+            
+        }
+        
+        if (this.state.stepTime == 1) {
+            
+            return <StepTime/>;
+            
+        }
+        
         if (this.props.permissions.includes("b")) {
             var readforfun = true;
         } else {
             var readforfun = false;
+        }
+        
+        if (this.props.permissions.includes("s")) {
+            var skiptotomorrow = true;
+        } else {
+            var skiptotomorrow = false;
+        }
+        
+        if (this.props.permissions.includes("r")) {
+            var reset = true;
+        } else {
+            var reset = false;
         }
         
         if (this.props.words.length == 0) {
@@ -425,11 +462,94 @@ class LearningSummary extends React.Component {
             <button style={{borderColor: "green", padding: "15px", color: "green", borderRadius: "30px", marginTop: "2em", backgroundColor: "white"}} onClick={this.handleSummary}>Review today's progress</button>
             </div><div>
 {readforfun && <button style={{borderColor: "darkpurple", padding: "15px", color: "darkpurple", borderRadius: "30px", marginTop: "2em", backgroundColor: "white"}} onClick={this.readForFun}>Read for fun!</button>}
+{skiptotomorrow && <button style={{borderColor: "darkpurple", padding: "15px", color: "darkpurple", borderRadius: "30px", marginTop: "2em", backgroundColor: "white"}} onClick={this.skipToTomorrow}>Skip to tomorrow</button>}
+{reset && <button style={{borderColor: "darkpurple", padding: "15px", color: "darkpurple", borderRadius: "30px", marginTop: "2em", backgroundColor: "white"}} onClick={this.resetAccount}>Reset account.</button>}
             </div>
             </div>
             );
     }
 }
+
+const ResetAccount = (props) => {
+    
+    const payload = {}
+
+    
+    const {login, getAccessTokenWithPopup } = useAuth0();
+    const opts = {audience: APIHOST, 
+                  fetchOptions: {method: 'post',
+                                 headers: {'Access-Control-Allow-Credentials': 'true',
+                                           'Access-Control-Allow-Origin': '*',
+                                           'Accept': 'application/json',
+                                            'Content-Type': 'application/json',
+                                          'Access-Control-Request-Method': 'POST'}}};
+    const {error, data, loading, refresh} = useApi(APIHOST + '/api/resetaccount', payload, opts);
+    
+    const getTokenAndTryAgain = async () => {
+        await getAccessTokenWithPopup(opts);
+        refresh()
+  };
+    
+    
+    if (loading) {
+        return <div></div>;
+    }
+    if (error) {
+        if (error.error === 'consent_required') {
+      return (
+        <button onClick={getTokenAndTryAgain}>Consent to reading users</button>
+      );
+    }
+    return <div>Oops {error.message}</div>;
+    }
+
+    return (
+        
+        <Redirect to="/"/>
+    );
+
+}
+
+const StepTime = (props) => {
+    
+    const payload = {}
+
+    
+    const {login, getAccessTokenWithPopup } = useAuth0();
+    const opts = {audience: APIHOST, 
+                  fetchOptions: {method: 'post',
+                                 headers: {'Access-Control-Allow-Credentials': 'true',
+                                           'Access-Control-Allow-Origin': '*',
+                                           'Accept': 'application/json',
+                                            'Content-Type': 'application/json',
+                                          'Access-Control-Request-Method': 'POST'}}};
+    const {error, data, loading, refresh} = useApi(APIHOST + '/api/steptime', payload, opts);
+    
+    const getTokenAndTryAgain = async () => {
+        await getAccessTokenWithPopup(opts);
+        refresh()
+  };
+    
+    
+    if (loading) {
+        return <div></div>;
+    }
+    if (error) {
+        if (error.error === 'consent_required') {
+      return (
+        <button onClick={getTokenAndTryAgain}>Consent to reading users</button>
+      );
+    }
+    return <div>Oops {error.message}</div>;
+    }
+
+    return (
+        
+        <Redirect to="/"/>
+    );
+
+}
+
 
         
         

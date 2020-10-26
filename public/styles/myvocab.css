@@ -14,3 +14,23 @@
      border: 2px solid rgba(0,0,0, 0.25);
     
 }
+
+.countsummary {
+    position: relative;
+    
+    width: 10%;
+    height: 10em;
+    border-radius: 10%;
+    margin-left: 1em;
+    margin-right: 1em;
+    
+}
+
+.countcontent {
+    
+    font-size: 40px;
+    position: absolute;
+    bottom: 50%;
+    right: 50%;
+    transform: translate(50%, 50%);
+}

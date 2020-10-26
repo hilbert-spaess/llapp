@@ -270,11 +270,56 @@ class MyVocabContainer1 extends React.Component {
                  wipeSubmit={this.props.wipeSubmitData}
                  confirmSubmit={this.confirmSubmit}/>
                 </Modal>
+<CountSummary vocab={this.state.vocab}/>
 {levelgrids}
 <div style={{marginBottom: "3em"}}/>
                     </div>
     );
 
+    }
+}
+
+class CountSummary extends React.Component {
+    
+    render () {
+        
+        var greencount = 0;
+        var bluecount = 0;
+        var pinkcount = 0;
+        
+        for (var i = 0; i < this.props.vocab.length; i++) {
+            
+            if (this.props.vocab[i]['s'] < 5) {
+                
+                greencount = greencount + 1;
+                
+            } else if (this.props.vocab[i]['s'] < 9) {
+                
+                bluecount = bluecount + 1;
+                
+            } else {
+                
+                pinkcount = pinkcount + 1;
+                
+            }
+        }
+                
+                
+        
+        return (
+            
+            <Row style={{justifyContent: "center", marginTop: "1em"}}>
+            <div className="countsummary" style={{backgroundColor: "lightgreen"}}>
+                <div style={{paddingLeft: "1em", paddingTop: "0.5em", color: "grey"}}>Novice</div>
+                <div className="countcontent">{greencount}</div></div>
+            <div className="countsummary" style={{backgroundColor: "lightblue"}}>
+                <div style={{paddingLeft: "1em", paddingTop: "0.5em", color: "grey"}}>Proficient</div>
+                <div className="countcontent">{bluecount}</div></div>
+             <div className="countsummary" style={{backgroundColor: "lightpink"}}>
+                 <div style={{paddingLeft: "1em", paddingTop: "0.5em", color: "grey"}}>Expert</div>
+                 <div className="countcontent">{pinkcount}</div></div>
+            </Row>
+            );
     }
 }
             
