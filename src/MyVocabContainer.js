@@ -226,7 +226,31 @@ class MyVocabContainer1 extends React.Component {
                        
         }
         
+        var levels = {};
         
+        var levelgrids = [];
+        
+        for (var i = 0; i < this.state.vocab.length; i++ ) {
+            
+            var l = this.state.vocab[i]["l"];
+            if (levels[l.toString()] === undefined) {
+                levels[l.toString()] = [];
+            }
+            levels[l.toString()].push(this.state.vocab[i]);
+            
+        }
+        
+        var levelkeys = Object.keys(levels);
+        
+        for (var i =0; i<levelkeys.length; i++) {
+            
+            levelgrids.push(<div style={{marginTop: "1em", marginBottom: "5em"}}>
+                            <VocabGrid 
+                            VocabDict={levels[levelkeys[i]]}
+                            thislevel = {levelkeys[i]}
+                            showDetail = {this.props.showDetail} userlevel = {this.props.data.level}
+                            size="2em"/></div>);
+        }
         
         return (
             <div>
@@ -246,12 +270,7 @@ class MyVocabContainer1 extends React.Component {
                  wipeSubmit={this.props.wipeSubmitData}
                  confirmSubmit={this.confirmSubmit}/>
                 </Modal>
-        <div style={{marginTop: "1em"}}>
-<VocabGrid
-VocabDict={this.state.vocab}
-showDetail={this.props.showDetail}
-userlevel={this.props.data.level}
-size="2em"/></div>
+{levelgrids}
 <div style={{marginBottom: "3em"}}/>
                     </div>
     );
@@ -282,9 +301,13 @@ class VocabGrid extends React.Component {
         }
     
         return (
-    <Container>
-    <Row 
-     style={{justifyContent: "center"}}>
+    <Container fluid="xl">
+    <Row style={{justifyContent: "center"}}
+     >
+         <Col>
+<div style={{textAlign: "left", fontSize: "30px"}}>Level {this.props.thislevel} </div></Col></Row>
+ <Row 
+     style={{justifyContent: "space-evenly left"}}>
             {vocabCards}
 </Row>
             </Container>
@@ -314,11 +337,14 @@ class VocabCard extends React.Component {
     render () {
         
         if (this.props.data['s'] < 5) {
-            var colour = "lightgreen";
+            var colour = "#d2f8d2";
+            var variant = "success";
         } else if (this.props.data['s'] < 8) {
             var colour = "lightblue";
+            var variant = "";
         } else {
             var colour = "white";
+            var variant = "success";
         }
         
         if (this.props.active) {
@@ -334,17 +360,16 @@ class VocabCard extends React.Component {
                 <Card
                 onClick={this.handleClick}
                 className="myvocabcard"
-                style={{height: "10rem", width: "15rem", marginRight: "1rem", marginLeft: "1rem", marginTop: "1rem", backgroundColor: colour}}>
-
+                style={{height: "5rem", width: "15rem", marginRight: "1rem", marginLeft: "1rem", marginTop: "1rem", backgroundImage: "linear-gradient(0deg,  "+ colour + " 0%, white 100%)"}}>
                 <div className="cardHeader"
                 style={{textAlign: "center",
                       padding: "1rem",
                       fontSize: this.props.size}}>
-                {this.props.data["w"]} <br></br> 
-    {this.props.active && <StreakShow 
-                    streak={this.props.data["s"]}/>}
+                {this.props.data["w"]}
                 </div>
 </Card>
+<div style={{width: "15rem", marginRight: "1rem", marginLeft: "1rem"}}>
+<StreakBar streak={this.props.data["s"]} variant={variant}/></div>
 </div>
             );
     }  else {
@@ -360,7 +385,7 @@ class VocabCard extends React.Component {
                 <Card
                 onClick={this.handleClick}
                 className="myvocabcard"
-                style={{height: "10rem", width: "15rem", marginRight: "1rem", marginLeft: "1rem", marginTop: "1rem", backgroundColor: "lightgrey"}}>
+                style={{height: "5rem", width: "15rem", marginRight: "1rem", marginLeft: "1rem", marginTop: "1rem", backgroundColor: "lightgrey"}}>
 
                 <div className="cardHeader"
                 style={{textAlign: "center",
@@ -372,6 +397,48 @@ class VocabCard extends React.Component {
 </div>
 );
     }
+    }
+}
+
+export class StreakBar extends React.Component {
+    
+    render () {
+        
+        var pips = [];
+        
+        if (this.props.streak < 5) {
+            
+            var now = (this.props.streak)*100/4;
+        
+            for (var i = 0; i < (this.props.streak % 5); i++) {
+                console.log("Hi1");
+                pips.push(<div className="pip pip-green"/>);
+            }
+
+            for (var i = 0; i < (4 - (this.props.streak % 5)); i++) {
+                console.log("Hi2");
+                pips.push(<div className="pip pip-green-hollow"/>);
+            }
+        } else if (this.props.streak < 9) {
+            
+            var now = (this.props.streak % 4) * 100/4;
+            
+            for (var i = 0; i < (this.props.streak % 4); i++) {
+                console.log("Hi1");
+                pips.push(<div className="pip pip-blue"/>);
+            }
+
+            for (var i = 0; i < (4 - (this.props.streak % 4)); i++) {
+                console.log("Hi2");
+                pips.push(<div className="pip pip-blue-hollow"/>);
+            }
+        }
+        console.log(now);
+        return (
+            <div style={{marginBotttom: "0.5em"}}>
+            <ProgressBar now={now} variant =  {this.props.variant} style={{height: "8px"}}/>
+            </div>
+        );
     }
 }
 
