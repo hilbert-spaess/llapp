@@ -164,12 +164,32 @@ const MyVocabContainerLogging = (props) => {
 
 class MyVocabContainer1 extends React.Component {
     
+    constructor(props) {
+        super(props);
+        this.refsArray = [];
+        this.myRef1 = React.createRef();
+        this.myRef2 = React.createRef();
+        this.myRef3 = React.createRef();
+        this.myRefs = [this.myRef1, this.myRef2, this.myRef3];
+    }
+    
     state = {
         showDialog: false,
         showAddNew: false,
         detailId: null,
         detailActive: null,
         vocab: this.props.data.vocab
+    }
+    
+
+    executeScroll = (i) => {
+        console.log("scrolling nibba");
+        console.log(i);
+        this.scrollToRef(this.myRefs[i]);
+    }
+    
+    scrollToRef = (ref) => {
+        ref.current.scrollIntoView({behavior: 'smooth'})
     }
     
     showDetail = (id, active) => {
@@ -241,11 +261,14 @@ class MyVocabContainer1 extends React.Component {
         }
         
         var levelkeys = Object.keys(levels);
+        var levelslength = levelkeys.length;
         
         for (var i =0; i<levelkeys.length; i++) {
             
-            levelgrids.push(<div style={{marginTop: "1em", marginBottom: "5em"}}>
-                            <VocabGrid 
+           
+            
+            levelgrids.push(<div ref={this.myRefs[i]} style={{marginTop: "1em", marginBottom: "5em"}}>
+                            <VocabGrid
                             VocabDict={levels[levelkeys[i]]}
                             thislevel = {levelkeys[i]}
                             showDetail = {this.props.showDetail} userlevel = {this.props.data.level}
@@ -270,7 +293,7 @@ class MyVocabContainer1 extends React.Component {
                  wipeSubmit={this.props.wipeSubmitData}
                  confirmSubmit={this.confirmSubmit}/>
                 </Modal>
-<CountSummary vocab={this.state.vocab}/>
+<LevelFinder userlevel={this.props.data.level} onClick={this.executeScroll} levelslength={levelslength}/>
 {levelgrids}
 <div style={{marginBottom: "3em"}}/>
                     </div>
@@ -322,6 +345,68 @@ class CountSummary extends React.Component {
             );
     }
 }
+
+class LevelFinder extends React.Component {
+    
+    render () {
+        
+        var levels = [];
+        
+        for (var i = 0; i < 10; i++) {
+            
+            if (i < this.props.userlevel) {
+                
+                var colour = "lightgreen";
+                const j = i;
+                levels.push(<LevelCircle no={i} colour={colour} onClick={() => {this.props.onClick(j)}}/>);
+                
+            } else if (i < this.props.levelslength) {
+                var colour = "lightgrey";
+                const j = i;
+                levels.push(<LevelCircle no={i} colour={colour} onClick={() => {this.props.onClick(j)}}/>);
+                }
+                
+                else {
+                
+                var colour = "lightgrey";
+                var onClick = () => this.props.onClick(this.props.userlevel - 1);
+                levels.push(<LevelCircle no={i} colour={colour} onClick={() => {this.props.onClick( this.props.userlevel - 1)}}/>);
+                
+            }
+            
+        
+            
+        }
+        
+        return (
+            
+            <div>
+             <Container fluid="xl">
+             <Row style={{justifyContent: "center", marginTop: "1em"}}>
+             {levels}
+            </Row>
+</Container>
+            </div>
+            
+            );
+        
+    }
+}
+            
+class LevelCircle extends React.Component {
+    
+    render () {
+        
+        return (
+            <div style={{display: "inline-block", backgroundColor: this.props.colour}} className="levelcircle" onClick={this.props.onClick}>
+            <div className="centerno">
+            {this.props.no + 1}
+            </div></div>
+                
+       );
+    }
+}
+            
             
 
 class VocabGrid extends React.Component {
@@ -416,7 +501,7 @@ class VocabCard extends React.Component {
                 </div>
 </Card>
 <div style={{width: "15rem", marginRight: "1rem", marginLeft: "1rem"}}>
-<StreakBar streak={this.props.data["s"]} variant={variant}/></div>
+<StreakShow streak={this.props.data["s"]} variant={variant}/></div>
 </div>
             );
     }  else {
@@ -521,7 +606,7 @@ export class StreakShow extends React.Component {
         }
 
         return (
-            <div style={{marginTop: "0.5em"}}>
+            <div style={{textAlign: "center", marginLeft: "1rem", marginRight: "1rem"}}>
             {pips}
             </div>
         );
@@ -539,12 +624,15 @@ class VocabDetail extends React.Component {
 	    <div className="vocabdisplay">
 		    {this.props.data["w"]}
 	    </div>
-{this.props.active && <StreakBar streak={this.props.data['s']} variant={this.props.variant}/>}
+<div style={{textAlign: "center", marginTop: "0.5em"}}>
+{this.props.active && <StreakShow streak={this.props.data['s']} variant={this.props.variant}/>}
+</div>
         </div>
         <div className="chinesedef">
+            <hr style={{marginTop: "1em"}}></hr>
             {"chinesedef" in this.props.data && <div>{this.props.data["chinesedef"]}</div>}
         </div>
-        <div className="chinesedef" style={{marginTop: "1em", paddingLeft: "1em", paddingRight: "1em"}}>
+        <div className="chinesedef" style={{marginTop: "0.5em", paddingLeft: "1em", paddingRight: "1em"}}>
             {"d" in this.props.data && this.props.data["d"]}
         </div>
         <hr></hr>

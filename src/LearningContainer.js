@@ -404,6 +404,11 @@ class AnswerCard extends React.Component {
     } else {
         var streak2 = streak1 + 1;
     }   
+    if (streak2 < 5) {
+        var colour="lightgreen"
+    } else if (streak2 < 9) {
+        var colour="lightblue"
+    }
     var full = ((streak == "0" && this.props.first == 1) || this.props.answeredCorrect == 0);
     if (this.props.first == 0) {
         streak1 = streak2;
@@ -411,7 +416,7 @@ class AnswerCard extends React.Component {
     if (this.props.show == true) {
 	return (
 	    <div key={this.props.show}>
-	    <div>
+	     <div style={{height: "5em", backgroundColor: colour}}>
             {full && <FirstInput 
 handleHide={this.props.handleHide}
 styling={styling}
@@ -419,16 +424,16 @@ styling={styling}
 />}
 {!full && <div><div className="vocabdisplay">{this.props.word}</div><SecondInput handleHide={this.props.handleClose} styling={styling}/></div>}
 </div>
+ <div className="cardprogress">
+            {(this.props.displayType != "readforfun") && <AnimatedStreakShow 
+                streak2={streak2}
+                streak1={streak1}/>}
+        </div>
         <div className="chinesedef">
             {"chinesedef" in this.props.specificInteraction && <div>Chinese definition here.</div>}
         </div>
         <div className="chinesedef">
             {"def" in this.props.specificInteraction && this.props.specificInteraction["def"]}
-        </div>
-        <div className="cardprogress">
-            {(this.props.displayType != "readforfun") && <AnimatedStreakShow 
-                streak2={streak2}
-                streak1={streak1}/>}
         </div>
         <div className="samplesentences">
             {full && ("samples" in this.props.specificInteraction) && <SampleSentences samples={this.props.specificInteraction["samples"]}/>}

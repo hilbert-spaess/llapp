@@ -217,15 +217,15 @@ class VocabCard extends React.Component {
             
             <div>
                 <Card
-                style={{height: "4rem", width: "9rem", marginRight: "0.3rem", marginLeft: "0.3rem", marginTop: "0.5rem", borderColor: colour}}>
+                style={{height: "3rem", width: "9rem", marginRight: "0.3rem", marginLeft: "0.3rem", marginTop: "0.5rem", borderColor: colour}}>
 
                 <div className="cardHeader"
                 style={{textAlign: "center",
-                      padding: "0.5rem"}}>
+                      padding: "0.75rem"}}>
                 {this.props.word} <br></br>
-                <StreakShow streak={this.props.streak}/>
                 </div>
             </Card>
+<StreakShow streak={this.props.streak}/>
             </div>
         
         );
@@ -243,28 +243,28 @@ class StreakShow extends React.Component {
         
             for (var i = 0; i < (this.props.streak % 5); i++) {
                 console.log("Hi1");
-                pips.push(<div className="pip pip-green"/>);
+                pips.push(<div className="pipsmall pip-green"/>);
             }
 
             for (var i = 0; i < (4 - (this.props.streak % 5)); i++) {
                 console.log("Hi2");
-                pips.push(<div className="pip pip-green-hollow"/>);
+                pips.push(<div className="pipsmall pip-green-hollow"/>);
             }
         } else if (this.props.streak < 9) {
             
             for (var i = 0; i < (this.props.streak % 4); i++) {
                 console.log("Hi1");
-                pips.push(<div className="pip pip-blue"/>);
+                pips.push(<div className="pipsmall pip-blue"/>);
             }
 
             for (var i = 0; i < (4 - (this.props.streak % 4)); i++) {
                 console.log("Hi2");
-                pips.push(<div className="pip pip-blue-hollow"/>);
+                pips.push(<div className="pipsmall pip-blue-hollow"/>);
             }
         }
 
         return (
-            <div style={{marginTop: "0.1em"}}>
+            <div>
             {pips}
             </div>
         );

@@ -34,3 +34,25 @@
     right: 50%;
     transform: translate(50%, 50%);
 }
+
+.levelcircle {
+    
+    position: relative;
+    
+   font-size: 20px;
+    
+   width: 50px;
+   height: 50px;
+    
+    margin-left: 0.25em;
+    margin-right: 0.25em;
+    
+    
+   border-radius: 50%;
+   background: lightgreen;
+   color: white;
+}
+
+.levelcircle:hover {
+    cursor: pointer;
+}
