@@ -449,7 +449,7 @@ export class StreakShow extends React.Component {
     
     render () {
         
-        var pips = []
+        var pips = [];
         
         if (this.props.streak < 5) {
         
@@ -499,14 +499,11 @@ class VocabDetail extends React.Component {
         <div className="chinesedef">
             {"chinesedef" in this.props.data && <div>{this.props.data["chinesedef"]}</div>}
         </div>
-        <div className="chinesedef" style={{marginTop: "1em"}}>
+        <div className="chinesedef" style={{marginTop: "1em", paddingLeft: "1em", paddingRight: "1em"}}>
             {"d" in this.props.data && this.props.data["d"]}
         </div>
-        <div style={{textAlign: "center", fontSize: "2em", marginTop: "1em"}}>
-            {this.props.active && <StreakShow 
-                streak={this.props.data['s']}/>}
-        </div>
-        <div className="samplesentences" style={{marginBottom: "2em"}}>
+        <hr></hr>
+        <div className="samplesentences" style={{marginBottom: "0.5em"}}>
             {("samples" in this.props.data) && <SampleSentences samples={this.props.data["samples"]}/>}
     </div>
 		</div>
@@ -519,10 +516,12 @@ class SampleSentences extends React.Component {
     
     render () {
         
-        var words = []
+        var words = [];
+        
+        var punct = [".",",",";","!","?",":", "'s", "n't", "n’t", "’s"];
         
         if (this.props.samples.length > 0) {
-            
+        
             
         
             var sentencearray = this.props.samples[0][0].split("#");
@@ -531,10 +530,40 @@ class SampleSentences extends React.Component {
             console.log(loc);
             
             for (var i =0; i < sentencearray.length; i++) {
-                if (i == loc) {
-                    words.push(<Text style={{fontWeight: "bold"}}>{sentencearray[i]} </Text>);
+                    if ((punct.includes(sentencearray[i]))) {
+                    var spc = "";
                 } else {
-                    words.push(<Text>{sentencearray[i]} </Text>);
+                    var spc = " ";
+                }
+                if (i == loc) {
+                    words.push(<Text style={{fontWeight: "bold"}}>{spc + sentencearray[i]}</Text>);
+                } else {
+                    words.push(<Text>{spc + sentencearray[i]}</Text>);
+                }
+            };
+        }
+        
+        var words2 = []
+        
+        if (this.props.samples.length > 1) {
+            
+            
+        
+            var sentencearray = this.props.samples[1][0].split("#");
+            var loc = this.props.samples[1][1];
+            console.log(sentencearray);
+            console.log(loc);
+            
+            for (var i =0; i < sentencearray.length; i++) {
+                    if ((punct.includes(sentencearray[i]))) {
+                    var spc = "";
+                } else {
+                    var spc = " ";
+                }
+                if (i == loc) {
+                    words2.push(<Text style={{fontWeight: "bold"}}>{spc + sentencearray[i]}</Text>);
+                } else {
+                    words2.push(<Text>{spc + sentencearray[i]}</Text>);
                 }
             };
         }
@@ -543,7 +572,8 @@ class SampleSentences extends React.Component {
         return (
             <Text style={{fontSize: "25px", textAlign: "center"}}>
             
-            {this.props.samples.length > 0 && words}
+            {this.props.samples.length > 0 && words} <hr></hr>
+            {this.props.samples.length > 1 && words2}
     </Text>
         );
     }
