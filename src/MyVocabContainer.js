@@ -337,7 +337,7 @@ class VocabCard extends React.Component {
     render () {
         
         if (this.props.data['s'] < 5) {
-            var colour = "#d2f8d2";
+            var colour = "lightgreen";
             var variant = "success";
         } else if (this.props.data['s'] < 8) {
             var colour = "lightblue";
@@ -355,12 +355,14 @@ class VocabCard extends React.Component {
                 <Modal centered show={this.state.showDialog} onHide={this.onHide}>
             <VocabDetail
                 data={this.props.data}
-                active={this.props.active}/>
+                active={this.props.active}
+                colour={colour}
+                variant={variant}/>
                 </Modal>
                 <Card
                 onClick={this.handleClick}
                 className="myvocabcard"
-                style={{height: "5rem", width: "15rem", marginRight: "1rem", marginLeft: "1rem", marginTop: "1rem", backgroundImage: "linear-gradient(0deg,  "+ colour + " 0%, white 100%)"}}>
+                style={{height: "5rem", width: "15rem", marginRight: "1rem", marginLeft: "1rem", marginTop: "1rem", backgroundColor: colour}}>
                 <div className="cardHeader"
                 style={{textAlign: "center",
                       padding: "1rem",
@@ -380,7 +382,8 @@ class VocabCard extends React.Component {
                 <Modal centered show={this.state.showDialog} onHide={this.onHide}>
             <VocabDetail
                 data={this.props.data}
-                active={this.props.active}/>
+                active={this.props.active}
+                colour={colour}/>
                 </Modal>
                 <Card
                 onClick={this.handleClick}
@@ -487,13 +490,16 @@ class VocabDetail extends React.Component {
 
 	return (
         <div>
+        <div style={{height: "5em", backgroundColor: this.props.colour}}>
 	    <div className="vocabdisplay">
 		    {this.props.data["w"]}
 	    </div>
+{this.props.active && <StreakBar streak={this.props.data['s']} variant={this.props.variant}/>}
+        </div>
         <div className="chinesedef">
             {"chinesedef" in this.props.data && <div>{this.props.data["chinesedef"]}</div>}
         </div>
-        <div className="chinesedef">
+        <div className="chinesedef" style={{marginTop: "1em"}}>
             {"d" in this.props.data && this.props.data["d"]}
         </div>
         <div style={{textAlign: "center", fontSize: "2em", marginTop: "1em"}}>
