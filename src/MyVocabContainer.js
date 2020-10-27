@@ -166,11 +166,11 @@ class MyVocabContainer1 extends React.Component {
     
     constructor(props) {
         super(props);
-        this.refsArray = [];
-        this.myRef1 = React.createRef();
-        this.myRef2 = React.createRef();
-        this.myRef3 = React.createRef();
-        this.myRefs = [this.myRef1, this.myRef2, this.myRef3];
+        this.myRefs = [];
+        for (var i =0; i < 10; i++) {
+            this.myRefs.push(React.createRef());
+        }
+        this.scrollRef = React.createRef();
     }
     
     state = {
@@ -225,6 +225,13 @@ class MyVocabContainer1 extends React.Component {
         this.props.handleSubmit(vocab);
     }
     
+    handleScroll = () => {
+        
+        const {offsetTop} = this.inputRef.current;
+        this.setState({offsetTop});
+        console.log(offsetTop);
+    }
+    
     confirmSubmit = (data) => {
         
         this.props.confirmSubmit(data);
@@ -276,10 +283,11 @@ class MyVocabContainer1 extends React.Component {
         }
         
         return (
-            <div>
-            <div style={{marginTop: "1em", fontSize: "50px", textAlign: "center"}}>
- <PlusCircle size={50} onClick={this.addVocab} style={{cursor: "pointer", marginRight: "3em", color: "green"}}/>    My Vocab <span style={{color: "white"}}> <PlusCircle size= {50} style={{marginLeft: "3em"}}/> </span>
+            <div onScroll={this.handleScroll}>
+            <div classsName="vocablevel" style={{marginTop: "1em", fontSize: "50px", textAlign: "center"}}>   My Vocab <span style={{color: "white"}}> </span>
             </div>
+            <div className="levelscroller">
+                <LevelScroller levelno={levelslength}/></div>
             <Modal centered show={this.state.showDialog} onHide={this.onHide}>
             {this.state.detailActive && this.props.data.active[this.state.detailId]['w']}
     </Modal>
@@ -293,7 +301,6 @@ class MyVocabContainer1 extends React.Component {
                  wipeSubmit={this.props.wipeSubmitData}
                  confirmSubmit={this.confirmSubmit}/>
                 </Modal>
-<LevelFinder userlevel={this.props.data.level} onClick={this.executeScroll} levelslength={levelslength}/>
 {levelgrids}
 <div style={{marginBottom: "3em"}}/>
                     </div>
@@ -392,6 +399,43 @@ class LevelFinder extends React.Component {
         
     }
 }
+
+class LevelScroller extends React.Component {
+    
+    render () {
+        
+        var scrollercircles = [];
+        
+        for (var i =0; i < this.props.levelno; i++) {
+            var line = true;
+            if (i == this.props.levelno - 1) {
+                line = false;
+            }
+            
+            scrollercircles.push(<ScrollerCircle line={line}/>);
+                                 
+        }
+        
+        return (
+            
+            <div>{scrollercircles}</div>
+            
+            );
+    }
+}
+
+class ScrollerCircle extends React.Component {
+    
+    render () {
+        
+        return (
+            <>
+            <div className="scrollercircle"/>
+            {this.props.line && <div className="scrollerline"/>}
+            </>
+            );
+    }
+}
             
 class LevelCircle extends React.Component {
     
@@ -431,7 +475,7 @@ class VocabGrid extends React.Component {
         }
     
         return (
-    <Container fluid="xl">
+    <Container className="vocablevel" fluid="xl" style={{padding: "1em"}}>
     <Row style={{justifyContent: "center"}}
      >
          <Col>
