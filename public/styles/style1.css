@@ -274,8 +274,8 @@ a:hover {
 
 .chinesedef {
     font-size: 30px;
-    color: grey;
-    text-align: center;
+    padding-left: 20px;
+    text-align: left;
     margin-bottom: 0.5em;
 }
 

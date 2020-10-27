@@ -8,7 +8,7 @@ import {APIHOST} from './api_config.js';
 import {BarWrapped, FreeBarWrapped} from './sidebar.js';
 import {Text} from 'react-native';
 import {Redirect} from 'react-router-dom';
-import {PlusCircle} from 'react-feather';
+import {PlusCircle, BookOpen, Edit3} from 'react-feather';
 
 function shuffle(array) {
   var currentIndex = array.length, temporaryValue, randomIndex;
@@ -225,12 +225,6 @@ class MyVocabContainer1 extends React.Component {
         this.props.handleSubmit(vocab);
     }
     
-    handleScroll = () => {
-        
-        const {offsetTop} = this.inputRef.current;
-        this.setState({offsetTop});
-        console.log(offsetTop);
-    }
     
     confirmSubmit = (data) => {
         
@@ -244,6 +238,8 @@ class MyVocabContainer1 extends React.Component {
     }
     
     render () {
+        
+        console.log(this.scrollTop);
         
         var words = [];
         
@@ -272,10 +268,19 @@ class MyVocabContainer1 extends React.Component {
         
         for (var i =0; i<levelkeys.length; i++) {
             
-           
+            if (i==0) {
+                var color = "#f1f1f9";
+            }
+            else if (i==1) {
+                var color = "#efeff8";
+            }
+            else {
+                var color = "#ebebf7";
+            }
             
-            levelgrids.push(<div ref={this.myRefs[i]} style={{marginTop: "1em", marginBottom: "5em"}}>
+            levelgrids.push(<div ref={this.myRefs[i]}>
                             <VocabGrid
+                            color={color}
                             VocabDict={levels[levelkeys[i]]}
                             thislevel = {levelkeys[i]}
                             showDetail = {this.props.showDetail} userlevel = {this.props.data.level}
@@ -283,11 +288,9 @@ class MyVocabContainer1 extends React.Component {
         }
         
         return (
-            <div onScroll={this.handleScroll}>
-            <div classsName="vocablevel" style={{marginTop: "1em", fontSize: "50px", textAlign: "center"}}>   My Vocab <span style={{color: "white"}}> </span>
+            <div style={{overflow: "auto"}} onScroll={this.handleScroll}>
+            <div style={{paddingTop: "1em", fontSize: "50px", textAlign: "center", backgroundColor: "#f1f1f9"}}>   My Vocab <span style={{color: "white"}}> </span>
             </div>
-            <div className="levelscroller">
-                <LevelScroller levelno={levelslength}/></div>
             <Modal centered show={this.state.showDialog} onHide={this.onHide}>
             {this.state.detailActive && this.props.data.active[this.state.detailId]['w']}
     </Modal>
@@ -465,26 +468,22 @@ class VocabGrid extends React.Component {
         
         for (var i = 0; i <this.props.VocabDict.length; i++) {
             
-            vocabCards.push(<VocabCard
+            vocabCards.push(<div style={{marginTop: "1em", marginBottom: "2em"}}><VocabCard
                             id = {i}
                             data = {this.props.VocabDict[i]}
                             size={this.props.size}
                             showDetail={this.props.showDetail}
                             active={this.props.VocabDict[i]['l'] <= this.props.userlevel}
-        ></VocabCard>);
+        ></VocabCard></div>);
         }
     
         return (
-    <Container className="vocablevel" fluid="xl" style={{padding: "1em"}}>
-    <Row style={{justifyContent: "center"}}
-     >
-         <Col>
-<div style={{textAlign: "left", fontSize: "30px"}}>Level {this.props.thislevel} </div></Col></Row>
+    <div style={{paddingLeft: "5%", paddingBottom: "3em", paddingRight: "5%", backgroundColor: this.props.color}}>
  <Row 
-     style={{justifyContent: "space-evenly left"}}>
+     style={{justifyContent: "center"}}>
             {vocabCards}
 </Row>
-            </Container>
+            </div>
                 
         );
     }
@@ -511,11 +510,13 @@ class VocabCard extends React.Component {
     render () {
         
         if (this.props.data['s'] < 5) {
-            var colour = "lightgreen";
+            var colour = "lightblue";
+            var fontcolour = "black";
             var variant = "success";
         } else if (this.props.data['s'] < 8) {
-            var colour = "lightblue";
+            var colour = "#003366";
             var variant = "";
+            var fontcolour = "white";
         } else {
             var colour = "white";
             var variant = "success";
@@ -526,9 +527,10 @@ class VocabCard extends React.Component {
             return (
 
                      <div>
-                <Modal centered show={this.state.showDialog} onHide={this.onHide}>
+                <Modal size="lg" centered show={this.state.showDialog} onHide={this.onHide}>
             <VocabDetail
                 data={this.props.data}
+                fontcolour={fontcolour}
                 active={this.props.active}
                 colour={colour}
                 variant={variant}/>
@@ -536,16 +538,17 @@ class VocabCard extends React.Component {
                 <Card
                 onClick={this.handleClick}
                 className="myvocabcard"
-                style={{height: "5rem", width: "15rem", marginRight: "1rem", marginLeft: "1rem", marginTop: "1rem", backgroundColor: colour}}>
+                style={{height: "5rem", width: "15rem", marginRight: "1rem", marginLeft: "1rem", marginTop: "1rem"}}>
                 <div className="cardHeader"
                 style={{textAlign: "center",
                       padding: "1rem",
                       fontSize: this.props.size}}>
                 {this.props.data["w"]}
                 </div>
+<div style={{marginBottom: "1em"}}>
+<StreakShow style={{marginBottom: "1em"}} streak={this.props.data['s']} variant={variant}/>
+    </div>
 </Card>
-<div style={{width: "15rem", marginRight: "1rem", marginLeft: "1rem"}}>
-<StreakShow streak={this.props.data["s"]} variant={variant}/></div>
 </div>
             );
     }  else {
@@ -553,7 +556,7 @@ class VocabCard extends React.Component {
         return (
             
            <div>
-                <Modal centered show={this.state.showDialog} onHide={this.onHide}>
+                <Modal size="lg" centered show={this.state.showDialog} onHide={this.onHide}>
             <VocabDetail
                 data={this.props.data}
                 active={this.props.active}
@@ -650,7 +653,7 @@ export class StreakShow extends React.Component {
         }
 
         return (
-            <div style={{textAlign: "center", marginLeft: "1rem", marginRight: "1rem"}}>
+            <div style={{textAlign: "center", marginLeft: "1rem", marginRight: "1rem", marginBottom: "3em"}}>
             {pips}
             </div>
         );
@@ -664,7 +667,7 @@ class VocabDetail extends React.Component {
 
 	return (
         <div>
-        <div style={{height: "5em", backgroundColor: this.props.colour}}>
+        <div style={{height: "5em", backgroundColor: this.props.colour, color: this.props.fontcolour}}>
 	    <div className="vocabdisplay">
 		    {this.props.data["w"]}
 	    </div>
@@ -672,16 +675,14 @@ class VocabDetail extends React.Component {
 {this.props.active && <StreakShow streak={this.props.data['s']} variant={this.props.variant}/>}
 </div>
         </div>
-        <div className="chinesedef">
-            <hr style={{marginTop: "1em"}}></hr>
-            {"chinesedef" in this.props.data && <div>{this.props.data["chinesedef"]}</div>}
-        </div>
-        <div className="chinesedef" style={{marginTop: "0.5em", paddingLeft: "1em", paddingRight: "1em"}}>
+        <BookOpen style={{marginRight: "1em", marginTop: "3em", marginLeft: "2em", display: "inline-block"}}/>
+        <div className="chinesedef" style={{marginLeft: "2em", paddingLeft: "1em", paddingRight: "1em"}}> 
             {"d" in this.props.data && this.props.data["d"]}
         </div>
         <hr></hr>
-        <div className="samplesentences" style={{marginBottom: "0.5em"}}>
-            {("samples" in this.props.data) && <SampleSentences samples={this.props.data["samples"]}/>}
+         <Edit3 style={{display: "inline-block", marginLeft: "2em"}}/> 
+        <div className="chinesedef" style={{marginBottom: "0.5em", color: "grey", paddingLeft: "1em", paddingRight: "1em", marginLeft: "2em"}}>
+          {("samples" in this.props.data) && <SampleSentences samples={this.props.data["samples"]}/>}
     </div>
 		</div>
 	); 
@@ -712,6 +713,9 @@ class SampleSentences extends React.Component {
                 } else {
                     var spc = " ";
                 }
+                if (i==0) {
+                    var spc = "";
+                }
                 if (i == loc) {
                     words.push(<Text style={{fontWeight: "bold"}}>{spc + sentencearray[i]}</Text>);
                 } else {
@@ -736,6 +740,9 @@ class SampleSentences extends React.Component {
                     var spc = "";
                 } else {
                     var spc = " ";
+                }
+                if (i==0) {
+                    spc = "";
                 }
                 if (i == loc) {
                     words2.push(<Text style={{fontWeight: "bold"}}>{spc + sentencearray[i]}</Text>);

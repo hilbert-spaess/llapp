@@ -9,13 +9,11 @@ export const FreeBarWrapped = ({WrappedComponent, data, ...args}) => (
     
     <div>
     <TopBar data={data}/>
-                <Container fluid>
                                 <Row className="mainrow">
                                 <Col>
                             <WrappedComponent {...args} data={data}/>
                                 </Col>
                                 </Row>
-                   </Container>
 </div>
 );
 
@@ -23,13 +21,11 @@ export const FreeBarWrapped2 = ({WrappedComponent, data, ...args}) => (
     
     <div>
     <TopBar2 data={data}/>
-                <Container fluid>
                                 <Row className="mainrow">
                                 <Col>
                             <WrappedComponent {...args} data={data}/>
                                 </Col>
                                 </Row>
-                   </Container>
 </div>
 );
 
