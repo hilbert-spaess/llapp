@@ -1,12 +1,12 @@
 .vline {
-    width: 2px;
+    width: 5px;
     background-color: black;
     position: absolute;
     z-index: 1;
 }
 
 .hline {
-    height: 2px;
+    height: 5px;
     background-color: black;
     position: absolute;
     z-index: 1;
