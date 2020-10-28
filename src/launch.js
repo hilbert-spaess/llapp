@@ -246,9 +246,11 @@ class Mondrian extends React.Component {
             <div className="bluefill bluefill1"/>
             <div className="bluefill bluefill2"/>
             <Link to={{pathname: "/read", data: this.props.data}}>
-<div style={{color: "white", position: "absolute", top: "35.5%", left: "27.5%", transform: "translate(-50%,-50%)", fontSize: "30px", zIndex: "2"}}>
+<div style={{color: "white", position: "absolute", top: "45.5%", left: "37.5%", transform: "translate(-50%,-50%)", fontSize: "30px", zIndex: "2"}}>
 <BookOpen/> <br></br> Daily Reading </div></Link>
-
+             <Link to={{pathname: "/vocab", data: this.props.data}}>
+<div style={{color: "white", position: "absolute", top: "60.5%", left: "77.5%", transform: "translate(-50%,-50%)", fontSize: "30px", zIndex: "2"}}>
+<BookOpen/> <br></br> My Vocab </div></Link>
             </>
             );
     }

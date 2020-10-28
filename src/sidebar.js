@@ -9,7 +9,7 @@ export const FreeBarWrapped = ({WrappedComponent, data, ...args}) => (
     
     <>
     <Sidebar data={data}/>
-                     <div style={{marginLeft: "20%", height: "100vh"}}><WrappedComponent {...args} data={data}/>
+                     <div style={{marginLeft: "15%", height: "100vh"}}><WrappedComponent {...args} data={data}/>
                                 
 </div>
 </>
@@ -19,7 +19,7 @@ export const FreeBarWrapped2 = ({WrappedComponent, data, ...args}) => (
     
      <>
     <Sidebar data={data}/>
-                     <div style={{marginLeft: "20%"}}><WrappedComponent {...args} data={data}/>
+                     <div style={{marginLeft: "15%"}}><WrappedComponent {...args} data={data}/>
                                 
 </div>
 </>
@@ -67,10 +67,10 @@ export class Sidebar extends React.Component {
 
     render () {
 	return (
-	    <div className="sidenav" style={{paddingTop: "5em"}}>
+	    <div className="sidenav" style={{paddingTop: "5em", paddingLeft: "1em"}}>
 		<div><Link style={{ marginTop: "40%", fontSize: "30px"}} to={{pathname: "/home", data: this.props.data}}>RiceCake</Link></div>
-        <div style={{marginTop: "2em"}}><Link to="/home"><Home/></Link></div>
-        <div style={{marginTop: "2em"}}><Link to="/vocab" style={{marginTop: "2em"}}><Settings/></Link></div>
+        <div style={{marginTop: "2em"}}><Link to={{pathname: "/home", data: this.props.data}}><Home/></Link></div>
+        <div style={{marginTop: "2em"}}><Link to={{pathname: "/vocab", data: this.props.data}} style={{marginTop: "2em"}}><Settings/></Link></div>
 		</div>
 	);
     }
