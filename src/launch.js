@@ -72,7 +72,7 @@ class Launch1 extends React.Component {
     
     render () {
         return (
-            <Mondrian/>
+            <Mondrian data={this.props.data}/>
         );
     }
 }
