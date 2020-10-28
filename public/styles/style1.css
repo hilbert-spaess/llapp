@@ -36,18 +36,34 @@ a:hover {
     text-decoration: underline;
 }
 
+body {
+    background-color: #f5f5f5;
+}
+
+.floating {
+    left: 0%;
+    box-shadow: 0px 20px 60px 0px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.2s ease, box-shadow 0.2s ease;
+      opacity: 1;
+}
 .sidenav {
-    background-color: lightgrey;
-    width: 60px;
+    width: 20%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    
+    background-color: #d6cfcb;
+    
     text-align: center;
     overflow: hidden;
     min-height: 100vh;
     margin-left: 0;
-    -webkit-transition: margin .25s ease-out;
-    -moz-transition: margin .25s ease-out;
-    -o-transition: margin .25s ease-out;
-    transition: margin .25s ease-out;
-    z-index:0;
+    position: fixed;
+    left: 0%;
+    box-shadow: 0px 20px 60px 0px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.2s ease, box-shadow 0.2s ease;
+      opacity: 1;
 }
 
 .centerno {

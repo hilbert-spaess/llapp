@@ -1,0 +1,193 @@
+.vline {
+    width: 2px;
+    background-color: black;
+    position: absolute;
+    z-index: 1;
+}
+
+.hline {
+    height: 2px;
+    background-color: black;
+    position: absolute;
+    z-index: 1;
+}
+
+.hline0 {
+    width: 20%;
+    top: 10%;
+    left: 0;
+}
+
+.hline1 {
+    
+    width: 40%;
+    top: 10%;
+    left: 55%;
+}
+
+.hline2 {
+    top: 20%;
+    left: 20%;
+    width: 80%;
+}
+
+.hline3 {
+    top: 35%;
+    left: 55%;
+    width: 45%;
+}
+
+.hline4 {
+    width: 55%;
+    bottom: 29%;
+    left: 0%;
+}
+
+.hline5 {
+    bottom: 14%;
+    width: 100%;
+    left: 0%;
+}
+
+.hline6 {
+    bottom: 7%;
+    left: 20%;
+    width: 60%;
+}
+
+.vertline0 {
+    
+    height: 100%;
+    
+    left: 15%;
+    
+}
+
+.vertline1 {
+    
+    height: 100%;
+    
+    left: 20%;
+}
+
+.vertline2 {
+    
+    height: 20%;
+    top: 0;
+    
+    left: 25%;
+    
+}
+
+.vertline3 {
+    
+    height: 15%;
+    top: 71%; 
+    left: 45%;
+    
+}
+
+.vertline4 {
+    
+    height: 100%;
+    
+    left: 55%;
+}
+
+.vertline5 {
+    
+    height: 80%;
+    top: 20%;
+    left: 60%;
+    
+}
+
+.vertline6 {
+    
+    top: 86%;
+    height: 20%;
+    left: 80%;
+}
+
+.vertline7 {
+    
+    height: 20%;
+    top: 0;
+    left: 90%;
+}
+
+.vertline8 {
+    
+    height: 86%;
+    top: 0;
+    left: 95%;
+    
+}
+
+.tealfill {
+    
+    background-color: #048a81;
+    position: absolute;
+    z-index: 0;
+    
+}
+
+.tealfill1 {
+    
+    left: 90%;
+    top: 0%;
+    width: 5%;
+    height: 10%;
+}
+
+.tealfill2 {
+    left: 20%;
+    top: 20%;
+    width: 35%;
+    height: 51%;
+}
+
+.tealfill3 {
+    left: 20%;
+    top: 86%;
+    width: 40%;
+    height: 7%;
+}
+
+.greyfill {
+    
+    background-color: #d6cfcb;
+    position: absolute;
+    z-index: 0.5;
+}
+
+.greyfill1 {
+    left: 55%;
+    top: 10%;
+    width: 35%;
+    height: 10%;
+}
+
+.bluefill {
+    
+    background-color: #261447;
+    position: absolute;
+    z-index: 0.5;
+}
+
+.bluefill1 {
+    left: 60%;
+    top: 35%;
+    width: 35%;
+    height: 51%;
+}
+
+.bluefill2 {
+    left: 95%;
+    top: 20%;
+    width: 5%;
+    height: 15%;
+}
+    
+
+    

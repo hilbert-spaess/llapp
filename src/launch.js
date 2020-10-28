@@ -72,61 +72,7 @@ class Launch1 extends React.Component {
     
     render () {
         return (
-          <Container fluid="lg">
-             <Row>
-                        <Col>
-            <Card className="launchnotification"
-            style={{backgroundColor: "lightyellow"}}>
-            <div className="messagetext">
-                <Info size={30}/> <br></br>{this.props.data.message}
-            </div>
-            </Card>
-            </Col>
-            </Row>
-                      <Row>
-                        <Col>
-            <Card className="launchcardtwotop launchtopleft"
-            style={{}}>
-            <Notification
-            no={this.props.data.read_notification}
-            />
-              <Link to={{pathname: "/read", data: this.props.data}}>
-                   <div className="launchcontent" style={{color: "green"}}>
-                <BookOpen/> <br></br>
-    
-                Daily Reading
-               </div>
-              </Link>
-            </Card>
-            </Col>
-            <Col>
-            <Card className="launchcardtwotop launchtopright"
-            style={{}}>
-                <Link to={{pathname: "/vocab", data: this.props.data}}>
-            <div className="launchcontent" style={{color: "#261447"}}>
-                <Type/> <br></br>
-                My Vocab
-            </div>
- </Link>
-            </Card>
-            </Col>
-           </Row>
-             <Row>
-                        
-            <Card className="launchcardtwo"
-            style={{borderColor: "#aaf8ff"}}>
-            <div className="launchprogress">
-              <Progress
-                data={this.props.data}
-                />
-                    </div>
-            <div style={{position: "absolute", width: "70%", right: 0, marginTop: "2em"}}>
-              <VocabGrid
-                words={this.props.data.levelwords}/>
-            </div>
-            </Card>
-           </Row>
-            </Container>
+            <Mondrian/>
         );
     }
 }
@@ -270,7 +216,44 @@ class StreakShow extends React.Component {
         );
 
     }
-}      
+} 
+
+class Mondrian extends React.Component {
+    
+    render () {
+        
+        return (
+            <>
+            <div className="vline vertline0"/>
+            <div className="vline vertline1"/>
+            <div className="vline vertline2"/>
+            <div className="vline vertline3"/>
+            <div className="vline vertline4"/>
+            <div className="vline vertline5"/>
+            <div className="vline vertline6"/>
+            <div className="vline vertline7"/>
+            <div className="vline vertline8"/>
+            <div className="hline hline1"/>
+            <div className="hline hline2"/>
+            <div className="hline hline3"/>
+            <div className="hline hline4"/>
+            <div className="hline hline5"/>
+            <div className="hline hline6"/>
+            <div className="tealfill tealfill1"/>
+            <div className="tealfill tealfill2"/>
+            <div className="tealfill tealfill3"/>
+            <div className="greyfill greyfill1"/>
+            <div className="bluefill bluefill1"/>
+            <div className="bluefill bluefill2"/>
+            <Link to={{pathname: "/read", data: this.props.data}}>
+<div style={{color: "white", position: "absolute", top: "35.5%", left: "27.5%", transform: "translate(-50%,-50%)", fontSize: "30px", zIndex: "2"}}>
+<BookOpen/> <br></br> Daily Reading </div></Link>
+
+            </>
+            );
+    }
+}
+        
 
 const LogoutButton = () => {
     

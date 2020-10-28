@@ -8,7 +8,7 @@ import {APIHOST} from './api_config.js';
 import {BarWrapped, FreeBarWrapped} from './sidebar.js';
 import {Text} from 'react-native';
 import {Redirect} from 'react-router-dom';
-import {PlusCircle, BookOpen, Edit3} from 'react-feather';
+import {PlusCircle, BookOpen, Edit3, Edit} from 'react-feather';
 
 function shuffle(array) {
   var currentIndex = array.length, temporaryValue, randomIndex;
@@ -289,7 +289,7 @@ class MyVocabContainer1 extends React.Component {
         
         return (
             <div style={{overflow: "auto"}} onScroll={this.handleScroll}>
-            <div style={{paddingTop: "1em", fontSize: "50px", textAlign: "center", backgroundColor: "#f1f1f9"}}>   My Vocab <span style={{color: "white"}}> </span>
+            <div style={{paddingTop: "1em", fontSize: "50px", textAlign: "left", letterSpacing: "-1px", fontWeight: "300", paddingLeft: "5%", backgroundColor: "#f1f1f9"}}>   My Vocab  <Edit style={{marginLeft: "0.5em"}}/>
             </div>
             <Modal centered show={this.state.showDialog} onHide={this.onHide}>
             {this.state.detailActive && this.props.data.active[this.state.detailId]['w']}
@@ -459,7 +459,15 @@ class LevelCircle extends React.Component {
 class VocabGrid extends React.Component {
     
     state = {
-        keys: null
+        keys: null,
+        edit: false
+    }
+    
+    handleEditClick = () => {
+        
+        console.log("editing now");
+        this.setState({edit: !this.state.edit});
+        
     }
     
     render () {
@@ -470,6 +478,7 @@ class VocabGrid extends React.Component {
             
             vocabCards.push(<div style={{marginTop: "1em", marginBottom: "2em"}}><VocabCard
                             id = {i}
+                            edit = {this.state.edit}
                             data = {this.props.VocabDict[i]}
                             size={this.props.size}
                             showDetail={this.props.showDetail}
@@ -479,8 +488,10 @@ class VocabGrid extends React.Component {
     
         return (
     <div style={{paddingLeft: "5%", paddingBottom: "3em", paddingRight: "5%", backgroundColor: this.props.color}}>
+            <div style={{paddingTop:"2em"}}/>
+            <div>{(this.props.thislevel > this.props.userlevel) && <Edit style={{cursor: "pointer"}} onClick={this.handleEditClick}/>}</div>
  <Row 
-     style={{justifyContent: "center"}}>
+     style={{justifyContent: "left"}}>
             {vocabCards}
 </Row>
             </div>
@@ -502,12 +513,19 @@ class VocabCard extends React.Component {
      
     
     handleClick = () => {
-        
-        this.setState({showDialog: true});
+        if (!this.props.edit) {
+            this.setState({showDialog: true});
+        }
         
     }
     
+    handleDeleteClick = () => {
+        console.log("DELETE");
+    }
+    
     render () {
+        
+        console.log(this.props.edit);
         
         if (this.props.data['s'] < 5) {
             var colour = "lightblue";
@@ -521,62 +539,67 @@ class VocabCard extends React.Component {
             var colour = "white";
             var variant = "success";
         }
-        
-        if (this.props.active) {
-            
-            return (
-
-                     <div>
-                <Modal size="lg" centered show={this.state.showDialog} onHide={this.onHide}>
-            <VocabDetail
-                data={this.props.data}
-                fontcolour={fontcolour}
-                active={this.props.active}
-                colour={colour}
-                variant={variant}/>
-                </Modal>
-                <Card
-                onClick={this.handleClick}
-                className="myvocabcard"
-                style={{height: "5rem", width: "15rem", marginRight: "1rem", marginLeft: "1rem", marginTop: "1rem"}}>
-                <div className="cardHeader"
-                style={{textAlign: "center",
-                      padding: "1rem",
-                      fontSize: this.props.size}}>
-                {this.props.data["w"]}
-                </div>
-<div style={{marginBottom: "1em"}}>
-<StreakShow style={{marginBottom: "1em"}} streak={this.props.data['s']} variant={variant}/>
-    </div>
-</Card>
-</div>
-            );
-    }  else {
+        if (!this.props.active) {
+            var bgcolor = "lightgrey";
+        } else {
+            var bgcolor = "";
+        }
         
         return (
             
            <div>
                 <Modal size="lg" centered show={this.state.showDialog} onHide={this.onHide}>
             <VocabDetail
+                fontcolour={fontcolour}
                 data={this.props.data}
                 active={this.props.active}
                 colour={colour}/>
                 </Modal>
+                <Modal centered show={this.state.showDeleteConfirm} onHide={this.onDeleteHide}>
+                    <DeleteConfirm data={this.props.data}/>
+                </Modal>
                 <Card
                 onClick={this.handleClick}
                 className="myvocabcard"
-                style={{height: "5rem", width: "15rem", marginRight: "1rem", marginLeft: "1rem", marginTop: "1rem", backgroundColor: "lightgrey"}}>
-
+                style={{height: "5rem", width: "15rem", marginRight: "1rem", marginLeft: "1rem", marginTop: "1rem", backgroundColor: bgcolor}}>
+                    {this.props.edit && <Cross onClick={this.handleDeleteClick}/>}
                 <div className="cardHeader"
                 style={{textAlign: "center",
                       padding: "1rem",
                       fontSize: this.props.size}}>
                 {this.props.data["w"]} <br></br> 
                 </div>
+<div style={{marginBottom: "1em"}}>
+    {this.props.active && <StreakShow style={{marginBottom: "1em"}} streak={this.props.data['s']} variant={variant}/>}
+    </div>
 </Card>
 </div>
 );
+}
+}
+
+class Cross extends React.Component {
+    
+    render () {
+        
+        console.log("render CROSS-SAN");
+        
+      return (
+
+          <button onClick={this.props.onClick} className="myvocabcrossbackground">
+              <div className="cross1">
+                <div className="cross2"></div></div>
+          </button>
+      );
     }
+}
+
+class DeleteConfirm extends React.Component {
+    
+    render () {
+        
+        return (<div></div>);
+        
     }
 }
 

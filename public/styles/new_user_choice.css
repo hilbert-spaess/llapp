@@ -60,6 +60,19 @@
     
 }
 
+.myvocabcrossbackground {
+    
+  border: none;
+  margin-right: 10px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 25px;
+  height: 25px;
+  background-color: lightgrey;
+}
+    
+
 .cross1 {
   height: 25px;
   width: 2px;

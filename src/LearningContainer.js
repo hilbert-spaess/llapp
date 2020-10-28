@@ -345,7 +345,7 @@ class TextCard extends React.Component {
     };
 
         return (
-		<Card className="maintext"
+		<Card className="maintext" style={{backgroundColor: "#f5f5f5"}}
             key={this.props.showDialog}>
 		<Text spellcheck="false" style={{fontSize: "30px", lineHeight: "2em", display: "inline-block", wordBreak: "keep-all", fontFamily: "roboto"}}>
         <form className="commentForm" onSubmit={this.handleSubmit}>

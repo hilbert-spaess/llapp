@@ -303,7 +303,7 @@ class FloatingVocabCard extends React.Component {
     }
 }
 
-class Cross extends React.Component {
+export class Cross extends React.Component {
     
     render () {
         
