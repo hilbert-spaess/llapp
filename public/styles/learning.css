@@ -216,3 +216,7 @@
     border: 1px solid green;   
     
 }
+
+.progress-custom {
+    color: #048a81 !important;
+}

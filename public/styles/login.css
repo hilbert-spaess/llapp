@@ -39,3 +39,134 @@
 .formgroup {
     text-align: center;
 }
+
+.selectpanel {
+    border: 1px solid black;
+    height: 20vh;
+    width: 100%;
+    
+    background-color: #d6cfcb;
+}
+
+.bottomselectpanel {
+    
+    position: relative;
+    
+    border: 1px solid black;
+    height: 70vh;
+    width: 100%;
+    
+    background-color: #f5f5f5;
+}
+
+.coursecardleft {
+    
+    overflow: hidden !important;
+    
+    width: 50%;
+    height: 100%;
+    border: 1px solid black;
+    
+    position: absolute;
+    left: 0;
+    top: 0;
+    
+    background-color: #f5f5f5;
+}
+
+.coursecardright {
+    
+   overflow: hidden !important;
+    
+    width: 50%;
+    height: 100%;
+    border: 1px solid black;
+    
+    position: absolute;
+    left: 50%;
+    top: 0;
+    
+    background-color: #f5f5f5;
+}
+
+.coursecardname {
+    border: 0;
+    background-color: white;
+    
+    text-align: center;
+    margin-top: 1em;
+    font-size: 30px;
+    
+}
+
+.textscroller {
+    background-color: darken(#f5f5f5, 20%);
+    
+    background: -webkit-linear-gradient(
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 1) 100%
+    ); 
+    background-image: -moz-linear-gradient(
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 1) 100%
+    );
+    background-image: -o-linear-gradient(
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 1) 100%
+    );
+    background-image: linear-gradient(
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 1) 100%
+    );
+    background-image: -ms-linear-gradient(
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 1) 100%
+    );
+    margin-top: "2em";
+    position: absolute;
+    mix-blend-mode: hard-light;
+    
+    text-align: center;
+    
+    width: 50%;
+    height: 70%;
+    top: 25%;
+    
+    left: 25%;
+    
+    float: center;
+    
+    overflow: scroll;
+    
+     -ms-overflow-style: none;
+}
+
+.textscrollerword {
+    
+    font-size: 30px;
+    
+    margin-top: 0.5em;
+    
+    margin-bottom: 0.5em;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
+
+.ricecakeheader {
+
+    font-family: "Open Sans";
+    font-size: 50px;
+    font-weight: 400;
+}
+
+.ricecakesub {
+    
+    font-size: 30px;
+    font-family: "Open Sans";
+    font-weight: 100;
+}
+
+.element::-webkit-scrollbar { width: 0 !important }

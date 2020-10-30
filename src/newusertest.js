@@ -43,8 +43,10 @@ export class NewUserTest1 extends React.Component {
     render () {
         
         if (this.state.readingacademic==null) {
-            return <ReadingChoice
-                    handleSubmit = {this.handleReadingChoiceSubmit}/>;
+            return (
+                <ReadingChoice
+                    handleSubmit = {this.handleReadingChoiceSubmit}/>
+        );
         }
         
         if (this.state.course==null) {
@@ -60,6 +62,27 @@ export class NewUserTest1 extends React.Component {
             
             );
 
+    }
+}
+
+class SelectPanel extends React.Component {
+    
+    render () {
+        
+        if (this.props.type=="reading") {
+            
+            var text = "Welcome. What sort of English can we help you with?";
+            
+        }
+        
+        return (
+            
+            <div className="selectpanel">
+            <div className="ricecakeheader">RiceCake</div>
+            <div className="ricecakesub">{text}</div>
+            </div>
+            
+            );
     }
 }
 
@@ -158,15 +181,13 @@ class ReadingChoice extends React.Component {
                      handleClick={this.props.handleSubmit}/>);
         
         return (
+            <>
+            <div className="maintext" style={{textAlign: "center"}}>Welcome. What sort of English can we help you with?</div>
             
-             <div className="mainbox">
-                            <div className="maintext">
-                        Welcome! What are you working on?
-                        </div>
                        <Row style={{marginTop: "3em", justifyContent: "space-evenly"}}>
              {choices}
                         </Row>
-                        </div>
+</>
         );
     }
 }
@@ -181,21 +202,69 @@ export class CourseCard extends React.Component {
     
     render () {
         
+        if (this.props.id == 1) {
+            var posclass = "coursecardleft";
+        }
+        if (this.props.id == 2) {
+            var posclass = "coursecardright";
+        }
+        
         return (
-            
-             <Card style={{height: "30rem", width: "20rem"}}>
-            <div style={{textAlign: "center", marginTop: "1em", fontSize: "30px"}}>{this.props.name}</div>
-            <div style={{position: "absolute", bottom: "10%", left: "50%", transform: "translate(-50%,0%)"}}>
-            <Button style={{fontSize: "20px"}} block onClick={this.onClick} variant={this.props.variant}>{this.props.buttonText}</Button>
-</div>
-            
+             
+            <Card onClick={this.onClick} style={{cursor: "pointer", width: "30em", height: "15em"}}>
+            <div className="coursecardname" onClick={this.onClick}>{this.props.name}</div>         
             </Card>
 
 
         );
     }
 }
+
+class TextScroller extends React.Component {
     
+    render () {
+        
+        var wordCards = [];
+        var words = [];
+        
+        if (this.props.id==1) {
+            
+            var words = ["damp", "leap", "insane", "demolish", "imaginative", "herd", "crumble", "sneak", "refund", "chink", "dreadful", "weep", "furious", "slump", "quest" ,"oak", "delightful", "feast", "revenge", "hurricane", "revenge"];
+        }
+        
+        if (this.props.id==2) {
+            
+            var words = ["abbreviate", "clarify", "autonomy", "paean","cause", "coherent", "enumerate", "dichotomy", "devise", "recapitulate", "plethora", "paradigm", "maxim", "objective", "implicit", "unprecedented", "scrutinise", "rationale"];
+        }
+        
+        for (var i =0; i < words.length; i ++ ) {
+            
+            wordCards.push(<WordCard word={words[i]}/>);
+        
+        }
+        
+        return (
+            
+            <div className="textscroller">
+             {wordCards}
+            </div>
+            );
+    }
+}
+
+class WordCard extends React.Component {
+    
+    render () {
+        
+        return (
+            
+            <div className="textscrollerword">
+            {this.props.word}
+             </div>
+        );
+    }
+}
+
 
 export class OptionCard extends React.Component {
     

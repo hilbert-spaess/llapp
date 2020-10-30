@@ -13,6 +13,7 @@ import {APIHOST} from './api_config.js';
 import {Tutorial} from './tutorial.js';
 import {CheckCircle, Type, AlignLeft, Eye, BookOpen, Edit3} from 'react-feather';
 import {StreakShow} from './MyVocabContainer.js';
+import {Line} from 'rc-progress';
 
 function range(start, end) {
   return Array(end - start + 1).fill().map((_, idx) => start + idx)
@@ -203,16 +204,17 @@ export class LearningContainer extends React.Component {
         handleClose={this.handleCloseDialog}/>
 		    </Modal>
 </div>
+        <div style={{marginTop: "10%"}}>
             <RunningProgressTracker
                 runningProgress={this.state.runningProgress}
                 yet={this.props.yet}
                 reviewyet={this.props.reviewyet}/>
             <Row>
 		    <Col>
-            <ProgressBar now={progress} variant="success"
-            style={{marginTop: "2em"}}/></Col>
+                    <Line percent={progress} strokeWidth="1" strokeColor="#048a81" style={{marginTop: "2em"}}/>
+            </Col>
             </Row>
-           
+           <div style={{marginTop: "5%"}}>
 		    <Row>
 		    <Col>
 		    <TextCard
@@ -248,6 +250,8 @@ export class LearningContainer extends React.Component {
 		    </Col>
 		    </Row>
             <div style={{marginTop: "2em"}} ref={this.bottomRef}/>
+                </div>
+        </div>
 		</Container>
 	);
         }
@@ -334,13 +338,13 @@ class TextCard extends React.Component {
     words.push(<Text style={{wordBreak: "keep-all", display: "inline-block", overflowWrap: "normal"}}>{spc + context[i]['w']}</Text>);
         } else if (this.props.limbo || i != location) {
             if (this.props.answers[context[i]["i"]] == 1) {
-                words.push(<Text style={{color: "green", overflowWrap: "normal"}}>{spc + context[i]["w"]}</Text>);
+                words.push(<Text style={{color: "#048a81", overflowWrap: "normal"}}>{spc + context[i]["w"]}</Text>);
             } else {
                 words.push(<Text style={{color: "red", overflowWrap: "normal"}}>{spc + context[i]["w"]}</Text>);
             }
         } else {
             words.push(spc);
-        words.push(<input spellcheck="false" className="workinput" type="text"  key = {this.props.showDialog} autocomplete="off" autoFocus ref = {(input) => {this.nameInput=input;}} value={value} onChange={this.handleChange} style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", flex: "none", display: "inline-block", border: "0", width: (this.props.answerlength+1).toString() + "ch", borderTop: "0", outlineTop: "0", lineHeight: "20px", borderBottom: "2px dotted blue", textAlign: "left"}}/>);
+        words.push(<input spellcheck="false" className="workinput" type="text"  key = {this.props.showDialog} autocomplete="off" autoFocus ref = {(input) => {this.nameInput=input;}} value={value} onChange={this.handleChange} style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", flex: "none", display: "inline-block", border: "0", width: (this.props.answerlength+1).toString() + "ch", borderTop: "0", outlineTop: "0", lineHeight: "20px", borderBottom: "1px solid grey", textAlign: "left"}}/>);
         }
     };
 
@@ -562,11 +566,13 @@ class SecondInput extends React.Component {
     super(props);
     this.innerRef = React.createRef();
   }
+    
+  state = {show: false};
 
   componentDidMount() {
     // Add a timeout here
     setTimeout(() => {
-        try {this.innerRef.current.focus();} catch (e) {console.log("Error");}}, 500);
+        try {this.setState({show: true}); this.innerRef.current.focus();} catch (e) {console.log("Error");}}, 400);
     }
     
     handleHide = (event) => {
@@ -577,9 +583,10 @@ class SecondInput extends React.Component {
   render() {
       
     return (
+        <div> {this.state.show &&
         <form className="commentForm" onSubmit={this.handleHide}>
-        <button className="nextbutton" type="submit" autoFocus ref={this.innerRef}/>
-            </form>
+        <button className="nextbuttonlimbo2" type="submit" autoFocus ref={this.innerRef}/>
+            </form>}</div>
     );
   }
 }

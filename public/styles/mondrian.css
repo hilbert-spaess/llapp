@@ -1,13 +1,13 @@
 .vline {
     width: 5px;
-    background-color: black;
+    background-color: #151712;
     position: absolute;
     z-index: 1;
 }
 
 .hline {
     height: 5px;
-    background-color: black;
+    background-color: #151712;
     position: absolute;
     z-index: 1;
 }
@@ -147,6 +147,12 @@
     height: 51%;
 }
 
+.tealfill2:hover {
+    
+    background-color: #04726a;
+    
+}
+
 .tealfill3 {
     left: 20%;
     top: 86%;
@@ -173,6 +179,12 @@
     background-color: #261447;
     position: absolute;
     z-index: 0.5;
+}
+
+.bluefill1:hover {
+    
+    background-color: #1e1038
+        
 }
 
 .bluefill1 {

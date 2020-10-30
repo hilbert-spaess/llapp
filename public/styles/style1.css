@@ -38,6 +38,9 @@ a:hover {
 
 body {
     background-color: #f5f5f5;
+    overflow: hidden;
+    scrollbar-width: none;
+    overflow: -moz-scrollbars-none;
 }
 
 .floating {
@@ -179,7 +182,7 @@ body {
     
     margin-top: 2em;
     
-    background-color: green;
+    background-color: #048a81;
     position: absolute;
     right: 0;
     bottom: 0;
@@ -199,11 +202,35 @@ body {
     
 }
 
+.nextbuttonlimbo2 {
+    
+    margin-top: 2em;
+    
+    background-color: #048a81;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    margin-top: 1em;
+    width: 100px;
+    height: 100px;
+    border-color: transparent;
+    border-top-left-radius: 100%;
+    
+    animation: pulse 1.5s infinite;
+}
+
+.nextbuttonlimbo2:focus {
+    
+    border-color: transparent;
+    outline: none;
+    
+}
+
 .nextbutton {
     
     margin-top: 2em;
     
-    background-color: green;
+    background-color: #048a81;
     position: absolute;
     right: 0;
     bottom: 0;
@@ -271,6 +298,7 @@ body {
     margin-top: 2em;
     text-align: center;
     border-color: transparent;
+    background-color: #f5f5f5;
 }
 
 .answercardinput ::placeholder {

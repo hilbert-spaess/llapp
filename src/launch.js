@@ -220,7 +220,34 @@ class StreakShow extends React.Component {
 
 class Mondrian extends React.Component {
     
+    state = {read: null, vocab: null}
+    
+    readClick = () => {
+        
+        console.log("read click");
+        this.setState({read: true});
+        
+    }
+    
+    vocabClick = () => {
+        
+        this.setState({vocab: true});
+        
+    }
+    
     render () {
+        
+        if (this.state.read) {
+            
+            return (<Redirect to={{pathname: "/read", data: this.props.data}}/>);
+
+        }
+        
+        if (this.state.vocab) {
+            
+            return (<Redirect to={{pathname: "/vocab", data: this.props.data}}/>);
+
+        }
         
         return (
             <>
@@ -240,17 +267,16 @@ class Mondrian extends React.Component {
             <div className="hline hline5"/>
             <div className="hline hline6"/>
             <div className="tealfill tealfill1"/>
-            <div className="tealfill tealfill2"/>
+            <button onClick={this.readClick} className="tealfill tealfill2">
+            <div style={{color: "white", position: "absolute", top: "45.5%", left: "37.5%", transform: "translate(-50%,-50%)", fontSize: "50px", zIndex: "2"}}>
+<BookOpen size={50}/> <br></br> Daily Reading </div>
+            </button>
             <div className="tealfill tealfill3"/>
             <div className="greyfill greyfill1"/>
-            <div className="bluefill bluefill1"/>
+            <button onClick={this.vocabClick} className="bluefill bluefill1"/>
             <div className="bluefill bluefill2"/>
-            <Link to={{pathname: "/read", data: this.props.data}}>
-<div style={{color: "white", position: "absolute", top: "45.5%", left: "37.5%", transform: "translate(-50%,-50%)", fontSize: "50px", zIndex: "2"}}>
-<BookOpen size={50}/> <br></br> Daily Reading </div></Link>
-             <Link to={{pathname: "/vocab", data: this.props.data}}>
 <div style={{color: "white", position: "absolute", top: "60.5%", left: "77.5%", transform: "translate(-50%,-50%)", fontSize: "50px", zIndex: "2"}}>
-<Type size={50}/> <br></br> My Vocab </div></Link>
+<Type size={50}/> <br></br> My Vocab </div>
             </>
             );
     }
