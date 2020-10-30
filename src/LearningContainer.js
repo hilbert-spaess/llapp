@@ -11,7 +11,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import {Redirect} from 'react-router-dom';
 import {APIHOST} from './api_config.js';
 import {Tutorial} from './tutorial.js';
-import {CheckCircle, Type, AlignLeft, Eye} from 'react-feather';
+import {CheckCircle, Type, AlignLeft, Eye, BookOpen, Edit3} from 'react-feather';
 import {StreakShow} from './MyVocabContainer.js';
 
 function range(start, end) {
@@ -190,7 +190,7 @@ export class LearningContainer extends React.Component {
                 return (
 	    <Container fluid="lg">
                     <div id="myModal">
-		<Modal centered show={this.state.showDialog} onHide={this.handleCloseDialog}>
+		<Modal centered size="lg" show={this.state.showDialog} onHide={this.handleCloseDialog}>
                     
 		<AnswerCard
         show={this.state.showDialog}
@@ -405,9 +405,11 @@ class AnswerCard extends React.Component {
         var streak2 = streak1 + 1;
     }   
     if (streak2 < 5) {
-        var colour="lightgreen"
+        var colour="lightblue";
+        var fontcolour="black";
     } else if (streak2 < 9) {
-        var colour="lightblue"
+        var colour="#003153";
+        var fontcolour="white";
     }
     var full = ((streak == "0" && this.props.first == 1) || this.props.answeredCorrect == 0);
     if (this.props.first == 0) {
@@ -416,10 +418,11 @@ class AnswerCard extends React.Component {
     if (this.props.show == true) {
 	return (
 	    <div key={this.props.show}>
-	     <div style={{height: "5em", backgroundColor: colour}}>
+	     <div style={{height: "5em", backgroundColor: colour, color: fontcolour}}>
             {full && <FirstInput 
 handleHide={this.props.handleHide}
 styling={styling}
+bgcolor={colour}
         word={this.props.word}
 />}
 {!full && <div><div className="vocabdisplay">{this.props.word}</div><SecondInput handleHide={this.props.handleClose} styling={styling}/></div>}
@@ -429,13 +432,14 @@ styling={styling}
                 streak2={streak2}
                 streak1={streak1}/>}
         </div>
-        <div className="chinesedef">
-            {"chinesedef" in this.props.specificInteraction && <div>Chinese definition here.</div>}
-        </div>
-        <div className="chinesedef">
+         <BookOpen style={{marginRight: "1em", marginTop: "1em", marginLeft: "2em", display: "inline-block"}}/>
+        <div className="chinesedef" style={{marginLeft: "2em", paddingLeft: "1em", paddingRight: "1em"}}> 
             {"def" in this.props.specificInteraction && this.props.specificInteraction["def"]}
         </div>
-        <div className="samplesentences">
+        <hr></hr>
+{full &&
+        <Edit3 style={{display: "inline-block", marginLeft: "2em"}}/>}
+<div className="chinesedef" style={{marginBottom: "0.5em", color: "grey", paddingLeft: "1em", paddingRight: "1em", marginLeft: "2em"}}>
             {full && ("samples" in this.props.specificInteraction) && <SampleSentences samples={this.props.specificInteraction["samples"]}/>}
     </div>
 		</div>
@@ -546,7 +550,7 @@ class FirstInput extends React.Component {
     return (
         <form className="commentForm" onSubmit={this.handleHide}>
         <div style={{textAlign: "center"}}>
-        <input className="answercardinput" type="text" autoFocus autocomplete="off" style={{fontSize: "50px", outline: "0", border: "0", borderBottom: "2px dotted black", width: "80%", textAlign: "center", marginTop: "0.5em", marginBottom: "0.5em"}} placeholder={this.props.word} id="myInput" ref={this.innerRef} value={this.state.value} onChange={this.handleChange}/>
+        <input className="answercardinput" type="text" autoFocus autocomplete="off" style={{fontSize: "50px", outline: "0", border: "0", backgroundColor: this.props.bgcolor, width: "80%", textAlign: "center", marginBottom: "0.5em"}} placeholder={this.props.word} id="myInput" ref={this.innerRef} value={this.state.value} onChange={this.handleChange}/>
             </div>
 </form>
     );
