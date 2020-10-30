@@ -59,13 +59,7 @@ export class LearningContainer extends React.Component {
 
     bottomRef = React.createRef();
     
-    componentDidUpdate () {
-            this.scrollToBottom();
-        }
     
-    scrollToBottom = () => {
-            this.bottomRef.current.scrollIntoView({behaviour: 'smooth'});
-        }
     
     storeAnswer = (correct) => {
         this.setState(prevState => ({
@@ -204,7 +198,7 @@ export class LearningContainer extends React.Component {
         handleClose={this.handleCloseDialog}/>
 		    </Modal>
 </div>
-        <div style={{marginTop: "10%"}}>
+        <div style={{paddingTop: "10vh"}}>
             <RunningProgressTracker
                 runningProgress={this.state.runningProgress}
                 yet={this.props.yet}
@@ -214,7 +208,7 @@ export class LearningContainer extends React.Component {
                     <Line percent={progress} strokeWidth="1" strokeColor="#048a81" style={{marginTop: "2em"}}/>
             </Col>
             </Row>
-           <div style={{marginTop: "5%"}}>
+           <div style={{marginTop: "5vh"}}>
 		    <Row>
 		    <Col>
 		    <TextCard

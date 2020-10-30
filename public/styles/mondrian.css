@@ -153,6 +153,10 @@
     
 }
 
+.link:hover {
+    color: black;
+}
+
 .tealfill3 {
     left: 20%;
     top: 86%;

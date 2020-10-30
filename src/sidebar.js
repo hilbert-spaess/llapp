@@ -9,7 +9,7 @@ export const FreeBarWrapped = ({WrappedComponent, data, ...args}) => (
     
     <>
     <Sidebar data={data}/>
-                     <div style={{marginLeft: "15%", height: "100vh"}}><WrappedComponent {...args} data={data}/>
+                     <div style={{marginLeft: "15%", height: "100vh", overflow: "scroll"}}><WrappedComponent {...args} data={data}/>
                                 
 </div>
 </>
@@ -19,7 +19,7 @@ export const FreeBarWrapped2 = ({WrappedComponent, data, ...args}) => (
     
      <>
     <Sidebar2/>
-                     <div style={{marginLeft: "15%", height: "100vh"}}><WrappedComponent {...args} data={data}/>
+                     <div style={{marginLeft: "15%", height: "100vh", overflow: "scroll"}}><WrappedComponent {...args} data={data}/>
                                 
 </div>
 </>
@@ -67,10 +67,10 @@ export class Sidebar extends React.Component {
 
     render () {
 	return (
-	    <div className="sidenav" style={{paddingTop: "5em"}}>
-		<div><Link style={{ marginTop: "40%", fontSize: "50px"}} to={{pathname: "/home", data: this.props.data}}>RiceCake</Link></div>
-        <div style={{marginTop: "2em"}}><Link to={{pathname: "/home", data: this.props.data}}><Home size={50}/></Link></div>
-        <div style={{marginTop: "2em"}}><Link to={{pathname: "/vocab", data: this.props.data}} style={{marginTop: "2em"}}><Settings size={50}/></Link></div>
+	    <div className="sidenav" style={{paddingTop: "1em", textAlign: "left"}}>
+		<div style={{textAlign: "left", marginLeft: "1em"}}><Link style={{ marginTop: "40%", fontSize: "2em"}} to={{pathname: "/home", data: this.props.data}}>RiceCake</Link></div>
+        <div className="sidelink" style={{marginTop: "2em", fontSize: "1.5em"}}><Link className="sideclick" to={{pathname: "/home", data: this.props.data}}><Home size={50} style={{marginLeft: "0.5em", marginRight: "1em"}}/>   Home</Link></div>
+        <div className="sidelink" style={{marginTop: "1em", fontSize: "1.5em"}}><Link className="sideclick" to={{pathname: "/vocab", data: this.props.data}}><Settings size={50} style={{marginLeft: "0.5em", marginRight: "1em"}}/>   Settings</Link></div>
 		</div>
 	);
     }
@@ -81,10 +81,10 @@ export class Sidebar2 extends React.Component {
 
     render () {
 	return (
-	    <div className="sidenav" style={{paddingTop: "5em"}}>
-		<div><Link style={{ marginTop: "40%", fontSize: "50px"}} to="/home">RiceCake</Link></div>
-        <div style={{marginTop: "2em"}}><Link to="/home"><Home size={50}/></Link></div>
-        <div style={{marginTop: "2em"}}><Link to="/vocab" style={{marginTop: "2em"}}><Settings size={50}/></Link></div>
+	    <div className="sidenav" style={{paddingTop: "1em", textAlign: "left"}}>
+		<div style={{textAlign: "left", marginLeft: "1em"}}><Link style={{ marginTop: "40%", fontSize: "2em"}} to="/home">RiceCake</Link></div>
+        <div className="sidelink" style={{marginTop: "2em", fontSize: "1.5em", marginRight: "1em"}}><Link className="sideclick" to="/home"><Home size={50} style={{marginLeft: "0.5em", marginRight: "1em"}}/> Home</Link></div>
+       <div className="sidelink" style={{marginTop: "1em", fontSize: "1.5em", marginRight: "1em"}}><Link className="sideclick" to="/vocab" style={{marginTop: "1em"}}><Settings size={50} style={{marginLeft: "0.5em", marginRight: "1em"}}/> Settings</Link></div>
 		</div>
 	);
     }
