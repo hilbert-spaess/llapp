@@ -8,7 +8,7 @@ import {APIHOST} from './api_config.js';
 import {BarWrapped, FreeBarWrapped} from './sidebar.js';
 import {Text} from 'react-native';
 import {Redirect} from 'react-router-dom';
-import {PlusCircle, BookOpen, Edit3, Edit} from 'react-feather';
+import {PlusCircle, BookOpen, Edit3, Edit, ChevronLeft, ChevronRight} from 'react-feather';
 
 function shuffle(array) {
   var currentIndex = array.length, temporaryValue, randomIndex;
@@ -103,6 +103,18 @@ class MyVocabContainerSubmit extends React.Component {
         
     }
     
+    handleDelete = (data) => {
+        
+        this.setState({payload: data, type: "delete"});
+        
+    }
+    
+    handleSubmitChoice = (selected, choices, level, vocab, insertlength) => {
+        
+        this.setState({payload: {s: selected, c: [...choices], l: level, i: insertlength, v:vocab}, type: "submit_choice"});
+        
+    }
+    
     render () {
         
         return (
@@ -113,7 +125,9 @@ class MyVocabContainerSubmit extends React.Component {
             data={this.props.data}
             handleSubmit={this.handleSubmit}
             handleWipe={this.handleWipe}
-            confirmSubmit={this.confirmSubmit}/>
+            confirmSubmit={this.confirmSubmit}
+            handleDelete={this.handleDelete}
+            handleSubmitChoice={this.handleSubmitChoice}/>
     );
     }
 }
@@ -139,6 +153,11 @@ const MyVocabContainerLogging = (props) => {
         refresh();
     }
     
+    const handleDelete = async (data) => {
+        props.handleDelete(data);
+        refresh();
+    }
+    
     const wipeSubmit = async () => {
         props.handleWipe();
         console.log("WOOOOOOOW");
@@ -151,10 +170,18 @@ const MyVocabContainerLogging = (props) => {
         refresh();
     }
     
+    const handleSubmitChoice = async (selected, choices, level, vocab, insertlength) => {
+        console.log(choices);
+        props.handleSubmitChoice(selected, choices, level, vocab, insertlength);
+        refresh();
+    }
+    
     return (
         <MyVocabContainer1
         data={props.data}
         handleSubmit={handleSubmit}
+        handleSubmitChoice={handleSubmitChoice}
+        handleDelete = {handleDelete}
         submitdata={data}
         wipeSubmitData={wipeSubmit}
         confirmSubmit={confirmSubmit}/>
@@ -176,6 +203,7 @@ class MyVocabContainer1 extends React.Component {
     state = {
         showDialog: false,
         showAddNew: false,
+        levelAddNew: null,
         detailId: null,
         detailActive: null,
         vocab: this.props.data.vocab
@@ -208,9 +236,9 @@ class MyVocabContainer1 extends React.Component {
         
     }
     
-    addVocab = () => {
+    addVocab = (level) => {
         
-        this.setState({showAddNew: true});
+        this.setState({showAddNew: true, levelAddNew: level});
         console.log("Add vocab you dumbo");
         
     }
@@ -225,6 +253,17 @@ class MyVocabContainer1 extends React.Component {
         this.props.handleSubmit(vocab);
     }
     
+    handleDelete = (data) => {
+        
+        this.props.handleDelete(data);
+        var newvocab = this.state.vocab;
+        console.log("HERE + DELETIN");
+        console.log(data.no);
+        newvocab.splice(data.no, 1);
+        this.setState({vocab: newvocab});
+    }
+    
+        
     
     confirmSubmit = (data) => {
         
@@ -234,6 +273,63 @@ class MyVocabContainer1 extends React.Component {
         var newvocab = this.state.vocab;
         newvocab.push({"w": data[0], "l": this.props.data.maxlevel});
         this.setState({vocab: newvocab});
+        
+    }
+    
+    handleSubmitChoice = async (choices, selected) => {
+        
+        this.setState({showAddNew: false});
+        console.log(this.state.vocab);
+        this.props.handleSubmitChoice(choices, selected, this.state.levelAddNew, this.state.vocab);
+        
+        var newselected = [...selected];
+        
+        var newvocab = this.state.vocab;
+        
+        var level = this.state.levelAddNew;
+        
+        var levels = [];
+        
+        for (var i = 0; i < this.state.vocab.length; i++ ) {
+            
+            var l = this.state.vocab[i]["l"];
+            if (levels[l.toString()] === undefined) {
+                levels[l.toString()] = [];
+            }
+            levels[l.toString()].push([this.state.vocab[i], i]);
+            
+        }
+        var levelkeys = Object.keys(levels);
+        var levelslength = levelkeys.length;
+        
+        var overflow = newselected.length;
+        
+        for (var l = level; l < levelslength + 1; l++) {
+            
+            var total = levels[l.toString()].length + overflow;
+            overflow = Math.max(0, total - 15);
+            if (total > 15) {
+                for (var z = 0; z < overflow; z++) {
+                    console.log(levels[l.toString()].length);
+                    console.log(levels[l.toString()]);
+                    console.log([levels[l.toString()].length - 1 - z]);
+                    console.log(z);
+                    console.log(overflow);
+                    newvocab[levels[l][levels[l].length - 1 - z].slice(1)]['l'] += 1;
+                }
+            }
+        }
+        
+        for (var i = 0; i < newselected.length; i++) {
+            
+            newvocab.unshift({'w': choices[newselected[i]]['w'], 'l': this.state.levelAddNew});
+            
+        }
+        
+        this.setState({vocab: newvocab});
+        
+        this.props.handleSubmitChoice(choices, selected, this.state.levelAddNew, newvocab, newselected.length);
+    
         
     }
     
@@ -260,6 +356,7 @@ class MyVocabContainer1 extends React.Component {
                 levels[l.toString()] = [];
             }
             levels[l.toString()].push(this.state.vocab[i]);
+            levels[l.toString()][levels[l.toString()].length-1]['no'] = i;
             
         }
         
@@ -283,29 +380,39 @@ class MyVocabContainer1 extends React.Component {
                             color={color}
                             VocabDict={levels[levelkeys[i]]}
                             thislevel = {levelkeys[i]}
+                            handleDelete={this.handleDelete}
+                            handleAddNew={this.addVocab}
                             showDetail = {this.props.showDetail} userlevel = {this.props.data.level}
                             size="2em"/></div>);
         }
+        
+        var newchoices = [];
+        for (var i =0; i<this.props.data.choices.length; i++) {
+            if (!(words.includes(this.props.data.choices[i]['w']))) {
+                newchoices.push(this.props.data.choices[i]);
+            }
+        }
+        
         
         return (
             <div style={{overflow: "auto"}} onScroll={this.handleScroll}>
             <div style={{paddingTop: "1em", fontSize: "50px", textAlign: "left", letterSpacing: "-1px", fontWeight: "300", paddingLeft: "5%", backgroundColor: "#f1f1f9"}}>   My Vocab  <Edit style={{marginLeft: "0.5em"}}/>
             </div>
-            <Modal centered show={this.state.showDialog} onHide={this.onHide}>
+            <Modal size="lg" centered show={this.state.showDialog} onHide={this.onHide}>
             {this.state.detailActive && this.props.data.active[this.state.detailId]['w']}
     </Modal>
-            <Modal centered show={this.state.showAddNew} onHide={this.hideShowNew}>
+            <Modal size="lg" dialogClassName="bigassmodal" centered show={this.state.showAddNew} onHide={this.hideShowNew}>
                 <FindNew
                  submitdata={this.props.submitdata}
-                 newchoices={this.props.data.choices}
+                 newchoices={newchoices}
                  handleSubmit={this.handleNewVocabSubmit}
+                 handleSubmitChoice={this.handleSubmitChoice}
                  words={words}
                  handleHide={this.hideShowNew}
                  wipeSubmit={this.props.wipeSubmitData}
                  confirmSubmit={this.confirmSubmit}/>
                 </Modal>
 {levelgrids}
-<div style={{marginBottom: "3em"}}/>
                     </div>
     );
 
@@ -470,9 +577,20 @@ class VocabGrid extends React.Component {
         
     }
     
+    handleAddNew = () => {
+    
+        this.props.handleAddNew(this.props.thislevel);
+        
+    }
+    
     render () {
         
         var vocabCards = [];
+        
+        if (this.state.edit) {
+            vocabCards.push(<div style={{marginTop: "1em", marginBottom: "2em"}}><AddNewCard
+                            onClick={this.handleAddNew} color={this.props.color}/></div>);
+        }
         
         for (var i = 0; i <this.props.VocabDict.length; i++) {
             
@@ -483,8 +601,11 @@ class VocabGrid extends React.Component {
                             size={this.props.size}
                             showDetail={this.props.showDetail}
                             active={this.props.VocabDict[i]['l'] <= this.props.userlevel}
+                            handleDelete={this.props.handleDelete}
         ></VocabCard></div>);
         }
+        
+        
     
         return (
     <div style={{paddingLeft: "5%", paddingBottom: "3em", paddingRight: "5%", backgroundColor: this.props.color}}>
@@ -504,11 +625,16 @@ class VocabCard extends React.Component {
     
     state = {
         
-        showDialog: false
+        showDialog: false,
+        showDeleteConfirm: false
     }
     
     onHide = () => {
         this.setState({showDialog: false});
+    }
+    
+    onDeleteHide = () => {
+        this.setState({showDeleteConfirm: false});
     }
      
     
@@ -521,6 +647,13 @@ class VocabCard extends React.Component {
     
     handleDeleteClick = () => {
         console.log("DELETE");
+        this.setState({showDeleteConfirm: true});
+    }
+    
+    handleDeleteConfirm = () => {
+        console.log("EXTERMINATE");
+        this.props.handleDelete({no: this.props.data.no, data: this.props.data});
+        this.onDeleteHide();
     }
     
     render () {
@@ -556,7 +689,7 @@ class VocabCard extends React.Component {
                 colour={colour}/>
                 </Modal>
                 <Modal centered show={this.state.showDeleteConfirm} onHide={this.onDeleteHide}>
-                    <DeleteConfirm data={this.props.data}/>
+                    <DeleteConfirm data={this.props.data} onClick={this.handleDeleteConfirm}/>
                 </Modal>
                 <Card
                 onClick={this.handleClick}
@@ -576,6 +709,16 @@ class VocabCard extends React.Component {
 </div>
 );
 }
+}
+
+class AddNewCard extends React.Component {
+    
+    render () {
+        
+        return (
+            <Card style={{height: "5em", width: "15rem", marginRight: "1rem", marginLeft: "1rem", marginTop: "1rem", border: "0", backgroundColor: this.props.color}}><div style={{textAlign: "center", marginTop: "1em"}}><PlusCircle size={50} style={{cursor: "pointer"}} onClick={this.props.onClick}/></div></Card>
+            );
+    }
 }
 
 class Cross extends React.Component {
@@ -598,7 +741,19 @@ class DeleteConfirm extends React.Component {
     
     render () {
         
-        return (<div></div>);
+        return (
+            <Card style={{borderRadius: "10px"}}>
+            <div style={{height: "2em", backgroundColor: "red", color: "white", textAlign: "center", fontSize: "20px"}}>
+            Confirm Delete
+            </div>
+            <div className="vocabdisplay">
+            {this.props.data['w']}
+            </div>
+            <div style={{justifyContent: "center", textAlign: "center"}}>
+            <button className="deleteconfirmbutton" onClick={this.props.onClick} style={{width: "50%"}}>Delete</button>
+            </div>
+            </Card>
+        );
         
     }
 }
@@ -777,11 +932,13 @@ class SampleSentences extends React.Component {
 
         
         return (
+            <div style={{marginBottom: "2em"}}>
             <Text style={{fontSize: "25px", textAlign: "center"}}>
             
             {this.props.samples.length > 0 && words} <hr></hr>
             {this.props.samples.length > 1 && words2}
     </Text>
+</div>
         );
     }
 }
@@ -826,7 +983,10 @@ class FindNew extends React.Component {
     
     state = {warning: "",
              inputting: true,
-             loading: false}
+             loading: false,
+             choices: this.props.newchoices,
+             window: 1,
+             selected: new Set()}
     
     handleChange = (event) => {
         
@@ -842,6 +1002,53 @@ class FindNew extends React.Component {
         
             event.preventDefault();
             this.setState({value: event.target.value});
+        }
+    }
+    
+    handleClickRight = () => {
+        
+        console.log((1.0 * this.state.choices.length)/9);
+        console.log(this.state.window);
+        console.log(this.state.choices.length);
+        
+        if (this.state.window < ((1.0 * this.state.choices.length)/9)) {
+            
+            this.setState({window: this.state.window + 1});
+            
+        }
+    }
+    
+    handleClickLeft = () => {
+        
+        if (this.state.window > 1) {
+            
+            this.setState({window: this.state.window - 1});
+            
+        }
+        
+    }
+    
+    handleSelect = (id) => {
+        
+        console.log(id);
+        var newselected = this.state.selected;
+        if (!(this.state.selected.has(9*(this.state.window-1)+id))) {
+            newselected.add(9*(this.state.window-1)+id);
+        } else {
+            newselected.delete(9*(this.state.window-1)+id);
+        }
+        this.setState({selected: newselected}); 
+    }
+    
+    handleSubmitChoice = (event) => {
+        
+        event.preventDefault();
+        
+        if (this.state.inputting == true) {
+            
+            console.log(this.state.selected);
+            this.props.handleSubmitChoice(this.state.choices, this.state.selected);
+            
         }
     }
     
@@ -871,7 +1078,7 @@ class FindNew extends React.Component {
     
     
     render () {
-        
+        console.log(this.props.newchoices);
         console.log("SUBMIT DATA");
         if ((this.props.submitdata != null) && (this.props.submitdata["state"] == "in_dictionary") && (this.props.submitdata["data"][0][0] == this.state.value)) {
             var choosing = true;
@@ -896,25 +1103,166 @@ class FindNew extends React.Component {
         
         return (
             
-            <Card className="findnewcard">
-            <div style={{marginTop: "0.5em"}}>
-            {!choosing && "Add a new word"}
-{choosing && "Confirm new word:"}
-            </div>
+            <>
+            <FindNewGrid
+                            handleClick={this.handleSelect}
+                            color="white"
+                            window={this.state.window}
+                            selected={this.state.selected}
+                            VocabDict={this.state.choices.slice(9*(this.state.window-1),9*this.state.window)}
+                            thislevel = "0"
+                            size="2em"/>
+    <div style={{textAlign: "center"}}><ChevronLeft style={{cursor: "pointer"}} onClick={this.handleClickLeft} color="green" size={50}/><ChevronRight style={{cursor: "pointer"}} onClick={this.handleClickRight} size={50} color="green"/></div>
+            <div style={{textAlign: "center"}}> {!choosing && this.state.selected.size > 0 && <NewSubmitButton onClick={this.handleSubmitChoice} no={this.state.selected.size}/>}</div>
            
-            <div style={{color: "red", marginTop: "0.5em"}}>{this.state.warning}{warning}</div>
-            <div>{!choosing && <NewInput 
-                              handleSubmit={this.handleSubmit}
-                              handleChange={this.handleChange}
-                              value={this.state.value}/>}</div>
-            <div>{choosing && <Choose data={this.props.submitdata["data"]} 
-                                      handleCancel={this.props.handleHide}
-                                      confirmSubmit={this.props.confirmSubmit}/>}</div>
+            
+            
              
-            </Card>
+            </>
             
         );
     }
+}
+
+class NewSubmitButton extends React.Component {
+    
+    render () {
+        
+        if (this.props.no == 1) {
+           var wd = "word";
+        } else {
+           var wd = "words";
+        }
+        
+        return (
+            
+            <button onClick={this.props.onClick} className="newvocabsubmit">Add {this.props.no} new {wd}.</button>
+        );
+    }
+}
+
+class FindNewGrid extends React.Component {
+    
+    state = {
+        keys: null,
+        edit: false
+    }
+    
+    handleEditClick = () => {
+        
+        console.log("editing now");
+        this.setState({edit: !this.state.edit});
+        
+    }
+    
+    
+    render () {
+        
+        var vocabCards = [];
+        
+        if (this.state.edit) {
+            vocabCards.push(<div style={{marginTop: "1em", marginBottom: "2em"}}><AddNewCard
+                            onClick={this.props.handleAddNew} color={this.props.color}/></div>);
+        }
+        
+        for (var i = 0; i <this.props.VocabDict.length; i++) {
+            
+            if (this.props.selected.has(9*(this.props.window-1)+i)) {
+                
+                var border = "2px solid red";
+                console.log("BORDER BORER");
+                
+            } else {
+                console.log("BRDER NO");
+                var border = "";
+                
+            }
+            
+            vocabCards.push(<div style={{marginTop: "1em", marginBottom: "2em"}}><FindNewCard
+                            id = {i}
+                            edit = {this.state.edit}
+                            border={border}
+                            data = {this.props.VocabDict[i]}
+                            size={this.props.size}
+                            handleClick={this.props.handleClick}
+                            active={this.props.VocabDict[i]['l'] <= this.props.userlevel}
+                            handleDelete={this.props.handleDelete}
+        /></div>);
+        }
+        
+        
+    
+        return (
+    <div style={{paddingLeft: "5%", paddingBottom: "3em", paddingRight: "5%", backgroundColor: this.props.color}}>
+            <div style={{paddingTop:"2em"}}/>
+            <div>{(this.props.thislevel > this.props.userlevel) && <Edit style={{cursor: "pointer"}} onClick={this.handleEditClick}/>}</div>
+ <Row 
+     style={{justifyContent: "center"}}>
+            {vocabCards}
+</Row>
+            </div>
+                
+        );
+    }
+}
+
+class FindNewCard extends React.Component {
+    
+    state = {
+        
+        showDialog: false,
+        showDeleteConfirm: false
+    }
+    
+    handleClick = () => {
+        
+        this.props.handleClick(this.props.id)
+        
+    }
+    
+    render () {
+        
+        console.log(this.props.edit);
+        
+        if (this.props.data['s'] < 5) {
+            var colour = "lightblue";
+            var fontcolour = "black";
+            var variant = "success";
+        } else if (this.props.data['s'] < 8) {
+            var colour = "#003366";
+            var variant = "";
+            var fontcolour = "white";
+        } else {
+            var colour = "white";
+            var variant = "success";
+        }
+        if (!this.props.active) {
+            var bgcolor = "lightgrey";
+        } else {
+            var bgcolor = "";
+        }
+        
+        return (
+            
+           <div>
+                <Card
+                onClick={this.handleClick}
+                className="myvocabcard"
+                style={{height: "5rem", width: "15rem", marginRight: "1rem", marginLeft: "1rem", marginTop: "1rem", backgroundColor: bgcolor, border: this.props.border}}>
+                    {this.props.edit && <Cross onClick={this.handleDeleteClick}/>}
+                <div className="cardHeader"
+                style={{textAlign: "center",
+                      padding: "1rem",
+                      fontSize: this.props.size}}>
+                {this.props.data["w"]} <br></br> 
+                </div>
+<div style={{marginBottom: "1em"}}>
+    {this.props.active && <StreakShow style={{marginBottom: "1em"}} streak={this.props.data['s']} variant={variant}/>}
+    </div>
+</Card>
+</div>
+);
+}
 }
 
 class NewInput extends React.Component {

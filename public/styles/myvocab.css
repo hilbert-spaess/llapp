@@ -96,4 +96,27 @@
     background: lightgreen;
     
 }
+
+.deleteconfirmcontent {
+    
+    padding: 2em;
+        
+}
+
+.deleteconfirmbutton {
+  
+  margin-top: 1rem;
+  border-radius: 2rem;
+  padding: 0.5em 0.5em;
+  font-size: 20px;
+  background-color: red;
+  margin-bottom: 1rem;
+    
+}
+
+.bigassmodal {
+    
+    max-width: 100%!important;
+    width: 60em;
+}
     
