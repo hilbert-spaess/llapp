@@ -4,32 +4,23 @@ import {Redirect} from 'react-router-dom';
 import {useApi} from './use-api.js';
 import {APIHOST} from './api_config.js';
 import {Card, Button, Row, Col, Container, Modal, ProgressBar} from 'react-bootstrap';
-import {BarWrapped} from './sidebar.js';
+import {BarWrapped, FreeBarWrapped2} from './sidebar.js';
 import {VocabSelectContainer} from './VocabSelect.js';
 
 export class NewUserTest extends React.Component {
     
     render () {
         return (
-            <BarWrapped WrappedComponent={NewUserTest1}/>
+            <FreeBarWrapped2 WrappedComponent={NewUserTest1}/>
         );
     }
 }
 
 export class NewUserTest1 extends React.Component {
     
-    state = {native: null,
-             readingacademic: null,
+    state = {readingacademic: null,
              answers: null,
             course: null}
-    
-    handleNativeClick = (id) => {
-        
-        console.log("henlo");
-        
-        this.setState({native: id});
-        
-    }
     
     handleReadingChoiceSubmit = (id) => {
         
@@ -69,130 +60,6 @@ export class NewUserTest1 extends React.Component {
             
             );
 
-    }
-}
-
-export class NativeChoice extends React.Component {
-    
-    render () {
-        
-        return (
-            
-            <div className="mainbox">
-                        <div className="maintext">
-                Welcome! Let's work out your reading level. <br></br>
-                    Are you a native English speaker?
-                    </div>
-                   <Row style={{marginTop: "3em", justifyContent: "space-evenly"}}>
-                    <OptionCard 
-                        id = {1}
-                        variant="outline-success"
-                        text="Yes"
-                        handleClick = {this.props.handleClick}/>
-                            
-                    <OptionCard
-                        id = {2}
-                        variant="outline-danger"
-                        text="No"
-                        handleClick= {this.props.handleClick}/>
-                    </Row>
-                    </div>
-
-        );
-    }
-}
-
-const LevelTestLoader = (props) => {
-    
-    const {login, getAccessTokenWithPopup } = useAuth0();
-    const opts = {audience: APIHOST, 
-                  fetchOptions: {method: 'post',
-                                 headers: {'Access-Control-Allow-Credentials': 'true',
-                                           'Access-Control-Allow-Origin': '*',
-                                           'Accept': 'application/json',
-                                           'Content-Type': 'application/json',
-                                          'Access-Control-Request-Method': 'POST'}}};
-    const {error, loading, data, refresh} = useApi(APIHOST + '/api/newuserleveltest', {}, opts);
-        
-    const handleNext = async (parcelData) => {
-        await props.handleNext(parcelData);
-        refresh();
-    }
-        
-    console.log(data);
-    const getTokenAndTryAgain = async () => {
-        await getAccessTokenWithPopup(opts);
-        refresh()
-  };
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-    if (error) {
-        if (error.error === 'consent_required') {
-      return (
-        <button onClick={getTokenAndTryAgain}>Consent to reading users</button>
-      );
-    }
-    return <div>Oops {error.message}</div>;
-    }
-
-    return (
-        <div>
-        <LevelTest
-            words={data.words}
-            handleSubmit = {props.handleSubmit}
-        />          
-</div>
-    );
-}
-    
-export class LevelTest extends React.Component {
-    
-    state = {currentWord: 0,
-            answers: [],
-            progress: 0}
-    
-    handleClick = (id) => {
-        this.setState(prevState => ({
-            answers: [...prevState.answers, id]
-        }));
-        
-        if (this.state.currentWord < this.props.words.length - 1) {
-            var a = this.state.currentWord;
-            this.setState({currentWord: a+1});
-        } else {
-            this.props.handleSubmit(this.state);
-        }
-    }
-    
-    render () {
-        
-        return (
-            <div className="mainbox">
-                        <div className="maintext">
-            <Row style={{justifyContent: "center"}}>
-            <ProgressBar style={{width: "80%", textAlign: "center"}} variant = "success" now={100*(this.state.currentWord/this.props.words.length)}/>
-                </Row>
-            <div style={{color: "grey", marginTop: "1em"}}>Do you understand this word?</div>
-            <div style={{fontSize: "40px"}}>{this.props.words[this.state.currentWord]}</div>
-            </div>
-<Row style={{marginTop: "3em", justifyContent: "space-evenly"}}>
-                    <OptionCard 
-                        id = {1}
-                        variant="outline-success"
-                        text="Yes"
-                        handleClick = {this.handleClick}/>
-                            
-                    <OptionCard
-                        id = {0}
-                        variant="outline-danger"
-                        text="No"
-                        handleClick= {this.handleClick}/>
-                    </Row>
-            </div>
-            
-            
-            );
     }
 }
 
@@ -388,7 +255,8 @@ const VocabSelectLoader = (props) => {
         return <div>Oops {error.message}</div>;
         }
         return (<VocabSelectContainer
-                data={data}/>);
+                data={data}
+                course={props.data.course}/>);
     }
 
     

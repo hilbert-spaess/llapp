@@ -72,7 +72,7 @@ export class VocabSelectContainer extends React.Component {
             
             return <Done
                     words={this.state.floatingWords}
-                    course={this.props.data.course}/>;
+                    course={this.props.course}/>;
             
         }
         
@@ -80,24 +80,22 @@ export class VocabSelectContainer extends React.Component {
             
             <>
             
-            <div className="maintext" style={{textAlign:"center"}}>Help us find some words at your level.</div>
+            <div className="maintext" style={{textAlign:"center"}}>Let's get started. Pick 5 words to start your course.</div>
 
             <FloatingWords
             words= {this.state.floatingWords}
             handleClick = {this.handleDeleteClick}
             />
-            
-            <UserInputContainer
-            handleSubmit={this.handleVocabSumit}
-            done={(this.state.floatingWords.length >= 5)}
-            submitClick = {this.submitClick}/>
-  <div>          
+                   <UserInputContainer
+handleSubmit={this.handleVocabSumit}
+done={(this.state.floatingWords.length >= 5)}
+submitClick = {this.submitClick}/>
 {(this.state.floatingWords.length < 5) && <VocabChoiceContainer
             floatingWords={this.state.floatingWords}
             course_vocab={this.props.data.course_vocab}
             handleClick={this.handleVocabClick}
-            chosen={this.state.chosen}/>}</div>
-                
+            chosen={this.state.chosen}/>}
+
                 <div style={{marginBottom: "3em"}}/>
 
             </>
@@ -181,14 +179,7 @@ class UserInputContainer extends React.Component {
         
             return (
 
-                <div className="newuserinputcontainer" style={{marginBottom: "0.5em"}}>
-                Tell us some words at your target level:<br></br>
-
-                <form className="commentForm" onSubmit={this.handleSubmit}>
-                <input type="text" style={{fontSize: "2em",  border: "none", outline: "none", borderBottom: "1px dashed black", textAlign: "center"}} className="newuserinput" value={this.state.value} onChange={this.handleChange}/>
-                    </form>
-
-                </div>
+               <div></div>
 
             );
         }
@@ -216,7 +207,7 @@ class VocabChoiceContainer extends React.Component {
         
         return (
             <div className="vocabchoicecontainer">
-             Or choose from our dictionary:
+             Choose from our dictionary:
             <Container>
         <Row 
          style={{justifyContent: "center"}}>
@@ -246,7 +237,7 @@ class VocabCard extends React.Component {
                 <Card
                 onClick={this.handleClick}
                 className="myvocabcard"
-                style={{height: "10rem", width: "15rem", marginRight: "1rem", marginLeft: "1rem", marginTop: "1rem"}}>
+                style={{height: "5rem", width: "15rem", marginRight: "1rem", marginLeft: "1rem", marginTop: "1rem", backgroundColor: "#f5f5f5"}}>
 
                 <div className="cardHeader"
                 style={{textAlign: "center",
@@ -289,11 +280,11 @@ class FloatingVocabCard extends React.Component {
                 <div>
                 <Card
                 className={name}
-                style={{height: "10rem", width: "15rem", marginRight: "1rem", marginLeft: "1rem", marginTop: "1rem", position: "relative"}}>
+                style={{height: "5rem", width: "15rem", marginRight: "1rem", marginLeft: "1rem", marginTop: "1rem", position: "relative", backgroundColor: "#f5f5f5"}}>
                     <div>{this.props.word!="" && <Cross onClick={this.handleClick}/>}</div>
                 <div className="floatingcardheader"
                 style={{textAlign: "center",
-                       marginTop: "3rem",
+                       marginTop: "1rem",
                       fontSize: "2em"}}>
                 {this.props.word}
                 </div>
@@ -319,9 +310,11 @@ export class Cross extends React.Component {
 
 const Done = (props) => {
     
-     const {login, getAccessTokenWithPopup } = useAuth0();
+     console.log(props.course);
+    
+     const {login, getAccessTokenWithPopup, user} = useAuth0();
      const opts = {audience: APIHOST};
-     const {error, loading, data, refresh} = useApi(APIHOST + '/api/coursevocabsubmit', {words: props.words, course: props.course}, opts);
+     const {error, loading, data, refresh} = useApi(APIHOST + '/api/coursevocabsubmit', {words: props.words, course: props.course, email: user.email}, opts);
      const getTokenAndTryAgain = async () => {
         await getAccessTokenWithPopup(opts);
         refresh()
