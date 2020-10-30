@@ -19,7 +19,7 @@ export const FreeBarWrapped2 = ({WrappedComponent, data, ...args}) => (
     
      <>
     <Sidebar2/>
-                     <div style={{marginLeft: "15%"}}><WrappedComponent {...args} data={data}/>
+                     <div style={{marginLeft: "15%", height: "100vh"}}><WrappedComponent {...args} data={data}/>
                                 
 </div>
 </>
