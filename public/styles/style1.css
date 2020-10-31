@@ -248,6 +248,13 @@ body {
     
 }
 
+.coursecard {
+    
+    box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
+      transition: opacity 0.2s ease, box-shadow 0.2s ease;
+      opacity: 1;
+}
+
 .nextbutton {
     
     margin-top: 2em;

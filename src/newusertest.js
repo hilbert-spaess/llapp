@@ -42,18 +42,22 @@ export class NewUserTest1 extends React.Component {
     
     render () {
         
-        if (this.state.readingacademic==null) {
+        console.log(this.state.readingacademic != null);
+        console.log(this.state.readingacademic);
+        
+        if (this.state.readingacademic == null || this.state.course==null) {
+            
             return (
-                <ReadingChoice
-                    handleSubmit = {this.handleReadingChoiceSubmit}/>
-        );
+                
+                <div>
+                <ReadingChoice 
+                handleSubmit={this.handleReadingChoiceSubmit}
+                choosing={this.state.readingacademic==null}/>
+                {(this.state.readingacademic != null) && <CourseChoice readingacademic={this.state.readingacademic} handleSubmit = {this.handleCourseChoiceSubmit}/>}
+                </div>
+            );
         }
         
-        if (this.state.course==null) {
-            return <CourseChoice
-                    readingacademic={this.state.readingacademic}
-                    handleSubmit = {this.handleCourseChoiceSubmit}/>;
-        }
 
         return (
             
@@ -105,6 +109,7 @@ const CourseChoice = (props) => {
         }
         return <div>Oops {error.message}</div>;
         }
+        console.log("rendering course choice");
         return (<CourseChoice1 
                 readingacademic = {props.readingacademic}
                 choices = {data.choices}
@@ -120,6 +125,8 @@ export class CourseChoice1 extends React.Component {
         var keys = Object.keys(this.props.choices);
         
         if (this.props.readingacademic == "2") {
+            
+            console.log("BEMBLO");
             
             var ids = ["1", "2", "6"]
             
@@ -146,16 +153,12 @@ export class CourseChoice1 extends React.Component {
         }
     
          return (
-
-                <div className="mainbox">
-                            <div className="maintext">
-                        Choose your reading level.
-                        </div>
+                        <>
+                       <div style={{textAlign: "center"}} className="maintext"> Choose your reading level.</div>
                        <Row style={{marginTop: "3em", justifyContent: "space-evenly"}}>
              {choices}
                         </Row>
-                        </div>
-
+                </>
             );
     }
 }
@@ -211,7 +214,7 @@ export class CourseCard extends React.Component {
         
         return (
              
-            <Card onClick={this.onClick} style={{cursor: "pointer", width: "30em", height: "15em"}}>
+            <Card className="coursecard" onClick={this.onClick} style={{cursor: "pointer", width: "30em", height: "15em"}}>
             <div className="coursecardname" onClick={this.onClick}>{this.props.name}</div>         
             </Card>
 
