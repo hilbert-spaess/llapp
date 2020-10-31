@@ -98,13 +98,13 @@ const LearningContainerData = (props) => {
         refresh()
   };
     
-    var reviewyet = 0;
-    for (var i=0; i < data.allChunks.length; i++) {
-        if (data.allChunks[i]["first"] == 0) {
-            reviewyet += 1;
-        }
-    }
     if (props.data !== undefined) {
+        var reviewyet = 0;
+        for (var i=0; i < props.data.read_data.allChunks.length; i++) {
+            if (props.data.read_data.allChunks[i]["first"] == 0) {
+                reviewyet += 1;
+            }
+        }
         return <LearningContainerUpdatable
             allChunks = {props.data.read_data.allChunks}
             displayType= {props.data.read_data.displayType}
@@ -134,7 +134,12 @@ const LearningContainerData = (props) => {
                 handleNext={handleTutorialNext}
                 />;
     }
-        
+    var reviewyet = 0;
+    for (var i=0; i < data.allChunks.length; i++) {
+        if (data.allChunks[i]["first"] == 0) {
+            reviewyet += 1;
+        }
+    }
     console.log(data);
     return (
         <div>
