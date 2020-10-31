@@ -69,7 +69,6 @@ export class Sidebar extends React.Component {
 	return (
         
 	    <div className="sidenav" style={{paddingTop: "1em", textAlign: "left"}}>
-        <ProfileDropDown/>
 		<div style={{textAlign: "left", marginLeft: "1em"}}><Link style={{ marginTop: "40%", fontSize: "2em"}} to={{pathname: "/home", data: this.props.data}}>RiceCake</Link></div>
             <ProfileDropDown/>
         <div className="sidelink" style={{marginTop: "2em", fontSize: "1.5em"}}><Link className="sideclick" to={{pathname: "/home", data: this.props.data}}><Home size={50} style={{marginLeft: "0.5em", marginRight: "1em"}}/>   Home</Link></div>
