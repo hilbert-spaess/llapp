@@ -188,7 +188,7 @@ class UserInputContainer extends React.Component {
             
             return (
                 <div style={{textAlign: "center", marginTop: "3em"}}>
-                <button onClick={this.props.submitClick} className="selectdonebutton">Generate Course</button>
+                <button style={{borderColor: "green", padding: "15px", color: "green", borderRadius: "30px", marginTop: "2em", backgroundColor: "white"}} onClick={this.props.submitClick}>Generate Course</button>
                 </div>
             );
             
