@@ -59,7 +59,22 @@ const TodayProgressData = (props) => {
 
 class TodayProgressContainer extends React.Component {
     
+    state = {vocab: false}
+    
+    handleSummary = () => {
+        
+        console.log("no hemlo");
+        this.setState({vocab: true});
+        
+    }
+    
     render () {
+        
+        if (this.state.vocab) {
+            
+            return <Redirect to="/vocab"/>
+                
+        }
         
         console.log(this.props.data);
         
@@ -73,10 +88,12 @@ class TodayProgressContainer extends React.Component {
         }
         
         return (
-    <div style={{paddingLeft: "10%", paddingRight: "10%"}}>
+    <div style={{marginTop: "20vh", paddingLeft: "5%", paddingRight: "5%", paddingBottom: "20em", marginBottom: "3em"}}>
             <div className="maintext" style={{textAlign: "center", fontSize: "40px", marginTop: "1em"}}>Today's work</div>
-        <VocabGrid style={{fontSize: "20px"}} words={this.props.data["words"]}/>
-            {chunks}
+        <VocabGrid style={{fontSize: "20px", marginTop: "5em"}} words={this.props.data["words"]}/>
+        <div style={{textAlign: "center"}}>
+        <button style={{borderColor: "green", padding: "15px", color: "green", borderRadius: "30px", marginTop: "2em", backgroundColor: "white"}} onClick={this.handleSummary}>Go to My Vocab</button>
+        </div>
             </div>
 
         );
@@ -150,11 +167,11 @@ class VocabGrid extends React.Component {
         }
         
         return (
-            <Container justifyContent="center">
-<Row style={{justifyContent:"center"}}>
+            <>
+<Row style={{justifyContent:"center", paddingBottom: "3em"}}>
             {vocabCards}
 </Row>
-           </Container>     
+</>
         );
     }
 }
@@ -175,13 +192,12 @@ class VocabCard extends React.Component {
             
             <div>
                 <Card
-                style={{height: "10rem", width: "15rem", marginRight: "1rem", marginLeft: "1rem", marginTop: "1em", borderColor: colour}}>
+                style={{height: "5rem", width: "15rem", marginRight: "1rem", marginLeft: "1rem", marginTop: "3rem", borderColor: colour}}>
 
                 <div className="cardHeader"
                 style={{textAlign: "center",
-                       fontSize: "2em",
-                       marginBottom: "1.5em",
-                      padding: "2rem"}}>
+                       marginTop: "1rem",
+                       fontSize: "2em"}}>
                 {this.props.word} <br></br>
                 <StreakShow streak={this.props.streak}/>
                 </div>

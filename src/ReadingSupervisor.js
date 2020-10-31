@@ -457,7 +457,7 @@ class LearningSummary extends React.Component {
              
         return (
             <div style={{textAlign: "center"}}>
-            <div style={{marginTop: "5em", fontSize: "30px"}}> You're done for today!</div>
+            <div style={{marginTop: "5em", fontSize: "30px"}}> You're done for today! <br></br> Check in tomorrow for more reviews.</div>
             <div>
             <button style={{borderColor: "green", padding: "15px", color: "green", borderRadius: "30px", marginTop: "2em", backgroundColor: "white"}} onClick={this.handleSummary}>Review today's progress</button>
             </div><div>
