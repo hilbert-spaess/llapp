@@ -678,6 +678,12 @@ class VocabCard extends React.Component {
             var bgcolor = "";
         }
         
+        if (this.props.data['w'].length > 12) {
+            var size = "1.75em";
+        } else {
+            var size = this.props.size;
+        }
+        
         return (
             
            <div>
@@ -699,7 +705,7 @@ class VocabCard extends React.Component {
                 <div className="cardHeader"
                 style={{textAlign: "center",
                       padding: "1rem",
-                      fontSize: this.props.size}}>
+                      fontSize: size}}>
                 {this.props.data["w"]} <br></br> 
                 </div>
 <div style={{marginBottom: "1em"}}>

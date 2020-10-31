@@ -188,6 +188,12 @@ class VocabCard extends React.Component {
                 var colour = "white";
             }
         
+        if (this.props.word.length > 12) {
+            var size = "1.75em";
+        } else {
+            var size = "2em";
+        }
+        
         return (
             
             <div>
@@ -197,7 +203,7 @@ class VocabCard extends React.Component {
                 <div className="cardHeader"
                 style={{textAlign: "center",
                        marginTop: "1rem",
-                       fontSize: "2em"}}>
+                       fontSize: size}}>
                 {this.props.word} <br></br>
                 <StreakShow streak={this.props.streak}/>
                 </div>

@@ -246,8 +246,16 @@ class VocabCard extends React.Component {
         
     }
     
+    
+    
     render () {
-            
+        
+            if (this.props.word.length > 12) {
+                var size = "1.75em";
+            } else {
+                var size = "2em";
+            }
+
             return (
 
                 <div>
@@ -259,7 +267,7 @@ class VocabCard extends React.Component {
                 <div className="cardHeader"
                 style={{textAlign: "center",
                       padding: "1rem",
-                      fontSize: "2em"}}>
+                      fontSize: size}}>
                 {this.props.word}
                 </div>
         </Card>
