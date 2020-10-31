@@ -16,8 +16,34 @@ export class Launch extends React.Component {
         const {data} = this.props.location;
         console.log(data);
         return (
-            <FreeBarWrapped WrappedComponent={LaunchLoader} data={data}/>
+            <FreeBarWrapped WrappedComponent={LaunchAnimation} data={data}/>
         );
+    }
+}
+
+class LaunchAnimation extends React.Component {
+    
+    state = {data: this.props.data}
+    
+    loadData = (data) => {
+        
+        this.setState({data});
+        
+    }
+    
+    render () {
+        
+        if (this.state.data !== undefined) {
+            return <Launch1 data={this.state.data}/>;
+        }
+        
+        return (
+            <>
+            <LaunchMondrian/>
+            <LaunchLoader
+            loadData={this.loadData}/>
+            </>
+            );
     }
 }
 
@@ -53,12 +79,44 @@ const LaunchLoader = (props) => {
     }
     console.log(data.notification);
     
-    return (
-            <Launch1
-        data={data}/>
-    );
+    props.loadData(data);
+    
+    return <div></div>;
 
 }
+
+class LaunchMondrian extends React.Component {
+    
+    render () {
+        
+        return (
+            <>
+            <div className="vline avline0 vertline0"/>
+            <div className="vline avline1 vertline1"/>
+            <div className="vline avline2 vertline2"/>
+            <div className="vline avline3 vertline3"/>
+            <div className="vline avline4 vertline4"/>
+            <div className="vline avline5 vertline5"/>
+            <div className="vline avline6 vertline6"/>
+            <div className="vline avline7 vertline7"/>
+            <div className="vline avline8 vertline8"/>
+            <div className="hline ahline1 hline1"/>
+            <div className="hline ahline2 hline2"/>
+            <div className="hline ahline3 hline3"/>
+            <div className="hline ahline4 hline4"/>
+            <div className="hline ahline5 hline5"/>
+            <div className="hline ahline6 hline6"/>
+            <div className="tealfill afill tealfill1"/>
+            <div className="tealfill afill tealfill2"/>
+            <div className="tealfill afill tealfill3"/>
+            <div className="greyfill greyfill1"/>
+            <div className="bluefill abfill bluefill1"/>
+            <div className="bluefill abfill bluefill2"/>
+            </>
+            );
+    }
+}
+        
 
 class Launch1 extends React.Component {
 
