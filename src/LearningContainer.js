@@ -178,7 +178,8 @@ export class LearningContainer extends React.Component {
         } else {
             var progress = this.props.reviewProgress;
         }
-
+        
+        console.log(this.props.progress);
         console.log(progress);
         
         if (this.state.isLoading == 0 ) {
