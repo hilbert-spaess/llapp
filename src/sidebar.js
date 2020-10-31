@@ -56,7 +56,7 @@ const ProfileDropDown = () => {
     const {user, logout} = useAuth0();
     
     return (
-        <NavDropdown title={user.email} id="basic-nav-dropdown">
+        <NavDropdown style={{fontSize: "20px", marginTop: "1em", marginLeft: "0.3em"}} title={user.email} id="basic-nav-dropdown">
         <NavDropdown.Item onClick={() => logout({returnTo: window.location.origin})}>Log out</NavDropdown.Item>
       </NavDropdown>
     );
@@ -67,8 +67,11 @@ export class Sidebar extends React.Component {
 
     render () {
 	return (
+        
 	    <div className="sidenav" style={{paddingTop: "1em", textAlign: "left"}}>
+        <ProfileDropDown/>
 		<div style={{textAlign: "left", marginLeft: "1em"}}><Link style={{ marginTop: "40%", fontSize: "2em"}} to={{pathname: "/home", data: this.props.data}}>RiceCake</Link></div>
+            <ProfileDropDown/>
         <div className="sidelink" style={{marginTop: "2em", fontSize: "1.5em"}}><Link className="sideclick" to={{pathname: "/home", data: this.props.data}}><Home size={50} style={{marginLeft: "0.5em", marginRight: "1em"}}/>   Home</Link></div>
         <div className="sidelink" style={{marginTop: "1em", fontSize: "1.5em"}}><Link className="sideclick" to={{pathname: "/vocab", data: this.props.data}}><Settings size={50} style={{marginLeft: "0.5em", marginRight: "1em"}}/>   Settings</Link></div>
 		</div>
@@ -83,6 +86,7 @@ export class Sidebar2 extends React.Component {
 	return (
 	    <div className="sidenav" style={{paddingTop: "1em", textAlign: "left"}}>
 		<div style={{textAlign: "left", marginLeft: "1em"}}><Link style={{ marginTop: "40%", fontSize: "2em"}} to="/home">RiceCake</Link></div>
+            <ProfileDropDown/>
         <div className="sidelink" style={{marginTop: "2em", fontSize: "1.5em", marginRight: "1em"}}><Link className="sideclick" to="/home"><Home size={50} style={{marginLeft: "0.5em", marginRight: "1em"}}/> Home</Link></div>
        <div className="sidelink" style={{marginTop: "1em", fontSize: "1.5em", marginRight: "1em"}}><Link className="sideclick" to="/vocab" style={{marginTop: "1em"}}><Settings size={50} style={{marginLeft: "0.5em", marginRight: "1em"}}/> Settings</Link></div>
 		</div>

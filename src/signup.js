@@ -9,7 +9,7 @@ import {BookOpen, Type, FastForward} from 'react-feather';
 import {useApi} from './use-api.js';
 import {Redirect} from 'react-router-dom';
 import {APIHOST} from './api_config.js';
-import {CALLBACK} from './api_config.js';
+import {CALLBACK, SIGNUP_CALLBACK} from './api_config.js';
 import auth0 from 'auth0-js';
 
 
@@ -18,7 +18,7 @@ export const Signup = () => {
     var webAuth = new auth0.WebAuth({
         domain: "accounts.ricecake.ai",
         clientID: "3Quvqqshf1rWfO46Cmry14XeDjhwQMwM",
-        redirectUri: CALLBACK,
+        redirectUri: SIGNUP_CALLBACK,
         responseType: "token"});
     
     return (<div>
