@@ -86,7 +86,7 @@ class WhyWorksCard extends React.Component {
     render () {
         
         return (
-            <Card className="whyworkscard" style={{width: this.props.width, zIndex: "0"}}>
+            <Card className="whyworkscard" style={{backgroundColor: "#f5f5f5", width: this.props.width, zIndex: "0"}}>
                  <FadeInSection style={{display: "inline-block", zIndex: "1"}}>
                      {this.props.id==0 && <div style={{textAlign: "center"}}><Clock size={40} color="green"/></div>}
 {this.props.id==1 && <div style={{textAlign: "center"}}><BookOpen size={40} color="green"/></div>}
@@ -100,6 +100,42 @@ class WhyWorksCard extends React.Component {
         );
     }
 }
+
+class ForInstitutions extends React.Component {
+    
+    render () {
+        
+        return (
+            <Container fluid="lg">
+            <h1 style={{textAlign: "left", color: "black", marginTop: "1em"}}>RiceCake for Institutions.</h1>
+            <div style={{color: "black", textAlign: "left"}}>
+            Is the quality of written English a bottleneck for your students? <br></br>
+            Would better vocabulary improve performance? <br></br>
+            Is time a major constraint? <br></br>
+            Find out how we can help you.
+            </div>
+            <Row style={{justifyContent: "space-evenly", marginTop: "4em"}}>
+                <InstitutionCard t="Tailored Lists"/>
+                <InstitutionCard t="Exemplar Text"/>
+                <InstitutionCard t="Immediate Results"/></Row>
+            </Container>
+            );
+    }
+}
+
+class InstitutionCard extends React.Component {
+    
+    render () {
+        
+        return (
+            
+            <Card style={{width: "25%", height: "40vh", borderColor: "white", color: "black"}}>
+            <div className="institutiontitle">{this.props.t}</div>
+            </Card>
+        );
+    }
+}
+            
 
 
 
@@ -129,7 +165,7 @@ export class Landing1 extends React.Component {
     
     render () {
         return (
-            <>
+            <div style={{overflow: "scroll"}}>
               <nav class="navbar navbar-expand-sm navbar-dark navbar-custom ">
     <Container fluid="lg">
       <a class="navbar-brand" href="/">RiceCake</a>
@@ -146,9 +182,9 @@ export class Landing1 extends React.Component {
 <header className="masthead text-center text-white">
     <div className="masthead-content">
       <Container fluid="lg">
-        <h2 className="masthead-heading mb-0" style={{fontSize: "90px"}}>Read Smarter</h2>
+        <h2 className="masthead-heading mb-0" style={{fontSize: "90px"}}>Choose the right word</h2>
         <h3 className="masthead-subheading mb-0" style={{fontSize: "70px"}}>Interactive targeted text.</h3>
-        <h3 className="masthead-subheading mb-0" style={{fontSize: "70px"}}>The vocab you want.</h3>
+        <h3 className="masthead-subheading mb-0" style={{fontSize: "70px"}}>The vocab you need.</h3>
             <div align="left">
         <Link align="left" to="/signup" className="btn btn-primary btn-xl rounded-pill mt-5">Sign up now</Link>
             </div>
@@ -162,7 +198,7 @@ export class Landing1 extends React.Component {
 <Container fluid="lg">
 <WhyWorks style={{fontFamily: "roboto"}}/>
 </Container>
-  
+
             
            
 
@@ -173,6 +209,6 @@ export class Landing1 extends React.Component {
   </footer>
 
             
-   </>         );
+   </div>         );
 }
 }
