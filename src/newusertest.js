@@ -52,7 +52,7 @@ export class NewUserTest1 extends React.Component {
                 <div>
                 <ReadingChoice 
                 handleSubmit={this.handleReadingChoiceSubmit}
-                choosing={this.state.readingacademic==null}/>
+                selected={this.state.readingacademic}/>
                 {(this.state.readingacademic != null) && <CourseChoice readingacademic={this.state.readingacademic} handleSubmit = {this.handleCourseChoiceSubmit}/>}
                 </div>
             );
@@ -172,6 +172,7 @@ class ReadingChoice extends React.Component {
         choices.push(<CourseCard 
                      name="General Reading"
                      id={1}
+                     selected={this.props.selected==1}
                      variant="outline-success"
                      buttonText="Choose"
                      handleClick={this.props.handleSubmit}/>);
@@ -179,6 +180,7 @@ class ReadingChoice extends React.Component {
         choices.push(<CourseCard 
                      name="Academic Reading"
                      id={2}
+                     selected={this.props.selected==2}
                      variant="outline-success"
                      buttonText="Choose"
                      handleClick={this.props.handleSubmit}/>);
@@ -205,6 +207,12 @@ export class CourseCard extends React.Component {
     
     render () {
         
+        if (this.props.selected) {
+            var bordercolor = "red";
+        } else {
+            var bordercolor = "";
+        }
+        
         if (this.props.id == 1) {
             var posclass = "coursecardleft";
         }
@@ -214,7 +222,7 @@ export class CourseCard extends React.Component {
         
         return (
              
-            <Card className="coursecard" onClick={this.onClick} style={{cursor: "pointer", width: "30em", height: "15em"}}>
+            <Card className="coursecard" onClick={this.onClick} style={{cursor: "pointer", width: "30em", height: "15em", borderColor: bordercolor}}>
             <div className="coursecardname" onClick={this.onClick}>{this.props.name}</div>         
             </Card>
 

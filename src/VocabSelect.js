@@ -5,12 +5,21 @@ import {useApi} from './use-api.js';
 import {APIHOST} from './api_config.js';
 import {Card, Button, Row, Col, Container, Modal, ProgressBar} from 'react-bootstrap';
 import {BarWrapped} from './sidebar.js';
+import {NewUserTest1} from './newusertest.js';
+import {ArrowLeft} from 'react-feather';
 
 export class VocabSelectContainer extends React.Component {
     
     state = {floatingWords: [],
              chosen: Array(this.props.data.course_vocab.length).fill(0),
-             done: 0}
+             done: 0,
+             back: 0}
+    
+    goBack = () => {
+        
+        this.setState({back: 1});
+        
+    }
     
     handleVocabClick = (id) => {
         
@@ -68,6 +77,12 @@ export class VocabSelectContainer extends React.Component {
     
     render () {
         
+        if (this.state.back == 1) {
+            
+            return <NewUserTest1/>;
+            
+        }
+        
         if (this.state.done==1) {
             
             return <Done
@@ -80,7 +95,9 @@ export class VocabSelectContainer extends React.Component {
             
             <>
             
-            <div className="maintext" style={{textAlign:"center"}}>Let's get started. Pick 5 words to start your course.</div>
+            <div onClick={this.goBack} style={{cursor: "pointer", marginLeft: "2em", marginTop: "1em"}}><ArrowLeft size={50}/></div>
+            
+            <div style={{marginTop: "0"}} className="maintext" style={{textAlign:"center"}}>Let's get started. Pick 5 words to start your course.</div>
 
             <FloatingWords
             words= {this.state.floatingWords}
@@ -300,7 +317,7 @@ export class Cross extends React.Component {
         
       return (
 
-          <button onClick={this.props.onClick} className="crossbackground">
+          <button onClick={this.props.onClick} className="crossbackground" style={{backgroundColor: "#f5f5f5"}}>
               <div className="cross1">
                 <div className="cross2"></div></div>
           </button>
