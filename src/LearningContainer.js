@@ -612,6 +612,8 @@ class SampleSentences extends React.Component {
         
         var words = []
         
+        var punct = [".",",",";","!","?",":", "'s", "n't", "n’t", "’s"];
+        
         if (this.props.samples.length > 0) {
             
             
@@ -622,10 +624,18 @@ class SampleSentences extends React.Component {
             console.log(loc);
             
             for (var i =0; i < sentencearray.length; i++) {
-                if (i == loc) {
-                    words.push(<Text style={{fontWeight: "bold"}}>{sentencearray[i]} </Text>);
+                if ((punct.includes(sentencearray[i]))) {
+                    var spc = "";
                 } else {
-                    words.push(<Text>{sentencearray[i]} </Text>);
+                    var spc = " ";
+                }
+                if (i==0) {
+                    var spc = "";
+                }
+                if (i == loc) {
+                    words.push(<Text style={{fontWeight: "bold"}}>{spc + sentencearray[i]}</Text>);
+                } else {
+                    words.push(<Text>{spc + sentencearray[i]}</Text>);
                 }
             };
         }
