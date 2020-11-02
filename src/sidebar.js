@@ -56,7 +56,7 @@ const ProfileDropDown = () => {
     const {user, logout} = useAuth0();
     
     return (
-        <NavDropdown style={{fontSize: "1em", marginTop: "1em", marginLeft: "0.3em"}} title={user.email} id="basic-nav-dropdown">
+        <NavDropdown style={{fontSize: "1em", marginTop: "1em", marginLeft: "0.5em"}} title={<User size={50}/>} id="basic-nav-dropdown">
         <NavDropdown.Item onClick={() => logout({returnTo: window.location.origin})}>Log out</NavDropdown.Item>
       </NavDropdown>
     );
