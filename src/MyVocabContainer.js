@@ -861,13 +861,12 @@ class VocabDetail extends React.Component {
 {this.props.active && <StreakShow streak={this.props.data['s']} variant={this.props.variant}/>}
 </div>
         </div>
-        <BookOpen style={{marginRight: "1em", marginTop: "3em", marginLeft: "2em", display: "inline-block"}}/>
-        <div className="chinesedef" style={{marginLeft: "2em", paddingLeft: "1em", paddingRight: "1em", fontFamily: "Open Sans"}}> 
+        <div className="chinesedef" style={{marginTop: "2em", marginLeft: "0.5em"}}>
+        <BookOpen style={{marginRight: "1em"}}/>
             {"d" in this.props.data && this.props.data["d"]}
         </div>
         <hr></hr>
-         <Edit3 style={{display: "inline-block", marginLeft: "2em"}}/> 
-        <div className="chinesedef" style={{marginBottom: "0.5em", color: "grey", paddingLeft: "1em", paddingRight: "1em", marginLeft: "2em", fontFamily: "Open Sans"}}>
+<div className="chinesedef" style={{marginTop: "1em", marginLeft: "0.5em", marginBottom: "2em"}}>
           {("samples" in this.props.data) && <SampleSentences samples={this.props.data["samples"]}/>}
     </div>
 		</div>
@@ -940,13 +939,11 @@ class SampleSentences extends React.Component {
 
         
         return (
-            <div style={{marginBottom: "2em"}}>
-            <Text style={{fontSize: "25px", fontFamily: "Open Sans", textAlign: "center"}}>
+            <Text style={{fontSize: "25px", fontFamily: "Open Sans", fontStyle: "italic", textAlign: "center"}}>
             
-            {this.props.samples.length > 0 && words} <hr></hr>
-            {this.props.samples.length > 1 && words2}
+            <Edit3 style={{marginRight: "1em"}}/> {this.props.samples.length > 0 && words} <hr></hr>
+            <Edit3 style={{marginRight: "1em"}}/> {this.props.samples.length > 1 && words2}
     </Text>
-</div>
         );
     }
 }

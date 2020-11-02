@@ -11,7 +11,7 @@
 }
 
 #root {
-    font-family: "Helvetica";
+    font-family: "Open Sans";
 }
 
 .row {
@@ -54,6 +54,8 @@ body {
     z-index: 1;
     
     padding-left: 0.5em;
+    
+    transition: background 300ms ease-in 200ms;
     
     background-image: url('/sideim.jpg');
     background-size: auto 100%;

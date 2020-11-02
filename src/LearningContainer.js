@@ -204,9 +204,11 @@ export class LearningContainer extends React.Component {
                 runningProgress={this.state.runningProgress}
                 yet={this.props.yet}
                 reviewyet={this.props.reviewyet}/>
-            <Row>
-		    <Col>
+            <Row style={{justifyContent: "center"}}>
+		    <Col style={{justifyContent: "center"}}>
+                    <div>
                     <Line percent={progress} strokeWidth="1" strokeColor="#048a81" style={{marginTop: "2em"}}/>
+                    </div>
             </Col>
             </Row>
            <div style={{marginTop: "5vh"}}>
@@ -424,7 +426,7 @@ styling={styling}
 bgcolor={colour}
         word={this.props.word}
 />}
-{!full && <div><div className="vocabdisplay">{this.props.word}</div><SecondInput handleHide={this.props.handleClose} styling={styling}/></div>}
+{!full && <div><div style={{fontFamily: "lora"}} className="vocabdisplay">{this.props.word}</div><SecondInput handleHide={this.props.handleClose} styling={styling}/></div>}
 </div>
  <div className="cardprogress">
             {(this.props.displayType != "readforfun") && <AnimatedStreakShow 
@@ -432,7 +434,7 @@ bgcolor={colour}
                 streak1={streak1}/>}
         </div>
          <BookOpen style={{marginRight: "1em", marginTop: "1em", marginLeft: "2em", display: "inline-block"}}/>
-        <div className="chinesedef" style={{marginLeft: "2em", paddingLeft: "1em", paddingRight: "1em"}}> 
+        <div className="chinesedef" style={{marginLeft: "2em", paddingLeft: "1em", paddingRight: "1em", fontFamily: "Open Sans"}}> 
             {"def" in this.props.specificInteraction && this.props.specificInteraction["def"]}
         </div>
         <hr></hr>
@@ -548,7 +550,7 @@ class FirstInput extends React.Component {
   render() {
     return (
         <form className="commentForm" onSubmit={this.handleHide}>
-        <div style={{textAlign: "center"}}>
+        <div style={{textAlign: "center", fontFamily: "lora"}}>
         <input className="answercardinput" type="text" autoFocus autocomplete="off" style={{fontSize: "50px", outline: "0", border: "0", backgroundColor: this.props.bgcolor, width: "80%", textAlign: "center", marginBottom: "0.5em"}} placeholder={this.props.word} id="myInput" ref={this.innerRef} value={this.state.value} onChange={this.handleChange}/>
             </div>
 </form>
@@ -578,7 +580,7 @@ class SecondInput extends React.Component {
   render() {
       
     return (
-        <div> {this.state.show &&
+        <div style={{fontFamily: "lora"}}> {this.state.show &&
         <form className="commentForm" onSubmit={this.handleHide}>
         <button className="nextbuttonlimbo2" type="submit" autoFocus ref={this.innerRef}/>
             </form>}</div>
@@ -642,7 +644,7 @@ class SampleSentences extends React.Component {
 
         
         return (
-            <Text style={{fontSize: "25px", textAlign: "center"}}>
+            <Text style={{fontSize: "25px", textAlign: "center", fontFamily: "Open Sans"}}>
             
             {this.props.samples.length > 0 && words}
     </Text>
