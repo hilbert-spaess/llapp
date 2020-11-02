@@ -326,14 +326,14 @@ class Mondrian extends React.Component {
             <div className="hline hline6"/>
             <div className="tealfill tealfill1"/>
             <button onClick={this.readClick} className="tealfill tealfill2">
-            <div style={{color: "white", position: "absolute", bottom: "10%", right: "10%", fontSize: "50px", zIndex: "2"}}>
+            <div style={{color: "white", position: "absolute", bottom: "10%", right: "10%", fontSize: "2em", zIndex: "2"}}>
 <BookOpen size={50} style={{marginRight: "1em"}}/> Daily Reading </div>
             <Notification no={this.props.data.read_notification}/>
             </button>
             <div className="tealfill tealfill3"/>
             <div className="greyfill greyfill1"/>
             <button onClick={this.vocabClick} className="bluefill bluefill1">
-<div style={{color: "white", position: "absolute", top: "10%", left: "10%", fontSize: "50px", zIndex: "2"}}>
+<div style={{color: "white", position: "absolute", top: "10%", left: "10%", fontSize: "2em", zIndex: "2"}}>
 <Type size={50} style={{marginRight: "1em"}}/> My Vocab </div></button>
 <div className="bluefill bluefill2"/>
             </>
