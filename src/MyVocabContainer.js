@@ -677,8 +677,10 @@ class VocabCard extends React.Component {
         } else {
             var bgcolor = "";
         }
-        
-        if (this.props.data['w'].length > 10) {
+        if (this.props.data['w'].length > 14) {
+            var size = "1.5em";
+        }
+        else if (this.props.data['w'].length > 10) {
             var size = "1.75em";
         } else {
             var size = this.props.size;
