@@ -395,7 +395,7 @@ class MyVocabContainer1 extends React.Component {
         
         
         return (
-            <div style={{overflow: "auto"}} onScroll={this.handleScroll}>
+            <div style={{overflow: "auto", fontFamily: "Open Sans"}} onScroll={this.handleScroll}>
             <div style={{paddingTop: "1em", fontSize: "50px", textAlign: "left", letterSpacing: "-1px", fontWeight: "300", paddingLeft: "5%", backgroundColor: "#f1f1f9"}}>   My Vocab 
             </div>
             <Modal size="lg" centered show={this.state.showDialog} onHide={this.onHide}>
@@ -678,7 +678,7 @@ class VocabCard extends React.Component {
             var bgcolor = "";
         }
         
-        if (this.props.data['w'].length > 12) {
+        if (this.props.data['w'].length > 10) {
             var size = "1.75em";
         } else {
             var size = this.props.size;
@@ -860,12 +860,12 @@ class VocabDetail extends React.Component {
 </div>
         </div>
         <BookOpen style={{marginRight: "1em", marginTop: "3em", marginLeft: "2em", display: "inline-block"}}/>
-        <div className="chinesedef" style={{marginLeft: "2em", paddingLeft: "1em", paddingRight: "1em"}}> 
+        <div className="chinesedef" style={{marginLeft: "2em", paddingLeft: "1em", paddingRight: "1em", fontFamily: "Open Sans"}}> 
             {"d" in this.props.data && this.props.data["d"]}
         </div>
         <hr></hr>
          <Edit3 style={{display: "inline-block", marginLeft: "2em"}}/> 
-        <div className="chinesedef" style={{marginBottom: "0.5em", color: "grey", paddingLeft: "1em", paddingRight: "1em", marginLeft: "2em"}}>
+        <div className="chinesedef" style={{marginBottom: "0.5em", color: "grey", paddingLeft: "1em", paddingRight: "1em", marginLeft: "2em", fontFamily: "Open Sans"}}>
           {("samples" in this.props.data) && <SampleSentences samples={this.props.data["samples"]}/>}
     </div>
 		</div>
@@ -939,7 +939,7 @@ class SampleSentences extends React.Component {
         
         return (
             <div style={{marginBottom: "2em"}}>
-            <Text style={{fontSize: "25px", textAlign: "center"}}>
+            <Text style={{fontSize: "25px", fontFamily: "Open Sans", textAlign: "center"}}>
             
             {this.props.samples.length > 0 && words} <hr></hr>
             {this.props.samples.length > 1 && words2}

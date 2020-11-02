@@ -182,7 +182,7 @@ export class Landing1 extends React.Component {
 <header className="masthead text-center text-white">
     <div className="masthead-content">
       <Container fluid="lg">
-        <h2 className="masthead-heading mb-0" style={{fontSize: "90px"}}>Use the best words</h2>
+        <h2 className="masthead-heading mb-0" style={{fontSize: "90px"}}>Better words. Better writing.</h2>
         <h3 className="masthead-subheading mb-0" style={{fontSize: "70px"}}>Improve your active vocabulary</h3>
         <h3 className="masthead-subheading mb-0" style={{fontSize: "70px"}}>with minutes of daily reviews.</h3>
             <div align="left">
