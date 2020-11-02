@@ -86,8 +86,8 @@ export class Sidebar2 extends React.Component {
 	    <div className="sidenav" style={{paddingTop: "1em", textAlign: "left"}}>
 		<div style={{textAlign: "left", marginLeft: "1em"}}><Link style={{ marginTop: "40%", fontSize: "2em"}} to="/home">RiceCake</Link></div>
             <ProfileDropDown/>
-        <div className="sidelink" style={{marginTop: "2em", fontSize: "1.5em", marginRight: "1em"}}><Link className="sideclick" to="/home"><Home size={50} style={{marginLeft: "0.5em", marginRight: "1em"}}/> Home</Link></div>
-       <div className="sidelink" style={{marginTop: "1em", fontSize: "1.5em", marginRight: "1em"}}><Link className="sideclick" to="/vocab" style={{marginTop: "1em"}}><Settings size={50} style={{marginLeft: "0.5em", marginRight: "1em"}}/> Settings</Link></div>
+        <div className="sidelink" style={{marginTop: "2em", fontSize: "1.5em", marginRight: "1em"}}><Link className="sideclick" to="/home"><Home size={50} style={{marginLeft: "0.5em", marginRight: "1em"}}/></Link></div>
+       <div className="sidelink" style={{marginTop: "1em", fontSize: "1.5em", marginRight: "1em"}}><Link className="sideclick" to="/vocab" style={{marginTop: "1em"}}><Settings size={50} style={{marginLeft: "0.5em", marginRight: "1em"}}/></Link></div>
 		</div>
 	);
     }

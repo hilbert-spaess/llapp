@@ -36,7 +36,7 @@ export class InteractionCard extends React.Component {
             );
     } else if (this.props.done == 0) {
         return (
-           <Card className="interactionbox" style={{backgroundColor: "#f5f5f5"}}>
+           <Card className="interactionbox" style={{backgroundColor: "#f5f5f5", fontFamily: "Open Sans"}}>
                 <FillBlankExamples
             interactionMode = {choice}
             interaction = {this.props.interaction}
