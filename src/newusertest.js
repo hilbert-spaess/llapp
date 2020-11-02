@@ -36,7 +36,12 @@ export class NewUserTest1 extends React.Component {
     
     handleCourseChoiceSubmit = (course) => {
         
-        this.setState({course});
+        var newcourse = course;
+        if (newcourse == "1") {
+            newcourse = "6"
+        }
+        
+        this.setState({course: newcourse});
     
     }
     
