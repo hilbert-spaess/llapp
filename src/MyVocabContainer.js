@@ -396,7 +396,7 @@ class MyVocabContainer1 extends React.Component {
         
         return (
             <div style={{overflow: "auto"}} onScroll={this.handleScroll}>
-            <div style={{paddingTop: "1em", fontSize: "50px", textAlign: "left", letterSpacing: "-1px", fontWeight: "300", paddingLeft: "5%", backgroundColor: "#f1f1f9"}}>   My Vocab  <Edit style={{marginLeft: "0.5em"}}/>
+            <div style={{paddingTop: "1em", fontSize: "50px", textAlign: "left", letterSpacing: "-1px", fontWeight: "300", paddingLeft: "5%", backgroundColor: "#f1f1f9"}}>   My Vocab 
             </div>
             <Modal size="lg" centered show={this.state.showDialog} onHide={this.onHide}>
             {this.state.detailActive && this.props.data.active[this.state.detailId]['w']}
