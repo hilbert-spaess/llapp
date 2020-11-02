@@ -4,6 +4,7 @@ import {Home, Settings, User} from 'react-feather';
 import {Link} from 'react-router-dom';
 import {useAuth0} from '@auth0/auth0-react';
 import bookshelf from './bookshelf.png';
+import sideim from './sideim.jpg';
 
 export const FreeBarWrapped = ({WrappedComponent, data, ...args}) => (
     
@@ -68,11 +69,11 @@ export class Sidebar extends React.Component {
     render () {
 	return (
         
-	    <div className="sidenav" style={{paddingTop: "1em", textAlign: "left"}}>
-		<div style={{textAlign: "left", marginLeft: "1em"}}><Link style={{ marginTop: "40%", fontSize: "2em"}} to={{pathname: "/home", data: this.props.data}}>RiceCake</Link></div>
-            <ProfileDropDown/>
-        <div className="sidelink" style={{marginTop: "2em", fontSize: "1.5em"}}><Link className="sideclick" to={{pathname: "/home", data: this.props.data}}><Home size={50} style={{marginLeft: "0.5em", marginRight: "1em"}}/></Link></div>
-        <div className="sidelink" style={{marginTop: "1em", fontSize: "1.5em"}}><Link className="sideclick" to={{pathname: "/vocab", data: this.props.data}}><Settings size={50} style={{marginLeft: "0.5em", marginRight: "1em"}}/></Link></div>
+	    <div className="sidenav" style={{paddingTop: "1em", textAlign: "left",  backgroundColor: "transparent"}}>
+		<div style={{textAlign: "left", marginLeft: "1em"}}><Link style={{marginTop: "40%", fontSize: "2em"}} to={{pathname: "/home", data: this.props.data}}>RiceCake</Link></div>
+            <ProfileDropDown/> 
+        <div className="sidelink" style={{marginTop: "0.5em", fontSize: "1.5em"}}><Link className="sideclick" to={{pathname: "/home", data: this.props.data}}><Home size={50} style={{marginLeft: "0.5em", marginRight: "1em"}}/></Link></div>
+        <div className="sidelink" style={{marginTop: "0.5em", fontSize: "1.5em"}}><Link className="sideclick" to={{pathname: "/vocab", data: this.props.data}}><Settings size={50} style={{marginLeft: "0.5em", marginRight: "1em"}}/></Link></div>
 		</div>
 	);
     }
@@ -86,8 +87,8 @@ export class Sidebar2 extends React.Component {
 	    <div className="sidenav" style={{paddingTop: "1em", textAlign: "left"}}>
 		<div style={{textAlign: "left", marginLeft: "1em"}}><Link style={{ marginTop: "40%", fontSize: "2em"}} to="/home">RiceCake</Link></div>
             <ProfileDropDown/>
-        <div className="sidelink" style={{marginTop: "2em", fontSize: "1.5em", marginRight: "1em"}}><Link className="sideclick" to="/home"><Home size={50} style={{marginLeft: "0.5em", marginRight: "1em"}}/></Link></div>
-       <div className="sidelink" style={{marginTop: "1em", fontSize: "1.5em", marginRight: "1em"}}><Link className="sideclick" to="/vocab" style={{marginTop: "1em"}}><Settings size={50} style={{marginLeft: "0.5em", marginRight: "1em"}}/></Link></div>
+        <div className="sidelink" style={{marginTop: "0.5em", fontSize: "1.5em", marginRight: "1em"}}><Link className="sideclick" to="/home"><Home size={50} style={{marginLeft: "0.5em", marginRight: "1em"}}/></Link></div>
+       <div className="sidelink" style={{marginTop: "0.5em", fontSize: "1.5em", marginRight: "1em"}}><Link className="sideclick" to="/vocab" style={{marginTop: "1em"}}><Settings size={50} style={{marginLeft: "0.5em", marginRight: "1em"}}/></Link></div>
 		</div>
 	);
     }

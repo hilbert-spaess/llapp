@@ -81,19 +81,29 @@
 }
 
 .hline4 {
-    width: 55%;
+    width: 35%;
     bottom: 29%;
     right: 45%;
 }
 
 .ahline4 {
-    animation: wincrease3 3s ease;
+    animation: wincrease4 3s ease;
+}
+
+@keyframes wincrease4 {
+    
+    0% {
+        width: 0%;
+    }
+    100% {
+        width: 35%;
+    }
 }
 
 .hline5 {
     bottom: 14%;
-    width: 100%;
-    left: 0%;
+    width: 80%;
+    left: 15%;
 }
 
 .ahline5 {
@@ -106,7 +116,7 @@
         width: 0%;
     }
     100% {
-        width: 100%;
+        width: 80%;
     }
 }
 

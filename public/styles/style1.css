@@ -55,7 +55,8 @@ body {
     
     padding-left: 0.5em;
     
-    background-color: #d6cfcb;
+    background-image: url('/sideim.jpg');
+    background-size: auto 100%;
     text-align: center;
     overflow: hidden;
     min-height: 100vh;
