@@ -702,7 +702,7 @@ class VocabCard extends React.Component {
                 <Card
                 onClick={this.handleClick}
                 className="myvocabcard"
-                style={{height: "5rem", width: "15rem", marginRight: "1rem", marginLeft: "1rem", marginTop: "1rem", backgroundColor: bgcolor}}>
+                style={{height: "5rem", width: "15rem", marginRight: "1rem", marginLeft: "1rem", backgroundColor: bgcolor}}>
                     {this.props.edit && <Cross onClick={this.handleDeleteClick}/>}
                 <div className="cardHeader"
                 style={{textAlign: "center",
@@ -710,10 +710,8 @@ class VocabCard extends React.Component {
                       fontSize: size}}>
                 {this.props.data["w"]} <br></br> 
                 </div>
-<div style={{marginBottom: "1em"}}>
-    {this.props.active && <StreakShow style={{marginBottom: "1em"}} streak={this.props.data['s']} variant={variant}/>}
-    </div>
 </Card>
+    {this.props.active && <StreakShow streak={this.props.data['s']} variant={variant}/>}
 </div>
 );
 }
@@ -839,7 +837,7 @@ export class StreakShow extends React.Component {
         }
 
         return (
-            <div style={{textAlign: "center", marginLeft: "1rem", marginRight: "1rem", marginBottom: "3em"}}>
+            <div style={{textAlign: "center", marginLeft: "1rem", marginRight: "1rem"}}>
             {pips}
             </div>
         );
