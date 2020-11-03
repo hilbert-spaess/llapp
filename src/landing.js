@@ -138,19 +138,43 @@ class InstitutionCard extends React.Component {
    
 class ExampleSentences extends React.Component {
     
-    state = {ambivalent: "ambivalent", 
-             ambiguous: "ambiguous",
-             i: 0,
-             j : 0}
+    state = {word1s: ["ambivalent", "compliment"],
+             word2s: ["ambiguous", "complement"],
+             firstsens: [["A good scientist is ", " towards their conclusions, as long as the methodology is correct."], ["I guessed that the ", " was not sincere."]],
+             secondsens: [["If the wording of the contract is ", ", ask for clarification."], ["The soundtrack was a perfect ", " to the action sequence."]],
+             i: 3,
+             j : 3,
+             counter: 0,
+             waiting: 0}
     
     componentDidMount = () => {
         
-        let timerId = setInterval(() => this.setState({i: this.state.i + 1}), 200);
-        setTimeout(() => { let timerId = setInterval(() => this.setState({j: this.state.j + 1}), 200); }, 5000);
+        let timerId2 = setInterval(() => this.handleCounts(), 200);
         
     }
     
+    handleCounts = () => {
+        var len1 = this.state.word1s[this.state.counter].length;
+        var len2 = this.state.word2s[this.state.counter].length;
+        
+        if (this.state.i < len1) {
+            this.setState({i: this.state.i + 1});
+        } else if (this.state.waiting < 4 && this.state.j == 3) {
+            this.setState({waiting: this.state.waiting + 1});
+        } else if (this.state.j < len2) {
+            this.setState({j : this.state.j + 1, waiting: 0});
+        } else if (this.state.waiting < 7) {
+             this.setState({waiting: this.state.waiting + 1});
+        } else {
+            this.setState({i: 3, j: 3, counter: (this.state.counter + 1) % (this.state.word1s.length), waiting: 0});
+        }
+    }
+    
     render () {
+        
+        var firstsens = [["A good scientist is ", " towards their conclusions, as long as the methodology is correct."]];
+        
+        var secondsens = [["If the wording of the contract is ", ", ask for clarification."]];
         
         if (this.state.i >= 10) {
             
@@ -159,13 +183,22 @@ class ExampleSentences extends React.Component {
         } else {
             
             var color1 = "black";
-            
         }
         
+        if (this.state.j >= 9) {
+            
+            var color2 = "green";
+            
+        } else {
+            
+            var color2 = "black";
+            
+        }
+
         return (
         
-            <div style={{fontFamily: "lora"}}>A good scientist is <input spellcheck="false" className="workinput" type="text"  key = {this.props.showDialog} autocomplete="off" value={this.state.ambivalent.slice(0,this.state.i)} style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", flex: "none", display: "inline-block", border: "0", width: ("ambiguous".length).toString() + "ch", borderTop: "0", outlineTop: "0", lineHeight: "20px", borderBottom: "1px solid grey", textAlign: "left", color: {color1}}}/> towards their conclusions, as long as the methodology is correct.<br></br> <br></br>
-            If the wording of the contract is <input spellcheck="false" className="workinput" type="text"  key = {this.props.showDialog} autocomplete="off" value={this.state.ambiguous.slice(0,this.state.j)} style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", flex: "none", display: "inline-block", border: "0", width: ("ambiguous".length).toString() + "ch", borderTop: "0", outlineTop: "0", lineHeight: "20px", borderBottom: "1px solid grey", textAlign: "left"}}/>, ask for clarification.</div>
+            <div style={{fontFamily: "lora"}}>{this.state.firstsens[this.state.counter][0]}<input spellcheck="false" className="workinput" type="text"  key = {this.props.showDialog} autocomplete="off" value={this.state.word1s[this.state.counter].slice(0,this.state.i)} style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", flex: "none", display: "inline-block", border: "0", width: (this.state.word1s[this.state.counter].length).toString() + "ch", borderTop: "0", outlineTop: "0", lineHeight: "20px", borderBottom: "1px solid grey", textAlign: "left", color: color1}}/>{this.state.firstsens[this.state.counter][1]}<br></br> <br></br>
+            {this.state.secondsens[this.state.counter][0]}<input spellcheck="false" className="workinput" type="text"  key = {this.props.showDialog} autocomplete="off" value={this.state.word2s[this.state.counter].slice(0,this.state.j)} style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", flex: "none", display: "inline-block", border: "0", width: (this.state.word2s[this.state.counter].length).toString() + "ch", borderTop: "0", outlineTop: "0", lineHeight: "20px", borderBottom: "1px solid grey", textAlign: "left", color: color2}}/>{this.state.secondsens[this.state.counter][1]}</div>
 
         );
 }
