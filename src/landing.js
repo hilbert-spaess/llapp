@@ -176,7 +176,7 @@ class ExampleSentences extends React.Component {
         
         var secondsens = [["If the wording of the contract is ", ", ask for clarification."]];
         
-        if (this.state.i >= 10) {
+        if (this.state.i >= this.state.word1s[this.state.counter].length) {
             
             var color1 = "green";
             
@@ -185,7 +185,7 @@ class ExampleSentences extends React.Component {
             var color1 = "black";
         }
         
-        if (this.state.j >= 9) {
+        if (this.state.j >= this.state.word2s[this.state.counter].length) {
             
             var color2 = "green";
             
