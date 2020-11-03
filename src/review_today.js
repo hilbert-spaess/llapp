@@ -205,9 +205,9 @@ class VocabCard extends React.Component {
                        marginTop: "1rem",
                        fontSize: size}}>
                 {this.props.word} <br></br>
-                <StreakShow streak={this.props.streak}/>
                 </div>
             </Card>
+<StreakShow streak={this.props.streak}/>
             </div>
         
         );
@@ -246,7 +246,7 @@ class StreakShow extends React.Component {
         }
 
         return (
-            <div style={{marginTop: "0.1em"}}>
+             <div style={{textAlign: "center", marginLeft: "1rem", marginRight: "1rem"}}>
             {pips}
             </div>
         );

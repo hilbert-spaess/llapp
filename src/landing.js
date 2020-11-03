@@ -135,7 +135,41 @@ class InstitutionCard extends React.Component {
         );
     }
 }
+   
+class ExampleSentences extends React.Component {
+    
+    state = {ambivalent: "ambivalent", 
+             ambiguous: "ambiguous",
+             i: 0,
+             j : 0}
+    
+    componentDidMount = () => {
+        
+        let timerId = setInterval(() => this.setState({i: this.state.i + 1}), 200);
+        setTimeout(() => { let timerId = setInterval(() => this.setState({j: this.state.j + 1}), 200); }, 5000);
+        
+    }
+    
+    render () {
+        
+        if (this.state.i >= 10) {
             
+            var color1 = "green";
+            
+        } else {
+            
+            var color1 = "black";
+            
+        }
+        
+        return (
+        
+            <div style={{fontFamily: "lora"}}>A good scientist is <input spellcheck="false" className="workinput" type="text"  key = {this.props.showDialog} autocomplete="off" value={this.state.ambivalent.slice(0,this.state.i)} style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", flex: "none", display: "inline-block", border: "0", width: ("ambiguous".length).toString() + "ch", borderTop: "0", outlineTop: "0", lineHeight: "20px", borderBottom: "1px solid grey", textAlign: "left", color: {color1}}}/> towards their conclusions, as long as the methodology is correct.<br></br> <br></br>
+            If the wording of the contract is <input spellcheck="false" className="workinput" type="text"  key = {this.props.showDialog} autocomplete="off" value={this.state.ambiguous.slice(0,this.state.j)} style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", flex: "none", display: "inline-block", border: "0", width: ("ambiguous".length).toString() + "ch", borderTop: "0", outlineTop: "0", lineHeight: "20px", borderBottom: "1px solid grey", textAlign: "left"}}/>, ask for clarification.</div>
+
+        );
+}
+}
 
 
 
@@ -166,29 +200,30 @@ export class Landing1 extends React.Component {
     render () {
         return (
             <div style={{overflow: "scroll"}}>
-              <nav class="navbar navbar-expand-sm navbar-dark navbar-custom ">
-    <Container fluid="lg">
-      <a class="navbar-brand" href="/">RiceCake</a>
+<nav className="navbar navbar-custom navbar-expand" style={{backgroundColor: "transparent", marginLeft: "5%", marginRight: "5%"}}>
+      <a href="/" style={{fontSize: "20px"}}>RiceCake</a>
         <ul class="navbar-nav ml-auto">
           <li class="nav-item signloglink">
-            <Link style={{color: "white", marginRight: "1em"}} to="/signup">Sign Up </Link>
+            <Link style={{color: "green", marginRight: "1em"}} to="/signup">Sign Up </Link>
           </li>
           <li class="nav-item signloglink">
-            <Link style={{color: "white"}} to="/login">Log In</Link>
+            <Link style={{color: "green"}} to="/login">Log In</Link>
           </li>
         </ul>
-</Container>
   </nav>
-<header className="masthead text-center text-white">
+<header className="masthead text-white">
     <div className="masthead-content">
-      <Container fluid="lg">
-        <h2 className="masthead-heading mb-0" style={{fontSize: "90px"}}>Better words. Better writing.</h2>
-        <h3 className="masthead-subheading mb-0" style={{fontSize: "70px"}}>Improve your active vocabulary</h3>
-        <h3 className="masthead-subheading mb-0" style={{fontSize: "70px"}}>with minutes of daily reviews.</h3>
+    <Row>
+        <div style={{width: "40%", marginLeft: "10%"}}>
+        <h2 className="masthead-heading mb-0" style={{fontSize: "70px"}}>Better words. Better writing.</h2>
+        <h3 className="masthead-subheading mb-0" style={{fontSize: "50px"}}>Improve your active vocabulary</h3>
+        <h3 className="masthead-subheading mb-0" style={{fontSize: "50px"}}>with minutes of daily reviews.</h3>
             <div align="left">
         <Link align="left" to="/signup" className="btn btn-primary btn-xl rounded-pill mt-5">Sign up now</Link>
             </div>
-      </Container>
+        </div>
+        <div style={{width: "30%", backgroundColor: "#f5f5f5", color: "black", padding: "1em", fontSize: "30px", marginLeft: "5%", borderRadius: "10px"}}><ExampleSentences/></div>
+    </Row>
     </div>
     <div className="bg-circle-1 bg-circle"></div>
     <div className="bg-circle-2 bg-circle"></div>

@@ -10,6 +10,30 @@ h2 {
         
 }
 
+.typewriter {
+  color: black;
+  overflow: hidden; /* Ensures the content is not revealed until the animation */
+  border-right: .15em solid orange; /* The typwriter cursor */
+  white-space: nowrap; /* Keeps the content on a single line */
+  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+  letter-spacing: .15em; /* Adjust as needed */
+  animation: 
+    typing 3.5s steps(20, end),
+    blink-caret .75s step-end infinite;
+}
+
+/* The typing effect */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: orange; }
+}
+
 .btn-xl {
   text-transform: uppercase;
   padding: 1rem 2rem;
@@ -60,11 +84,12 @@ h2 {
 }
 
 header.masthead {
+     padding-top: calc(7rem + 72px);
   position: relative;
   overflow: hidden;
-  padding-top: calc(7rem + 72px);
+  padding-top: 0;
   padding-bottom: 7rem;
-  background: linear-gradient(0deg,  #e3eaa7 0%, #b5e7a0 100%);
+  background: linear-gradient(0deg,  #b5e7a0 0%, #f5f5f5 100%);
   background-repeat: no-repeat;
   background-position: center center;
   background-attachment: scroll;
@@ -105,7 +130,7 @@ header.masthead .bg-circle {
   z-index: 0;
   position: absolute;
   border-radius: 100%;
-  background: linear-gradient(0deg, #b5e7a0 0%, #e3eaa7 100%);
+  background: linear-gradient(0deg, #f5f5f5 0%, #b5e7a0 100%);
 }
 
 header.masthead .bg-circle-1 {
