@@ -16,6 +16,17 @@ export const FreeBarWrapped = ({WrappedComponent, data, ...args}) => (
 </>
 );
 
+export const FreeBarWrappedLaunch = ({WrappedComponent, data, ...args}) => (
+    
+    <>
+    <Sidebar data={data}/>
+                     <div style={{marginLeft: "15%", height: "100vh", overflow: "hidden"}}><WrappedComponent {...args} data={data}/>
+                                
+</div>
+</>
+);
+
+
 export const FreeBarWrapped2 = ({WrappedComponent, data, ...args}) => (
     
      <>

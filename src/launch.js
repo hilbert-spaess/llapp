@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {Link} from 'react-router-dom';
 import {Stylesheet, css} from 'aphrodite';
 import {Card, Container, Row, Col, Nav, Navbar, Form, FormControl, Popover, OverlayTrigger, Overlay, Toast} from 'react-bootstrap';
-import {FreeBarWrapped} from './sidebar.js';
+import {FreeBarWrapped, FreeBarWrappedLaunch} from './sidebar.js';
 import {Auth0Provider, useAuth0, withAuthenticationRequired} from '@auth0/auth0-react';
 import {BookOpen, Type, FastForward, Info} from 'react-feather';
 import {useApi} from './use-api.js';
@@ -16,7 +16,7 @@ export class Launch extends React.Component {
         const {data} = this.props.location;
         console.log(data);
         return (
-            <FreeBarWrapped WrappedComponent={LaunchAnimation} data={data}/>
+            <FreeBarWrappedLaunch WrappedComponent={LaunchAnimation} data={data}/>
         );
     }
 }
