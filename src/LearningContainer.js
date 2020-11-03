@@ -417,7 +417,7 @@ class AnswerCard extends React.Component {
         streak1 = streak2;
     }
     if (this.props.show == true) {
-	return (
+     return (
 	    <div key={this.props.show}>
 	     <div style={{height: "5em", backgroundColor: colour, color: fontcolour}}>
             {full && <FirstInput 
@@ -433,18 +433,16 @@ bgcolor={colour}
                 streak2={streak2}
                 streak1={streak1}/>}
         </div>
-         <BookOpen style={{marginRight: "1em", marginTop: "1em", marginLeft: "2em", display: "inline-block"}}/>
-        <div className="chinesedef" style={{marginLeft: "2em", paddingLeft: "1em", paddingRight: "1em", fontFamily: "Open Sans"}}> 
+         <div className="chinesedef" style={{marginTop: "2em", marginLeft: "0.5em"}}>
+        <BookOpen style={{marginRight: "1em"}}/>
             {"def" in this.props.specificInteraction && this.props.specificInteraction["def"]}
         </div>
         <hr></hr>
-{full &&
-        <Edit3 style={{display: "inline-block", marginLeft: "2em"}}/>}
-<div className="chinesedef" style={{marginBottom: "0.5em", color: "grey", paddingLeft: "1em", paddingRight: "1em", marginLeft: "2em"}}>
-            {full && ("samples" in this.props.specificInteraction) && <SampleSentences samples={this.props.specificInteraction["samples"]}/>}
-    </div>
-		</div>
-	); } else {
+{full && ("samples" in this.props.specificInteraction) && 
+        <div className="chinesedef" style={{marginTop: "1em", marginLeft: "0.5em", marginBottom: "2em"}}> <SampleSentences samples={this.props.specificInteraction["samples"]}/></div>}
+</div>
+
+	);  } else {
         return (
             <div key={this.props.show}>
 	    <div className="vocabdisplay">
@@ -644,9 +642,9 @@ class SampleSentences extends React.Component {
 
         
         return (
-            <Text style={{fontSize: "25px", textAlign: "center", fontFamily: "Open Sans"}}>
+            <Text style={{fontSize: "25px", textAlign: "center", fontStyle: "italic", fontFamily: "Open Sans"}}>
             
-            {this.props.samples.length > 0 && words}
+             <Edit3 style={{marginRight: "1em"}}/> {this.props.samples.length > 0 && words}
     </Text>
         );
     }
