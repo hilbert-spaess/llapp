@@ -104,8 +104,8 @@ class LaunchMondrian extends React.Component {
         
         return (
             <>
-            <div className="tealfill afill tealfill2"/>
-            <div className="bluefill abfill bluefill1"/>
+            <div className="tealfill tealfill2"/>
+            <div className="bluefill bluefill1"/>
             </>
             );
     }
