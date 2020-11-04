@@ -248,14 +248,14 @@ export class Landing1 extends React.Component {
     <div className="masthead-content">
     <Row>
         <div style={{width: "40vw", marginLeft: "10vw"}}>
-        <h2 className="masthead-heading mb-0" style={{fontSize: "70px"}}>Better words. Better writing.</h2>
-        <h3 className="masthead-subheading mb-0" style={{fontSize: "50px"}}>Improve your active vocabulary</h3>
-        <h3 className="masthead-subheading mb-0" style={{fontSize: "50px"}}>with minutes of daily reviews.</h3>
+        <h2 className="masthead-heading mb-0" style={{fontSize: "5em"}}>Better words. Better writing.</h2>
+        <h3 className="masthead-subheading mb-0" style={{fontSize: "3em"}}>Improve your active vocabulary</h3>
+        <h3 className="masthead-subheading mb-0" style={{fontSize: "3em"}}>with minutes of daily reviews.</h3>
             <div align="left">
         <Link align="left" to="/signup" className="btn btn-primary btn-xl rounded-pill mt-5">Sign up now</Link>
             </div>
         </div>
-        <div style={{width: "30vw", backgroundColor: "#f5f5f5", color: "black", padding: "1em", fontSize: "30px", marginLeft: "5%", borderRadius: "10px"}}><ExampleSentences/></div>
+        <div style={{width: "30vw", backgroundColor: "#f5f5f5", color: "black", padding: "1em", fontSize: "2em", marginLeft: "5%", borderRadius: "10px"}}><ExampleSentences/></div>
     </Row>
     </div>
     <div className="bg-circle-1 bg-circle"></div>
