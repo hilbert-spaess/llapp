@@ -1,3 +1,9 @@
+.launchwindow {
+    background-image: url('/greenim.jpg');
+    background-size: 100% auto;
+    background-attachment: fixed;
+}
+
 .runningprogresstracker {
     margin-top: 2em;
     text-align: right;
