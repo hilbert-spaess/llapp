@@ -10,7 +10,7 @@ export const FreeBarWrapped = ({WrappedComponent, data, ...args}) => (
     
     <>
     <Sidebar data={data}/>
-                     <div style={{marginLeft: "15%", height: "100vh", overflow: "scroll"}}><WrappedComponent {...args} data={data}/>
+                     <div style={{marginLeft: "15vw", height: "100vh", overflow: "scroll"}}><WrappedComponent {...args} data={data}/>
                                 
 </div>
 </>
@@ -20,7 +20,7 @@ export const FreeBarWrappedLaunch = ({WrappedComponent, data, ...args}) => (
     
     <div className="launchwindow">
     <Sidebar data={data}/>
-                     <div style={{marginLeft: "15%", height: "100vh", overflow: "hidden"}}><WrappedComponent {...args} data={data}/>
+                     <div style={{marginLeft: "15vw", height: "100vh", overflow: "hidden"}}><WrappedComponent {...args} data={data}/>
                                 
 </div>
 </div>
@@ -31,7 +31,7 @@ export const FreeBarWrapped2 = ({WrappedComponent, data, ...args}) => (
     
      <>
     <Sidebar2/>
-                     <div style={{marginLeft: "15%", height: "100vh", overflow: "scroll"}}><WrappedComponent {...args} data={data}/>
+                     <div style={{marginLeft: "15vw", height: "100vh", overflow: "scroll"}}><WrappedComponent {...args} data={data}/>
                                 
 </div>
 </>
