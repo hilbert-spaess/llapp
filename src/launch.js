@@ -306,13 +306,13 @@ class Mondrian extends React.Component {
             <>
             <SideBox data={this.props.data}/>
             <button onClick={this.readClick} className="tealfill tealfill2">
-            <div style={{color: "black", fontFamily: "lora", position: "absolute", bottom: "10%", right: "10%", fontSize: "2em", zIndex: "2"}}>
-<BookOpen size={50} style={{marginRight: "1em"}}/> Daily Reading </div>
+            <div style={{color: "black", fontFamily: "lora", position: "absolute", bottom: "10%", right: "10%", fontSize: "1.5vw", zIndex: "2"}}>
+<BookOpen size="3vw" style={{marginRight: "1em"}}/> Daily Reading </div>
             <Notification no={this.props.data.read_notification}/>
             </button>
             <button onClick={this.vocabClick} className="bluefill bluefill1">
-<div style={{color: "black", position: "absolute", top: "10%", left: "10%", fontFamily: "lora", fontSize: "2em", zIndex: "2"}}>
-<Type size={50} style={{marginRight: "1em"}}/> My Vocab </div></button>
+<div style={{color: "black", position: "absolute", top: "10%", left: "10%", fontFamily: "lora", fontSize: "1.5vw", zIndex: "2"}}>
+<Type size="3vw" style={{marginRight: "1em"}}/> My Vocab </div></button>
             </>
             );
     }
@@ -325,7 +325,7 @@ const SideBox = (props) => {
     return (
         
         <div className="sidebox">
-        <div style={{position: "absolute", top: "10%", left: "10%", width: "80%"}}><div style={{position: "absolute", fontSize: "75px", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}><div style={{fontSize: "25px", display: "inline-block"}}>LVL</div>{props.data.level}</div><Circle strokeWidth={3} percent={100*props.data.levelprogress}></Circle></div>
+        <div style={{position: "absolute", top: "10%", left: "10%", width: "80%"}}><div style={{position: "absolute", fontSize: "3vw", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}><div style={{fontSize: "1vw", display: "inline-block"}}>LVL</div>{props.data.level}</div><Circle strokeWidth={3} percent={100*props.data.levelprogress}></Circle></div>
         <div style={{position: "absolute", bottom: "20%", height: "15%", width: "100%", left: "0"}}><div style={{width: "45%", border: "5px solid lightblue", borderRadius: "20px", position: "absolute", height: "100%", left: "2.5%"}}><div style={{top: "50%", left: "50%", position: "absolute", transform: "translate(-50%, -50%)"}}>{props.data.wordnos[0]}</div></div><div style={{width: "45%", right: "2.5%", position: "absolute", border: "5px solid #003366", borderRadius: "20px", height: "100%"}}><div style={{top: "50%", left: "50%", position: "absolute", transform: "translate(-50%, -50%)"}}>{props.data.wordnos[1]}</div></div></div>
         </div>
 
