@@ -859,7 +859,7 @@ class VocabDetail extends React.Component {
 {this.props.active && <StreakShow streak={this.props.data['s']} variant={this.props.variant}/>}
 </div>
         </div>
-        <div className="chinesedef" style={{marginTop: "2em", marginLeft: "0.5em"}}>
+        <div className="chinesedef" style={{marginTop: "2em", marginLeft: "0.5em", marginRight: "0.5em"}}>
         <BookOpen style={{marginRight: "1em"}}/>
             {"d" in this.props.data && this.props.data["d"]}
         </div>
@@ -900,9 +900,9 @@ class SampleSentences extends React.Component {
                     var spc = "";
                 }
                 if (i == loc) {
-                    words.push(<Text style={{fontWeight: "bold"}}>{spc + sentencearray[i]}</Text>);
+                    words.push(<Text style={{fontWeight: "bold", wordBreak: "keep-all", display: "inline-block", overflowWrap: "normal"}}>{spc + sentencearray[i]}</Text>);
                 } else {
-                    words.push(<Text>{spc + sentencearray[i]}</Text>);
+                    words.push(<Text style={{wordBreak: "keep-all", wordWrap: "normal", display: "inline-block", overflowWrap: "normal"}}>{spc + sentencearray[i]}</Text>);
                 }
             };
         }
@@ -928,16 +928,16 @@ class SampleSentences extends React.Component {
                     spc = "";
                 }
                 if (i == loc) {
-                    words2.push(<Text style={{fontWeight: "bold"}}>{spc + sentencearray[i]}</Text>);
+                    words2.push(<Text style={{fontWeight: "bold", wordBreak: "keep-all", display: "inline-block", overflowWrap: "normal"}}>{spc + sentencearray[i]}</Text>);
                 } else {
-                    words2.push(<Text>{spc + sentencearray[i]}</Text>);
+                    words2.push(<Text style={{wordBreak: "keep-all", display: "inline-block", overflowWrap: "normal"}}>{spc + sentencearray[i]}</Text>);
                 }
             };
         }
 
         
         return (
-            <Text style={{fontSize: "25px", fontFamily: "Open Sans", fontStyle: "italic", textAlign: "center"}}>
+            <Text style={{wordBreak: "keep-all", wordWrap: "normal", overflowWrap: "normal", fontSize: "25px", fontFamily: "Open Sans", fontStyle: "italic", textAlign: "center"}}>
             
             <Edit3 style={{marginRight: "1em"}}/> {this.props.samples.length > 0 && words} <hr></hr>
             <Edit3 style={{marginRight: "1em"}}/> {this.props.samples.length > 1 && words2}
