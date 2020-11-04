@@ -248,9 +248,9 @@ export class Landing1 extends React.Component {
     <div className="masthead-content">
     <Row>
         <div style={{width: "40vw", marginLeft: "10vw"}}>
-        <h2 className="masthead-heading mb-0" style={{fontSize: "5em"}}>Better words. Better writing.</h2>
-        <h3 className="masthead-subheading mb-0" style={{fontSize: "3em"}}>Improve your active vocabulary</h3>
-        <h3 className="masthead-subheading mb-0" style={{fontSize: "3em"}}>with minutes of daily reviews.</h3>
+        <h2 className="masthead-heading mb-0" style={{fontSize: "3.5vw"}}>Better words. Better writing.</h2>
+        <h3 className="masthead-subheading mb-0" style={{fontSize: "2.5vw"}}>Improve your active vocabulary</h3>
+        <h3 className="masthead-subheading mb-0" style={{fontSize: "2.5vw"}}>with minutes of daily reviews.</h3>
             <div align="left">
         <Link align="left" to="/signup" className="btn btn-primary btn-xl rounded-pill mt-5">Sign up now</Link>
             </div>
