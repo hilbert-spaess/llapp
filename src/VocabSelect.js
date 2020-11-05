@@ -311,13 +311,14 @@ class FloatingVocabCard extends React.Component {
                 <div>
                 <Card
                 className={name}
-                style={{height: "5rem", width: "15rem", marginRight: "1rem", marginLeft: "1rem", marginTop: "1rem", position: "relative", backgroundColor: "#f5f5f5"}}>
+                style={{height: "4vw", width: "13vw", marginRight: "1rem", marginLeft: "1rem", marginTop: "1rem", position: "relative", backgroundColor: "#f5f5f5"}}>
                     <div>{this.props.word!="" && <Cross onClick={this.handleClick}/>}</div>
                 <div className="floatingcardheader"
                 style={{textAlign: "center",
-                       marginTop: "1rem",
                       fontSize: "2em"}}>
+                           <div style={{position: "absolute", left: "50%", top: "50%", transform: "translate(-50%, -50%)"}}>
                 {this.props.word}
+                </div>
                 </div>
         </Card>
         </div>

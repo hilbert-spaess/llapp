@@ -642,7 +642,7 @@ class SampleSentences extends React.Component {
 
         
         return (
-            <Text style={{fontSize: "25px", textAlign: "center", fontStyle: "italic", fontFamily: "Open Sans"}}>
+            <Text style={{fontSize: "1.5vw", textAlign: "center", fontStyle: "italic", fontFamily: "Open Sans"}}>
             
              <Edit3 style={{marginRight: "1em"}}/> {this.props.samples.length > 0 && words}
     </Text>

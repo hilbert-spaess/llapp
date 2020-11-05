@@ -227,7 +227,7 @@ export class CourseCard extends React.Component {
         
         return (
              
-            <Card className="coursecard" onClick={this.onClick} style={{cursor: "pointer", width: "30em", height: "15em", borderColor: bordercolor}}>
+            <Card className="coursecard" onClick={this.onClick} style={{cursor: "pointer", width: "25vw", height: "25vh", borderColor: bordercolor}}>
             <div className="coursecardname" onClick={this.onClick}>{this.props.name}</div>         
             </Card>
 
