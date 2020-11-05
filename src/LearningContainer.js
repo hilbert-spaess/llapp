@@ -184,7 +184,7 @@ export class LearningContainer extends React.Component {
         
         if (this.state.isLoading == 0 ) {
                 return (
-	    <Container fluid="lg">
+	    <Container fluid="md">
                     <div id="myModal">
 		<Modal centered size="lg" show={this.state.showDialog} onHide={this.handleCloseDialog}>
                     

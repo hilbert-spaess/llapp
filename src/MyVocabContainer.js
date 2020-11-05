@@ -702,7 +702,7 @@ class VocabCard extends React.Component {
                 <Card
                 onClick={this.handleClick}
                 className="myvocabcard"
-                style={{height: "5rem", width: "13vw", marginRight: "1rem", marginLeft: "1rem", backgroundColor: bgcolor}}>
+                style={{height: "4vw", width: "13vw", marginRight: "1rem", marginLeft: "1rem", backgroundColor: bgcolor}}>
                     {this.props.edit && <Cross onClick={this.handleDeleteClick}/>}
                 <div className="cardHeader" style={{position: "relative"}}
                 style={{textAlign: "center",
@@ -798,7 +798,7 @@ export class StreakBar extends React.Component {
         }
         console.log(now);
         return (
-            <div style={{marginBotttom: "0.5em"}}>
+            <div>
             <ProgressBar now={now} variant =  {this.props.variant} style={{height: "8px"}}/>
             </div>
         );
