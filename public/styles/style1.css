@@ -314,8 +314,8 @@ body {
 }
 
 .maintext {
-    font-size: 30px;
-    margin-top: 2em;
+    font-size: 2vw;
+    margin-top: 5vh;
     border-color: transparent;
     line-height: 2em;
     word-break: keep-all;

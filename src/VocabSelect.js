@@ -95,7 +95,7 @@ export class VocabSelectContainer extends React.Component {
             
             <>
             
-            <div onClick={this.goBack} style={{cursor: "pointer", marginLeft: "2em", marginTop: "1em"}}><ArrowLeft size={50}/></div>
+            <div onClick={this.goBack} style={{cursor: "pointer", marginLeft: "2em", marginTop: "1em"}}><ArrowLeft size="3vw"/></div>
             
             <div style={{marginTop: "0"}} className="maintext" style={{textAlign:"center"}}>Let's get started. Pick 5 words to start your course.</div>
 
@@ -304,6 +304,17 @@ class FloatingVocabCard extends React.Component {
                 var name = "floatingvocabcard";
                 
             }
+        
+            if (this.props.word.length > 14) {
+                    var size = "1.5vw";
+                }
+                else if (this.props.word.length > 10) {
+                    var size = "1.75vw";
+                } 
+                else {
+                    var size = "2vw";
+                }
+                var size="1.5vw";
               
             
             return (
@@ -315,7 +326,7 @@ class FloatingVocabCard extends React.Component {
                     <div>{this.props.word!="" && <Cross onClick={this.handleClick}/>}</div>
                 <div className="floatingcardheader"
                 style={{textAlign: "center",
-                      fontSize: "2em"}}>
+                      fontSize: size}}>
                            <div style={{position: "absolute", left: "50%", top: "50%", transform: "translate(-50%, -50%)"}}>
                 {this.props.word}
                 </div>
