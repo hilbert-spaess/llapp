@@ -250,10 +250,14 @@ class VocabCard extends React.Component {
     
     render () {
         
-            if (this.props.word.length > 12) {
-                var size = "1.75em";
-            } else {
-                var size = "2em";
+            if (this.props.word.length > 14) {
+                var size = "1.5vw";
+            }
+            else if (this.props.word.length > 10) {
+                var size = "1.75vw";
+            } 
+            else {
+                var size = "2vw";
             }
 
             return (
@@ -262,13 +266,14 @@ class VocabCard extends React.Component {
                 <Card
                 onClick={this.handleClick}
                 className="myvocabcard"
-                style={{height: "5rem", width: "15rem", marginRight: "1rem", marginLeft: "1rem", marginTop: "1rem", backgroundColor: "#f5f5f5"}}>
+                style={{height: "4vw", width: "13vw", marginRight: "1rem", marginLeft: "1rem", backgroundColor: "#f5f5f5", marginBottom: "1em"}}>
 
                 <div className="cardHeader"
                 style={{textAlign: "center",
-                      padding: "1rem",
                       fontSize: size}}>
+                           <div style={{position: "absolute", left: "50%", top: "50%", transform: "translate(-50%, -50%)"}}>
                 {this.props.word}
+                </div>
                 </div>
         </Card>
         </div>
