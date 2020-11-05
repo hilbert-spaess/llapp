@@ -690,7 +690,7 @@ class VocabCard extends React.Component {
         return (
             
            <div>
-                <Modal size="lg" centered show={this.state.showDialog} onHide={this.onHide}>
+                <Modal dialogClassName="answercardmodal" centered show={this.state.showDialog} onHide={this.onHide}>
             <VocabDetail
                 fontcolour={fontcolour}
                 data={this.props.data}

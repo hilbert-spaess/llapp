@@ -184,9 +184,9 @@ export class LearningContainer extends React.Component {
         
         if (this.state.isLoading == 0 ) {
                 return (
-	    <Container fluid="md">
+	    <div style={{width: "80%", marginLeft: "10%"}}>
                     <div id="myModal">
-		<Modal centered size="lg" show={this.state.showDialog} onHide={this.handleCloseDialog}>
+		<Modal centered dialogClassName="answercardmodal" show={this.state.showDialog} onHide={this.handleCloseDialog}>
                     
 		<AnswerCard
         show={this.state.showDialog}
@@ -249,7 +249,7 @@ export class LearningContainer extends React.Component {
             <div style={{marginTop: "2em"}} ref={this.bottomRef}/>
                 </div>
         </div>
-		</Container>
+		</div>
 	);
         }
         else if (this.props.displayType == "done") {
@@ -633,9 +633,9 @@ class SampleSentences extends React.Component {
                     var spc = "";
                 }
                 if (i == loc) {
-                    words.push(<Text style={{fontWeight: "bold"}}>{spc + sentencearray[i]}</Text>);
+                    words.push(<Text style={{fontWeight: "bold", wordBreak: "keep-all", display: "inline-block", overflowWrap: "normal"}}>{spc + sentencearray[i]}</Text>);
                 } else {
-                    words.push(<Text>{spc + sentencearray[i]}</Text>);
+                    words.push(<Text style={{wordBreak: "keep-all", display: "inline-block", overflowWrap: "normal"}}>{spc + sentencearray[i]}</Text>);
                 }
             };
         }
