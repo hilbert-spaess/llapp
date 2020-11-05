@@ -678,12 +678,12 @@ class VocabCard extends React.Component {
             var bgcolor = "";
         }
         if (this.props.data['w'].length > 14) {
-            var size = "1.5em";
+            var size = "1.5vw";
         }
         else if (this.props.data['w'].length > 10) {
-            var size = "1.75em";
+            var size = "1.75vw";
         } else {
-            var size = this.props.size;
+            var size = "2vw";
         }
         
         return (
@@ -702,13 +702,12 @@ class VocabCard extends React.Component {
                 <Card
                 onClick={this.handleClick}
                 className="myvocabcard"
-                style={{height: "5rem", width: "15rem", marginRight: "1rem", marginLeft: "1rem", backgroundColor: bgcolor}}>
+                style={{height: "5rem", width: "13vw", marginRight: "1rem", marginLeft: "1rem", backgroundColor: bgcolor}}>
                     {this.props.edit && <Cross onClick={this.handleDeleteClick}/>}
-                <div className="cardHeader"
+                <div className="cardHeader" style={{position: "relative"}}
                 style={{textAlign: "center",
-                      padding: "1rem",
                       fontSize: size}}>
-                {this.props.data["w"]} <br></br> 
+                <div style={{position: "absolute", left: "50%", top: "50%", transform: "translate(-50%, -50%)"}}>{this.props.data["w"]}</div>
                 </div>
 </Card>
     {this.props.active && <StreakShow streak={this.props.data['s']} variant={variant}/>}
