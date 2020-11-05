@@ -183,10 +183,10 @@ body {
 
 .notification {
     
-    font-size: 20px;
+    font-size: 1vw;
     
-    width: 30px;
-    height: 30px;
+    width: 2vw;
+    height: 2vw;
     
     
    border-radius: 50%;
