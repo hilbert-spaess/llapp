@@ -851,11 +851,11 @@ class VocabDetail extends React.Component {
 
 	return (
         <div>
-        <div style={{height: "5em", backgroundColor: this.props.colour, color: this.props.fontcolour}}>
+        <div style={{height: "10vh", backgroundColor: this.props.colour, color: this.props.fontcolour}}>
 	    <div className="vocabdisplay">
 		    {this.props.data["w"]}
 	    </div>
-<div style={{textAlign: "center", marginTop: "0.5em"}}>
+<div style={{textAlign: "center", marginTop: "1vh"}}>
 {this.props.active && <StreakShow streak={this.props.data['s']} variant={this.props.variant}/>}
 </div>
         </div>

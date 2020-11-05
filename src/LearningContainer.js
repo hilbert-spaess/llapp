@@ -419,7 +419,7 @@ class AnswerCard extends React.Component {
     if (this.props.show == true) {
      return (
 	    <div key={this.props.show}>
-	     <div style={{height: "5em", backgroundColor: colour, color: fontcolour}}>
+	     <div style={{height: "10vh", backgroundColor: colour, color: fontcolour}}>
             {full && <FirstInput 
 handleHide={this.props.handleHide}
 styling={styling}
@@ -549,7 +549,7 @@ class FirstInput extends React.Component {
     return (
         <form className="commentForm" onSubmit={this.handleHide}>
         <div style={{textAlign: "center", fontFamily: "lora"}}>
-        <input className="answercardinput" type="text" autoFocus autocomplete="off" style={{fontSize: "50px", outline: "0", border: "0", backgroundColor: this.props.bgcolor, width: "80%", textAlign: "center", marginBottom: "0.5em"}} placeholder={this.props.word} id="myInput" ref={this.innerRef} value={this.state.value} onChange={this.handleChange}/>
+        <input className="answercardinput" type="text" autoFocus autocomplete="off" style={{fontSize: "3vw", outline: "0", border: "0", backgroundColor: this.props.bgcolor, width: "80%", textAlign: "center", marginBottom: "0.5em"}} placeholder={this.props.word} id="myInput" ref={this.innerRef} value={this.state.value} onChange={this.handleChange}/>
             </div>
 </form>
     );
