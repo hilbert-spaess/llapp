@@ -433,7 +433,7 @@ bgcolor={colour}
                 streak2={streak2}
                 streak1={streak1}/>}
         </div>
-         <div className="chinesedef" style={{marginTop: "2em", marginLeft: "0.5em"}}>
+         <div className="chinesedef" style={{marginTop: "0.5em", marginLeft: "0.5em"}}>
         <BookOpen style={{marginRight: "1em"}}/>
             {"def" in this.props.specificInteraction && this.props.specificInteraction["def"]}
         </div>
