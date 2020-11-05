@@ -937,7 +937,7 @@ class SampleSentences extends React.Component {
 
         
         return (
-            <Text style={{wordBreak: "keep-all", wordWrap: "normal", overflowWrap: "normal", fontSize: "25px", fontFamily: "Open Sans", fontStyle: "italic", textAlign: "center"}}>
+            <Text style={{wordBreak: "keep-all", wordWrap: "normal", overflowWrap: "normal", fontSize: "1.5vw", fontFamily: "Open Sans", fontStyle: "italic", textAlign: "center"}}>
             
             <Edit3 style={{marginRight: "1em"}}/> {this.props.samples.length > 0 && words} <hr></hr>
             <Edit3 style={{marginRight: "1em"}}/> {this.props.samples.length > 1 && words2}
