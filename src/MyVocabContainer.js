@@ -859,7 +859,7 @@ class VocabDetail extends React.Component {
 {this.props.active && <StreakShow streak={this.props.data['s']} variant={this.props.variant}/>}
 </div>
         </div>
-        <div className="chinesedef" style={{marginTop: "1em", marginLeft: "0.5em", marginRight: "0.5em"}}>
+        <div className="chinesedef" style={{marginTop: "1.5em", marginLeft: "0.5em", marginRight: "0.5em"}}>
         <BookOpen style={{marginRight: "1em"}}/>
             {"d" in this.props.data && this.props.data["d"]}
         </div>
