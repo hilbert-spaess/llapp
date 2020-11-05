@@ -685,6 +685,7 @@ class VocabCard extends React.Component {
         } else {
             var size = "2vw";
         }
+        var size = "1.5vw";
         
         return (
             
