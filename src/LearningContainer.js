@@ -44,7 +44,7 @@ function get_second_streak(streak1, first) {
     }
 }
 
-export class LearningContainer extends React.Component {
+export class FillGapsContainer extends React.Component {
 
     state = {
         done: 0,
@@ -126,19 +126,14 @@ export class LearningContainer extends React.Component {
     handleNext = (event) => {
         
         console.log(get_second_streak(this.props.currentChunk["interaction"][this.props.currentChunk["keyloc"]]["streak"], this.props.currentChunk["first"]));
-        console.log(this.props.displayType); 
-        if (this.props.displayType == "readforfun") {
-            var x = "readforfunlogging";
-        } else {
-            var x = this.props.displayType;
-        }
+        console.log(this.props.type); 
         
         this.props.handleNext({
         answeredCorrect: this.state.answeredCorrect,
         chunkId: this.props.currentChunk["chunkid"],
         keyloc: this.props.currentChunk["keyloc"],
         first: this.props.currentChunk["first"],
-        displayType: x,
+        type: this.props.type,
         answers: this.state.answers,
         streak: get_second_streak(this.props.currentChunk["interaction"][this.props.currentChunk["keyloc"]]["streak"], this.props.currentChunk["first"]),
         runningProgress: this.state.runningProgress,

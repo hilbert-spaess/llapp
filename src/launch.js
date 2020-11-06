@@ -292,7 +292,7 @@ class Mondrian extends React.Component {
         
         if (this.state.read) {
             
-            return (<Redirect to={{pathname: "/read", data: this.props.data}}/>);
+            return (<Redirect to={{pathname: "/read", data: this.props.data, type: "daily_reading"}}/>);
 
         }
         

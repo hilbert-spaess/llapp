@@ -12,7 +12,7 @@ import {Redirect} from 'react-router-dom';
 import {APIHOST} from './api_config.js';
 import {Tutorial} from './tutorial.js';
 import {CheckCircle, Type, AlignLeft, Eye} from 'react-feather';
-import {LearningContainer} from './LearningContainer.js'
+import {FillGapsContainer} from './LearningContainer.js'
 
 function range(start, end) {
   return Array(end - start + 1).fill().map((_, idx) => start + idx)
@@ -22,9 +22,10 @@ export class LearningSupervisor extends React.Component {
     
     render () {
         
-        const {data} = this.props.location;
+        const {data, type} = this.props.location;
+        
         return (
-            <FreeBarWrapped2 WrappedComponent={LearningSupervisor1} data={data} displayType={this.props.displayType}/>
+            <FreeBarWrapped2 WrappedComponent={LearningSupervisor1} data={data} type={type}/>
             );
     }
 }
@@ -32,9 +33,10 @@ export class LearningSupervisor extends React.Component {
 export class LearningSupervisor1 extends React.Component {
     
     state = {
-        parcelData: {answeredCorrect: "-1", displayType: this.props.displayType},
-        loading: 0,
-        runningProgress: [0, 0]
+        parcelData: {answeredCorrect: "-1", type: this.props.type},
+        type: this.props.type,
+        progressData: {runningProgress: [0,0]},
+        loading: 0
     };
 
     handleNext = async (parcelData) => {
@@ -53,8 +55,9 @@ export class LearningSupervisor1 extends React.Component {
         return (
             <LearningContainerData
             parcelData={this.state.parcelData}
+            type={this.props.type}
             handleNext={this.handleNext}
-            runningProgress={this.state.runningProgress}
+            runningProgress={this.state.progressData.runningProgress}
             data={this.props.data}
             />
         );
@@ -80,19 +83,13 @@ const LearningContainerData = (props) => {
                                            'Accept': 'application/json',
                                             'Content-Type': 'application/json',
                                           'Access-Control-Request-Method': 'POST'}}};
-    const {error, loading, data, refresh} = useApi(APIHOST + '/api/getchunk', payload, opts);
+    const {error, loading, data, refresh} = useApi(APIHOST + '/api/startreading', payload, opts);
         
     const handleNext = async (parcelData) => {
         await props.handleNext(parcelData);
         refresh();
     }
-    
-    const handleTutorialNext = async () => {
-        await props.handleNext({tutorial: "done", answeredCorrect: "-1"});
-        refresh();
-    }
         
-    console.log(props.data);
     const getTokenAndTryAgain = async () => {
         await getAccessTokenWithPopup(opts);
         refresh()
@@ -106,11 +103,12 @@ const LearningContainerData = (props) => {
             }
         }
         return <LearningContainerUpdatable
-            allChunks = {props.data.read_data.allChunks}
-            displayType= {props.data.read_data.displayType}
+            allChunks= {props.data.read_data.allChunks}
+            type={props.type}
             progress={props.data.read_data.today_progress}
             runningProgress = {props.runningProgress}
             reviewyet = {reviewyet}
+            status = {props.data.read_data.status}
             review_data={props.data.review_data}
         />  
     }
@@ -125,14 +123,8 @@ const LearningContainerData = (props) => {
     }
     return <div>Oops {error.message}</div>;
     }
-    if (data.displayType == "newUser") {
+    if (data.status == "newUser") {
         return <Redirect to="/newuser"/>;
-    }
-    if (data.displayType == "tutorial") {
-        return <Tutorial
-                currentChunk={data.tutorialchunk}
-                handleNext={handleTutorialNext}
-                />;
     }
     var reviewyet = 0;
     for (var i=0; i < data.allChunks.length; i++) {
@@ -145,7 +137,8 @@ const LearningContainerData = (props) => {
         <div>
         <LearningContainerUpdatable
             allChunks = {data.allChunks}
-            displayType= {data.displayType}
+            type= {props.type}
+            status = {data.status}
             progress={data.today_progress}
             runningProgress = {props.runningProgress}
             reviewyet = {reviewyet}
@@ -159,7 +152,7 @@ class LearningContainerUpdatable extends React.Component {
     state = {
         parcelData: {},
         currentChunkNo: 0,
-        displayType: this.props.displayType,
+        status: this.props.status,
         allChunks: this.props.allChunks,
         progress: this.props.progress,
         runningProgress: this.props.runningProgress,
@@ -179,6 +172,19 @@ class LearningContainerUpdatable extends React.Component {
     }
 
     handleNext = (parcelData) => {
+        if (this.props.type != "daily_reading") {
+            this.setState({progress: {"done": this.state.progress["done"] + 1, "yet": this.state.progress["yet"]-1}});
+            if (this.state.currentChunkNo < this.props.allChunks.length - 1) {
+                var i = this.state.currentChunkNo;
+                this.setState({currentChunkNo: i + 1});
+            } else {
+                console.log("DONEDONE");
+                parcelData["done"] = 1;
+                var i = this.state.currentChunkNo;
+                this.setState({done: 1, status: "done"});
+            }
+            return 0;
+        }
         console.log(parcelData)
         console.log("updatein");
         if (parcelData.first == 1) {
@@ -225,7 +231,7 @@ class LearningContainerUpdatable extends React.Component {
                 console.log("DONEDONE");
                 parcelData["done"] = 1;
                 var i = this.state.currentChunkNo;
-                this.setState({done: 1, displayType: "done"});
+                this.setState({done: 1, status: "done"});
             }
         }
         var reviewyet = 0;
@@ -247,7 +253,9 @@ class LearningContainerUpdatable extends React.Component {
                 reviewyet += 1;
             }
         }
+        console.log(this.props.type);
         return (
+            
     
             <div>
             <LearningContainerLogging
@@ -256,7 +264,8 @@ class LearningContainerUpdatable extends React.Component {
                 currentChunk = {this.props.allChunks[this.state.currentChunkNo]}
                 handleNext = {this.handleNext}
                 progress = {100*this.state.progress["done"]/(this.state.progress["done"] + this.state.progress["yet"])}
-                displayType = {this.state.displayType}
+                type = {this.props.type}
+                status = {this.state.status}
                 allChunks = {this.props.allChunks}
                 runningProgress = {this.state.runningProgress}
                 reviews = {this.props.allChunks[this.state.currentChunkNo]["first"]}
@@ -282,12 +291,10 @@ const LearningContainerLogging = (props) => {
                                            'Accept': 'application/json',
                                             'Content-Type': 'application/json',
                                           'Access-Control-Request-Method': 'POST'}}};
-    const {error, loading, data, refresh} = useApi(APIHOST + '/api/getchunk', payload, opts);
+    const {error, loading, data, refresh} = useApi(APIHOST + '/api/startreading', payload, opts);
     
     const handleNext = async (parcelData) => {
         props.handleNext(parcelData);
-        console.log("WOOOOOOOW");
-        console.log("WOOOOOOOW");
         refresh();
     }
     
@@ -297,36 +304,34 @@ const LearningContainerLogging = (props) => {
             );
     }
     
-    console.log(props.currentChunk)
-    console.log(props.review_data);
-    
-    if (props.displayType != "done") {
+    if (props.status != "done") {
 
-    return (
-        <div>
-        <LearningContainer
-            displayType={props.displayType}
-            currentChunk = {props.currentChunk}
-            handleNext = {handleNext}
-            progress = {props.progress}
-            yet={props.yet}
-            runningProgress = {props.runningProgress}
-            reviews = {props.reviews}
-            currentChunkNo = {props.currentChunkNo}
-            reviewyet={props.reviewyet}
-            reviewProgress={props.reviewProgress}
-        />
-        </div>
-    );
-} else if (loading) {
-    return <div></div>;
-} else {
-    
-    return (
-        <div> <LearningSummaryContainer
-            handleSummary={handleSummary}/></div>
+        return (
+            <div>
+            <FillGapsContainer
+                type={props.type}
+                status={props.status}
+                currentChunk = {props.currentChunk}
+                handleNext = {handleNext}
+                progress = {props.progress}
+                yet={props.yet}
+                runningProgress = {props.runningProgress}
+                reviews = {props.reviews}
+                currentChunkNo = {props.currentChunkNo}
+                reviewyet={props.reviewyet}
+                reviewProgress={props.reviewProgress}
+            />
+            </div>
         );
-}
+    } else if (loading) {
+        return <div></div>;
+    } else {
+    
+        return (
+            <div> <LearningSummaryContainer
+                handleSummary={handleSummary}/></div>
+            );
+    }
 }
 
 const LearningSummaryContainer = (props) => {

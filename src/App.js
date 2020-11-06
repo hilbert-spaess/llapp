@@ -21,6 +21,7 @@ import {Login} from './login.js';
 import {Signup} from './signup.js';
 import {ReviewToday} from './review_today.js';
 import {Register} from './register.js';
+import {DisplayLists} from './lists.js';
 
 export const history = createBrowserHistory();
 
@@ -53,6 +54,7 @@ function App() {
             <ProtectedRoute path="/newuser" component={NewUserTest}/>
             <ProtectedRoute path="/progress" component={ProgressContainer}/>
             <ProtectedRoute path="/reviewtoday" component={ReviewToday}/>
+            <ProtectedRoute path="/lists" component={DisplayLists}/>
             <Route path="/register" component={Register}/>
             <Route path="/login" component={Login}/>
             <Route path="/signup" component={Signup}/>
