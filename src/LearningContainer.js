@@ -190,6 +190,7 @@ export class FillGapsContainer extends React.Component {
 	    handleHide={this.handleHide}
 	    specificInteraction={interaction[this.state.currentInteraction]}
         first={this.props.currentChunk["first"]}
+        type={this.props.type}
         displayType={this.props.displayType}
         handleClose={this.handleCloseDialog}/>
 		    </Modal>
@@ -408,6 +409,9 @@ class AnswerCard extends React.Component {
         var fontcolour="white";
     }
     var full = ((streak == "0" && this.props.first == 1) || this.props.answeredCorrect == 0);
+    if (this.props.type == "list") {
+        var full = (this.props.answeredCorrect == 0);
+    }
     if (this.props.first == 0) {
         streak1 = streak2;
     }
@@ -424,7 +428,7 @@ bgcolor={colour}
 {!full && <div><div style={{fontFamily: "lora"}} className="vocabdisplay">{this.props.word}</div><SecondInput handleHide={this.props.handleClose} styling={styling}/></div>}
 </div>
  <div className="cardprogress">
-            {(this.props.displayType != "readforfun") && <AnimatedStreakShow 
+            {(this.props.type == "daily_reading") && <AnimatedStreakShow 
                 streak2={streak2}
                 streak1={streak1}/>}
         </div>
