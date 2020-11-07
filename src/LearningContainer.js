@@ -179,7 +179,7 @@ export class FillGapsContainer extends React.Component {
         
         if (this.state.isLoading == 0 ) {
                 return (
-	    <div style={{width: "80%", marginLeft: "10%"}}>
+	    <div className="fillgapscard">
                     <div id="myModal">
 		<Modal centered dialogClassName="answercardmodal" show={this.state.showDialog} onHide={this.handleCloseDialog}>
                     

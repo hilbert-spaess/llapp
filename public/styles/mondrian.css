@@ -394,6 +394,20 @@
     
 }
 
+.upbubbleread {
+    animation: upbubble 3s ease;
+}
+
+@keyframes upbubble {
+    0% {
+        top: 20%;
+    }
+    100% {
+        top: -80%;
+    }
+}
+            
+
 .link:hover {
     color: black;
 }
@@ -460,6 +474,7 @@
     width: 5%;
     height: 15%;
 }
+
     
 
     

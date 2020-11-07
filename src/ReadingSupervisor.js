@@ -20,12 +20,34 @@ function range(start, end) {
 
 export class LearningSupervisor extends React.Component {
     
+    state = {fade: null, redirectpath: null}
+    
+    onClick = (redirectpath) => {
+        
+        this.setState({fade: true, redirectpath});
+        setTimeout(() => {this.setState({redirect: true});}, 1500);
+        
+    }
+    
+    onRedirect = () => {
+        
+        console.log("redirect niga")
+        this.setState({redirect: true});
+        
+    }
+    
     render () {
         
         const {data, type} = this.props.location;
         
+        if (this.state.redirect) {
+            
+            return <Redirect to={this.state.redirectpath}/>
+                
+        }
+        
         return (
-            <FreeBarWrapped2 WrappedComponent={LearningSupervisor1} data={data} type={type}/>
+            <FreeBarWrapped2 onClick={this.onClick} onRedirect={this.onRedirect} fade={this.state.fade} redirect={this.state.redirect} WrappedComponent={LearningSupervisor1} data={data} type={type}/>
             );
     }
 }
@@ -163,14 +185,6 @@ class LearningContainerUpdatable extends React.Component {
 
     bottomRef = React.createRef();
     
-    componentDidUpdate () {
-        this.scrollToBottom();
-    }
-
-    scrollToBottom = () => {
-        this.bottomRef.current.scrollIntoView({behaviour: 'smooth'});
-    }
-
     handleNext = (parcelData) => {
         if (this.props.type != "daily_reading") {
             this.setState({progress: {"done": this.state.progress["done"] + 1, "yet": this.state.progress["yet"]-1}});

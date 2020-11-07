@@ -8,13 +8,15 @@ import sideim from './sideim.jpg';
 
 export const FreeBarWrapped = ({WrappedComponent, data, ...args}) => (
     
-    <>
+    <div className="launchwindow">
     <Sidebar data={data}/>
                      <div style={{marginLeft: "15vw", height: "100vh", overflow: "scroll"}}><WrappedComponent {...args} data={data}/>
                                 
 </div>
-</>
+</div>
 );
+
+
 
 export const FreeBarWrappedLaunch = ({WrappedComponent, data, ...args}) => (
     
@@ -27,14 +29,14 @@ export const FreeBarWrappedLaunch = ({WrappedComponent, data, ...args}) => (
 );
 
 
-export const FreeBarWrapped2 = ({WrappedComponent, data, ...args}) => (
+export const FreeBarWrapped2 = ({WrappedComponent, data, fade, onClick,onRedirect, ...args}) => (
     
-     <>
-    <Sidebar2/>
-                     <div style={{marginLeft: "15vw", height: "100vh", overflow: "scroll"}}><WrappedComponent {...args} data={data}/>
+     <div className="launchwindow">
+    <Sidebar2 onClick={onClick}/>
+                     <div className={fade ? "fadeout" : ""} style={{marginLeft: "15vw", height: "100vh", overflow: "hidden"}}><WrappedComponent {...args} data={data}/>
                                 
 </div>
-</>
+</div>
 );
 
 export const BarWrapped = ({WrappedComponent}) => (
@@ -98,7 +100,7 @@ export class Sidebar2 extends React.Component {
 	    <div className="sidenav" style={{paddingTop: "1em", textAlign: "left"}}>
 		<div style={{textAlign: "left", marginLeft: "1em"}}><Link style={{ marginTop: "40%", fontSize: "2vw"}} to="/home">RiceCake</Link></div>
             <ProfileDropDown/>
-        <div className="sidelink" style={{marginTop: "0.5em", fontSize: "1.5em", marginRight: "1em"}}><Link className="sideclick" to="/home"><Home size="2vw" style={{marginLeft: "0.5em", marginRight: "1em"}}/></Link></div>
+        <div className="sidelink" style={{marginTop: "0.5em", fontSize: "1.5em", marginRight: "1em"}}><div onClick={() => {this.props.onClick("/home")}} className="sideclick" to="/home"><Home size="2vw" style={{marginLeft: "0.5em", marginRight: "1em"}}/></div></div>
        <div className="sidelink" style={{marginTop: "0.5em", fontSize: "1.5em", marginRight: "1em"}}><Link className="sideclick" to="/vocab" style={{marginTop: "1em"}}><Settings size="2vw" style={{marginLeft: "0.5em", marginRight: "1em"}}/></Link></div>
 		</div>
 	);

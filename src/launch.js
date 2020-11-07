@@ -273,30 +273,29 @@ class StreakShow extends React.Component {
 
 class Mondrian extends React.Component {
     
-    state = {read: null, vocab: null}
+    state = {animate: false, redirect: null, type: null}
     
     readClick = () => {
         
         console.log("read click");
-        this.setState({read: true});
+        this.setState({animate: true, type: "read"});
         
     }
     
     vocabClick = () => {
         
-        this.setState({vocab: true});
+        this.setState({animate: true, type: "vocab"});
         
     }
     
     render () {
         
-        if (this.state.read) {
-            
-            return (<Redirect to={{pathname: "/read", data: this.props.data, type: "daily_reading"}}/>);
+        if (this.state.redirect && this.state.type=="read") {
+    return (<Redirect to={{pathname: "/read", data: this.props.data, type: "daily_reading"}}/>);
 
         }
         
-        if (this.state.vocab) {
+        if (this.state.redirect && this.state.type=="vocab") {
             
             return (<Redirect to={{pathname: "/vocab", data: this.props.data}}/>);
 
@@ -305,12 +304,12 @@ class Mondrian extends React.Component {
         return (
             <>
             <SideBox data={this.props.data}/>
-            <button onClick={this.readClick} className="tealfill tealfill2">
+            <button onClick={this.readClick} onAnimationEnd={() => this.setState({ redirect: true })} className={this.state.animate ? "tealfill tealfill2 upbubbleread" : "tealfill tealfill2"}>
             <div style={{color: "black", fontFamily: "lora", position: "absolute", bottom: "10%", right: "10%", fontSize: "1.5vw", zIndex: "2"}}>
 <BookOpen size="3vw" style={{marginRight: "1em"}}/> Daily Reading </div>
             <Notification no={this.props.data.read_notification}/>
             </button>
-            <button onClick={this.vocabClick} className="bluefill bluefill1">
+            <button onClick={this.vocabClick} onAnimationEnd={() => this.setState({redirect: true })} className={this.state.animate ? "bluefill bluefill1 upbubbleread" : "bluefill bluefill1"}>
 <div style={{color: "black", position: "absolute", top: "10%", left: "10%", fontFamily: "lora", fontSize: "1.5vw", zIndex: "2"}}>
 <Type size="3vw" style={{marginRight: "1em"}}/> My Vocab </div></button>
             </>
