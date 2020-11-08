@@ -395,7 +395,7 @@
 }
 
 .upbubbleread {
-    animation: upbubble 3s ease;
+    animation: upbubble 2s ease;
 }
 
 @keyframes upbubble {
@@ -408,7 +408,7 @@
 }
 
 .bottombubble {
-    animation: bottombubblean 3s ease;
+    animation: bottombubblean 2s ease;
 }
 
 @keyframes bottombubblean {

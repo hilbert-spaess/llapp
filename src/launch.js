@@ -271,12 +271,12 @@ class StreakShow extends React.Component {
 
 class Mondrian extends React.Component {
     
-    state = {animate: false, redirect: null, type: null}
+    state = {animate: false, redirect: true, type: null}
     
     readClick = () => {
         
         console.log("read click");
-        this.setState({animate: true, type: "read"});
+        this.setState({animate: true, redirect: false, type: "read"});
         
     }
     
@@ -302,7 +302,7 @@ class Mondrian extends React.Component {
         return (
             <>
             <SideBox data={this.props.data}/>
-            <button onClick={this.readClick} onAnimationEnd={() => this.setState({ redirect: true })} className={this.state.animate ? "tealfill tealfill2 upbubbleread" : "tealfill tealfill2 bottombubble"}>
+            <button onClick={this.readClick} onAnimationEnd={() => this.setState({ redirect: true})} className={this.state.animate ? "tealfill tealfill2 upbubbleread" : "tealfill tealfill2 bottombubble"}>
             <div style={{color: "black", fontFamily: "lora", position: "absolute", bottom: "10%", right: "10%", fontSize: "1.5vw", zIndex: "2"}}>
 <BookOpen size="3vw" style={{marginRight: "1em"}}/> Daily Reading </div>
             <Notification no={this.props.data.read_notification}/>
