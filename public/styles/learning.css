@@ -4,10 +4,17 @@
     max-width: none!important;
 }
 
+.fastfadeout {
+    
+    animation: fadeoutanim 0.5s ease;
+    
+}
+
 .listbubble {
     background: inherit;
     
     border-radius: 50%;
+    
     
     margin-left: 5%;
     margin-right: 5%;
@@ -16,6 +23,30 @@
 	-moz-box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2), inset 0px 10px 30px 5px rgba(255, 255, 255, 1);
 	box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2), inset 0px 10px 30px 5px rgba(255, 255, 255, 1);
     
+}
+
+.focuslistcard {
+    
+    animation: fadein 1.5s ease;
+    
+    padding: 2vh;
+    
+    width: 50%;
+    margin-top: 10%;
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+.focuslistcardout {
+    
+    animation: fadeoutanim 3s ease;
+    opacity: 0%;
+    padding: 2vh;
+    
+    width: 50%;
+    margin-top: 10%;
+    margin-left: 25%;
+    margin-right: 25%;
 }
 
 .fadeout {

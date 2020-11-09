@@ -111,11 +111,12 @@ const DisplayListsLogging = (props) => {
 class DisplayLists1 extends React.Component {
     
     state = {mode: null,
-             focus_id: null, animate: true}
+             focus_id: null,
+             animate: true}
     
     handleFocus = (i) => {
-        
-        this.setState({mode: "focus", focus_id: i});
+        this.setState({mode: "focus"});
+        setTimeout(()=>{this.setState({focus_id: i})}, 450);
         
     }
     
@@ -133,6 +134,25 @@ class DisplayLists1 extends React.Component {
         }
          
         console.log(this.props.data.lists.courselists);
+
+        if (this.state.focus_id != null) {
+            
+            if (this.state.focus_id == 0) {
+                
+                var data = {name: "Quick Session", id: "quicksession", words: []};
+            
+            } else {
+                
+                var data = this.props.data.lists.courselists[this.state.focus_id-1];
+                
+            }
+            
+            return <FocusList name={data.name}
+                words = {data.words}
+                handlePlay={this.props.handlePlay}
+                id={data.id}/>;
+                    
+        }
         
         var lists = [];
 
@@ -144,13 +164,13 @@ class DisplayLists1 extends React.Component {
                        i={i}
                         handleFocus = {this.handleFocus}
                        data={this.props.data.lists.courselists[i-1]}
-                        handlePlay={this.props.handlePlay}/>);
+                       handlePlay={this.props.handlePlay}/>);
         }
         
         console.log(this.state.focus_id);
         
         return (
-            <div>
+            <div className={this.state.mode == "focus" ? "fastfadeout" : ""}>
             <Modal show={this.state.focus_id != null} onHide={this.onHide}>
             <FocusList 
                 data={this.props.data.lists.courselists}
@@ -169,7 +189,7 @@ class ListCard extends React.Component {
     state = {focus: false, animate: false}
     
     handleFocus = () => {
-        this.setState({focus: true});
+        this.props.handleFocus(this.props.i);
     }
     
     
@@ -200,11 +220,12 @@ class ListCard extends React.Component {
 
 class FocusList extends React.Component {
     
-    state = {qno: 10}
+    state = {qno: 10, playing: false}
     
     handlePlay = () => {
         var data = {qno: this.state.qno, id: this.props.id};
         console.log(data);
+        this.setState({playing: true});
         this.props.handlePlay(data);
     }
     
@@ -224,19 +245,28 @@ class FocusList extends React.Component {
         
         var words = [];
         
-        for (var i = 0; i < this.props.words.length; i++) {
+        for (var i = 0; i < Math.min(this.props.words.length, 10); i++) {
             
-            words.push(this.props.words[i][1] + ",");
+            words.push(<div>{this.props.words[i][1]}</div>);
             
         }
         
         return (
             
-            <Card>
-            {this.props.name}<br></br>
-            {words}<br></br>
-            Question #: {this.state.qno} <Plus onClick={this.handlePlus} style={{cursor: "pointer"}}/> <Minus onClick={this.handleMinus} style={{cursor: "pointer"}}/>
-            <button className="newvocabsubmit" onClick={this.handlePlay}>Play!</button>
+            <Card className={this.state.playing ? "focuslistcardout" : "focuslistcard"}>
+            <div style={{fontSize: "2vw", textAlign: "center", marginBottom: "3vh"}}>{this.props.name}</div>
+            <div>
+                <Row>
+            <Col style={{width: "20%", textAlign: "center"}}>
+                <div>Words like:</div><hr></hr>
+            {words}</Col>
+            <Col style={{width: "80%", textAlign: "center"}}>
+            <div>High score: 0</div>
+            <div>5 Lives</div>
+            <button className="newvocabsubmit" onClick={this.handlePlay}>Start Round 1!</button>
+            </Col>
+            </Row>
+            </div>
             </Card>
         );
     }
