@@ -111,7 +111,7 @@ const DisplayListsLogging = (props) => {
 class DisplayLists1 extends React.Component {
     
     state = {mode: null,
-             focus_id: null}
+             focus_id: null, animate: true}
     
     handleFocus = (i) => {
         
@@ -150,23 +150,23 @@ class DisplayLists1 extends React.Component {
         console.log(this.state.focus_id);
         
         return (
-            <>
+            <div>
             <Modal show={this.state.focus_id != null} onHide={this.onHide}>
             <FocusList 
                 data={this.props.data.lists.courselists}
                 id={this.state.focus_id}/>
             </Modal>
-            <Row style={{justifyContent: "center"}}>
+            <Row className="bottombubbleread" style={{justifyContent: "center", position: "absolute", width: "80%", top: "10%"}}>
                 {lists}
                 </Row>
-            </>
+            </div>
             );
     }
 }
 
 class ListCard extends React.Component {
     
-    state = {focus: false}
+    state = {focus: false, animate: false}
     
     handleFocus = () => {
         this.setState({focus: true});
@@ -190,8 +190,8 @@ class ListCard extends React.Component {
                 handlePlay={this.props.handlePlay}
                 id={this.props.data.id}/>
             </Modal>
-            <Card onClick={this.handleFocus} style={{width: "15vw", height: "35vh", cursor: "pointer"}}>
-            {this.props.data.name}
+            <Card className="listbubble" onClick={this.handleFocus} style={{width: "30vh", height: "30vh", cursor: "pointer"}}>
+            <div className="bubbletext" style={{textAlign: "center"}}> {this.props.data.name} </div>
             </Card>
         </>
            );

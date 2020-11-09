@@ -4,6 +4,20 @@
     max-width: none!important;
 }
 
+.listbubble {
+    background: inherit;
+    
+    border-radius: 50%;
+    
+    margin-left: 5%;
+    margin-right: 5%;
+	
+    -webkit-box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2), inset 0px 10px 30px 5px rgba(255, 255, 255, 1);
+	-moz-box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2), inset 0px 10px 30px 5px rgba(255, 255, 255, 1);
+	box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2), inset 0px 10px 30px 5px rgba(255, 255, 255, 1);
+    
+}
+
 .fadeout {
     animation: fadeoutanim 1.5s ease;
 }
@@ -19,7 +33,7 @@
 
 .fillgapscard {
     
-    animation: upbubbleread 1.5s ease;
+    animation: fadein 1.5s ease;
     position: absolute;
     left: 17.5vw;
     width: 80vw;
@@ -32,7 +46,7 @@
     
 }
 
-@keyframes upbubbleread {
+@keyframes fadein {
     0% {
         opacity: 0%;
     }
