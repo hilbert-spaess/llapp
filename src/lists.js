@@ -292,11 +292,17 @@ class ListContainer extends React.Component {
     
     render () {
         
-        var wordnos = {0: "3", 1: "6", 2: "10"};
+        var wordnos = {0: "3", 1: "5", 2: "8", 3: "13"};
+        
+        if (this.state.currentList > 0) {
+            
+            var words = this.props.data.read_data.words.slice(0,wordnos[this.state.currentList-1]);
+            
+        }
         
         if (!this.state.playing) {
             return <div className="listsummarycard">
-                Completed level {this.state.currentList}: {wordnos[this.state.currentList-1]} words. Next level: {wordnos[this.state.currentList]} words.
+                Completed level {this.state.currentList}: {wordnos[this.state.currentList-1]} words. {words}. Next level: {wordnos[this.state.currentList]} words.
                 <button onClick={this.nextRound} className="newvocabsubmit">Start Round {this.state.currentList+1}!</button></div>
         }
         
