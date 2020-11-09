@@ -86,7 +86,6 @@ export class Sidebar extends React.Component {
 		<div style={{textAlign: "left", marginLeft: "1em"}}><Link style={{marginTop: "40%", fontSize: "2vw"}} to={{pathname: "/home", data: this.props.data}}>RiceCake</Link></div>
             <ProfileDropDown/> 
         <div className="sidelink" style={{marginTop: "0.5em", fontSize: "1.5em"}}><Link className="sideclick" to={{pathname: "/home", data: this.props.data}}><Home size="2vw" style={{marginLeft: "0.5em", marginRight: "1em"}}/></Link></div>
-        <div className="sidelink" style={{marginTop: "0.5em", fontSize: "1.5em"}}><Link className="sideclick" to={{pathname: "/vocab", data: this.props.data}}><Settings size="2vw" style={{marginLeft: "0.5em", marginRight: "1em"}}/></Link></div>
 		</div>
 	);
     }
@@ -101,7 +100,6 @@ export class Sidebar2 extends React.Component {
 		<div style={{textAlign: "left", marginLeft: "1em"}}><Link style={{ marginTop: "40%", fontSize: "2vw"}} to="/home">RiceCake</Link></div>
             <ProfileDropDown/>
         <div className="sidelink" style={{marginTop: "0.5em", fontSize: "1.5em", marginRight: "1em"}}><div onClick={() => {this.props.onClick("/home")}} className="sideclick" to="/home"><Home size="2vw" style={{marginLeft: "0.5em", marginRight: "1em"}}/></div></div>
-       <div className="sidelink" style={{marginTop: "0.5em", fontSize: "1.5em", marginRight: "1em"}}><Link className="sideclick" to="/vocab" style={{marginTop: "1em"}}><Settings size="2vw" style={{marginLeft: "0.5em", marginRight: "1em"}}/></Link></div>
 		</div>
 	);
     }
