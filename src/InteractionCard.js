@@ -115,16 +115,16 @@ class FillBlankExamples extends React.Component {
 	    var synonym3 = "";
 	    
 	    if ("0" in this.props.interaction) {
-		synonym0 = this.props.interaction["0"]["s"];
+		synonym0 = this.props.interaction["0"]["s"] + "\n";
 	    }
 	    if ("1" in this.props.interaction) {
-		synonym1 = " | " + this.props.interaction["1"]["s"];
+		synonym1 = this.props.interaction["1"]["s"] + "\n";
 	    }
 	    if ("2" in this.props.interaction) {
-		synonym2 = " | " + this.props.interaction["2"]["s"];
+		synonym2 = this.props.interaction["2"]["s"] + "\n";
 	    }
 	    if ("3" in this.props.interaction) {
-		synonym3 = " | " + this.props.interaction["3"]["s"];
+		synonym3 = this.props.interaction["3"]["s"] + "\n";
 	    }	
 	    return (
 		    <div className="interactiontext">
@@ -132,7 +132,9 @@ class FillBlankExamples extends React.Component {
                 interaction = {this.props.interaction}
                 interactionMode = {this.props.interactionMode}
         /><br></br>
-		    {synonym0 + synonym1 + synonym2 + synonym3}
+<Row style={{justifyContent: "center"}}>
+<div style={{width: (synonym0.length + 1).toString() + "ch", border: "transparent", borderLeft: "solid black"}}>
+		    {synonym0 + synonym1 + synonym2 + synonym3}</div></Row>
 		</div>
 	    );
 	} else if (this.props.interactionMode=="4") {
@@ -143,7 +145,9 @@ class FillBlankExamples extends React.Component {
             interaction={this.props.interaction}
             interactionMode={this.props.interactionMode}
             /> <br></br>
-{this.props.interaction["def"]}
+<Row style={{justifyContent: "center"}}>
+<div style={{textDecoration: "underline"}}>
+{this.props.interaction["def"]}</div></Row>
 </div>
          );
     }
@@ -174,7 +178,7 @@ class InteractionText extends React.Component {
        );
     } else if (this.props.interactionMode == "4") {
         return (
-            <div>Definition: 
+            <div>Definition
 </div>
     );
     }
