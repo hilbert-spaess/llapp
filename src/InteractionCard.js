@@ -133,7 +133,7 @@ class FillBlankExamples extends React.Component {
                 interactionMode = {this.props.interactionMode}
         /><br></br>
 <Row style={{justifyContent: "center"}}>
-<div style={{width: (synonym0.length + 1).toString() + "ch", border: "transparent", borderLeft: "solid black"}}>
+<div style={{width: (synonym0.length + 1).toString() + "ch", border: "transparent", borderLeft: "solid grey"}}>
 		    {synonym0 + synonym1 + synonym2 + synonym3}</div></Row>
 		</div>
 	    );

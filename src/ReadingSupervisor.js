@@ -38,7 +38,7 @@ export class LearningSupervisor extends React.Component {
     
     render () {
         
-        const {data, type} = this.props.location;
+        const {data, type, nextList} = this.props.location;
         
         if (this.state.redirect) {
             
@@ -47,7 +47,7 @@ export class LearningSupervisor extends React.Component {
         }
         
         return (
-            <FreeBarWrapped2 onClick={this.onClick} onRedirect={this.onRedirect} fade={this.state.fade} redirect={this.state.redirect} WrappedComponent={LearningSupervisor1} data={data} type={type}/>
+            <FreeBarWrapped2 onClick={this.onClick} onRedirect={this.onRedirect} fade={this.state.fade} redirect={this.state.redirect} WrappedComponent={LearningSupervisor1} data={data} type={type} nextList={nextList}/>
             );
     }
 }
@@ -69,6 +69,7 @@ export class LearningSupervisor1 extends React.Component {
     };
     
     render () {
+        console.log(this.props.nextList)
         if (this.state.loading == 1) {
             return (
                 <div></div>
@@ -81,6 +82,7 @@ export class LearningSupervisor1 extends React.Component {
             handleNext={this.handleNext}
             runningProgress={this.state.progressData.runningProgress}
             data={this.props.data}
+            nextList={this.props.nextList}
             />
         );
     }
@@ -132,6 +134,7 @@ const LearningContainerData = (props) => {
             reviewyet = {reviewyet}
             status = {props.data.read_data.status}
             review_data={props.data.review_data}
+            nextList={props.nextList}
         />  
     }
     if (loading) {
@@ -158,6 +161,7 @@ const LearningContainerData = (props) => {
     return (
         <div>
         <LearningContainerUpdatable
+            nextList={props.nextList}
             allChunks = {data.allChunks}
             type= {props.type}
             status = {data.status}
@@ -187,15 +191,26 @@ class LearningContainerUpdatable extends React.Component {
     
     handleNext = (parcelData) => {
         if (this.props.type != "daily_reading") {
-            this.setState({progress: {"done": this.state.progress["done"] + 1, "yet": this.state.progress["yet"]-1}});
-            if (this.state.currentChunkNo < this.props.allChunks.length - 1) {
+            if (parcelData.answers[parcelData.keyloc] == 0) {
+                this.setState({progress: {"done": this.state.progress["done"] + 1, "yet": this.state.progress["yet"]}});
+                var nowChunk = this.state.allChunks[this.state.currentChunkNo];
+                var nowChunks = this.state.allChunks;
+                nowChunks.push(nowChunk);
+                this.setState({allChunks: nowChunks});
+                var i = this.state.currentChunkNo;
+                this.setState({currentChunkNo: i+1});
+            }
+            else if (this.state.currentChunkNo < this.props.allChunks.length - 1) {
+                this.setState({progress: {"done": this.state.progress["done"] + 1, "yet": this.state.progress["yet"]-1}});
                 var i = this.state.currentChunkNo;
                 this.setState({currentChunkNo: i + 1});
             } else {
+                this.setState({progress: {"done": this.state.progress["done"] + 1, "yet": this.state.progress["yet"]-1}});
                 console.log("DONEDONE");
                 parcelData["done"] = 1;
                 var i = this.state.currentChunkNo;
                 this.setState({done: 1, status: "done"});
+                this.props.nextList();
             }
             return 0;
         }

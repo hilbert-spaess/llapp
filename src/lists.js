@@ -11,6 +11,7 @@ import {APIHOST} from './api_config.js';
 import {CheckCircle, Plus, Minus} from 'react-feather';
 import {Line} from 'rc-progress';
 import {LearningContainer} from './LearningContainer.js';
+import {LearningSupervisor1} from './ReadingSupervisor.js';
 
 export class DisplayLists extends React.Component {
     
@@ -129,7 +130,7 @@ class DisplayLists1 extends React.Component {
         if (this.props.submitData != null && this.props.submitData.state == "read") {
             
             console.log("hehe");
-            
+            return <ListContainer data={this.props.submitData} />
             return <Redirect to={{pathname: "/read", data: this.props.submitData, type: "list"}}/>
         }
          
@@ -271,6 +272,51 @@ class FocusList extends React.Component {
         );
     }
 }
+
+class ListContainer extends React.Component {
+    
+    state = {currentList:0, playing: true}
+    
+    nextList = () => {
+        
+        this.setState({playing: false});
+        this.setState({currentList: this.state.currentList + 1});
+        
+    }
+    
+    nextRound = () => {
+        console.log("henlo");
+        this.setState({playing: true});
+        
+    }
+    
+    render () {
+        
+        var wordnos = {0: "3", 1: "6", 2: "10"};
+        
+        if (!this.state.playing) {
+            return <div className="listsummarycard">
+                Completed level {this.state.currentList}: {wordnos[this.state.currentList-1]} words. Next level: {wordnos[this.state.currentList]} words.
+                <button onClick={this.nextRound} className="newvocabsubmit">Start Round {this.state.currentList+1}!</button></div>
+        }
+        
+        console.log(this.props.data);
+        
+        var allChunks = this.props.data["read_data"].allChunks[this.state.currentList];
+        
+        console.log(allChunks);
+        
+        var yet = allChunks.length;
+        
+        return (
+            
+            <LearningSupervisor1  data={{read_data: {allChunks: allChunks, today_progress: {yet: yet, done: 0}}}} type="list" nextList={this.nextList}/>
+            
+            );
+            
+    }
+}
+
 
     
     
