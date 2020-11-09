@@ -395,8 +395,9 @@ class MyVocabContainer1 extends React.Component {
         
         
         return (
-            <div style={{overflow: "auto", fontFamily: "Open Sans"}} onScroll={this.handleScroll}>
-            <div style={{paddingTop: "1em", fontSize: "50px", textAlign: "left", fontWeight: "300", paddingLeft: "5%", backgroundColor: "#f1f1f9"}}>   My Vocab 
+            <div style={{overflow: "scroll", animation: "fadein 1.5s ease", fontFamily: "Open Sans", background: "inherit"}} onScroll={this.handleScroll}>
+            <div>
+            <div style={{ paddingTop: "1em", fontSize: "50px", textAlign: "left", fontWeight: "300", paddingLeft: "5%", background: "inherit"}}>   My Vocab 
             </div>
             <Modal size="lg" centered show={this.state.showDialog} onHide={this.onHide}>
             {this.state.detailActive && this.props.data.active[this.state.detailId]['w']}
@@ -414,6 +415,7 @@ class MyVocabContainer1 extends React.Component {
                 </Modal>
 {levelgrids}
                     </div>
+            </div>
     );
 
     }
@@ -608,7 +610,7 @@ class VocabGrid extends React.Component {
         
     
         return (
-    <div style={{paddingLeft: "5%", paddingBottom: "3em", paddingRight: "5%", backgroundColor: this.props.color}}>
+    <div style={{paddingLeft: "5%", paddingBottom: "3em", paddingRight: "5%", background: "inherit"}}>
             <div style={{paddingTop:"2em"}}/>
             <div>{(this.props.thislevel > this.props.userlevel) && <Edit style={{cursor: "pointer"}} onClick={this.handleEditClick}/>}</div>
  <Row 
