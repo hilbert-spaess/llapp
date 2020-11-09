@@ -331,9 +331,9 @@ class TextCard extends React.Component {
     words.push(<Text style={{wordBreak: "keep-all", display: "inline-block", overflowWrap: "normal"}}>{spc + context[i]['w']}</Text>);
         } else if (this.props.limbo || i != location) {
             if (this.props.answers[context[i]["i"]] == 1) {
-                words.push(<div style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", flex: "none", display: "inline-block", border: "0", width: (this.props.answerlength+1).toString() + "ch", borderTop: "0", outlineTop: "0", lineHeight: "20px", textAlign: "center"}}><Text style={{color: "#048a81", overflowWrap: "normal"}}>{spc + context[i]["w"]}</Text></div>);
+                words.push(<div style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", flex: "none", display: "inline-block", border: "0", width: (context[i]["w"].length+1).toString() + "ch", borderTop: "0", outlineTop: "0", lineHeight: "20px", textAlign: "center"}}><Text style={{color: "#048a81", overflowWrap: "normal"}}>{spc + context[i]["w"]}</Text></div>);
             } else {
-                words.push(<div style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", flex: "none", display: "inline-block", border: "0", width: (this.props.answerlength+1).toString() + "ch", borderTop: "0", outlineTop: "0", lineHeight: "20px", textAlign: "center"}}><Text style={{color: "red", overflowWrap: "normal"}}>{spc + context[i]["w"]}</Text></div>);
+                words.push(<div style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", flex: "none", display: "inline-block", border: "0", width: (context[i]["w"].length+1).toString() + "ch", borderTop: "0", outlineTop: "0", lineHeight: "20px", textAlign: "center"}}><Text style={{color: "red", overflowWrap: "normal"}}>{spc + context[i]["w"]}</Text></div>);
             }
         } else {
             words.push(spc);
