@@ -1,3 +1,57 @@
+.bubble {
+    
+    position: absolute;
+    background: inherit;
+	
+    -webkit-box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2), inset 0px 10px 30px 5px rgba(255, 255, 255, 1);
+	-moz-box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2), inset 0px 10px 30px 5px rgba(255, 255, 255, 1);
+	box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2), inset 0px 10px 30px 5px rgba(255, 255, 255, 1);
+    
+}
+
+.readingbubble {
+    left: 20%;
+    top: 20%;
+    width: calc(35% + 5px);
+    height: 51%;
+    border-radius: 20px;
+}
+
+.vocabubble {
+    left: 60%;
+    top: 20%;
+    width: calc(35% + 5px);
+    height: 51%;
+    border-radius: 20px;
+}
+
+.upbubbleread {
+    animation: upbubble 2s ease;
+}
+
+@keyframes upbubble {
+    0% {
+        top: 20%;
+    }
+    100% {
+        top: -80%;
+    }
+}
+
+.bottombubble {
+    animation: bottombubblean 2s ease;
+}
+
+@keyframes bottombubblean {
+    0% {
+        top: 100%;
+    }
+    100% {
+        top: 20%;
+    }
+}
+   
+
 .vline {
     width: 2px;
     background-color: transparent;
