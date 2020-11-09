@@ -370,6 +370,19 @@
     background: inherit;
 }
 
+.tealfilll {
+    position: absolute;
+    left: 90%;
+    top: 0%;
+    width: 5%;
+    height: 10%;
+	
+    -webkit-box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2), inset 0px 10px 30px 5px rgba(255, 255, 255, 1);
+	-moz-box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2), inset 0px 10px 30px 5px rgba(255, 255, 255, 1);
+	box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2), inset 0px 10px 30px 5px rgba(255, 255, 255, 1);
+}
+    
+
 .tealfill1 {
     
     left: 90%;
@@ -466,6 +479,16 @@
     border-radius: 20px;
     position: absolute;
     z-index: 0.5;
+}
+
+.bluefilll {
+    position: absolute;
+    border-radius: 20px;
+    background: inherit;
+	
+    -webkit-box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2), inset 0px 10px 30px 5px rgba(255, 255, 255, 1);
+	-moz-box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2), inset 0px 10px 30px 5px rgba(255, 255, 255, 1);
+	box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2), inset 0px 10px 30px 5px rgba(255, 255, 255, 1);
 }
 
 .bluefill1:hover {

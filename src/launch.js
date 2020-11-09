@@ -302,12 +302,12 @@ class Mondrian extends React.Component {
         return (
             <>
             <SideBox data={this.props.data}/>
-            <button onClick={this.readClick} onAnimationEnd={() => this.setState({ redirect: true})} className={this.state.animate ? "tealfill tealfill2 upbubbleread" : "tealfill tealfill2 bottombubble"}>
+            <button onClick={this.readClick} onAnimationEnd={() => this.setState({ redirect: true})} className={this.state.animate ? "tealfilll tealfill2 upbubbleread" : "tealfilll tealfill2 bottombubble"}>
             <div style={{color: "black", fontFamily: "lora", position: "absolute", bottom: "10%", right: "10%", fontSize: "1.5vw", zIndex: "2"}}>
 <BookOpen size="3vw" style={{marginRight: "1em"}}/> Daily Reading </div>
             <Notification no={this.props.data.read_notification}/>
             </button>
-            <button onClick={this.vocabClick} onAnimationEnd={() => this.setState({redirect: true })} className={this.state.animate ? "bluefill bluefill1 upbubbleread" : "bluefill bluefill1 bottombubble"}>
+            <button onClick={this.vocabClick} onAnimationEnd={() => this.setState({redirect: true })} className={this.state.animate ? "bluefilll bluefill1 upbubbleread" : "bluefilll bluefill1 bottombubble"}>
 <div style={{color: "black", position: "absolute", top: "10%", left: "10%", fontFamily: "lora", fontSize: "1.5vw", zIndex: "2"}}>
 <Type size="3vw" style={{marginRight: "1em"}}/> My Vocab </div></button>
             </>
