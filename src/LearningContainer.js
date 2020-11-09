@@ -228,7 +228,7 @@ export class FillGapsContainer extends React.Component {
 		    </Col>
 		    </Row>
             
-		    <Row>
+		    <Row style={{marginTop: "5vh"}}>
 		    <Col>
 		    <InteractionCard
 		done={this.state.done}
@@ -331,13 +331,13 @@ class TextCard extends React.Component {
     words.push(<Text style={{wordBreak: "keep-all", display: "inline-block", overflowWrap: "normal"}}>{spc + context[i]['w']}</Text>);
         } else if (this.props.limbo || i != location) {
             if (this.props.answers[context[i]["i"]] == 1) {
-                words.push(<Text style={{color: "#048a81", overflowWrap: "normal"}}>{spc + context[i]["w"]}</Text>);
+                words.push(<div style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", flex: "none", display: "inline-block", border: "0", width: (this.props.answerlength+1).toString() + "ch", borderTop: "0", outlineTop: "0", lineHeight: "20px", textAlign: "center"}}><Text style={{color: "#048a81", overflowWrap: "normal"}}>{spc + context[i]["w"]}</Text></div>);
             } else {
-                words.push(<Text style={{color: "red", overflowWrap: "normal"}}>{spc + context[i]["w"]}</Text>);
+                words.push(<div style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", flex: "none", display: "inline-block", border: "0", width: (this.props.answerlength+1).toString() + "ch", borderTop: "0", outlineTop: "0", lineHeight: "20px", textAlign: "center"}}><Text style={{color: "red", overflowWrap: "normal"}}>{spc + context[i]["w"]}</Text></div>);
             }
         } else {
             words.push(spc);
-        words.push(<input spellcheck="false" className="workinput" type="text"  key = {this.props.showDialog} autocomplete="off" autoFocus ref = {(input) => {this.nameInput=input;}} value={value} onChange={this.handleChange} style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", flex: "none", display: "inline-block", border: "0", width: (this.props.answerlength+1).toString() + "ch", borderTop: "0", outlineTop: "0", lineHeight: "20px", borderBottom: "1px solid grey", textAlign: "left"}}/>);
+        words.push(<input spellcheck="false" className="workinput" type="text"  key = {this.props.showDialog} autocomplete="off" autoFocus ref = {(input) => {this.nameInput=input;}} value={value} onChange={this.handleChange} style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", flex: "none", display: "inline-block", border: "0", width: (this.props.answerlength+1).toString() + "ch", borderTop: "0", outlineTop: "0", lineHeight: "20px", borderBottom: "1px solid grey", textAlign: "center"}}/>);
         }
     };
 
