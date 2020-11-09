@@ -282,7 +282,13 @@ class Mondrian extends React.Component {
     
     vocabClick = () => {
         
-        this.setState({animate: true, type: "vocab"});
+        this.setState({animate: true, redirect: false, type: "vocab"});
+        
+    }
+    
+    listsClick = () => {
+        
+        this.setState({animate: true, redirect: false, type: "lists"});
         
     }
     
@@ -299,17 +305,25 @@ class Mondrian extends React.Component {
 
         }
         
+        if (this.state.redirect && this.state.type=="lists") {
+            
+            return (<Redirect to={{pathname: "/lists", data: this.props.data}}/>);
+
+        }
+        
         return (
             <>
             <SideBox data={this.props.data}/>
-            <button onClick={this.readClick} onAnimationEnd={() => this.setState({ redirect: true})} className={this.state.animate ? "tealfilll tealfill2 upbubbleread" : "tealfilll tealfill2 bottombubble"}>
-            <div style={{color: "black", fontFamily: "lora", position: "absolute", bottom: "10%", right: "10%", fontSize: "1.5vw", zIndex: "2"}}>
-<BookOpen size="3vw" style={{marginRight: "1em"}}/> Daily Reading </div>
+            <button onClick={this.readClick} onAnimationEnd={() => this.setState({ redirect: true})} className={this.state.animate ? "bubble readingbubble upbubbleread" : "bubble readingbubble bottombubbleread"}>
+            <div className="bubbletext">
+<BookOpen size="2vw"/><br></br> Daily Reading </div>
             <Notification no={this.props.data.read_notification}/>
             </button>
-            <button onClick={this.vocabClick} onAnimationEnd={() => this.setState({redirect: true })} className={this.state.animate ? "bluefilll bluefill1 upbubbleread" : "bluefilll bluefill1 bottombubble"}>
-<div style={{color: "black", position: "absolute", top: "10%", left: "10%", fontFamily: "lora", fontSize: "1.5vw", zIndex: "2"}}>
-<Type size="3vw" style={{marginRight: "1em"}}/> My Vocab </div></button>
+            <button onClick={this.vocabClick} onAnimationEnd={() => this.setState({redirect: true })} className={this.state.animate ? "bubble vocabubble upbubblevocab" : "bubble vocabubble bottombubblevocab"}>
+<div className="bubbletext" style={{color: "white"}}>
+<Type size="2vw"/><br></br> My Vocab </div></button>
+        <button onClick={this.listsClick} className={this.state.animate ? "bubble listsbubble upbubblelists" : "bubble listsbubble bottombubblelists"}>
+            <div className="bubbletext">Quick Session</div></button>
             </>
             );
     }

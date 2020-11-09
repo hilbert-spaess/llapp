@@ -9,28 +9,63 @@
     
 }
 
+.bubbletext {
+    
+    color: black;
+    font-family: lora;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    font-size: 1.5vw;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    
+}
+
 .readingbubble {
     left: 20%;
-    top: 20%;
-    width: calc(35% + 5px);
-    height: 51%;
-    border-radius: 20px;
+    top: 10%;
+    width: 20vw;
+    
+    height: 20vw;
+    border-radius: 50%;
 }
 
 .vocabubble {
-    left: 60%;
+    left: 70%;
     top: 20%;
-    width: calc(35% + 5px);
-    height: 51%;
-    border-radius: 20px;
+    width: 20vw;
+    height: 20vw;
+    border-radius: 50%;
+}
+
+.listsbubble {
+    left: 50%;
+    top: 60%;
+    width: 20vw;
+    height: 20vw;
+    border-radius: 50%;
 }
 
 .upbubbleread {
-    animation: upbubble 2s ease;
+    animation: upbubble1 2s ease;
 }
 
-@keyframes upbubble {
+@keyframes upbubble1 {
     0% {
+        top: 10%;
+    }
+    100% {
+        top: -80%;
+    }
+}
+
+.upbubblevocab {
+    animation: upbubble3 2s ease;
+}
+
+@keyframes upbubble3 {
+     0% {
         top: 20%;
     }
     100% {
@@ -38,11 +73,52 @@
     }
 }
 
-.bottombubble {
-    animation: bottombubblean 2s ease;
+.upbubblelists {
+    animation: upbubble2 2s ease;
 }
 
-@keyframes bottombubblean {
+@keyframes upbubble2 {
+    0% {
+        top: 60%;
+    }
+    100% {
+        top: -80%;
+    }
+}
+
+
+
+.bottombubbleread {
+    animation: bottombubble1 2s ease;
+}
+
+@keyframes bottombubble1 {
+    0% {
+        top: 100%;
+    }
+    100% {
+        top: 10%;
+    }
+}
+
+.bottombubblelists {
+    animation: bottombubble2 2s ease;
+}
+
+@keyframes bottombubble2 {
+    0% {
+        top: 100%;
+    }
+    100% {
+        top: 60%;
+    }
+}
+
+.bottombubblevocab {
+    animation: bottombubble3 2s ease;
+}
+
+@keyframes bottombubble3 {
     0% {
         top: 100%;
     }
@@ -459,19 +535,6 @@
     
     background-color: #04726a;
     
-}
-
-.upbubbleread {
-    animation: upbubble 2s ease;
-}
-
-@keyframes upbubble {
-    0% {
-        top: 20%;
-    }
-    100% {
-        top: -80%;
-    }
 }
 
 .bottombubble {
