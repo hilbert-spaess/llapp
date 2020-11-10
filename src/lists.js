@@ -352,7 +352,7 @@ class ListSummaryCard extends React.Component {
               <Card className="listsummarycard">
             <div style={{fontSize: "2vw", textAlign: "center", marginTop: "1vh", marginBottom: "3vh"}}>{this.props.name}</div>
 <div>Next round:</div>
-        <Row>{newwords}</Row>
+        <Row style={{height: "40%"}}>{newwords}</Row>
               <button onClick={this.props.nextRound} className="newvocabsubmit">Start Round {this.props.currentList+1}!</button>
             </Card>
 
