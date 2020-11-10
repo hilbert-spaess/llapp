@@ -177,6 +177,13 @@ export class FillGapsContainer extends React.Component {
         console.log(this.props.progress);
         console.log(progress);
         
+        if (this.props.lives != undefined) {
+            var lives = "";
+            for (var i =0; i < this.props.lives; i++) {
+                lives += " * ";
+            }
+        }
+        
         if (this.state.isLoading == 0 ) {
                 return (
 	    <div className="fillgapscard">
@@ -203,6 +210,7 @@ export class FillGapsContainer extends React.Component {
             <Row style={{justifyContent: "center"}}>
 		    <Col style={{justifyContent: "center"}}>
                     <div>
+                {this.props.type != "daily_reading" && <div color="red">{lives}</div>}
                     <Line percent={progress} strokeWidth="1" strokeColor="#048a81" style={{marginTop: "2em"}}/>
                     </div>
             </Col>

@@ -130,6 +130,7 @@ const LearningContainerData = (props) => {
             allChunks= {props.data.read_data.allChunks}
             type={props.type}
             progress={props.data.read_data.today_progress}
+            lives={props.data.read_data.lives}
             runningProgress = {props.runningProgress}
             reviewyet = {reviewyet}
             status = {props.data.read_data.status}
@@ -184,7 +185,8 @@ class LearningContainerUpdatable extends React.Component {
         runningProgress: this.props.runningProgress,
         yet: this.props.progress["yet"],
         reviewProgress: {yet: this.props.reviewyet, done: 0},
-        reviews: 0
+        reviews: 0,
+        lives: this.props.lives
     }
 
     bottomRef = React.createRef();
@@ -199,6 +201,12 @@ class LearningContainerUpdatable extends React.Component {
                 this.setState({allChunks: nowChunks});
                 var i = this.state.currentChunkNo;
                 this.setState({currentChunkNo: i+1});
+                if (this.state.lives == 1) {
+                    this.setState({done: 1, status: "done"});
+                    this.props.nextList({status: "done"});
+                } else {
+                    this.setState({lives: this.state.lives - 1});
+                }
             }
             else if (this.state.currentChunkNo < this.props.allChunks.length - 1) {
                 this.setState({progress: {"done": this.state.progress["done"] + 1, "yet": this.state.progress["yet"]-1}});
@@ -300,6 +308,7 @@ class LearningContainerUpdatable extends React.Component {
                 reviews = {this.props.allChunks[this.state.currentChunkNo]["first"]}
                 currentChunkNo = {this.state.currentChunkNo}
                 yet={this.state.yet}
+                lives={this.state.lives}
                 reviewProgress={100*this.state.reviewProgress["done"]/(this.state.reviewProgress["done"] + this.state.reviewProgress["yet"])}
             />
             <div ref={this.bottomRef}/></div>
@@ -349,6 +358,7 @@ const LearningContainerLogging = (props) => {
                 currentChunkNo = {props.currentChunkNo}
                 reviewyet={props.reviewyet}
                 reviewProgress={props.reviewProgress}
+                lives={props.lives}
             />
             </div>
         );

@@ -272,7 +272,7 @@ class FocusList extends React.Component {
 
 class ListContainer extends React.Component {
     
-    state = {currentList:0, playing: true}
+    state = {currentList:0, playing: true, lives: 5}
     
     nextList = () => {
         
@@ -312,7 +312,7 @@ class ListContainer extends React.Component {
         
         return (
             
-            <LearningSupervisor1  data={{read_data: {allChunks: allChunks, today_progress: {yet: yet, done: 0}}}} type="list" nextList={this.nextList}/>
+            <LearningSupervisor1  data={{read_data: {allChunks: allChunks, lives: this.state.lives, today_progress: {yet: yet, done: 0}}}} type="list" nextList={this.nextList}/>
             
             );
             
