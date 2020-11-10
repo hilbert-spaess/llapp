@@ -265,7 +265,7 @@ class FocusList extends React.Component {
                     <Row style={{justifyContent: "space-evenly"}}>
             {words}<div style={{marginTop: "1vh", marginBottom: "1vh"}}></div></Row></Col>
             <Col style={{width: "80%", textAlign: "center"}}>
-            <div style={{fontSize: "1.5vw"}}>High score</div><div style={{marginTop: "3vh"}}>Round 0</div><div><Line percent={0} strokeWidth="3" strokeColor="#048a81" style={{marginTop: "1vh"}}/></div>
+            <div style={{fontSize: "1.5vw"}}>High score</div><div style={{marginTop: "3vh"}}>Round 0</div><Line percent={0} strokeWidth="1" strokeColor="#048a81" style={{marginTop: "1vh"}}/>
             <div style={{marginTop: "10vh", color: "red", fontSize: "1.5vw"}}>* * * * *</div>
             <div>5 lives</div>
         <div style={{marginTop: "5vh", fontSize: "1.5vw"}}>
@@ -351,7 +351,7 @@ class ListSummaryCard extends React.Component {
             
               <Card className="listsummarycard" style={{paddingLeft: "1vw", paddingRight: "1vw"}}>
             <div style={{fontSize: "2vw", textAlign: "center", marginTop: "1vh", marginBottom: "3vh"}}>{this.props.name}</div>
-<div style={{marginTop: "2vh", fontSize: "1.5vw"}}>Finished {this.props.currentList} round of 6.</div>
+<div style={{marginTop: "2vh", fontSize: "1.5vw"}}>Finished round {this.props.currentList} of 6.</div>
 <div> <Line percent={100*(this.props.currentList/6)} strokeWidth="1" strokeColor="#048a81" style={{marginTop: "2vh"}}/></div>
 <div style={{fontSize: "1.5vw", marginTop: "8vh"}}>Next round:</div>
         <Row style={{height: "auto", justifyContent: "left", marginTop: "2vh"}}>{newwords}</Row>
