@@ -122,6 +122,7 @@ class DisplayLists1 extends React.Component {
     }
     
     finishHere = () => {
+        console.log("henloe");
         this.setState({mode: null, focus_id: null});
     }
     
@@ -149,6 +150,7 @@ class DisplayLists1 extends React.Component {
             return <FocusList name={data.name}
                 words = {data.words}
                 handlePlay={this.props.handlePlay}
+                finishHere={this.finishHere}
                 id={data.id}/>;
                     
         }
