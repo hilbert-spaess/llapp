@@ -8,7 +8,7 @@ import {useApi} from './use-api.js';
 import { useAuth0 } from '@auth0/auth0-react';
 import {Redirect} from 'react-router-dom';
 import {APIHOST} from './api_config.js';
-import {CheckCircle, Plus, Minus} from 'react-feather';
+import {CheckCircle, Plus, Minus, ArrowLeft} from 'react-feather';
 import {Line} from 'rc-progress';
 import {LearningContainer} from './LearningContainer.js';
 import {LearningSupervisor1} from './ReadingSupervisor.js';
@@ -255,6 +255,7 @@ class FocusList extends React.Component {
         return (
             
             <Card className={this.state.playing ? "focuslistcardout" : "listsummarycard"}>
+            <div style={{textAlign: "left"}}><ArrowLeft onClick={this.props.finishHere} size="2vw" style={{marginTop: "1vh", cursor: "pointer"}}/></div>
             <div style={{fontSize: "2vw", textAlign: "center", marginTop: "1vh", marginBottom: "3vh"}}>{this.props.name}</div>
             <div>
                 <Row>
@@ -297,6 +298,11 @@ class ListContainer extends React.Component {
         
     }
     
+    playAgain = () => {
+        this.setState({currentList: 0, lives: 5, dead: false});
+        this.setState({playing: true});
+    }
+    
     render () {
         
         var wordnos = {0: "3", 1: "5", 2: "8", 3: "13"};
@@ -321,6 +327,7 @@ class ListContainer extends React.Component {
             <div style={{fontSize: "2vw", textAlign: "center", marginTop: "1vh", marginBottom: "3vh"}}>{this.props.data.read_data.name}</div>
             <div style={{marginTop: "2vh", fontSize: "1.5vw"}}>You ran out of lives! You finished {this.state.currentList} {wd} out of 6.</div>
         <div> <Line percent={100*(this.state.currentList/6)} strokeWidth="1" strokeColor="#048a81" style={{marginTop: "2vh"}}/></div>
+            <div style={{marginTop: "3vh", textAlign: "center"}}><button onClick={this.playAgain} className="newvocabsubmit" style={{fontSize: "1.5vw"}}>Play again</button></div>
             </Card>
             );
         }
