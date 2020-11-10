@@ -137,16 +137,10 @@ class DisplayLists1 extends React.Component {
         console.log(this.props.data.lists.courselists);
 
         if (this.state.focus_id != null) {
+                
+                var data = this.props.data.lists.courselists[this.state.focus_id];
+                
             
-            if (this.state.focus_id == 0) {
-                
-                var data = {name: "Quick Session", id: "quicksession", words: []};
-            
-            } else {
-                
-                var data = this.props.data.lists.courselists[this.state.focus_id-1];
-                
-            }
             
             return <FocusList name={data.name}
                 words = {data.words}
@@ -156,15 +150,13 @@ class DisplayLists1 extends React.Component {
         }
         
         var lists = [];
-
-        lists.push(<ListCard i={0} handleFocus={this.handleFocus} data={{name: "Quick Session", id: "quicksession", words: []}} handlePlay={this.props.handlePlay}/>);
         
-        for (var i = 1; i < this.props.data.lists.courselists.length+1; i++) {
+        for (var i = 0; i < this.props.data.lists.courselists.length; i++) {
             
             lists.push(<ListCard 
                        i={i}
                         handleFocus = {this.handleFocus}
-                       data={this.props.data.lists.courselists[i-1]}
+                       data={this.props.data.lists.courselists[i]}
                        handlePlay={this.props.handlePlay}/>);
         }
         
