@@ -306,9 +306,8 @@ class ListContainer extends React.Component {
         }
         
         if (!this.state.playing) {
-            return <div className="listsummarycard">
-                Completed level {this.state.currentList}: {wordnos[this.state.currentList-1]} words. {words}. Next level: {wordnos[this.state.currentList]} words.
-                <button onClick={this.nextRound} className="newvocabsubmit">Start Round {this.state.currentList+1}!</button></div>
+            return (
+            <ListSummaryCard currentList={this.state.currentList} words={words} nextwordno={wordnos[this.state.currentList]} name={this.props.data.read_data.name} nextRound={this.nextRound}/>);
         }
         
         console.log(this.props.data);
@@ -325,6 +324,22 @@ class ListContainer extends React.Component {
             
             );
             
+    }
+}
+
+class ListSummaryCard extends React.Component {
+    
+    render () {
+        
+        return (
+            
+              <Card className="listsummarycard">
+            <div style={{fontSize: "2vw", textAlign: "center", marginTop: "1vh", marginBottom: "3vh"}}>{this.props.name}</div>
+             Completed level {this.props.currentList}: {this.props.words.length} words. {this.props.words}. Next level: {this.props.nextwordno} words.
+              <button onClick={this.props.nextRound} className="newvocabsubmit">Start Round {this.props.currentList+1}!</button>
+            </Card>
+
+        );
     }
 }
 
