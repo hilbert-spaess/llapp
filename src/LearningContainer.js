@@ -210,7 +210,7 @@ export class FillGapsContainer extends React.Component {
             <Row style={{justifyContent: "center"}}>
 		    <Col style={{justifyContent: "center"}}>
                     <div>
-                {this.props.type != "daily_reading" && <div color="red">{lives}</div>}
+                {this.props.type != "daily_reading" && <div style={{color:"red", fontSize: "1.5vw", textAlign: "center"}}>{lives}</div>}
                     <Line percent={progress} strokeWidth="1" strokeColor="#048a81" style={{marginTop: "2em"}}/>
                     </div>
             </Col>
