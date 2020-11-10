@@ -1,3 +1,83 @@
+.choicetextbox {
+  position: absolute;
+  width: 75vw;
+  top: 20%;
+  left: 20vw;
+  text-align: center;
+}
+
+.choicetext {
+    font-size: 3vw;
+}
+
+.userchoicerow {
+    position: absolute;
+    top: 40%;
+    left: 17.5vw;
+    width: 80vw;
+    justify-content: space-evenly;
+}
+
+.choiceinput {
+    
+    background-color: transparent;
+    border: 0;
+    border-bottom: solid black;
+    font-size: 3vw;
+    
+}
+
+.fadeoutchoice {
+    
+    animation: fadeoutanim 2s ease;
+    
+}
+
+.choicebubble {
+    
+    cursor: pointer;
+    
+    -webkit-box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2), inset 0px 10px 30px 5px rgba(255, 255, 255, 1);
+	-moz-box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2), inset 0px 10px 30px 5px rgba(255, 255, 255, 1);
+	box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2), inset 0px 10px 30px 5px rgba(255, 255, 255, 1);
+    background: inherit;
+    
+    height: 20vh;
+    width: 25vw;
+    
+    border-radius: 50px;
+    
+    position: relative;
+    
+    animation: bubblenter 1.5s ease;
+    
+}
+
+@keyframes bubblenter {
+    
+    0% {
+        top: 120%;
+        opacity: 0%;
+    }
+    100% {
+        top:0%;
+        opacity: 100%;
+    }
+}
+
+.choicebubbletext {
+    
+    font-size: 1.5vw;
+    
+    position: absolute;
+    
+    top: 50%;
+    left: 50%;
+    
+    transform: translate(-50%, -50%);
+    
+}
+
 .fade-in-section {
   opacity: 0;
   transform: translateY(20vh);
@@ -36,3 +116,4 @@
     margin-top: 1em;
     font-size: 30px;
 }
+

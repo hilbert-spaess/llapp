@@ -18,9 +18,16 @@ export class NewUserTest extends React.Component {
 
 export class NewUserTest1 extends React.Component {
     
-    state = {readingacademic: null,
+    state = {individual: null,
+        readingacademic: null,
              answers: null,
             course: null}
+    
+    handleIndividualChoiceSubmit = (id) => {
+        
+        setTimeout(()=>{this.setState({individual: id});}, 1500);
+        
+    }
     
     handleReadingChoiceSubmit = (id) => {
         
@@ -41,7 +48,7 @@ export class NewUserTest1 extends React.Component {
             newcourse = "6"
         }
         
-        this.setState({course: newcourse});
+        setTimeout(()=>{this.setState({course: newcourse});}, 1500);
     
     }
     
@@ -49,6 +56,54 @@ export class NewUserTest1 extends React.Component {
         
         console.log(this.state.readingacademic != null);
         console.log(this.state.readingacademic);
+        console.log(this.state.individual);
+        
+        if (this.state.individual == null) {
+            
+            console.log("Henloe");
+            
+            return <IndividualChoice
+                    handleSubmit={this.handleIndividualChoiceSubmit}/>;
+                    
+        }
+        
+        if (this.state.individual == 0) {
+            
+            if (this.state.course == null) {
+                
+                return <CourseChoice individual={this.state.individual} handleSubmit={this.handleCourseChoiceSubmit}/>
+                    
+            }
+                
+            else {
+                return <VocabSelectLoader data={this.state}/>
+                    
+            }
+            
+        }
+        
+        if (this.state.individual == 1) {
+            
+            if (this.state.institution == null) {
+                
+                return <div>Select Institution</div>
+                
+            }
+            
+            else if (this.state.course == null) {
+                
+                return <div>Select course</div>
+                
+            }
+            
+            else {
+                
+                return <VocabSelectLoader data={this.state}/>
+                    
+            }
+            
+        }
+        
         
         if (this.state.readingacademic == null || this.state.course==null) {
             
@@ -74,22 +129,53 @@ export class NewUserTest1 extends React.Component {
     }
 }
 
-class SelectPanel extends React.Component {
+class IndividualChoice extends React.Component {
+    
+    state = {blank: "", done: false}
+    
+    handleSubmit = (id, text) => {
+        
+        this.setState({blank: text, done: true});
+        this.props.handleSubmit(id);
+        
+    }
     
     render () {
         
-        if (this.props.type=="reading") {
-            
-            var text = "Welcome. What sort of English can we help you with?";
-            
-        }
+        var choices = [];
+        
+        choices.push(<ChoiceBubble no={2} id={0} text="personalised English courses" handleSubmit={this.handleSubmit}/>);
+        choices.push(<ChoiceBubble no={2} id={1} text="courses from my school" handleSubmit={this.handleSubmit}/>);            
+        
+        return (
+            <>
+            <div className="choicetextbox"><div className={this.state.done ? "fadeoutchoice" : ""}>
+            <div className="choicetext">
+            I'm looking for <input className="choiceinput" value={this.state.blank} style={{width: "26ch"}}/>
+            </div></div></div>
+            {!this.state.done && <Row className="userchoicerow">
+            {choices}
+        </Row>}
+            </>
+            );
+    }
+}
+
+class ChoiceBubble extends React.Component {
+    
+    handleSubmit = () => {
+        
+        this.props.handleSubmit(this.props.id, this.props.text);
+        
+    }
+    
+    render () {
         
         return (
             
-            <div className="selectpanel">
-            <div className="ricecakeheader">RiceCake</div>
-            <div className="ricecakesub">{text}</div>
-            </div>
+            <div onClick={this.handleSubmit} className="choicebubble">
+            <div className="choicebubbletext">
+            {this.props.text}</div></div>
             
             );
     }
@@ -116,6 +202,7 @@ const CourseChoice = (props) => {
         }
         console.log("rendering course choice");
         return (<CourseChoice1 
+                individual = {props.individual}
                 readingacademic = {props.readingacademic}
                 choices = {data.choices}
                 handleSubmit={props.handleSubmit}/>);
@@ -123,11 +210,27 @@ const CourseChoice = (props) => {
 
 export class CourseChoice1 extends React.Component {
     
+    state = {blank: "", done: false}
+    
+    handleSubmit = (id, text) => {
+        
+        this.setState({blank: text, done: true});
+        this.props.handleSubmit(id);
+        
+    }
+    
     render () {
         
         var choices = [];
         
         var keys = Object.keys(this.props.choices);
+        
+        
+        if (this.props.individual == "0") {
+            
+            var ids = ["5", "6", "2"];
+            
+        }
         
         if (this.props.readingacademic == "2") {
             
@@ -142,28 +245,27 @@ export class CourseChoice1 extends React.Component {
             
         }
         
-        for (var i = 0; i < keys.length; i++) {
-            
-            if (ids.includes(keys[i])) {
+        for (var i = 0; i < ids.length; i++) {
             
             
-            choices.push(<CourseCard
-                         name={this.props.choices[keys[i]]["name"]}
-                         id={keys[i]}
-                         variant="outline-success"
-                         buttonText="Choose"
-                         handleClick = {this.props.handleSubmit}
+            
+            choices.push(<ChoiceBubble
+                         text={this.props.choices[ids[i]]["name"]}
+                         id={ids[i]}
+                         handleSubmit = {this.handleSubmit}
                         />);
-            }
         }
     
          return (
                         <>
-                       <div style={{textAlign: "center"}} className="maintext"> Choose your reading level.</div>
-                       <Row style={{marginTop: "3em", justifyContent: "space-evenly"}}>
-             {choices}
-                        </Row>
-                </>
+            <div className="choicetextbox"><div className={this.state.done ? "fadeoutchoice" : ""}>
+            <div className="choicetext">
+            I'd like to study <input className="choiceinput" value={this.state.blank} style={{width: "13ch"}}/> vocab.
+            </div></div></div>
+            {!this.state.done && <Row className="userchoicerow">
+            {choices}
+        </Row>}
+            </>
             );
     }
 }
@@ -329,7 +431,7 @@ const VocabSelectLoader = (props) => {
         refresh()
       };
         if (loading) {
-            return <div>Loading...</div>;
+            return <div></div>;
         }
         if (error) {
             if (error.error === 'consent_required') {
