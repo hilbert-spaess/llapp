@@ -337,7 +337,7 @@ class ListContainer extends React.Component {
             <div style={{fontSize: "2vw", textAlign: "center", marginTop: "1vh", marginBottom: "3vh"}}>{this.props.data.read_data.name}</div>
             <div style={{marginTop: "2vh", fontSize: "1.5vw"}}>You ran out of lives! You finished {this.state.currentList} {wd} out of 6.</div>
         <div> <Line percent={100*(this.state.currentList/6)} strokeWidth="1" strokeColor="#048a81" style={{marginTop: "2vh"}}/></div>
-            <div style={{marginTop: "3vh", textAlign: "center"}}><button onClick={this.playAgain} className="newvocabsubmit" style={{fontSize: "1.5vw"}}>Play again</button></div>
+            <div style={{marginTop: "3vh", textAlign: "center"}}><button onClick={this.props.playAgain} className="newvocabsubmit" style={{fontSize: "1.5vw"}}>Play again</button></div>
             </Card>
             );
         }
