@@ -121,6 +121,16 @@ class DisplayLists1 extends React.Component {
         
     }
     
+    handlePlay = (data) => {
+        this.setState({mode: "read"});
+        this.props.handlePlay(data);
+    }
+    
+    playAgain = () => {
+        this.setState({mode: null});
+        this.props.handlePlay({id: this.state.focus_id});
+    }
+    
     finishHere = () => {
         console.log("henloe");
         this.setState({mode: null, focus_id: null});
@@ -132,10 +142,10 @@ class DisplayLists1 extends React.Component {
     
     render () {
             
-        if (this.props.submitData != null && this.props.submitData.state == "read") {
+        if (this.state.mode == "read" && this.props.submitData != null && this.props.submitData.state == "read") {
             
             console.log("hehe");
-            return <ListContainer data={this.props.submitData} finishHere={this.finishHere}/>
+            return <ListContainer data={this.props.submitData} playAgain={this.playAgain} finishHere={this.finishHere}/>
             return <Redirect to={{pathname: "/read", data: this.props.submitData, type: "list"}}/>
         }
          
@@ -149,7 +159,7 @@ class DisplayLists1 extends React.Component {
             
             return <FocusList name={data.name}
                 words = {data.words}
-                handlePlay={this.props.handlePlay}
+                handlePlay={this.handlePlay}
                 finishHere={this.finishHere}
                 id={data.id}/>;
                     
@@ -222,7 +232,7 @@ class FocusList extends React.Component {
     state = {qno: 10, playing: false}
     
     handlePlay = () => {
-        var data = {qno: this.state.qno, id: this.props.id};
+        var data = {id: this.props.id};
         console.log(data);
         this.setState({playing: true});
         this.props.handlePlay(data);
