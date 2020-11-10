@@ -272,12 +272,15 @@ class FocusList extends React.Component {
 
 class ListContainer extends React.Component {
     
-    state = {currentList:0, playing: true, lives: 5}
+    state = {currentList:0, playing: true, lives: 5, dead: false}
     
-    nextList = () => {
+    nextList = (data) => {
         
         this.setState({playing: false});
-        this.setState({currentList: this.state.currentList + 1});
+        this.setState({currentList: this.state.currentList + 1, lives: data.lives});
+        if (data.status == "dead") {
+            this.setState({dead: true});
+        }
         
     }
     
@@ -299,7 +302,7 @@ class ListContainer extends React.Component {
         
         if (!this.state.playing) {
             return (
-            <ListSummaryCard currentList={this.state.currentList} words={words} nextwordno={wordnos[this.state.currentList]} name={this.props.data.read_data.name} nextRound={this.nextRound}/>);
+            <ListSummaryCard currentList={this.state.currentList} words={words} nextwordno={wordnos[this.state.currentList]} name={this.props.data.read_data.name} lives={this.state.lives} nextRound={this.nextRound}/>);
         }
         
         console.log(this.props.data);
@@ -338,6 +341,14 @@ class ListSummaryCard extends React.Component {
             newwords.push(<VocabCard word="?"/>);
             
         }
+
+        var lives = ""
+
+        for (var i =0; i < this.props.lives ; i++) {
+            
+            lives += "  *  ";
+            
+        }
         
         return (
             
@@ -345,6 +356,8 @@ class ListSummaryCard extends React.Component {
             <div style={{fontSize: "2vw", textAlign: "center", marginTop: "1vh", marginBottom: "3vh"}}>{this.props.name}</div>
 <div style={{marginTop: "2vh", fontSize: "1.5vw"}}>Finished round {this.props.currentList} of 6.</div>
 <div> <Line percent={100*(this.props.currentList/6)} strokeWidth="1" strokeColor="#048a81" style={{marginTop: "2vh"}}/></div>
+    <div style={{fontSize: "1.5vw", marginTop: "2vh"}}>Remaining lives:</div>
+<div style={{marginTop: "2vh", color: "red", fontSize: "1.5vw"}}>{lives}</div>
 <div style={{fontSize: "1.5vw", marginTop: "8vh"}}>Next round:</div>
         <Row style={{height: "auto", justifyContent: "left", marginTop: "4vh"}}>{newwords}</Row>
               <div style={{marginTop: "5vh", textAlign: "center"}}><button onClick={this.props.nextRound} className="newvocabsubmit" style={{fontSize: "1.5vw"}}>Start Round {this.props.currentList+1}!</button></div>

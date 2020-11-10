@@ -203,7 +203,7 @@ class LearningContainerUpdatable extends React.Component {
                 this.setState({currentChunkNo: i+1});
                 if (this.state.lives == 1) {
                     this.setState({done: 1, status: "done"});
-                    this.props.nextList({status: "done"});
+                    this.props.nextList({status: "dead", lives: this.state.lives});
                 } else {
                     this.setState({lives: this.state.lives - 1});
                 }
@@ -218,7 +218,7 @@ class LearningContainerUpdatable extends React.Component {
                 parcelData["done"] = 1;
                 var i = this.state.currentChunkNo;
                 this.setState({done: 1, status: "done"});
-                this.props.nextList();
+                this.props.nextList({status: "alive", lives: this.state.lives});
             }
             return 0;
         }

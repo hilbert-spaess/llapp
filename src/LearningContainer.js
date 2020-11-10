@@ -180,7 +180,7 @@ export class FillGapsContainer extends React.Component {
         if (this.props.lives != undefined) {
             var lives = "";
             for (var i =0; i < this.props.lives; i++) {
-                lives += " * ";
+                lives += "  *  ";
             }
         }
         
