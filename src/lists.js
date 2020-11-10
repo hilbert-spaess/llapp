@@ -351,13 +351,9 @@ class ListSummaryCard extends React.Component {
             
               <Card className="listsummarycard">
             <div style={{fontSize: "2vw", textAlign: "center", marginTop: "1vh", marginBottom: "3vh"}}>{this.props.name}</div>
-        <Row>
-        <Col style={{width: "50%"}}>
-             <div>Completed level {this.props.currentList}: {this.props.words.length} words. </div>
-            <Row style={{justifyContent: "space-evenly"}}>{words}</Row> 
-             </Col><Col style={{width: "50%"}}>Next level: {this.props.nextwordno} words.
-            <Row style={{justifyContent: "space-evenly"}}>{newwords}</Row>
-              <button onClick={this.props.nextRound} className="newvocabsubmit">Start Round {this.props.currentList+1}!</button></Col></Row>
+<div>Next round:</div>
+        <Row>{newwords}</Row>
+              <button onClick={this.props.nextRound} className="newvocabsubmit">Start Round {this.props.currentList+1}!</button>
             </Card>
 
         );
