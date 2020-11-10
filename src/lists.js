@@ -254,7 +254,7 @@ class FocusList extends React.Component {
         
         return (
             
-            <Card className={this.state.playing ? "focuslistcardout" : "focuslistcard"}>
+            <Card className={this.state.playing ? "focuslistcardout" : "listsummarycard"}>
             <div style={{fontSize: "2vw", textAlign: "center", marginBottom: "3vh"}}>{this.props.name}</div>
             <div>
                 <Row>
