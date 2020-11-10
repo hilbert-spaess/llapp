@@ -343,17 +343,19 @@ class ListSummaryCard extends React.Component {
     
         for (var i = 0; i < this.props.nextwordno - this.props.words.length; i++) {
             
-            newwords.push(<VocabCard word=""/>);
+            newwords.push(<VocabCard word="?"/>);
             
         }
         
         return (
             
-              <Card className="listsummarycard">
+              <Card className="listsummarycard" style={{paddingLeft: "1vw", paddingRight: "1vw"}}>
             <div style={{fontSize: "2vw", textAlign: "center", marginTop: "1vh", marginBottom: "3vh"}}>{this.props.name}</div>
-<div>Next round:</div>
-        <Row style={{height: "40%"}}>{newwords}</Row>
-              <button onClick={this.props.nextRound} className="newvocabsubmit">Start Round {this.props.currentList+1}!</button>
+<div style={{marginTop: "2vh", fontSize: "1.5vw"}}>Finished {this.props.currentList} round of 6.</div>
+<div> <Line percent={100*(this.props.currentList/6)} strokeWidth="1" strokeColor="#048a81" style={{marginTop: "2vh"}}/></div>
+<div style={{fontSize: "1.5vw", marginTop: "8vh"}}>Next round:</div>
+        <Row style={{height: "auto", justifyContent: "left", marginTop: "2vh"}}>{newwords}</Row>
+              <div style={{marginTop: "5vh", textAlign: "center"}}><button onClick={this.props.nextRound} className="newvocabsubmit" style={{fontSize: "1.5vw"}}>Start Round {this.props.currentList+1}!</button></div>
             </Card>
 
         );
