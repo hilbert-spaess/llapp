@@ -246,25 +246,30 @@ class FocusList extends React.Component {
         
         var words = [];
         
-        for (var i = 0; i < Math.min(this.props.words.length, 10); i++) {
+        for (var i = 0; i < Math.min(this.props.words.length, 12); i++) {
             
-            words.push(<div>{this.props.words[i][1]}</div>);
+            words.push(<VocabCard word={this.props.words[i][1]}/>);
             
         }
+        
+        words.push(<div style={{opacity: "0%"}}><VocabCard word="hi"/></div>);
         
         return (
             
             <Card className={this.state.playing ? "focuslistcardout" : "listsummarycard"}>
-            <div style={{fontSize: "2vw", textAlign: "center", marginBottom: "3vh"}}>{this.props.name}</div>
+            <div style={{fontSize: "2vw", textAlign: "center", marginTop: "1vh", marginBottom: "3vh"}}>{this.props.name}</div>
             <div>
                 <Row>
             <Col style={{width: "20%", textAlign: "center"}}>
                 <div>Words like:</div><hr></hr>
-            {words}</Col>
+                    <Row style={{justifyContent: "space-evenly"}}>
+            {words}<div style={{marginTop: "1vh", marginBottom: "1vh"}}></div></Row></Col>
             <Col style={{width: "80%", textAlign: "center"}}>
-            <div>High score: 0</div>
-            <div>5 Lives</div>
-            <button className="newvocabsubmit" onClick={this.handlePlay}>Start Round 1!</button>
+            <div style={{fontSize: "1.5vw"}}>High score</div><div style={{marginTop: "3vh"}}>Round 0</div><div><Line percent={0} strokeWidth="3" strokeColor="#048a81" style={{marginTop: "1vh"}}/></div>
+            <div style={{marginTop: "10vh", color: "red", fontSize: "1.5vw"}}>* * * * *</div>
+            <div>5 lives</div>
+        <div style={{marginTop: "5vh", fontSize: "1.5vw"}}>
+            <button style={{fontSize: "1.5vw"}} className="newvocabsubmit" onClick={this.handlePlay}>Start Round 1!</button></div>
             </Col>
             </Row>
             </div>
@@ -320,6 +325,38 @@ class ListContainer extends React.Component {
             
             );
             
+    }
+}
+
+class VocabCard extends React.Component {
+    
+    render () {
+        
+            if (this.props.word.length > 14) {
+                var size = "1.5vw";
+            }
+            else if (this.props.word.length > 10) {
+                var size = "1.75vw";
+            } 
+            else {
+                var size = "2vw";
+            }
+            var size="1.5vw";
+
+            return (
+
+                <Card
+                style={{height: "4vw", width: "13vw", marginRight: "1vw", marginLeft: "1vw", backgroundColor: "#f5f5f5", marginBottom: "1vw"}}>
+
+                <div className="cardHeader"
+                style={{textAlign: "center",
+                      fontSize: size}}>
+                           <div style={{position: "absolute", left: "50%", top: "50%", transform: "translate(-50%, -50%)"}}>
+                {this.props.word}
+                </div>
+                </div>
+        </Card>
+        );
     }
 }
 

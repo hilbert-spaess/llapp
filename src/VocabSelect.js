@@ -236,7 +236,7 @@ class VocabChoiceContainer extends React.Component {
     }
 }
 
-class VocabCard extends React.Component {
+export class VocabCard extends React.Component {
     
     state = {clicked: false}
     
