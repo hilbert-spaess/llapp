@@ -277,11 +277,12 @@ class ListContainer extends React.Component {
     nextList = (data) => {
         
         this.setState({playing: false});
-        this.setState({currentList: this.state.currentList + 1, lives: data.lives});
         if (data.status == "dead") {
             this.setState({dead: true});
         }
-        
+        else {
+        this.setState({currentList: this.state.currentList + 1, lives: data.lives});
+        }
     }
     
     nextRound = () => {
@@ -349,6 +350,18 @@ class ListSummaryCard extends React.Component {
             lives += "  *  ";
             
         }
+
+        if (this.state.dead) {
+            
+            return (
+                
+                <Card className="listsummarycard" style={{paddingLeft: "1vw", paddingRight: "1vw"}}>
+            <div style={{fontSize: "2vw", textAlign: "center", marginTop: "1vh", marginBottom: "3vh"}}>{this.props.name}</div>
+            <div style={{marginTop: "2vh", fontSize: "1.5vw"}}>You ran out of lives! You finished {this.props.currentList} rounds out of 6.</div>
+        <div> <Line percent={100*(this.props.currentList/6)} strokeWidth="1" strokeColor="#048a81" style={{marginTop: "2vh"}}/></div>
+            </Card>
+            );
+        }
         
         return (
             
@@ -356,7 +369,7 @@ class ListSummaryCard extends React.Component {
             <div style={{fontSize: "2vw", textAlign: "center", marginTop: "1vh", marginBottom: "3vh"}}>{this.props.name}</div>
 <div style={{marginTop: "2vh", fontSize: "1.5vw"}}>Finished round {this.props.currentList} of 6.</div>
 <div> <Line percent={100*(this.props.currentList/6)} strokeWidth="1" strokeColor="#048a81" style={{marginTop: "2vh"}}/></div>
-    <div style={{fontSize: "1.5vw", marginTop: "2vh"}}>Remaining lives:</div>
+    <div style={{fontSize: "1.5vw", marginTop: "5vh"}}>Remaining lives:</div>
 <div style={{marginTop: "2vh", color: "red", fontSize: "1.5vw"}}>{lives}</div>
 <div style={{fontSize: "1.5vw", marginTop: "8vh"}}>Next round:</div>
         <Row style={{height: "auto", justifyContent: "left", marginTop: "4vh"}}>{newwords}</Row>
