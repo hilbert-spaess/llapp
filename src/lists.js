@@ -121,6 +121,10 @@ class DisplayLists1 extends React.Component {
         
     }
     
+    finishHere = () => {
+        this.setState({mode: null, focus_id: null});
+    }
+    
     onHide = () => {
         this.setState({focus_id: null});
     }
@@ -130,7 +134,7 @@ class DisplayLists1 extends React.Component {
         if (this.props.submitData != null && this.props.submitData.state == "read") {
             
             console.log("hehe");
-            return <ListContainer data={this.props.submitData} />
+            return <ListContainer data={this.props.submitData} finishHere={this.finishHere}/>
             return <Redirect to={{pathname: "/read", data: this.props.submitData, type: "list"}}/>
         }
          
@@ -302,12 +306,18 @@ class ListContainer extends React.Component {
         }
         
         if (this.state.dead) {
+            var wd = "round";
+            if (this.state.currentList > 1) {
+                
+                var wd="rounds";
+                
+            } 
             
              return (
                 
                 <Card className="listsummarycard" style={{paddingLeft: "1vw", paddingRight: "1vw"}}>
             <div style={{fontSize: "2vw", textAlign: "center", marginTop: "1vh", marginBottom: "3vh"}}>{this.props.data.read_data.name}</div>
-            <div style={{marginTop: "2vh", fontSize: "1.5vw"}}>You ran out of lives! You finished {this.state.currentList} rounds out of 6.</div>
+            <div style={{marginTop: "2vh", fontSize: "1.5vw"}}>You ran out of lives! You finished {this.state.currentList} {wd} out of 6.</div>
         <div> <Line percent={100*(this.state.currentList/6)} strokeWidth="1" strokeColor="#048a81" style={{marginTop: "2vh"}}/></div>
             </Card>
             );
@@ -316,7 +326,7 @@ class ListContainer extends React.Component {
         
         if (!this.state.playing) {
             return (
-            <ListSummaryCard currentList={this.state.currentList} words={words} nextwordno={wordnos[this.state.currentList]} name={this.props.data.read_data.name} lives={this.state.lives} nextRound={this.nextRound}/>);
+            <ListSummaryCard currentList={this.state.currentList} words={words} nextwordno={wordnos[this.state.currentList]} name={this.props.data.read_data.name} lives={this.state.lives} nextRound={this.nextRound} finishHere={this.props.finishHere}/>);
         }
         
         console.log(this.props.data);
@@ -375,6 +385,7 @@ class ListSummaryCard extends React.Component {
 <div style={{fontSize: "1.5vw", marginTop: "8vh"}}>Next round:</div>
         <Row style={{height: "auto", justifyContent: "left", marginTop: "4vh"}}>{newwords}</Row>
               <div style={{marginTop: "5vh", textAlign: "center"}}><button onClick={this.props.nextRound} className="newvocabsubmit" style={{fontSize: "1.5vw"}}>Start Round {this.props.currentList+1}!</button></div>
+              <div style={{marginTop: "1vh", textAlign: "center"}}><button onClick={this.props.finishHere} className="newvocabsubmit" style={{fontSize: "1.5vw"}}>Finish here</button></div>
             </Card>
 
         );
