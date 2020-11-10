@@ -331,12 +331,33 @@ class ListSummaryCard extends React.Component {
     
     render () {
         
+        var words = [];
+        var newwords = [];
+        
+        for (var i = 0; i < this.props.words.length; i++) {
+            
+            words.push(<VocabCard word={this.props.words[i]}/>);
+            newwords.push(<VocabCard word={this.props.words[i]}/>);
+        
+        }
+    
+        for (var i = 0; i < this.props.nextwordno - this.props.words.length; i++) {
+            
+            newwords.push(<VocabCard word=""/>);
+            
+        }
+        
         return (
             
               <Card className="listsummarycard">
             <div style={{fontSize: "2vw", textAlign: "center", marginTop: "1vh", marginBottom: "3vh"}}>{this.props.name}</div>
-             Completed level {this.props.currentList}: {this.props.words.length} words. {this.props.words}. Next level: {this.props.nextwordno} words.
-              <button onClick={this.props.nextRound} className="newvocabsubmit">Start Round {this.props.currentList+1}!</button>
+        <Row>
+        <Col style={{width: "50%"}}>
+             <div>Completed level {this.props.currentList}: {this.props.words.length} words. </div>
+            <Row style={{justifyContent: "space-evenly"}}>{words}</Row> 
+             </Col><Col style={{width: "50%"}}>Next level: {this.props.nextwordno} words.
+            <Row style={{justifyContent: "space-evenly"}}>{newwords}</Row>
+              <button onClick={this.props.nextRound} className="newvocabsubmit">Start Round {this.props.currentList+1}!</button></Col></Row>
             </Card>
 
         );
