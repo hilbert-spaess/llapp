@@ -331,13 +331,13 @@ class TextCard extends React.Component {
     words.push(<Text style={{wordBreak: "keep-all", display: "inline-block", overflowWrap: "normal"}}>{spc + context[i]['w']}</Text>);
         } else if (this.props.limbo || i != location) {
             if (this.props.answers[context[i]["i"]] == 1) {
-                words.push(<div style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", flex: "none", display: "inline-block", border: "0", width: (context[i]["w"].length+1).toString() + "ch", borderTop: "0", outlineTop: "0", lineHeight: "20px", textAlign: "center"}}><Text style={{color: "#048a81", overflowWrap: "normal"}}>{spc + context[i]["w"]}</Text></div>);
+                words.push(<div style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", flex: "none", display: "inline-block", border: "0", width: (context[i]["w"].length+1).toString() + "ch", borderTop: "0", outlineTop: "0", lineHeight: "20px", textAlign: "left", borderBottom: "1px transparent"}}><Text style={{color: "#048a81", overflowWrap: "normal", display: "inline-block", wordBreak: "keep-all"}}>{spc + context[i]["w"]}</Text></div>);
             } else {
-                words.push(<div style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", flex: "none", display: "inline-block", border: "0", width: (context[i]["w"].length+1).toString() + "ch", borderTop: "0", outlineTop: "0", lineHeight: "20px", textAlign: "center"}}><Text style={{color: "red", overflowWrap: "normal"}}>{spc + context[i]["w"]}</Text></div>);
+                words.push(<div style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", flex: "none", display: "inline-block", border: "0", width: (context[i]["w"].length+1).toString() + "ch", borderTop: "0", outlineTop: "0", lineHeight: "20px", textAlign: "left"}}><Text style={{color: "red", overflowWrap: "normal", borderBottom: "1px transparent", display: "inline-block", wordBreak: "keep-all"}}>{spc + context[i]["w"]}</Text></div>);
             }
         } else {
-            words.push(spc);
-        words.push(<input spellcheck="false" className="workinput" type="text"  key = {this.props.showDialog} autocomplete="off" autoFocus ref = {(input) => {this.nameInput=input;}} value={value} onChange={this.handleChange} style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", flex: "none", display: "inline-block", border: "0", width: (this.props.answerlength+1).toString() + "ch", borderTop: "0", outlineTop: "0", lineHeight: "20px", borderBottom: "1px solid grey", textAlign: "center"}}/>);
+            words.push(<div style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", flex: "none", display: "inline-block", border: "0", borderTop: "0", outlineTop: "0", lineHeight: "20px", textAlign: "left"}}>{spc}</div>);
+        words.push(<input spellcheck="false" type="text"  key = {this.props.showDialog} autocomplete="off" autoFocus ref = {(input) => {this.nameInput=input;}} value={value} onChange={this.handleChange} style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", flex: "none", display: "inline-block", border: "0", width: (this.props.answerlength+1).toString() + "ch", borderTop: "0", outlineTop: "0", lineHeight: "20px", borderBottom: "1px solid grey", textAlign: "left"}}/>);
         }
     };
 
@@ -579,7 +579,7 @@ class SecondInput extends React.Component {
     return (
         <div style={{fontFamily: "lora"}}> {this.state.show &&
         <form className="commentForm" onSubmit={this.handleHide}>
-        <button className="nextbuttonlimbo2" type="submit" autoFocus ref={this.innerRef}/>
+        <button style={{bottom: "5vh", right: "5vh"}} className="nextbuttonlimbo2" type="submit" autoFocus ref={this.innerRef}/>
             </form>}</div>
     );
   }

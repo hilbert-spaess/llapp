@@ -28,7 +28,7 @@ export class InteractionCard extends React.Component {
         return (
         <Card className="interactionbox">
             <form onSubmit={this.props.handleNext}>
-            <div style={{position: "fixed", bottom: "0", right: "0"}}>
+            <div style={{position: "fixed", bottom: "5vh", right: "5vh"}}>
               <button className="nextbuttonlimbo" type="submit" autoFocus ref = {(c) => {this.nameInput=c;}} onClick={this.props.handleNext}></button>
             </div>
             </form>
@@ -115,16 +115,16 @@ class FillBlankExamples extends React.Component {
 	    var synonym3 = "";
 	    
 	    if ("0" in this.props.interaction) {
-		synonym0 = this.props.interaction["0"]["s"] + "\n";
+		synonym0 = this.props.interaction["0"]["s"];
 	    }
 	    if ("1" in this.props.interaction) {
-		synonym1 = this.props.interaction["1"]["s"] + "\n";
+		synonym1 = " | " + this.props.interaction["1"]["s"];
 	    }
 	    if ("2" in this.props.interaction) {
-		synonym2 = this.props.interaction["2"]["s"] + "\n";
+		synonym2 = " | " + this.props.interaction["2"]["s"];
 	    }
 	    if ("3" in this.props.interaction) {
-		synonym3 = this.props.interaction["3"]["s"] + "\n";
+		synonym3 = " | " + this.props.interaction["3"]["s"];
 	    }	
 	    return (
 		    <div className="interactiontext">
@@ -132,23 +132,16 @@ class FillBlankExamples extends React.Component {
                 interaction = {this.props.interaction}
                 interactionMode = {this.props.interactionMode}
         /><br></br>
-<Row style={{justifyContent: "center"}}>
-<div style={{width: (synonym0.length + 1).toString() + "ch", border: "transparent", borderLeft: "solid grey"}}>
-		    {synonym0 + synonym1 + synonym2 + synonym3}</div></Row>
+		    {synonym0 + synonym1 + synonym2 + synonym3}
 		</div>
 	    );
 	} else if (this.props.interactionMode=="4") {
         
         return (
+            <Row style={{justifyContent: "center"}}>
             <div className="interactiontext">
-            <InteractionText
-            interaction={this.props.interaction}
-            interactionMode={this.props.interactionMode}
-            /> <br></br>
-<Row style={{justifyContent: "center"}}>
-<div style={{textDecoration: "underline"}}>
+           <div style={{textDecoration: "underline"}}> Definition<br></br><br></br></div>
 {this.props.interaction["def"]}</div></Row>
-</div>
          );
     }
                                
@@ -178,7 +171,7 @@ class InteractionText extends React.Component {
        );
     } else if (this.props.interactionMode == "4") {
         return (
-            <div>Definition
+            <div style={{textAlign: "left", textDecoration: "underline"}}>Definition
 </div>
     );
     }
