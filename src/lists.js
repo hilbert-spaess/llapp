@@ -301,6 +301,19 @@ class ListContainer extends React.Component {
             
         }
         
+        if (this.state.dead) {
+            
+             return (
+                
+                <Card className="listsummarycard" style={{paddingLeft: "1vw", paddingRight: "1vw"}}>
+            <div style={{fontSize: "2vw", textAlign: "center", marginTop: "1vh", marginBottom: "3vh"}}>{this.props.data.read_data.name}</div>
+            <div style={{marginTop: "2vh", fontSize: "1.5vw"}}>You ran out of lives! You finished {this.state.currentList} rounds out of 6.</div>
+        <div> <Line percent={100*(this.state.currentList/6)} strokeWidth="1" strokeColor="#048a81" style={{marginTop: "2vh"}}/></div>
+            </Card>
+            );
+        }
+            
+        
         if (!this.state.playing) {
             return (
             <ListSummaryCard currentList={this.state.currentList} words={words} nextwordno={wordnos[this.state.currentList]} name={this.props.data.read_data.name} lives={this.state.lives} nextRound={this.nextRound}/>);
@@ -349,18 +362,6 @@ class ListSummaryCard extends React.Component {
             
             lives += "  *  ";
             
-        }
-
-        if (this.state.dead) {
-            
-            return (
-                
-                <Card className="listsummarycard" style={{paddingLeft: "1vw", paddingRight: "1vw"}}>
-            <div style={{fontSize: "2vw", textAlign: "center", marginTop: "1vh", marginBottom: "3vh"}}>{this.props.name}</div>
-            <div style={{marginTop: "2vh", fontSize: "1.5vw"}}>You ran out of lives! You finished {this.props.currentList} rounds out of 6.</div>
-        <div> <Line percent={100*(this.props.currentList/6)} strokeWidth="1" strokeColor="#048a81" style={{marginTop: "2vh"}}/></div>
-            </Card>
-            );
         }
         
         return (
