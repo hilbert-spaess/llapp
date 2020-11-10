@@ -354,7 +354,7 @@ class ListSummaryCard extends React.Component {
 <div style={{marginTop: "2vh", fontSize: "1.5vw"}}>Finished round {this.props.currentList} of 6.</div>
 <div> <Line percent={100*(this.props.currentList/6)} strokeWidth="1" strokeColor="#048a81" style={{marginTop: "2vh"}}/></div>
 <div style={{fontSize: "1.5vw", marginTop: "8vh"}}>Next round:</div>
-        <Row style={{height: "auto", justifyContent: "left", marginTop: "2vh"}}>{newwords}</Row>
+        <Row style={{height: "auto", justifyContent: "left", marginTop: "4vh"}}>{newwords}</Row>
               <div style={{marginTop: "5vh", textAlign: "center"}}><button onClick={this.props.nextRound} className="newvocabsubmit" style={{fontSize: "1.5vw"}}>Start Round {this.props.currentList+1}!</button></div>
             </Card>
 
