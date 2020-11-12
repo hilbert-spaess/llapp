@@ -66,6 +66,7 @@ class DisplayListsSubmit extends React.Component {
         console.log(playdata);
         this.setState({type: "read", payload: {id: playdata.id, qno: playdata.qno}});
     }
+    
         
     
     render () {
@@ -95,9 +96,9 @@ const DisplayListsLogging = (props) => {
                                           'Access-Control-Request-Method': 'POST'}}};
     const {error, loading, data, refresh} = useApi(APIHOST + '/api/newlist', payload, opts);
     
-    const handlePlay = (playdata) => {
+    const handlePlay = async (playdata) => {
         
-        props.handlePlay(playdata);
+        await props.handlePlay(playdata);
         refresh();
     }
     
@@ -133,6 +134,7 @@ class DisplayLists1 extends React.Component {
     
     finishHere = () => {
         console.log("henloe");
+        this.props.handlePlay({});
         this.setState({mode: null, focus_id: null});
     }
     
@@ -145,7 +147,7 @@ class DisplayLists1 extends React.Component {
         if (this.state.mode == "read" && this.props.submitData != null && this.props.submitData.state == "read") {
             
             console.log("hehe");
-            return <ListContainer data={this.props.submitData} playAgain={this.playAgain} finishHere={this.finishHere}/>
+            return <ListContainerUpdatable data={this.props.submitData} playAgain={this.playAgain} finishHere={this.finishHere}/>
             return <Redirect to={{pathname: "/read", data: this.props.submitData, type: "list"}}/>
         }
          
@@ -287,6 +289,52 @@ class FocusList extends React.Component {
     }
 }
 
+class ListContainerUpdatable extends React.Component {
+    
+    state = {parcelData: {}}
+    
+    saveResult = (data) => {
+        this.setState({parcelData: data});
+    }
+    
+    render () {
+    
+        return (
+            
+            <ListContainerLogging
+            data={this.props.data} parcelData={this.state.parcelData} playAgain={this.props.playAgain} finishHere={this.props.finishHere} saveResult={this.props.saveResult} saveResult={this.saveResult}/>
+    
+        );
+    }
+}
+            
+
+const ListContainerLogging = (props) => {
+    
+    
+    const payload = props.parcelData;
+    const {login, getAccessTokenWithPopup } = useAuth0();
+    const opts = {audience: APIHOST, 
+                  fetchOptions: {method: 'post',
+                                 body: payload,
+                                 headers: {'Access-Control-Allow-Credentials': 'true',
+                                           'Access-Control-Allow-Origin': '*',
+                                           'Accept': 'application/json',
+                                            'Content-Type': 'application/json',
+                                          'Access-Control-Request-Method': 'POST'}}};
+    const {error, loading, refresh} = useApi(APIHOST + '/api/loglist', payload, opts);
+    
+    const saveResult = async (data) => {
+        await props.saveResult(data);
+        refresh();
+    }
+    
+    return (
+        <ListContainer data={props.data} playAgain={props.playAgain} finishHere={props.finishHere} saveResult={saveResult}/>
+        );
+}
+    
+
 class ListContainer extends React.Component {
     
     state = {currentList:0, playing: true, lives: 5, dead: false}
@@ -296,9 +344,11 @@ class ListContainer extends React.Component {
         this.setState({playing: false});
         if (data.status == "dead") {
             this.setState({dead: true});
+            this.saveResult("dead");
         }
         else {
         this.setState({currentList: this.state.currentList + 1, lives: data.lives});
+        this.saveResult("alive");
         }
     }
     
@@ -311,6 +361,10 @@ class ListContainer extends React.Component {
     playAgain = () => {
         this.setState({currentList: 0, lives: 5, dead: false});
         this.setState({playing: true});
+    }
+    
+    saveResult = (status) => {
+        this.props.saveResult({currentList: this.state.currentList, id: this.props.data.read_data.id, status: status});
     }
     
     render () {
@@ -403,8 +457,8 @@ class ListSummaryCard extends React.Component {
 <div style={{marginTop: "2vh", color: "red", fontSize: "1.5vw"}}>{lives}</div>
 <div style={{fontSize: "1.5vw", marginTop: "3vh"}}>Next round:</div>
         <Row style={{height: "auto", justifyContent: "left", marginTop: "4vh"}}>{newwords}</Row>
-              <div style={{marginTop: "5vh", textAlign: "center"}}><button onClick={this.props.nextRound} className="newvocabsubmit" style={{fontSize: "1.5vw"}}>Start Round {this.props.currentList+1}!</button></div>
-              <div style={{marginTop: "1vh", textAlign: "center"}}><button onClick={this.props.finishHere} className="newvocabsubmit" style={{fontSize: "1.5vw"}}>Finish here</button></div>
+              <div style={{marginTop: "5vh", textAlign: "center"}}><button onClick={this.props.nextRound} className="newvocabsubmit" style={{fontSize: "1.5vw"}}>Start Round {this.props.currentList+1}!</button>
+            <button onClick={this.props.finishHere} className="newvocabsubmit" style={{fontSize: "1.5vw"}}>Finish here</button></div>
             </Card>
 
         );
