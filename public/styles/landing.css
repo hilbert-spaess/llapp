@@ -1,19 +1,21 @@
 .choicetextbox {
   position: absolute;
-  width: 75vw;
+  width: 80vw;
   top: 20%;
-  left: 20vw;
+  left: 10vw;
   text-align: center;
 }
 
 .choicetext {
     font-size: 3vw;
+    font-family: 'Montserrat';
+    font-weight: 300;
 }
 
 .userchoicerow {
     position: absolute;
     top: 40%;
-    left: 17.5vw;
+    left: 10vw;
     width: 80vw;
     justify-content: space-evenly;
 }
@@ -29,7 +31,8 @@
 
 .fadeoutchoice {
     
-    animation: fadeoutanim 2s ease;
+    animation: fadeoutanim 1s ease;
+    opacity: 0%;
     
 }
 
@@ -48,6 +51,8 @@
     border-radius: 50px;
     
     position: relative;
+    
+    font-family: 'Montserrat';
     
     animation: bubblenter 1.5s ease;
     

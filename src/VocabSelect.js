@@ -93,11 +93,11 @@ export class VocabSelectContainer extends React.Component {
         
         return (
             
-            <>
+            <div style={{paddingTop: "10vh"}}>
             
-            <div onClick={this.goBack} style={{cursor: "pointer", marginLeft: "2em", marginTop: "1em"}}><ArrowLeft size="3vw"/></div>
+            <div onClick={this.goBack} style={{position: "absolute", bottom: "3vh", left: "2vw", cursor: "pointer"}}><ArrowLeft size="3vw"/></div>
             
-            <div style={{marginTop: "0"}} className="maintext" style={{textAlign:"center"}}>Let's get started. Pick 5 words to start your course.</div>
+            <div style={{textAlign:"center", top: "5vh", fontFamily: "Montserrat", fontSize: "2vw"}}>Let's get started. Pick 5 words to start your course.</div>
 
             <FloatingWords
             words= {this.state.floatingWords}
@@ -113,9 +113,7 @@ submitClick = {this.submitClick}/>
             handleClick={this.handleVocabClick}
             chosen={this.state.chosen}/>}
 
-                <div style={{marginBottom: "3em"}}/>
-
-            </>
+            </div>
 
         );
     }
@@ -150,12 +148,10 @@ class FloatingWords extends React.Component {
         return (
             
             <div>
-            <Container>
         <Row 
          style={{justifyContent: "center"}}>
                 {vocab_choice}
     </Row>
-            </Container>
             </div>
         
         ); 

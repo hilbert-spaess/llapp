@@ -440,13 +440,16 @@ bgcolor={colour}
                 streak2={streak2}
                 streak1={streak1}/>}
         </div>
-         <div className="chinesedef" style={{marginTop: "0.5em", marginLeft: "0.5em"}}>
-        <BookOpen style={{marginRight: "1em"}}/>
+        <div style={{height: "10vh"}}>
+         <div className="chinesedef" style={{position: "relative", width: "100%", marginLeft: "0.5em"}}>
+        <div style={{width: "10%", position: "absolute", left: "0%", top: "0%"}}>
+        <BookOpen/></div><div style={{width: "90%", position: "absolute", top: "0%", left: "10%"}}>
             {"def" in this.props.specificInteraction && this.props.specificInteraction["def"]}
+</div>
         </div>
-        <hr></hr>
+</div>
 {full && ("samples" in this.props.specificInteraction) && 
-        <div className="chinesedef" style={{marginTop: "1em", marginLeft: "0.5em", marginBottom: "2em"}}> <SampleSentences samples={this.props.specificInteraction["samples"]}/></div>}
+       <div> <div className="chinesedef" style={{position: "relative", width: "100%", marginLeft: "0.5em", marginBottom: "2em"}}> <SampleSentences samples={this.props.specificInteraction["samples"]}/></div></div>}
 </div>
 
 	);  } else {
@@ -649,10 +652,11 @@ class SampleSentences extends React.Component {
 
         
         return (
-            <Text style={{fontSize: "1.5vw", textAlign: "center", fontStyle: "italic", fontFamily: "Open Sans"}}>
-            
-             <Edit3 style={{marginRight: "1em"}}/> {this.props.samples.length > 0 && words}
-    </Text>
+            <>
+            <div style={{position: "absolute", width: "10%", left: "0%", top: "0%"}}>
+             <Edit3 style={{marginRight: "1em"}}/> </div> <div style={{position: "absolute", width: "90%", left: "10%", top: "0%"}}>
+<Text style={{fontSize: "1.5vw", textAlign: "center", fontStyle: "italic", fontFamily: "Open Sans"}}>{this.props.samples.length > 0 && words}
+    </Text></div></>
         );
     }
 }

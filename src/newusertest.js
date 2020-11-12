@@ -6,8 +6,9 @@ import {APIHOST} from './api_config.js';
 import {Card, Button, Row, Col, Container, Modal, ProgressBar} from 'react-bootstrap';
 import {BarWrapped, FreeBarWrapped2} from './sidebar.js';
 import {VocabSelectContainer} from './VocabSelect.js';
+import {ArrowLeft} from 'react-feather';
 
-export class NewUserTest extends React.Component {
+export class NewUserTest1 extends React.Component {
     
     render () {
         return (
@@ -16,16 +17,36 @@ export class NewUserTest extends React.Component {
     }
 }
 
-export class NewUserTest1 extends React.Component {
+export class NewUserTest extends React.Component {
+    
+    render () {
+        
+        return (
+            <div className="launchwindow">
+            <div style={{width: "100vw", height: "100vh"}}>
+            <div style={{position: "absolute", top: "3%", left: "2%", fontSize: "2vw", fontFamily: "Montserrat", fontWeight: "600"}}>RiceCake</div>
+            <NewUserTest2/></div></div>
+        );
+            
+            }
+}
+
+export class NewUserTest2 extends React.Component {
     
     state = {individual: null,
         readingacademic: null,
              answers: null,
             course: null}
     
-    handleIndividualChoiceSubmit = (id) => {
+    handleIndividualChoiceSubmit = (id, delay) => {
         
-        setTimeout(()=>{this.setState({individual: id});}, 1500);
+        setTimeout(()=>{this.setState({individual: id});}, delay);
+        
+    }
+    
+    handleIndividualCourseBack = () => {
+        console.log("hehehe");
+        this.setState({individual: null});
         
     }
     
@@ -71,7 +92,7 @@ export class NewUserTest1 extends React.Component {
             
             if (this.state.course == null) {
                 
-                return <CourseChoice individual={this.state.individual} handleSubmit={this.handleCourseChoiceSubmit}/>
+                return <CourseChoice individual={this.state.individual} handleBack={this.handleIndividualCourseBack} handleSubmit={this.handleCourseChoiceSubmit}/>
                     
             }
                 
@@ -131,16 +152,29 @@ export class NewUserTest1 extends React.Component {
 
 class IndividualChoice extends React.Component {
     
-    state = {blank: "", done: false}
+    state = {blank: "________", i: 0, done: false, chosen: false}
     
     handleSubmit = (id, text) => {
         
-        this.setState({blank: text, done: true});
-        this.props.handleSubmit(id);
+        this.setState({chosen: true, blank: text});
+        let timerId2 = setInterval(() => this.handleCounts(text), 50);
+        this.props.handleSubmit(id, 50*(text.length+5) + 500);
         
     }
     
+    handleCounts = () => {
+        
+        if (this.state.i < this.state.blank.length) {
+            this.setState({i: this.state.i+1});
+        }
+        else {
+            this.setState({done: true});
+        }
+    }
+    
     render () {
+        
+        var m = Math.max(10, this.state.blank.length).toString();
         
         var choices = [];
         
@@ -151,15 +185,28 @@ class IndividualChoice extends React.Component {
             <>
             <div className="choicetextbox"><div className={this.state.done ? "fadeoutchoice" : ""}>
             <div className="choicetext">
-            I'm looking for <input className="choiceinput" value={this.state.blank} style={{width: "26ch"}}/>
+            I'm looking for {this.state.blank.slice(0, this.state.i)}
             </div></div></div>
-            {!this.state.done && <Row className="userchoicerow">
+            {!this.state.chosen && <Row className="userchoicerow">
             {choices}
         </Row>}
             </>
             );
     }
 }
+
+class BackArrow extends React.Component {
+    
+    render () {
+        
+        return (
+            
+            <div onClick={this.props.handleBack} style={{position: "absolute", bottom: "6vh", left: "4vw", cursor: "pointer"}}><ArrowLeft size="3vw"/></div>
+
+        );
+    }
+}
+
 
 class ChoiceBubble extends React.Component {
     
@@ -205,7 +252,8 @@ const CourseChoice = (props) => {
                 individual = {props.individual}
                 readingacademic = {props.readingacademic}
                 choices = {data.choices}
-                handleSubmit={props.handleSubmit}/>);
+                handleSubmit={props.handleSubmit}
+                handleBack={props.handleBack}/>);
 }
 
 export class CourseChoice1 extends React.Component {
@@ -217,6 +265,11 @@ export class CourseChoice1 extends React.Component {
         this.setState({blank: text, done: true});
         this.props.handleSubmit(id);
         
+    }
+    
+    handleBack = () => {
+        console.log("hehe");
+        this.props.handleBack();
     }
     
     render () {
@@ -258,6 +311,7 @@ export class CourseChoice1 extends React.Component {
     
          return (
                         <>
+             <BackArrow handleBack={this.props.handleBack}/>
             <div className="choicetextbox"><div className={this.state.done ? "fadeoutchoice" : ""}>
             <div className="choicetext">
             I'd like to study <input className="choiceinput" value={this.state.blank} style={{width: "13ch"}}/> vocab.
@@ -294,7 +348,7 @@ class ReadingChoice extends React.Component {
         
         return (
             <>
-            <div className="maintext" style={{textAlign: "center"}}>Welcome. What sort of English can we help you with?</div>
+            <div className="maintext" style={{textAlign: "center", fontFamily: "Montserrat", fontWeight: "400"}}>Welcome. What sort of English can we help you with?</div>
             
                        <Row style={{marginTop: "3em", justifyContent: "space-evenly"}}>
              {choices}
