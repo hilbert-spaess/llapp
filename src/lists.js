@@ -187,7 +187,7 @@ class DisplayLists1 extends React.Component {
                 data={this.props.data.lists.courselists}
                 id={this.state.focus_id}/>
             </Modal>
-            <Row className="bottombubbleread" style={{justifyContent: "center", position: "absolute", width: "80%", top: "10%"}}>
+            <Row className="bottombubbleread" style={{justifyContent: "center", position: "absolute", width: "80%", top: "5%"}}>
                 {lists}
                 </Row>
             </div>
@@ -256,7 +256,7 @@ class FocusList extends React.Component {
         
         var words = [];
         
-        for (var i = 0; i < Math.min(this.props.words.length, 12); i++) {
+        for (var i = 0; i < Math.min(this.props.words.length, 10); i++) {
             
             words.push(<VocabCard word={this.props.words[i][1]}/>);
             
@@ -266,21 +266,21 @@ class FocusList extends React.Component {
         
         return (
             
-            <Card className={this.state.playing ? "focuslistcardout" : "listsummarycard"}>
+            <Card className={this.state.playing ? "focuslistcardout bubble" : "listsummarycard bubble"}>
             <div style={{textAlign: "left"}}><ArrowLeft onClick={this.props.finishHere} size="2vw" style={{marginTop: "1vh", cursor: "pointer"}}/></div>
             <div style={{fontSize: "2vw", textAlign: "center", marginTop: "1vh", marginBottom: "3vh"}}>{this.props.name}</div>
             <div>
                 <Row>
             <Col style={{width: "20%", textAlign: "center"}}>
-                <div>Words like:</div><hr></hr>
+                <div style={{marginBottom: "5vh", fontSize: "2vw"}}>Words like:</div>
                     <Row style={{justifyContent: "space-evenly"}}>
             {words}<div style={{marginTop: "1vh", marginBottom: "1vh"}}></div></Row></Col>
             <Col style={{width: "80%", textAlign: "center"}}>
-            <div style={{fontSize: "1.5vw"}}>High score</div><div style={{marginTop: "3vh"}}>Round 0</div><Line percent={0} strokeWidth="1" strokeColor="#048a81" style={{marginTop: "1vh"}}/>
-            <div style={{marginTop: "10vh", color: "red", fontSize: "1.5vw"}}>* * * * *</div>
+            <div style={{fontSize: "2vw", marginBottom: "5vh"}}>High score</div><div style={{marginTop: "3vh"}}>Round 0</div><Line percent={0} strokeWidth="1" strokeColor="#048a81" style={{marginTop: "1vh"}}/>
+            <div style={{marginTop: "20vh", color: "red", fontSize: "1.5vw"}}>* * * * *</div>
             <div>5 lives</div>
-        <div style={{marginTop: "5vh", fontSize: "1.5vw"}}>
-            <button style={{fontSize: "1.5vw"}} className="newvocabsubmit" onClick={this.handlePlay}>Start Round 1!</button></div>
+        <div style={{marginTop: "3vh", fontSize: "1.5vw"}}>
+            <button style={{borderColor: "green", padding: "15px", color: "green", borderRadius: "30px", fontSize: "1.5vw", backgroundColor: "white"}} className="newvocabsubmit" onClick={this.handlePlay}>Start Round 1!</button></div>
             </Col>
             </Row>
             </div>
@@ -387,7 +387,7 @@ class ListContainer extends React.Component {
             
              return (
                 
-                <Card className="listsummarycard" style={{paddingLeft: "1vw", paddingRight: "1vw"}}>
+                <Card className="listsummarycard bubble" style={{paddingLeft: "1vw", paddingRight: "1vw"}}>
             <div style={{fontSize: "2vw", textAlign: "center", marginTop: "1vh", marginBottom: "3vh"}}>{this.props.data.read_data.name}</div>
             <div style={{marginTop: "2vh", fontSize: "1.5vw"}}>You ran out of lives! You finished {this.state.currentList} {wd} out of 6.</div>
         <div> <Line percent={100*(this.state.currentList/6)} strokeWidth="1" strokeColor="#048a81" style={{marginTop: "2vh"}}/></div>
