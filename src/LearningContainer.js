@@ -433,7 +433,7 @@ styling={styling}
 bgcolor={colour}
         word={this.props.word}
 />}
-{!full && <div><div style={{fontFamily: "lora"}} className="vocabdisplay">{this.props.word}</div><SecondInput handleHide={this.props.handleClose} styling={styling}/></div>}
+{!full && <div><div style={{fontFamily: "PT Serif"}} className="vocabdisplay">{this.props.word}</div><SecondInput handleHide={this.props.handleClose} styling={styling}/></div>}
 </div>
  <div className="cardprogress">
             {(this.props.type == "daily_reading") && <AnimatedStreakShow 
@@ -555,7 +555,7 @@ class FirstInput extends React.Component {
   render() {
     return (
         <form className="commentForm" onSubmit={this.handleHide}>
-        <div style={{textAlign: "center", fontFamily: "lora"}}>
+        <div style={{textAlign: "center", fontFamily: "PT Serif"}}>
         <input className="answercardinput" type="text" autoFocus autocomplete="off" style={{fontSize: "3vw", outline: "0", border: "0", backgroundColor: this.props.bgcolor, width: "80%", textAlign: "center", marginBottom: "0.5em"}} placeholder={this.props.word} id="myInput" ref={this.innerRef} value={this.state.value} onChange={this.handleChange}/>
             </div>
 </form>
@@ -585,7 +585,7 @@ class SecondInput extends React.Component {
   render() {
       
     return (
-        <div style={{fontFamily: "lora"}}> {this.state.show &&
+        <div style={{fontFamily: "PT Serif"}}> {this.state.show &&
         <form className="commentForm" onSubmit={this.handleHide}>
         <button style={{bottom: "5vh", right: "5vh"}} className="nextbuttonlimbo2" type="submit" autoFocus ref={this.innerRef}/>
             </form>}</div>
