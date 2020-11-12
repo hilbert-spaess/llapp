@@ -69,25 +69,12 @@ body {
       opacity: 1;
 }
 
-.sidelink {
-    
-    padding: 0.5em;
-    border: transparent;
-    width: 80%;
-    border-radius: 20px;
-    
-}
 
 .sideclick:hover {
     color: black;
     text-decoration: none;
 }
 
-.sidelink:hover {
-    
-    border: 1px solid  #04726a;
-    
-}
 
 .centerno {
     position: absolute;

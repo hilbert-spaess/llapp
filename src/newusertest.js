@@ -314,7 +314,7 @@ export class CourseChoice1 extends React.Component {
              <BackArrow handleBack={this.props.handleBack}/>
             <div className="choicetextbox"><div className={this.state.done ? "fadeoutchoice" : ""}>
             <div className="choicetext">
-            I'd like to study <input className="choiceinput" value={this.state.blank} style={{width: "13ch"}}/> vocab.
+            I'd like to study <input className="choiceinput" value={this.state.blank} style={{width: "13ch", textAlign: "center"}}/> vocab.
             </div></div></div>
             {!this.state.done && <Row className="userchoicerow">
             {choices}

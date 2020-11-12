@@ -70,9 +70,11 @@ const ProfileDropDown = () => {
     const {user, logout} = useAuth0();
     
     return (
-        <NavDropdown style={{fontSize: "1em", marginTop: "1em", marginLeft: "0.5em"}} title={<User size="2vw"/>} id="basic-nav-dropdown">
+        <div className="sidelink" style={{marginTop: "5vh", textAlign: "center"}}>
+        <NavDropdown style={{fontSize: "1em"}} title={<User size="2vw"/>} id="basic-nav-dropdown">
         <NavDropdown.Item onClick={() => logout({returnTo: window.location.origin})}>Log out</NavDropdown.Item>
       </NavDropdown>
+        </div>
     );
 }
 
@@ -82,10 +84,10 @@ export class Sidebar extends React.Component {
     render () {
 	return (
         
-	    <div className="sidenav" style={{paddingTop: "1em", textAlign: "left",  backgroundColor: "transparent"}}>
-		<div style={{textAlign: "left", marginLeft: "1em"}}><Link style={{marginTop: "40%", fontSize: "2vw", fontFamily: 'Montserrat', fontWeight: "600"}} to={{pathname: "/home", data: this.props.data}}>RiceCake</Link></div>
-            <ProfileDropDown/> 
-        <div className="sidelink" style={{marginTop: "0.5em", fontSize: "1.5em"}}><Link className="sideclick" to={{pathname: "/home", data: this.props.data}}><Home size="2vw" style={{marginLeft: "0.5em", marginRight: "1em"}}/></Link></div>
+	    <div className="sidenav" style={{paddingTop: "1em", textAlign: "center",  backgroundColor: "transparent"}}>
+		<div style={{textAlign: "center"}}><Link style={{marginTop: "40%", fontSize: "2vw", fontFamily: 'Montserrat', fontWeight: "600"}} to={{pathname: "/home", data: this.props.data}}>RiceCake</Link></div>
+        <div className="sidelink" style={{textAlign: "center", fontSize: "1.5em", marginTop: "5vh"}}><Link className="sideclick" to={{pathname: "/home", data: this.props.data}}><Home size="2vw"/></Link></div>
+        <ProfileDropDown/> 
 		</div>
 	);
     }
@@ -97,9 +99,9 @@ export class Sidebar2 extends React.Component {
     render () {
 	return (
 	    <div className="sidenav" style={{paddingTop: "1em", textAlign: "left"}}>
-		<div style={{textAlign: "left", marginLeft: "1em"}}><Link style={{ marginTop: "40%", fontSize: "2vw", fontFamily: 'Montserrat', fontWeight: "600"}} to="/home">RiceCake</Link></div>
-            <ProfileDropDown/>
-        <div className="sidelink" style={{marginTop: "0.5em", fontSize: "1.5em", marginRight: "1em"}}><div onClick={() => {this.props.onClick("/home")}} className="sideclick" to="/home"><Home size="2vw" style={{marginLeft: "0.5em", marginRight: "1em"}}/></div></div>
+		<div style={{textAlign: "center"}}><Link style={{ marginTop: "40%", fontSize: "2vw", fontFamily: 'Montserrat', fontWeight: "600"}} to="/home">RiceCake</Link></div>
+        <div className="sidelink" style={{textAlign: "center", fontSize: "1.5em", marginTop: "5vh"}}><div onClick={() => {this.props.onClick("/home")}} className="sideclick" to="/home"><Home size="2vw"/></div></div>
+        <ProfileDropDown/>
 		</div>
 	);
     }

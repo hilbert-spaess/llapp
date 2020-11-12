@@ -220,13 +220,14 @@ class VocabChoiceContainer extends React.Component {
         
         return (
             <div className="vocabchoicecontainer">
-             Choose from our dictionary:
+            <div style={{marginTop: "5vh"}}>
             <Container>
         <Row 
          style={{justifyContent: "center"}}>
                 {vocab_choice}
     </Row>
             </Container>
+            </div>
             </div>
         );
     }
