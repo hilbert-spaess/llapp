@@ -42,7 +42,9 @@ class LoginForm extends React.Component {
       [name]: value    , err: null});
   }
     
-    handleSubmit = () => {
+    handleSubmit = (event) => {
+        
+        event.preventDefault();
         
         if (this.state.email == null) {
             this.setState({err: {description: "Email required"}});
@@ -100,7 +102,8 @@ class LoginForm extends React.Component {
     </div>
       <div className="container">
         <form
-            autoComplete="off">
+            onSubmit={this.handleSubmit}
+            className="comentForm">
             <div className="formgroup">
             <input className="logininput"
             name="email"
@@ -115,9 +118,8 @@ class LoginForm extends React.Component {
             onChange={this.handleInputChange}
             placeholder="Password"/>
     </div>
-        </form>
-        <button onClick={this.handleSubmit} className="btn btn-primary btn-xl login-rounded-pill mt-4">Login</button>  </div>
-
+        <button type="submit" className="btn btn-primary btn-xl login-rounded-pill mt-4">Login</button>
+ </form></div>
     <div className="loginsubs">
           <div>  New user? <Link to="/signup">Sign up </Link>here.</div>
           <div style={{marginTop: "0.5em"}}> <Link onClick={this.forgotPassword}> Forgot your password? </Link></div>

@@ -161,6 +161,7 @@ class DisplayLists1 extends React.Component {
             
             return <FocusList name={data.name}
                 words = {data.words}
+                hs={data.hs}
                 handlePlay={this.handlePlay}
                 finishHere={this.finishHere}
                 id={data.id}/>;
@@ -276,7 +277,7 @@ class FocusList extends React.Component {
                     <Row style={{justifyContent: "space-evenly"}}>
             {words}<div style={{marginTop: "1vh", marginBottom: "1vh"}}></div></Row></Col>
             <Col style={{width: "80%", textAlign: "center"}}>
-            <div style={{fontSize: "2vw", marginBottom: "5vh"}}>High score</div><div style={{marginTop: "3vh"}}>Round 0</div><Line percent={0} strokeWidth="1" strokeColor="#048a81" style={{marginTop: "1vh"}}/>
+            <div style={{fontSize: "2vw", marginBottom: "5vh"}}>High score</div><div style={{marginTop: "3vh"}}>Round {this.props.hs}</div><Line percent={100*(this.props.hs/6)} strokeWidth="1" strokeColor="#048a81" style={{marginTop: "1vh"}}/>
             <div style={{marginTop: "20vh", color: "red", fontSize: "1.5vw"}}>* * * * *</div>
             <div>5 lives</div>
         <div style={{marginTop: "3vh", fontSize: "1.5vw"}}>

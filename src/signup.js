@@ -41,7 +41,9 @@ class SignUpForm extends React.Component {
       [name]: value, err: null    });
   }
     
-    handleSubmit = () => {
+    handleSubmit = (e) => {
+        
+        e.preventDefault();
         
         if (this.state.email == null) {
             this.setState({err: {description: "Email required"}});
@@ -95,6 +97,8 @@ class SignUpForm extends React.Component {
     </div>
       <div className="container">
         <form
+            className="commentForm"
+            onSubmit={this.handleSubmit}
             autoComplete="off">
             <div className="formgroup">
             <input className="logininput"
@@ -117,8 +121,7 @@ class SignUpForm extends React.Component {
             onChange={this.handleInputChange}
             placeholder="Confirm Password"/>
     </div>
-        </form>
-        <button onClick={this.handleSubmit} className="btn btn-primary btn-xl login-rounded-pill mt-4">Sign up</button>  </div>
+        <button  type="submit" className="btn btn-primary btn-xl login-rounded-pill mt-4">Sign up</button> </form> </div>
 
     <div className="loginsubs">
             Already signed up? <Link to="/login">Log in </Link>here.
