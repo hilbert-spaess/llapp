@@ -313,7 +313,6 @@ class Mondrian extends React.Component {
         
         return (
             <>
-            <SideBox data={this.props.data}/>
             <button onClick={this.readClick} onAnimationEnd={() => this.setState({ redirect: true})} className={this.state.animate ? "bubble readingbubble upbubbleread" : "bubble readingbubble bottombubbleread"}>
             <div className="bubbletext">
 <BookOpen size="2vw"/><br></br> Daily Reading </div>

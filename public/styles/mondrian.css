@@ -25,11 +25,11 @@
 }
 
 .readingbubble {
-    left: 20%;
-    top: 10%;
-    width: 20vw;
+    left: 21%;
+    top: 5%;
+    width: 25vw;
     
-    height: 20vw;
+    height: 25vw;
     border-radius: 50%;
 }
 
@@ -42,8 +42,8 @@
 }
 
 .listsbubble {
-    left: 50%;
-    top: 60%;
+    left: 47%;
+    top: 55%;
     width: 20vw;
     height: 20vw;
     border-radius: 50%;
@@ -55,7 +55,7 @@
 
 @keyframes upbubble1 {
     0% {
-        top: 10%;
+        top: 5%;
     }
     100% {
         top: -80%;
@@ -81,7 +81,7 @@
 
 @keyframes upbubble2 {
     0% {
-        top: 60%;
+        top: 55%;
     }
     100% {
         top: -80%;
@@ -99,7 +99,7 @@
         top: 100%;
     }
     100% {
-        top: 10%;
+        top: 5%;
     }
 }
 
@@ -112,7 +112,7 @@
         top: 100%;
     }
     100% {
-        top: 60%;
+        top: 55%;
     }
 }
 
