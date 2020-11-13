@@ -86,7 +86,7 @@ export class Sidebar extends React.Component {
         
 	    <div className="sidenav" style={{paddingTop: "1em", textAlign: "center",  backgroundColor: "transparent"}}>
 		<div style={{textAlign: "center"}}><Link style={{marginTop: "40%", fontSize: "2vw", fontFamily: 'Montserrat', fontWeight: "600"}} to={{pathname: "/home", data: this.props.data}}>RiceCake</Link></div>
-        <div className="sidelink" style={{textAlign: "center", fontSize: "1.5em", marginTop: "5vh"}}><Link className="sideclick" to={{pathname: "/home", data: this.props.data}}><Home size="2vw"/></Link></div>
+        <div className="sidelink" style={{textAlign: "center", cursor: "pointer", fontSize: "1.5em", marginTop: "5vh"}}><Link className="sideclick" to={{pathname: "/home", data: this.props.data}}><Home size="2vw"/></Link></div>
         <ProfileDropDown/> 
 		</div>
 	);
@@ -100,7 +100,7 @@ export class Sidebar2 extends React.Component {
 	return (
 	    <div className="sidenav" style={{paddingTop: "1em", textAlign: "left"}}>
 		<div style={{textAlign: "center"}}><Link style={{ marginTop: "40%", fontSize: "2vw", fontFamily: 'Montserrat', fontWeight: "600"}} to="/home">RiceCake</Link></div>
-        <div className="sidelink" style={{textAlign: "center", fontSize: "1.5em", marginTop: "5vh"}}><div onClick={() => {this.props.onClick("/home")}} className="sideclick" to="/home"><Home size="2vw"/></div></div>
+        <div className="sidelink" style={{textAlign: "center", cursor: "pointer", fontSize: "1.5em", marginTop: "5vh"}}><div onClick={() => {this.props.onClick("/home")}} className="sideclick" to="/home"><Home size="2vw"/></div></div>
         <ProfileDropDown/>
 		</div>
 	);

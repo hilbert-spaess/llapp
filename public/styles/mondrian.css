@@ -14,11 +14,11 @@
 .bubbletext {
     
     color: black;
-    font-family: lora;
+    font-family: 'Source Serif Pro';
+    font-weight: 300;
     position: absolute;
     left: 50%;
     top: 50%;
-    font-size: 1.5vw;
     z-index: 2;
     transform: translate(-50%, -50%);
     
@@ -29,8 +29,28 @@
     top: 5%;
     width: 25vw;
     
+    font-size: 3vw;
+    
+    
     height: 25vw;
     border-radius: 50%;
+    
+    transition-property: width height;
+    transition-duration: 1s;
+}
+
+.readingbubble:hover {
+    width: 30vw;
+    height: 30vw;
+    
+    font-size: 1.5vw;
+}
+
+.hoverotherread {
+    width: 20vw;
+    height: 20vw;
+    
+    font-size: 2.5vw;
 }
 
 .vocabubble {
@@ -39,14 +59,62 @@
     width: 20vw;
     height: 20vw;
     border-radius: 50%;
+    
+    font-size: 2.5vw;
+    
+    transition-property: width height top left font-size;
+    transition-duration: 1s;
 }
 
 .listsbubble {
-    left: 47%;
-    top: 55%;
+    right: 33%;
+    bottom: 8%;
     width: 20vw;
     height: 20vw;
     border-radius: 50%;
+    
+    font-size: 2.5vw;
+    
+    transition-property: width height bottom right font-size;
+    transition-duration: 1s;
+}
+
+.hoveronvocab {
+    width: 25vw;
+    height: 25vw;
+    
+    top: 10%;
+    left: 65%;
+}
+
+.hoveronlists {
+    width: 25vw;
+    height: 25vw;
+}
+
+.hoverother {
+    width: 15vw;
+    height: 15vw;
+    
+    font-size: 2vw;
+}
+
+.hoverothervl {
+    width: 15vw;
+    height: 15vw;
+    
+    right: 40%;
+    
+    font-size: 2vw;
+}
+
+.hoverotherlv {
+    width: 15vw;
+    height: 15vw;
+    
+    left: 75%;
+    
+    font-size: 2vw;
 }
 
 .upbubbleread {
@@ -88,6 +156,52 @@
     }
 }
 
+.hoverreadon {
+    width: 30vw;
+    height: 30vw;
+    animation: hoverreadon 1s ease;
+}
+
+@keyframes hoverreadon {
+    0% {
+        width: 25vw;
+        height: 25vw;
+    }
+    100% {
+        width: 30vw;
+        height: 30vw;
+    }
+}
+
+.hoverreadoff {
+    width: 25vw;
+    height: 25vw;
+    animation: hoverreadon 1s ease;
+}
+
+@keyframes hoverreadon {
+    0% {
+        width: 30vw;
+        height: 30vw;
+    }
+    100% {
+        width: 25vw;
+        height: 25vw;
+    }
+}
+
+.bubbleout {
+    animation: bubbleout 1.5s ease;
+}
+
+@keyframes bubbleout {
+    0% {
+        opacity: 100%;
+    } 
+    100% {
+        opacity: 0%;
+    }
+}
 
 
 .bottombubbleread {
@@ -109,10 +223,10 @@
 
 @keyframes bottombubble2 {
     0% {
-        top: 100%;
+        bottom: -40%;
     }
     100% {
-        top: 55%;
+        bottom: 8%;
     }
 }
 

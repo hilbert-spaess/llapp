@@ -292,7 +292,7 @@ class TextCard extends React.Component {
         event.preventDefault();
     }
     
-    state = {values: range(0, Object.keys(this.props.interaction).length - 1).map((thing) => this.props.context[this.props.interaction[thing]["location"]]["w"][0])}
+    state = {values: range(0, Object.keys(this.props.interaction).length - 1).map((thing) => this.props.context[this.props.interaction[thing]["location"]]["w"][0]), submitted: null}
 
     handleSubmit = (event) => {
         console.log("hemlo");
@@ -301,11 +301,14 @@ class TextCard extends React.Component {
         console.log(a.toLowerCase())
         console.log(this.props.alternatives);
         console.log(a.toLowerCase() in this.props.alternatives)
+        this.forceUpdate();
         if (this.props.alternatives.includes(a.toLowerCase())) {
                 console.log("hemloe");
-                this.props.handleAnswer(1);
+                this.setState({submitted: 1});
+                setTimeout(() => {this.props.handleAnswer(1); this.setState({submitted: null});}, 1500);
         } else {
-                this.props.handleAnswer(0);
+                this.setState({submitted: 0});
+                setTimeout(() => {this.props.handleAnswer(0); this.setState({submitted: null});}, 1500);
         }
         event.preventDefault();
     }
@@ -323,7 +326,20 @@ class TextCard extends React.Component {
 	var tcolour = "black";
 	var answer = {};
     var punct = [".",",",";","!","?",":", "'s", "n't", "n’t", "’s", "'re", "’re"];
-    for (var i = 0; i < length; i++) {
+    var upto = length;
+        
+    console.log(location);
+        
+    console.log(upto);
+        
+    if (this.state.submitted==1) {
+        var swipecolor="green";
+    } else if (this.state.submitted==0) {
+        var swipecolor="red";
+    } else {
+        var swipecolor="black";
+    }
+    for (var i = 0; i < upto; i++) {
         if (context[i]["u"] == 1) {
         var tcolour = "black";
         } else {
@@ -339,13 +355,13 @@ class TextCard extends React.Component {
     words.push(<Text style={{wordBreak: "keep-all", display: "inline-block", overflowWrap: "normal"}}>{spc + context[i]['w']}</Text>);
         } else if (this.props.limbo || i != location) {
             if (this.props.answers[context[i]["i"]] == 1) {
-                words.push(<div style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", flex: "none", display: "inline-block", border: "0", width: (context[i]["w"].length+1).toString() + "ch", borderTop: "0", outlineTop: "0", lineHeight: "20px", textAlign: "left", borderBottom: "1px transparent"}}><Text style={{color: "#048a81", overflowWrap: "normal", display: "inline-block", wordBreak: "keep-all"}}>{spc + context[i]["w"]}</Text></div>);
+                words.push(<div style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", flex: "none", display: "inline-block", border: "0", borderTop: "0", outlineTop: "0", lineHeight: "20px", textAlign: "left", borderBottom: "1px transparent"}}><Text style={{color: "#048a81", overflowWrap: "normal", display: "inline-block", wordBreak: "keep-all"}}>{spc + context[i]["w"]}</Text></div>);
             } else {
-                words.push(<div style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", flex: "none", display: "inline-block", border: "0", width: (context[i]["w"].length+1).toString() + "ch", borderTop: "0", outlineTop: "0", lineHeight: "20px", textAlign: "left"}}><Text style={{color: "red", overflowWrap: "normal", borderBottom: "1px transparent", display: "inline-block", wordBreak: "keep-all"}}>{spc + context[i]["w"]}</Text></div>);
+                words.push(<div style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", flex: "none", display: "inline-block", border: "0", borderTop: "0", outlineTop: "0", lineHeight: "20px", textAlign: "left"}}><Text style={{color: "red", overflowWrap: "normal", borderBottom: "1px transparent", display: "inline-block", wordBreak: "keep-all"}}>{spc + context[i]["w"]}</Text></div>);
             }
         } else {
             words.push(<div style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", flex: "none", display: "inline-block", border: "0", borderTop: "0", outlineTop: "0", lineHeight: "20px", textAlign: "left"}}>{spc}</div>);
-        words.push(<input spellcheck="false" type="text"  key = {this.props.showDialog} autocomplete="off" autoFocus ref = {(input) => {this.nameInput=input;}} value={value} onChange={this.handleChange} style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", flex: "none", display: "inline-block", border: "0", width: (this.props.answerlength+1).toString() + "ch", borderTop: "0", outlineTop: "0", lineHeight: "20px", borderBottom: "1px solid grey", textAlign: "left"}}/>);
+        words.push(<input className={(this.state.submitted == 1) ? "learninginput inputswipe" : "learninginput"} color={swipecolor} spellcheck="false" type="text"  key = {this.props.showDialog} autocomplete="off" autoFocus ref = {(input) => {this.nameInput=input;}} value={value} onChange={this.handleChange} style={{color: swipecolor, width: (this.state.submitted == null) ? (this.props.answerlength+1).toString() + "ch" : (this.props.answerlength).toString() + "ch"}}/>);
         }
     };
 

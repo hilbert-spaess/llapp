@@ -271,7 +271,7 @@ class StreakShow extends React.Component {
 
 class Mondrian extends React.Component {
     
-    state = {animate: false, redirect: true, type: null}
+    state = {animate: false, redirect: true, type: null, hover: null, readclassName:"bubble readingbubble bottombubbleread", vocabclassName:"bubble vocabubble bottombubblevocab", listsClassName:"bubble listsbubble bottombubblelists"}
     
     readClick = () => {
         
@@ -311,18 +311,51 @@ class Mondrian extends React.Component {
 
         }
         
+        if (!this.state.animate) {
+             var readclassname="bubble readingbubble bottombubbleread";
+            var vocabclassname="bubble vocabubble bottombubblevocab";
+            var listsclassname="bubble listsbubble bottombubblelists";
+        } else {
+            var readclassname="bubble readingbubble bubbleout";
+            var vocabclassname="bubble vocabubble bubbleout";
+            var listsclassname="bubble listsbubble bubbleout";
+        }
+
+        var readtext=<div style={{fontSize: "3vw"}}>Daily Reading</div>;
+        var vocabtext=<div>My<br></br>Vocab</div>;
+        var liststext="Quick Session";
+        
+        if (this.state.hover == "read") {
+            readtext = <div style={{fontSize: "1.5vw", width: "15vw", height: "7vw", color: "grey"}}>Daily exercises featuring the words you want to use.</div>
+            readclassname += " hoverreadon";
+            vocabclassname += " hoverother";
+            listsclassname += " hoverother";
+        }
+
+        if (this.state.hover == "vocab") {
+            vocabtext = <div style={{fontSize: "1.5vw", width: "15vw", height: "7vw", color: "#f5f5f5"}}>Explore and customise your collection of vocabulary.</div>
+            readclassname += " hoverotherread";
+            vocabclassname += " hoveronvocab";
+            listsclassname += " hoverothervl";
+        }
+        
+        if (this.state.hover == "lists") {
+            liststext = <div style={{fontSize: "1.5vw", width: "15vw", height: "7vw", color: "grey"}}>Quick learning game with one of our curated lists.</div>
+            readclassname += " hoverotherread";
+            vocabclassname += " hoverotherlv";
+            listsclassname += " hoveronlists";
+        }
+        
         return (
             <>
-            <button onClick={this.readClick} onAnimationEnd={() => this.setState({ redirect: true})} className={this.state.animate ? "bubble readingbubble upbubbleread" : "bubble readingbubble bottombubbleread"}>
-            <div className="bubbletext">
-<BookOpen size="2vw"/><br></br> Daily Reading </div>
+            <button onClick={this.readClick} onMouseEnter={()=>this.setState({hover: "read"})} onMouseLeave={()=>this.setState({hover: null})} onAnimationEnd={() => this.setState({ redirect: true})} className={readclassname}>
+            <div className="bubbletext">{readtext}</div>
             <Notification no={this.props.data.read_notification}/>
             </button>
-            <button onClick={this.vocabClick} onAnimationEnd={() => this.setState({redirect: true })} className={this.state.animate ? "bubble vocabubble upbubblevocab" : "bubble vocabubble bottombubblevocab"}>
-<div className="bubbletext" style={{color: "white"}}>
-<Type size="2vw"/><br></br> My Vocab </div></button>
-        <button onClick={this.listsClick} className={this.state.animate ? "bubble listsbubble upbubblelists" : "bubble listsbubble bottombubblelists"}>
-            <div className="bubbletext">Quick Session</div></button>
+            <button onClick={this.vocabClick} onMouseEnter={()=>this.setState({hover: "vocab"})} onMouseLeave={()=>this.setState({hover: null})} onAnimationEnd={() => this.setState({redirect: true })} className={vocabclassname}>
+<div className="bubbletext" style={{color: "white"}}>{vocabtext}</div></button>
+        <button onClick={this.listsClick} onMouseEnter={()=>this.setState({hover: "lists"})} onMouseLeave={()=>this.setState({hover: null})} className={listsclassname}>
+            <div className="bubbletext">{liststext}</div></button>
             </>
             );
     }

@@ -1,3 +1,29 @@
+.learninginput {
+    background-color: transparent;
+    outline: 0;
+    word-break: keep-all;
+    flex: none;
+    display: inline-block;
+    border: 0;
+    border-top: 0;
+    line-height: 20px;
+    border-bottom: 1px solid grey;
+}
+
+.inputswipe {
+    animation: swipe 2s linear;
+    border-bottom: 0;
+}
+
+@keyframes swipe {
+    0% {
+        max-width: 0%;
+    }
+    100% {
+        max-width: 100%;
+    }
+}
+
 .answercardmodal {
     
     width: 50%;
