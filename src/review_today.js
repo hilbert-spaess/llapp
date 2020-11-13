@@ -90,7 +90,7 @@ class TodayProgressContainer extends React.Component {
         return (
     <div style={{marginTop: "20vh", paddingLeft: "5%", paddingRight: "5%", paddingBottom: "20em", marginBottom: "3em"}}>
             <div className="maintext" style={{textAlign: "center", fontSize: "40px", marginTop: "1em"}}>Today's work</div>
-        <VocabGrid style={{fontSize: "20px", marginTop: "5em"}} words={this.props.data["words"]}/>
+        <VocabGrid style={{fontSize: "2vw", marginTop: "5em"}} words={this.props.data["words"]}/>
         <div style={{textAlign: "center"}}>
         <button style={{borderColor: "green", padding: "15px", color: "green", borderRadius: "30px", marginTop: "2em", backgroundColor: "white"}} onClick={this.handleSummary}>Go to My Vocab</button>
         </div>
@@ -193,19 +193,19 @@ class VocabCard extends React.Component {
         } else {
             var size = "2em";
         }
+        var size="1.5vw";
         
         return (
             
             <div>
                 <Card
-                style={{height: "5rem", width: "15rem", marginRight: "1rem", marginLeft: "1rem", marginTop: "3rem", borderColor: colour}}>
+                style={{height: "4vw", width: "13vw", marginRight: "1rem", marginLeft: "1rem", marginTop: "3rem"}}>
 
                 <div className="cardHeader"
                 style={{textAlign: "center",
                        marginTop: "1rem",
                        fontSize: size}}>
-                {this.props.word} <br></br>
-                </div>
+                            <div style={{position: "absolute", left: "50%", top: "50%", transform: "translate(-50%, -50%)"}}>{this.props.word}</div></div>
             </Card>
 <StreakShow streak={this.props.streak}/>
             </div>
