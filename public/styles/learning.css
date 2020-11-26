@@ -24,12 +24,6 @@
     }
 }
 
-.answercardmodal {
-    
-    width: 50%;
-    max-width: none!important;
-}
-
 .fastfadeout {
     
     animation: fadeoutanim 0.5s ease;
@@ -105,21 +99,6 @@
     }
 }
 
-.fillgapscard {
-    
-    animation: fadein 1.5s ease;
-    position: absolute;
-    left: 17.5vw;
-    width: 80vw;
-    height: 90vh;
-    bottom: 5vh;
-    padding-left: 5vw;
-    padding-right: 5vw;
-    background-color: #f5f5f5;
-    border-radius: 10px;
-    
-}
-
 @keyframes fadein {
     0% {
         opacity: 0%;
@@ -150,13 +129,6 @@
     box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
     filter: blur(10px);
     background: inherit;
-}
-    
-
-.launchwindow {
-    background-image: url('/greenim.jpg');
-    background-size: 100% auto;
-    background-attachment: fixed;
 }
 
 .runningprogresstracker {

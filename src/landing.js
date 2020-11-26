@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import {Link} from 'react-router-dom';
 import {Stylesheet, css} from 'aphrodite';
 import {Card, Container, Row, Col, Nav, Navbar, Form, FormControl, Popover, OverlayTrigger, Overlay, Toast} from 'react-bootstrap';
-import {BarWrapped} from './sidebar.js';
 import {Auth0Provider, useAuth0, withAuthenticationRequired} from '@auth0/auth0-react';
 import {BookOpen, Type, FastForward, Clock, Edit} from 'react-feather';
 import {useApi} from './use-api.js';
@@ -12,15 +11,6 @@ import {APIHOST} from './api_config.js';
 import img2 from './images/img2.png';
 import img1 from './images/img1.png';
 import img3 from './images/img3.png';
-
-export class Landing2 extends React.Component {
-    
-    render () {
-        return (
-            <BarWrapped WrappedComponent={Landing1}/>
-        );
-    }
-}
 
 export const Landing = () => {
     

@@ -1,0 +1,105 @@
+import React from 'react';
+
+export class ImproveContainer extends React.Component {
+
+    handleNext = (answeredCorrect) => {
+
+	this.props.metadata.handleNext({
+	    metadata: {
+		answeredCorrect: answeredCorrect,
+		type: this.props.type,
+		done: 0}});
+    }
+	    
+    
+    render () {
+
+	return (
+
+	    <div className="fillgapscard">
+		<Sandbox
+		    data={this.props.data.currentChunk}
+		    handleNext={this.handleNext}/>
+		<QuestionContainer
+		    data={this.props.data.currentChunk.interaction}/>
+		<SubmitButton
+		    handleClick={this.handleNext}/>
+	    </div>
+	);
+    }
+}
+
+class Sandbox extends React.Component {
+
+    state = {text: this.props.data.text}
+
+    handleChange = (event) => {
+
+	this.setState({text: event.target.value});
+
+    }
+
+    handleSubmit = () => {
+
+	var answeredCorrect = (this.state.text == this.props.data.interaction.answer);
+
+	this.props.handleNext(answeredCorrect);
+
+    }
+    
+    render () {
+
+	return (
+	<>
+		<SubmitButton
+		    handleClick={this.handleSubmit}/>
+						 
+		<input type="textarea"  className="improvesandbox" placeholder={this.state.text} value={this.state.text} onChange={this.handleChange}/>
+	</>
+
+
+	);
+    }
+}
+
+class QuestionContainer extends React.Component {
+
+    render () {
+
+	if (this.props.data.type == "choose") {
+
+	    var optiontext = "";
+
+	    for (var i= 0; i < this.props.data.options.length; i++) {
+
+		if (i==0) {
+		    optiontext += this.props.data.options[i];
+		} else {
+		    optiontext += " | " + this.props.data.options[i];
+		}
+	    }
+	}
+
+	return (
+
+	    <div className="improvequestioncontainer">
+		{this.props.data.question}
+		<br></br><br></br>
+		{(this.props.data.type == "choose") && <div className="improveoptions">{optiontext}</div>}
+	    </div>
+	);
+    }
+}
+
+class SubmitButton extends React.Component {
+
+    render () {
+
+	return (
+
+	    <button className="nextbuttonlimbo" onClick={this.props.handleClick}/>
+
+	);
+    }
+}
+	    

@@ -4,7 +4,7 @@ import {useLocation, Link} from 'react-router-dom';
 import {Card, Button, Row, Col, Container, Modal, ProgressBar} from 'react-bootstrap';
 import {InteractionCard} from './InteractionCard.js';
 import {getChunk, firstChunk, getData, JSONconvert} from './client.js';
-import {FreeBarWrapped, FreeBarWrapped2} from './sidebar.js';
+import {SidebarWrapped} from './sidebar.js';
 import {Text} from 'react-native';
 import {useApi} from './use-api.js';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -18,7 +18,7 @@ export class ReviewToday extends React.Component {
     
     render () {
         return (
-            <FreeBarWrapped WrappedComponent={TodayProgressData}/>
+            <SidebarWrapped WrappedComponent={TodayProgressData}/>
             );
     }
 }

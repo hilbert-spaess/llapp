@@ -5,7 +5,7 @@ import {loadVocab} from './client.js';
 import {useApi} from './use-api.js';
 import { useAuth0 } from '@auth0/auth0-react';
 import {APIHOST} from './api_config.js';
-import {BarWrapped, FreeBarWrapped} from './sidebar.js';
+import {SidebarWrapped} from './sidebar.js';
 import {Text} from 'react-native';
 import {Redirect} from 'react-router-dom';
 import {PlusCircle, BookOpen, Edit3, Edit, ChevronLeft, ChevronRight} from 'react-feather';
@@ -39,7 +39,7 @@ export class MyVocabContainer extends React.Component {
         const {data} = this.props.location;
         console.log(data);
         return (
-            <FreeBarWrapped WrappedComponent={LoadingVocabContainer} data={data}/>
+            <SidebarWrapped WrappedComponent={LoadingVocabContainer} data={data}/>
         );
     }
 }

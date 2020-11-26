@@ -1,0 +1,5 @@
+.maincomponent {
+    margin-left: 15vw;
+    height: 100vh;
+    overflow: scroll;
+}

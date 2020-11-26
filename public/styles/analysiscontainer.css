@@ -1,0 +1,36 @@
+.analysistextcontainer {
+
+    width: 90;
+    margin-left: 5%;
+    margin-top: 5%;
+}
+
+.analysistext {
+
+    font-family: 'PT Serif';
+    font-size: 2vw;
+
+}
+
+.analysisprogress {
+
+    width: 80%;
+    margin-left: 10%;
+    margin-top: 5%;
+
+}
+
+.analysisquestioncontainer {
+
+    width: 80%;
+    margin-left: 10%;
+    margin-top: 5%;
+}
+
+.analysisquestion {
+
+    color: grey;
+    font-family: 'Open Sans';
+    text-align: center;
+    font-size: 2vw;
+}

@@ -1,0 +1,78 @@
+.fillgapscard {
+    
+    animation: fadein 1.5s ease;
+    position: absolute;
+    left: 17.5vw;
+    width: 80vw;
+    height: 90vh;
+    bottom: 5vh;
+    padding-left: 5vw;
+    padding-right: 5vw;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    
+}
+
+.answercardmodal {
+    
+    width: 50%;
+    max-width: none!important;
+}
+
+.lives {
+    color: red;
+    font-size:1.5vw;
+    text-align:center;
+}
+
+/* Answer card display */
+
+.colourbar {
+    height: 10vh;
+}
+
+.vocabdisplay {
+    font-size: 3vw;
+    text-align: center;
+    font-family: "PT Serif";
+}
+
+.cardprogress {
+    margin-left: 1em;
+    margin-right: 1em;
+    margin-bottom: 1.5em;
+    text-align: center;
+}
+
+.answercarddef {
+    font-size: 2vw;
+    padding-left: 20px;
+    text-align: left;
+    margin-bottom: 0.5em;
+    margin-left: 0.5em;
+    margin-top: 1.5em;
+    margin-right: 0.5em;
+}
+
+.answercardsamples {
+    font-size: 2vw;
+    padding-left: 20px;
+    text-align: left;
+    margin-bottom: 2em;
+    margin-left: 0.5em;
+    margin-top: 1;
+    margin-right: 0.5em;
+}
+
+.answercardinput {
+    outline: 0;
+    border: 0;
+    width: 80%;
+    text-align: center;
+    margin-bottom: 0.5em;
+}
+    
+
+.answercardinput ::placeholder {
+    color: lightgrey;
+}

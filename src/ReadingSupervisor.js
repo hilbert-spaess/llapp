@@ -4,7 +4,7 @@ import {useLocation, Link} from 'react-router-dom';
 import {Card, Button, Row, Col, Container, Modal, ProgressBar} from 'react-bootstrap';
 import {InteractionCard} from './InteractionCard.js';
 import {getChunk, firstChunk, getData, JSONconvert} from './client.js';
-import {FreeBarWrapped2} from './sidebar.js';
+import {SidebarWrapped} from './sidebar.js';
 import {Text} from 'react-native';
 import {useApi} from './use-api.js';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -12,45 +12,26 @@ import {Redirect} from 'react-router-dom';
 import {APIHOST} from './api_config.js';
 import {Tutorial} from './tutorial.js';
 import {CheckCircle, Type, AlignLeft, Eye} from 'react-feather';
-import {FillGapsContainer} from './LearningContainer.js'
+import {FillGapsContainer} from './LearningContainer.js';
+import {AnalysisContainer} from './analysiscontainer.js';
+import {ImproveContainer} from './improvecontainer.js';
+import {Line} from 'rc-progress';
 
 function range(start, end) {
-  return Array(end - start + 1).fill().map((_, idx) => start + idx)
-}
+    return Array(end - start + 1).fill().map((_, idx) => start + idx);
+};
 
 export class LearningSupervisor extends React.Component {
-    
-    state = {fade: null, redirectpath: null}
-    
-    onClick = (redirectpath) => {
-        
-        this.setState({fade: true, redirectpath});
-        setTimeout(() => {this.setState({redirect: true});}, 1500);
-        
-    }
-    
-    onRedirect = () => {
-        
-        console.log("redirect niga")
-        this.setState({redirect: true});
-        
-    }
     
     render () {
         
         const {data, type, nextList} = this.props.location;
         
-        if (this.state.redirect) {
-            
-            return <Redirect to={this.state.redirectpath}/>
-                
-        }
-        
         return (
-            <FreeBarWrapped2 onClick={this.onClick} onRedirect={this.onRedirect} fade={this.state.fade} redirect={this.state.redirect} WrappedComponent={LearningSupervisor1} data={data} type={type} nextList={nextList}/>
+            <SidebarWrapped doesRemember={false}  WrappedComponent={LearningSupervisor1} data={data} type={type} nextList={nextList}/>
             );
     }
-}
+};
 
 export class LearningSupervisor1 extends React.Component {
     
@@ -69,7 +50,6 @@ export class LearningSupervisor1 extends React.Component {
     };
     
     render () {
-        console.log(this.props.nextList)
         if (this.state.loading == 1) {
             return (
                 <div></div>
@@ -80,24 +60,19 @@ export class LearningSupervisor1 extends React.Component {
             parcelData={this.state.parcelData}
             type={this.props.type}
             handleNext={this.handleNext}
-            runningProgress={this.state.progressData.runningProgress}
             data={this.props.data}
             nextList={this.props.nextList}
             />
         );
     }
     }
-}
+};
 
             
 
 const LearningContainerData = (props) => {
     
-    const location = useLocation();
-    console.log(location.pathname);
     var payload = props.parcelData;
-    payload["lessons"] = (location == "/lessons");
-    console.log(payload);
     const {login, getAccessTokenWithPopup } = useAuth0();
     const opts = {audience: APIHOST, 
                   fetchOptions: {method: 'post',
@@ -106,37 +81,28 @@ const LearningContainerData = (props) => {
                                            'Access-Control-Allow-Origin': '*',
                                            'Accept': 'application/json',
                                             'Content-Type': 'application/json',
-                                          'Access-Control-Request-Method': 'POST'}}};
+                                           'Access-Control-Request-Method': 'POST'}}};
+    
     const {error, loading, data, refresh} = useApi(APIHOST + '/api/startreading', payload, opts);
         
     const handleNext = async (parcelData) => {
         await props.handleNext(parcelData);
         refresh();
-    }
+    };
         
     const getTokenAndTryAgain = async () => {
         await getAccessTokenWithPopup(opts);
-        refresh()
-  };
+        refresh();
+    };
     
     if (props.data !== undefined) {
-        var reviewyet = 0;
-        for (var i=0; i < props.data.read_data.allChunks.length; i++) {
-            if (props.data.read_data.allChunks[i]["first"] == 0) {
-                reviewyet += 1;
-            }
-        }
+        
         return <LearningContainerUpdatable
             allChunks= {props.data.read_data.allChunks}
             type={props.type}
-            progress={props.data.read_data.today_progress}
-            lives={props.data.read_data.lives}
-            runningProgress = {props.runningProgress}
-            reviewyet = {reviewyet}
+            metadata={{progress: props.data.read_data.today_progress, lives: props.data.read_data.lives, review_data: props.data.review_data, nextList: props.nextList}}   
             status = {props.data.read_data.status}
-            review_data={props.data.review_data}
-            nextList={props.nextList}
-        />  
+               />;  
     }
     if (loading) {
         return <div></div>;
@@ -150,29 +116,20 @@ const LearningContainerData = (props) => {
     return <div>Oops {error.message}</div>;
     }
     if (data.status == "newUser") {
-        return <Redirect to="/newuser"/>;
-    }
-    var reviewyet = 0;
-    for (var i=0; i < data.allChunks.length; i++) {
-        if (data.allChunks[i]["first"] == 0) {
-            reviewyet += 1;
-        }
+        return <Redirect to="/newusertest"/>;
     }
     console.log(data);
     return (
         <div>
         <LearningContainerUpdatable
-            nextList={props.nextList}
-            allChunks = {data.allChunks}
-            type= {props.type}
-            status = {data.status}
-            progress={data.today_progress}
-            runningProgress = {props.runningProgress}
-            reviewyet = {reviewyet}
+          allChunks = {data.allChunks}
+          type= {props.type}
+          metadata={{progress: data.today_progress, review_data: data.review_data, nextList: props.nextList}}
+          status = {data.status}
         />          
-</div>
+        </div>
     );
-}
+};
 
 class LearningContainerUpdatable extends React.Component {
     
@@ -181,19 +138,39 @@ class LearningContainerUpdatable extends React.Component {
         currentChunkNo: 0,
         status: this.props.status,
         allChunks: this.props.allChunks,
-        progress: this.props.progress,
-        runningProgress: this.props.runningProgress,
-        yet: this.props.progress["yet"],
-        reviewProgress: {yet: this.props.reviewyet, done: 0},
-        reviews: 0,
-        lives: this.props.lives
+        progress: this.props.metadata.progress,
+        lives: this.props.metadata.lives
     }
 
     bottomRef = React.createRef();
-    
-    handleNext = (parcelData) => {
-        if (this.props.type != "daily_reading") {
-            if (parcelData.answers[parcelData.keyloc] == 0) {
+
+    handleNextDaily = (parcelData) => {
+        if (parcelData.first == 1 && parcelData.answeredCorrect == 0) {
+            this.setState({progress: {done: this.state.progress.done + 1, yet: this.state.progress.yet}});
+            var nowChunk = this.state.allChunks[this.state.currentChunkNo];
+            var nowChunks = this.state.allChunks;
+            nowChunks.push(nowChunk);
+            this.setState({allChunks: nowChunks});
+            var i = this.state.currentChunkNo;
+            this.setState({currentChunkNo: i+1});
+        } else {
+            this.setState({progress: {done: this.state.progress.done + 1, yet: this.state.progress.yet - 1}});
+            if (this.state.currentChunkNo < this.props.allChunks.length - 1) {
+                var i = this.state.currentChunkNo;
+                this.setState({currentChunkNo: i + 1});
+            } else {
+                parcelData["done"] = 1;
+                var i = this.state.currentChunkNo;
+                this.setState({done: 1, status: "done"});
+            }
+        }
+        this.setState({parcelData});
+
+    }
+
+    handleNextQuick = (parcelData) => {
+
+        if (parcelData.answers[parcelData.keyloc] == 0) {
                 this.setState({progress: {"done": this.state.progress["done"] + 1, "yet": this.state.progress["yet"]}});
                 var nowChunk = this.state.allChunks[this.state.currentChunkNo];
                 var nowChunks = this.state.allChunks;
@@ -220,98 +197,29 @@ class LearningContainerUpdatable extends React.Component {
                 this.setState({done: 1, status: "done"});
                 this.props.nextList({status: "alive", lives: this.state.lives});
             }
-            return 0;
+        return 0;
+    };
+    
+    handleNext = (parcelData) => {
+        if (this.props.type != "daily_reading") {
+            this.handleNextQuick(parcelData);
         }
-        console.log(parcelData)
-        console.log("updatein");
-        if (parcelData.first == 1) {
-            this.setState({progress: {"done": this.state.progress["done"] + 1, "yet": this.state.progress["yet"]-1}});
-        } else {
-            this.setState({reviewProgress: {"done": this.state.reviewProgress["done"] + 1, "yet": this.state.reviewProgress["yet"]-1}});
-        }
-        this.setState({runningProgress: parcelData.runningProgress});
-        if ((parcelData.interaction[parcelData.keyloc]["streak"] == 0 && parcelData.first == 1) || (parcelData.answers[parcelData.keyloc] == 0)) {
-            this.setState({reviewyet: this.state.reviewyet + 1});
-            var nowChunk = this.state.allChunks[this.state.currentChunkNo];
-            nowChunk["first"] = 0;
-            if (parcelData.first == 1) {
-                var lower = parcelData.interaction[parcelData.keyloc]["lower_upper"][0];
-                var upper = parcelData.interaction[parcelData.keyloc]["lower_upper"][1];
-                var int = {};
-                int['0'] = parcelData.interaction[parcelData.keyloc];
-                var loc = int['0']["location"] - lower;
-                var len = int['0']["length"] - lower;
-                int['0']["location"] = loc;
-                console.log(loc);
-                int['0']["length"] = len;
-                nowChunk["keyloc"] = '0';
-                nowChunk["interaction"] = int;
-                var cont = {};
-                for (var i = lower; i < upper; i++) {
-                    cont[i-lower] = this.state.allChunks[this.state.currentChunkNo]['context'][i];
-                };
-                console.log(cont)
-                cont[loc]["i"] = 0;
-                nowChunk["context"] = cont;
-            }
-            var nowChunks = this.state.allChunks;
-            nowChunks.push(nowChunk);
-            this.setState({allChunks: nowChunks});
-            var i = this.state.currentChunkNo;
-            this.setState({currentChunkNo: i+1});
-        } else {
-            console.log(this.state.progress);
-            if (this.state.currentChunkNo < this.props.allChunks.length - 1) {
-                var i = this.state.currentChunkNo;
-                this.setState({currentChunkNo: i + 1});
-            } else {
-                console.log("DONEDONE");
-                parcelData["done"] = 1;
-                var i = this.state.currentChunkNo;
-                this.setState({done: 1, status: "done"});
-            }
-        }
-        var reviewyet = 0;
-        for (var j= i+1; j < this.props.allChunks.length; j++) {
-            if (this.props.allChunks[i]["first"] == 0) {
-                reviewyet += 1;
-            }
-        }
-        this.setState({reviewProgress: {"done": this.state.reviewProgress["done"], "yet": reviewyet}})
-        this.setState({parcelData});
-        console.log(this.state.currentChunkNo);
+        this.handleNextDaily(parcelData);
+        return 0;
     }
     
     render () {
-        console.log(this.state.progress);
-        var reviewyet = 0;
-        for (var i=this.state.currentChunkNo; i < this.props.allChunks.length; i++) {
-            if (this.props.allChunks[i]["first"] == 0) {
-                reviewyet += 1;
-            }
-        }
-        console.log(this.props.type);
+
+        const progress = 100*this.state.progress.done/(this.state.progress.done + this.state.progress.yet);
+        
         return (
             
-    
-            <div>
             <LearningContainerLogging
-                review_data={this.props.review_data}
-                parcelData = {this.state.parcelData}
-                currentChunk = {this.props.allChunks[this.state.currentChunkNo]}
-                handleNext = {this.handleNext}
-                progress = {100*this.state.progress["done"]/(this.state.progress["done"] + this.state.progress["yet"])}
+              metadata={{progress: progress, lives: this.state.lives, review_data: this.props.metadata.review_data, parcelData: this.state.parcelData, handleNext: this.handleNext}}
+              data={{currentChunk: this.props.allChunks[this.state.currentChunkNo], allChunks: this.props.allChunks, currentChunkNo: this.state.currentChunkNo}}
                 type = {this.props.type}
                 status = {this.state.status}
-                allChunks = {this.props.allChunks}
-                runningProgress = {this.state.runningProgress}
-                reviews = {this.props.allChunks[this.state.currentChunkNo]["first"]}
-                currentChunkNo = {this.state.currentChunkNo}
-                yet={this.state.yet}
-                lives={this.state.lives}
-                reviewProgress={100*this.state.reviewProgress["done"]/(this.state.reviewProgress["done"] + this.state.reviewProgress["yet"])}
             />
-            <div ref={this.bottomRef}/></div>
         );
     }
 }   
@@ -319,7 +227,7 @@ class LearningContainerUpdatable extends React.Component {
 const LearningContainerLogging = (props) => {
     
     
-    const payload = props.parcelData;
+    const payload = props.metadata.parcelData;
     const {login, getAccessTokenWithPopup } = useAuth0();
     const opts = {audience: APIHOST, 
                   fetchOptions: {method: 'post',
@@ -332,36 +240,32 @@ const LearningContainerLogging = (props) => {
     const {error, loading, data, refresh} = useApi(APIHOST + '/api/startreading', payload, opts);
     
     const handleNext = async (parcelData) => {
-        props.handleNext(parcelData);
+        props.metadata.handleNext(parcelData.metadata);
         refresh();
-    }
+    };
     
     const handleSummary = () => {
         return (
             <Redirect to="/reviewtoday"/>
             );
-    }
+    };
     
     if (props.status != "done") {
 
-        return (
-            <div>
-            <FillGapsContainer
-                type={props.type}
-                status={props.status}
-                currentChunk = {props.currentChunk}
-                handleNext = {handleNext}
-                progress = {props.progress}
-                yet={props.yet}
-                runningProgress = {props.runningProgress}
-                reviews = {props.reviews}
-                currentChunkNo = {props.currentChunkNo}
-                reviewyet={props.reviewyet}
-                reviewProgress={props.reviewProgress}
-                lives={props.lives}
-            />
-            </div>
-        );
+	return (
+	    <div className="fillgapscard">
+		<div style={{marginTop: "5%"}}>
+	    <ProgressLine
+		progress={props.metadata.progress}/>
+		</div>
+		
+	    <LearningContainer
+		type={props.type}
+			status={props.status}
+			data = {{currentChunk: props.data.currentChunk}}
+		metadata = {{handleNext: handleNext, progress: props.metadata.progress, currentChunkNo: props.metadata.currentChunkNo, lives: props.metadata.lives}}/>
+	    </div>
+	);
     } else if (loading) {
         return <div></div>;
     } else {
@@ -373,9 +277,66 @@ const LearningContainerLogging = (props) => {
     }
 }
 
+class LearningContainer extends React.Component {
+
+    render () {
+
+	    if (this.props.data.currentChunk.mechanism == "analysis") {
+
+	    return (
+
+		<AnalysisContainer
+		    type={this.props.type}
+		    status={this.props.status}
+		    data = {this.props.data}
+		    metadata = {this.props.metadata}
+		/>
+	    );
+	} else if (this.props.data.currentChunk.mechanism == "improve") {
+
+	    return (
+
+		    <ImproveContainer
+			type={this.props.type}
+			status={this.props.status}
+			data = {this.props.data}
+			metadata = {this.props.metadata}/>
+
+	    );
+		
+
+	} else {
+
+        return (
+            <FillGapsContainer
+                type={this.props.type}
+                status={this.props.status}
+                currentChunk = {this.props.data.currentChunk}
+                handleNext = {this.props.metadata.handleNext}
+                progress = {this.props.metadata.progress}
+                currentChunkNo = {this.props.metadata.currentChunkNo}
+                lives={this.props.metadata.lives}
+            />
+        );
+	}
+    }
+}
+
+class ProgressLine extends React.Component {
+
+    render () {
+
+	return (
+
+	      <Line percent={this.props.progress} strokeWidth="1"/>
+
+	);
+    }
+}
+
 const LearningSummaryContainer = (props) => {
     
-    const payload = {}
+    const payload = {};
 
     
     const {login, getAccessTokenWithPopup } = useAuth0();
@@ -390,14 +351,14 @@ const LearningSummaryContainer = (props) => {
     
     const getTokenAndTryAgain = async () => {
         await getAccessTokenWithPopup(opts);
-        refresh()
+        refresh();
   };
     
     const handleSummary = (event) => {
         
         return <Redirect to="/reviewtoday"/>;
         
-    }
+    };
     if (loading) {
         return <div></div>;
     }
@@ -423,7 +384,7 @@ const LearningSummaryContainer = (props) => {
 class LearningSummary extends React.Component {
     
     state = {done: 0,
-            readForFun: 0,
+            readforFun: 0,
             stepTime: 0}
     
     handleSummary = () => {

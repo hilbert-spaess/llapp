@@ -4,7 +4,7 @@ import {Redirect} from 'react-router-dom';
 import {useApi} from './use-api.js';
 import {APIHOST} from './api_config.js';
 import {Card, Button, Row, Col, Container, Modal, ProgressBar} from 'react-bootstrap';
-import {BarWrapped, FreeBarWrapped2} from './sidebar.js';
+import {SidebarWrapped} from './sidebar.js';
 import {VocabSelectContainer} from './VocabSelect.js';
 import {ArrowLeft} from 'react-feather';
 
@@ -12,7 +12,7 @@ export class NewUserTest1 extends React.Component {
     
     render () {
         return (
-            <FreeBarWrapped2 WrappedComponent={NewUserTest1}/>
+            <SidebarWrapped WrappedComponent={NewUserTest1}/>
         );
     }
 }

@@ -4,13 +4,13 @@ import {Redirect} from 'react-router-dom';
 import {useApi} from './use-api.js';
 import {APIHOST} from './api_config.js';
 import {Card, Button, Row, Col, Container, Modal} from 'react-bootstrap';
-import {BarWrapped} from './sidebar.js';
+import {SidebarWrapped} from './sidebar.js';
 
 export class NewUser extends React.Component {
     
     render () {
         return (
-            <BarWrapped WrappedComponent={NewUser1}/>
+            <SidebarWrapped WrappedComponent={NewUser1}/>
         );
     }
 }

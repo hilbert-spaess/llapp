@@ -1,0 +1,29 @@
+.improvesandbox {
+
+    margin-top: 5%;
+    width: 90%;
+    margin-left: 5%;
+
+    font-family: 'PT Serif';
+
+    font-size: 2vw;
+
+    background-color: #f5f5f5;
+    border: 1px solid black;
+    outline: 0;
+    padding: 1vw;
+    
+
+}
+
+.improvequestioncontainer {
+
+    margin-top: 10%;
+    margin-left: 10%;
+    width: 80%;
+    font-family: 'Open Sans';
+    font-size: 2vw;
+
+    color: grey;
+    text-align: center;
+}

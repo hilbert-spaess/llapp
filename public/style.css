@@ -3,9 +3,15 @@
 @import "./styles/login.css";
 @import "./styles/learning.css";
 @import "./styles/new_user_choice.css";
+@import "./styles/launch.css";
 @import "./styles/myvocab.css";
 @import "./styles/landing.css";
+@import "./styles/sidebar.css";
+@import "./styles/learningsupervisor.css";
 @import "./styles/mondrian.css";
+@import "./styles/learningcontainer.css";
+@import "./styles/analysiscontainer.css";
+@import "./styles/improvecontainer.css";
 @import url('https://fonts.googleapis.com/css?family=Lora&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
 @import url('https://fonts.googleapis.com/css?family=PT+Serif&display=swap');

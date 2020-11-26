@@ -6,7 +6,6 @@ import {Stylesheet, css} from 'aphrodite';
 import {Launch} from './launch.js';
 import {Sidebar, TopBar} from './sidebar.js';
 import {LearningSupervisor} from './ReadingSupervisor.js';
-import {LessonsSupervisor} from './LessonsSupervisor.js';
 import {MyVocabContainer} from './MyVocabContainer.js';
 import {UserSelectContainer} from './UserSelectContainer.js';
 import {TestContainer} from './TestContainer.js';
@@ -15,7 +14,6 @@ import {createBrowserHistory} from 'history';
 import {NewUser} from './newuser.js';
 import {NewUserTest} from './newusertest.js';
 import {CALLBACK} from './api_config.js';
-import {ProgressContainer} from './progress.js';
 import {Landing} from './landing.js';
 import {Login} from './login.js';
 import {Signup} from './signup.js';
@@ -40,8 +38,7 @@ function App() {
          <Auth0Provider
         domain="accounts.ricecake.ai"
         clientId="3Quvqqshf1rWfO46Cmry14XeDjhwQMwM"
-                    
-             redirectUri={CALLBACK}
+        redirectUri={CALLBACK}
         onRedirectCallback={onRedirectCallback}
         useRefreshTokens={true}
         >
@@ -49,10 +46,8 @@ function App() {
         <Switch>
             <ProtectedRoute path="/home" component={Launch} exact/>
             <ProtectedRoute path="/read" component={LearningSupervisor}/>
-            <ProtectedRoute path="/lessons" component={LessonsSupervisor}/>
             <ProtectedRoute path="/vocab" component={MyVocabContainer}/>
             <ProtectedRoute path="/newuser" component={NewUserTest}/>
-            <ProtectedRoute path="/progress" component={ProgressContainer}/>
             <ProtectedRoute path="/reviewtoday" component={ReviewToday}/>
             <ProtectedRoute path="/lists" component={DisplayLists}/>
             <Route path="/register" component={Register}/>
@@ -61,84 +56,9 @@ function App() {
             <Route path="/" component={Landing} exact/>
         </Switch>
         </Router>
-</Auth0Provider>
+        </Auth0Provider>
     );
-}
-
-const Home2 = () => {
-    
-    const {user, isAuthenticated, isLoading} = useAuth0();
-    
-    if (! (isAuthenticated)) {
-        return <LoginButton/>
-    }
-    
-    if (isLoading) {
-        return <div>Loading...</div>;
-    };
-    
-    return (
-        isAuthenticated && (
-            <div className="content">
-            {user.username}
-            <Launch
-                userId={user.username}
-            />
-            </div>
-    ));
-}
-            
-
-
-class Home extends React.Component {
-
-    state = {
-        userId: this.props.userId
-    }
-
-    handleFinishTest = () => {
-        this.setState({testMode: 0,
-                       usualMode: 1});
-    };
-
-    onUserSubmit = (value) => {
-        this.props.newUser(value);
-        this.setState({userId: value});
-    }
-    
-    render () {
-        if (this.state.userId!=0) {
-            return (
-                <div className="content">
-                  <Launch
-                    userId={this.state.userId}
-                  />
-                </div>
-            );
-        } else {
-	    return (
-                <div className="content">
-                    <LoginButton/>
-                  <UserSelectContainer
-                    onSubmit={this.onUserSubmit}
-                  />
-                </div>
-            );
-        }
-    };
-}	
-
-const LoginButton = () => {
-        
-        const {loginWithRedirect} = useAuth0();
-        
-        return (
-            <div className="ui centered card">
-         <button onClick={()=> loginWithRedirect()} >Log In </button>
-            </div>
-        );
-}
-        
+}        
             
 ReactDOM.render(
     <App/>,

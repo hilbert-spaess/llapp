@@ -1,0 +1,13 @@
+.analysistextcontainer {
+
+    width: 80%;
+    margin-left: 10%;
+
+}
+
+.analysistext {
+
+    font-family: 'PT Serif';
+    font-size: 2vw;
+
+}

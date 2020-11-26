@@ -53,13 +53,10 @@ export class FillGapsContainer extends React.Component {
         answeredCorrect: "-1",
         answers: [],
         currentInteraction: 0,
-        limbo: false,
-        runningProgress: this.props.runningProgress
+        limbo: false
         }
 
     bottomRef = React.createRef();
-    
-    
     
     storeAnswer = (correct) => {
         this.setState(prevState => ({
@@ -71,18 +68,14 @@ export class FillGapsContainer extends React.Component {
         this.storeAnswer(correct);
         if (correct) {
             this.setState({answeredCorrect: 1});
-            this.setState({runningProgress: [this.state.runningProgress[0]+1, this.state.runningProgress[1]] });
         } else {
             this.setState({answeredCorrect: 0});
-            this.setState({runningProgress: [this.state.runningProgress[0], this.state.runningProgress[1]+1] });
         }
-        console.log("HANDLING NOW");
         if (this.props.currentChunk["interaction"][this.state.currentInteraction]["key"] == 1) {
             this.handleOpenDialog();
         } else {
             this.handleCloseDialog();
-        }
-            
+        }       
     }
     
     nextInteraction = () => {
@@ -97,9 +90,7 @@ export class FillGapsContainer extends React.Component {
     handleHide = (answer) => {
         
         console.log(answer);
-        const target= this.props.currentChunk["context"][this.props.currentChunk["interaction"][this.state.currentInteraction]["location"]]['vw']
-        console.log(target);
-        console.log(answer==target);
+        const target=this.props.currentChunk["context"][this.props.currentChunk["interaction"][this.state.currentInteraction]["location"]]['vw'];
         if (answer == target) {
             this.handleCloseDialog();
         }
@@ -114,39 +105,33 @@ export class FillGapsContainer extends React.Component {
                 console.log("hehe");
                 this.nextInteraction();
             } else {
-            if (this.props.currentChunk['first'] == 0) {
                     this.handleNext();
-                } else {
-                    this.setState({limbo: true});
-                }
+              
             }}, 200);
     }
     
     
     handleNext = (event) => {
         
-        console.log(get_second_streak(this.props.currentChunk["interaction"][this.props.currentChunk["keyloc"]]["streak"], this.props.currentChunk["first"]));
-        console.log(this.props.type); 
-        
+        this.setState({currentInteraction: 0, limbo: false});
         this.props.handleNext({
-        answeredCorrect: this.state.answeredCorrect,
-        chunkId: this.props.currentChunk["chunkid"],
-        keyloc: this.props.currentChunk["keyloc"],
-        first: this.props.currentChunk["first"],
-        type: this.props.type,
-        answers: this.state.answers,
-        streak: get_second_streak(this.props.currentChunk["interaction"][this.props.currentChunk["keyloc"]]["streak"], this.props.currentChunk["first"]),
-        runningProgress: this.state.runningProgress,
-        done: 0,
-        interaction: this.props.currentChunk["interaction"]});
-        this.setState({currentInteraction: 0,
-                       answers: [],
-                       limbo: false});
-    }
+            metadata: {
+            answeredCorrect: this.state.answeredCorrect,
+            chunkId: this.props.currentChunk["chunkid"],
+            keyloc: this.props.currentChunk["keyloc"],
+            first: this.props.currentChunk["first"],
+            type: this.props.type,
+            answers: this.state.answers,
+            streak: get_second_streak(this.props.currentChunk["interaction"][this.props.currentChunk["keyloc"]]["streak"], this.props.currentChunk["first"]),
+            done: 0,
+            interaction: this.props.currentChunk["interaction"]
+            }});
+        this.setState({answers: []});
+    };
 
     
     render () {
-        console.log(this.props.progress);
+
         if ("alternatives" in this.props.currentChunk["interaction"][this.state.currentInteraction]) {
             var alternatives = this.props.currentChunk["interaction"][this.state.currentInteraction]["alternatives"];
         } else {
@@ -156,7 +141,7 @@ export class FillGapsContainer extends React.Component {
         const interaction = this.props.currentChunk["interaction"];
         const location = this.props.currentChunk["interaction"][this.state.currentInteraction]["location"];
         const answer= this.props.currentChunk["context"][this.props.currentChunk["interaction"][this.state.currentInteraction]["location"]]['w'];
-        alternatives.push(answer.toLowerCase())
+        alternatives.push(answer.toLowerCase());
         console.log(answer);
         const answerlength = answer.length;
         const interactionMode= this.props.currentChunk["interaction"][this.state.currentInteraction]["mode"];
@@ -168,11 +153,7 @@ export class FillGapsContainer extends React.Component {
             var letterNo = 1;
         }
         
-        if (this.props.currentChunk["first"] == 1) {
-            var progress = this.props.progress;
-        } else {
-            var progress = this.props.reviewProgress;
-        }
+        var progress = this.props.progress;
         
         console.log(this.props.progress);
         console.log(progress);
@@ -187,52 +168,47 @@ export class FillGapsContainer extends React.Component {
         if (this.state.isLoading == 0 ) {
                 return (
 	    <div className="fillgapscard">
-                    <div id="myModal">
-		<Modal centered dialogClassName="answercardmodal" show={this.state.showDialog} onHide={this.handleCloseDialog}>
-                    
+              <div id="myModal">
+		<Modal centered dialogClassName="answercardmodal" show={this.state.showDialog} onHide={this.handleCloseDialog}>   
 		<AnswerCard
-        show={this.state.showDialog}
-	    word={context[location]['vw']}
-	    answeredCorrect={this.state.answeredCorrect}
-	    handleHide={this.handleHide}
-	    specificInteraction={interaction[this.state.currentInteraction]}
-        first={this.props.currentChunk["first"]}
-        type={this.props.type}
-        displayType={this.props.displayType}
-        handleClose={this.handleCloseDialog}/>
+                  show={this.state.showDialog}
+	          word={context[location]['vw']}
+	          answeredCorrect={this.state.answeredCorrect}
+	          handleHide={this.handleHide}
+	          specificInteraction={interaction[this.state.currentInteraction]}
+                  first={this.props.currentChunk["first"]}
+                  type={this.props.type}
+                  displayType={this.props.displayType}
+                  handleClose={this.handleCloseDialog}/>
 		    </Modal>
-</div>
-        <div style={{paddingTop: "10vh"}}>
-            <RunningProgressTracker
-                runningProgress={this.state.runningProgress}
-                yet={this.props.yet}
-                reviewyet={this.props.reviewyet}/>
+             </div>
+            <div style={{paddingTop: "10vh"}}>
             <Row style={{justifyContent: "center"}}>
 		    <Col style={{justifyContent: "center"}}>
                     <div>
-                {this.props.type != "daily_reading" && <div style={{color:"red", fontSize: "1.5vw", textAlign: "center"}}>{lives}</div>}
-                    <Line percent={progress} strokeWidth="1" strokeColor="#048a81" style={{marginTop: "2em"}}/>
+                {this.props.type != "daily_reading" && <div className="lives">{lives}</div>}
                     </div>
             </Col>
             </Row>
+              <Line percent={progress} strokeWidth="1"/>
            <div style={{marginTop: "5vh"}}>
 		    <Row>
 		    <Col>
 		    <TextCard
-        first={this.props.currentChunk["first"]}
-        alternatives={alternatives}
-		context={context}
-		length={length}
-		interaction={interaction}
-		currentInteraction={this.state.currentInteraction}
-		answer={answer}
-        answers={this.state.answers}
-		location={location}
-		handleAnswer={this.handleAnswer}
-        limbo={this.state.limbo}
-        showDialog={this.state.showDialog}
-        answerlength={answerlength}
-        letterNo={letterNo}/>   
+                      first={this.props.currentChunk["first"]}
+                      alternatives={alternatives}
+		      context={context}
+		      length={length}
+		      interaction={interaction}
+		      currentInteraction={this.state.currentInteraction}
+		      answer={answer}
+                      answers={this.state.answers}
+		      location={location}
+		      handleAnswer={this.handleAnswer}
+                      limbo={this.state.limbo}
+                      showDialog={this.state.showDialog}
+                      answerlength={answerlength}
+                      letterNo={letterNo}/>   
 		    </Col>
 		    </Row>
             
@@ -304,11 +280,9 @@ class TextCard extends React.Component {
         this.forceUpdate();
         if (this.props.alternatives.includes(a.toLowerCase())) {
                 console.log("hemloe");
-                this.setState({submitted: 1});
-                setTimeout(() => {this.props.handleAnswer(1); this.setState({submitted: null});}, 1500);
+            this.props.handleAnswer(1);
         } else {
-                this.setState({submitted: 0});
-                setTimeout(() => {this.props.handleAnswer(0); this.setState({submitted: null});}, 1500);
+            this.props.handleAnswer(0);
         }
         event.preventDefault();
     }
@@ -399,20 +373,7 @@ class AnswerCard extends React.Component {
     
 
     render () {
-    console.log(this.props.specificInteraction["mode"])
-    console.log("samples" in this.props.specificInteraction)
-    console.log(this.props.specificInteraction["samples"]);
-    console.log(this.state.barLevel);
-	if (this.props.answeredCorrect == 1) {
-	    var styling = "Correct";
-	} else {
-	    var styling = "Wrong";
-	}
-    if (this.props.specificInteraction["key"] == "1") {
-        var streak = (this.props.specificInteraction["streak"]).toString();
-    } else {
-        var streak = "";
-    }
+        
     var streak1 = this.props.specificInteraction["streak"];
     if (this.props.answeredCorrect == 0 || this.props.first == 0) {
         if (streak1 == 0 && this.props.answeredCorrect == 0) {
@@ -432,70 +393,42 @@ class AnswerCard extends React.Component {
         var colour="#003153";
         var fontcolour="white";
     }
-    var full = ((streak == "0" && this.props.first == 1) || this.props.answeredCorrect == 0);
+        console.log(this.props.first);
+    var full = ((streak1 == "0" && this.props.first == 0) || this.props.answeredCorrect == 0);
     if (this.props.type == "list") {
         var full = (this.props.answeredCorrect == 0);
     }
+        console.log(full);
     if (this.props.first == 0) {
         streak1 = streak2;
     }
-    if (this.props.show == true) {
+        
      return (
 	    <div key={this.props.show}>
-	     <div style={{height: "10vh", backgroundColor: colour, color: fontcolour}}>
+	     <div className="colourbar"style={{backgroundColor: colour, color: fontcolour}}>
             {full && <FirstInput 
 handleHide={this.props.handleHide}
-styling={styling}
 bgcolor={colour}
         word={this.props.word}
 />}
-{!full && <div><div style={{fontFamily: "PT Serif"}} className="vocabdisplay">{this.props.word}</div><SecondInput handleHide={this.props.handleClose} styling={styling}/></div>}
+{!full && <><div className="vocabdisplay">{this.props.word}</div><SecondInput handleHide={this.props.handleClose}/></>}
 </div>
  <div className="cardprogress">
             {(this.props.type == "daily_reading") && <AnimatedStreakShow 
                 streak2={streak2}
                 streak1={streak1}/>}
         </div>
-        <div style={{height: "10vh"}}>
-         <div className="chinesedef" style={{position: "relative", width: "100%", marginLeft: "0.5em"}}>
-        <div style={{width: "10%", position: "absolute", left: "0%", top: "0%"}}>
-        <BookOpen/></div><div style={{width: "90%", position: "absolute", top: "0%", left: "10%"}}>
+         <div className="answercarddef">
+        <BookOpen style={{marginRight: "1em"}}/>
             {"def" in this.props.specificInteraction && this.props.specificInteraction["def"]}
 </div>
-        </div>
-</div>
+<hr></hr>
 {full && ("samples" in this.props.specificInteraction) && 
-       <div> <div className="chinesedef" style={{position: "relative", width: "100%", marginLeft: "0.5em", marginBottom: "2em"}}> <SampleSentences samples={this.props.specificInteraction["samples"]}/></div></div>}
+       <div className="answercardsamples" style={{marginTop: "1em", marginLeft: "0.5em", marginBottom: "2em"}}> <SampleSentences samples={this.props.specificInteraction["samples"]}/></div>}
 </div>
 
-	);  } else {
-        return (
-            <div key={this.props.show}>
-	    <div className="vocabdisplay">
-		    {this.props.word}
-	    </div>
-        <div className="chinesedef">
-            Chinese definition here.
-        </div>
-        <div className="cardprogress">
-            <AnimatedStreakShow 
-                streak2={streak2}
-                streak1={streak2}/>
-        </div>
-        <div className="samplesentences">
-            {("samples" in this.props.specificInteraction) && (this.props.specificInteraction["samples"].length > 0) && <SampleSentences samples={this.props.specificInteraction["samples"]}/>}
-    </div>
-<div>
-		<FirstInput 
-handleHide={this.props.handleHide}
-styling={styling}
-/>
-</div>
-		</div>
-    );
-    
-    }
-}
+	); 
+                                                                                                                          }
 }
 
 class AnimatedStreakShow extends React.Component {
@@ -574,8 +507,8 @@ class FirstInput extends React.Component {
   render() {
     return (
         <form className="commentForm" onSubmit={this.handleHide}>
-        <div style={{textAlign: "center", fontFamily: "PT Serif"}}>
-        <input className="answercardinput" type="text" autoFocus autocomplete="off" style={{fontSize: "3vw", outline: "0", border: "0", backgroundColor: this.props.bgcolor, width: "80%", textAlign: "center", marginBottom: "0.5em"}} placeholder={this.props.word} id="myInput" ref={this.innerRef} value={this.state.value} onChange={this.handleChange}/>
+        <div className="vocabdisplay">
+        <input className="answercardinput" type="text" autoFocus autocomplete="off" style={{backgroundColor: this.props.bgcolor}} placeholder={this.props.word} id="myInput" ref={this.innerRef} value={this.state.value} onChange={this.handleChange}/>
             </div>
 </form>
     );
@@ -636,7 +569,7 @@ class SampleSentences extends React.Component {
     
     render () {
         
-        var words = []
+        var words = [];
         
         var punct = [".",",",";","!","?",":", "'s", "n't", "n’t", "’s"];
         
@@ -668,35 +601,10 @@ class SampleSentences extends React.Component {
 
         
         return (
-            <>
-            <div style={{position: "absolute", width: "10%", left: "0%", top: "0%"}}>
-             <Edit3 style={{marginRight: "1em"}}/> </div> <div style={{position: "absolute", width: "90%", left: "10%", top: "0%"}}>
-<Text style={{fontSize: "1.5vw", textAlign: "center", fontStyle: "italic", fontFamily: "Open Sans"}}>{this.props.samples.length > 0 && words}
-    </Text></div></>
+            
+<Text style={{wordBreak: "keep-all", wordWrap: "normal", overflowWrap: "normal", fontSize: "1.5vw", textAlign: "center", fontStyle: "italic", fontFamily: "Open Sans"}}>
+             <Edit3 style={{marginRight: "1em"}}/> {this.props.samples.length > 0 && words}
+    </Text>
         );
-    }
-}
-
-class RunningProgressTracker extends React.Component {
-
-    render () {
-
-        if (this.props.runningProgress[0] + this.props.runningProgress[1] == 0) {
-            return (
-                <div className="runningprogresstracker">
-                    <CheckCircle 
-                    style={{marginRight: "0.5em",
-                            marginLeft: "1em"}}/>100%
-                </div>
-            )
-        }
- 
-        return (
-            <div className="runningprogresstracker">
-                <CheckCircle
-                style={{marginRight: "0.5em",
-                marginLeft: "1em"}}/> {Math.round(this.props.runningProgress[0]*100/(this.props.runningProgress[0] + this.props.runningProgress[1]))}%
-            </div>
-        )
     }
 }

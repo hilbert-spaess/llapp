@@ -1,0 +1,53 @@
+.launchwindow {
+    background-image: url('/greenim.jpg');
+    background-size: 100% auto;
+    background-attachment: fixed;
+}
+
+.maincomponent {
+    margin-left: 15vw;
+    height: 100vh;
+    overflow: scroll;
+}
+
+.sidenav {
+    position: fixed;
+    min-height: 100vh;
+    margin-left: 0;
+    width: 15vw;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    padding-left: 0.5em;
+    padding-top: 1em;
+
+    overflow: hidden;
+    text-align: center;
+    
+    transition: background 300ms ease-in 200ms;
+    background-color: transparent;
+    background-size: auto 100%;
+    box-shadow: 0px 20px 60px 0px rgba(0, 0, 0, 0.1);
+    opacity: 1;
+
+}
+
+.sidelogo {
+    margin-top: 5%;
+    font-size: 2vw;
+    font-family: 'Montserrat';
+    font-weight: 600;
+}
+
+.sidelink {
+    
+    text-align: center;
+    font-size: 1vw;
+    margin-top: 5vh;
+}
+
+.sideclick {
+    cursor: pointer;
+}
+

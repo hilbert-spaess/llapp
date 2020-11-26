@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {useLocation} from 'react-router-dom';
 import {Card, Button, Row, Col, Container, Modal, ProgressBar} from 'react-bootstrap';
 import {getChunk, firstChunk, getData, JSONconvert} from './client.js';
-import {FreeBarWrapped} from './sidebar.js';
+import {SidebarWrapped} from './sidebar.js';
 import {useApi} from './use-api.js';
 import { useAuth0 } from '@auth0/auth0-react';
 import {Redirect} from 'react-router-dom';
@@ -21,7 +21,7 @@ export class DisplayLists extends React.Component {
         
         return (
             
-            <FreeBarWrapped WrappedComponent={LoadingDisplayLists} data={data}/>
+            <SidebarWrapped WrappedComponent={LoadingDisplayLists} data={data}/>
     
         );
     }
