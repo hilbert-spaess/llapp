@@ -1,0 +1,39 @@
+.devicetextcontainer {
+
+    margin-top: 10vh;
+    width: 90%;
+    margin-left: 5%;
+    font-size: 25px;
+    font-family: 'PT Serif';
+}
+
+.devicequestioncontainer {
+
+    margin-top: 10vh;
+    text-align: center;
+}
+
+.deviceanswertext {
+
+    display: inline-block;
+    font-size: 30px;
+    font-family: 'Open Sans';
+
+}
+
+.deviceanswerinput {
+
+    font-size: 30px;
+    font-family: 'Open Sans';
+
+    background-color: transparent;
+    border: 0;
+    outline: 0;
+
+    border-bottom: 1px solid black;
+}
+
+.deviceanswerinput:focus {
+
+    outline: 0;
+}

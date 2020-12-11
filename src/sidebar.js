@@ -6,13 +6,14 @@ import {useAuth0} from '@auth0/auth0-react';
 import bookshelf from './bookshelf.png';
 import sideim from './sideim.jpg';
 
-export const SidebarWrapped = ({WrappedComponent, data, doesRemember, ...args}) => (
+export const SidebarWrapped = ({WrappedComponent, data, doesRemember, thin, ...args}) => (
     
     <div className="launchwindow">
       <Sidebar data={data}
                doesRemember={doesRemember}
+	       thin={thin}
       />
-                     <div className="maincomponent"><WrappedComponent {...args} data={data}/>
+        <div className={thin ? "maincomponent maincomponentthin" : "maincomponent"}><WrappedComponent {...args} data={data}/>
                                 
 </div>
 </div>
@@ -29,7 +30,7 @@ export class Sidebar extends React.Component {
         
 	return (
         
-	<div className="sidenav">
+	    <div className={(this.props.thin == true) ? "sidenav sidenavthin" : "sidenav"}>
 		<div className="sidelogo">RiceCake</div>
               <div className="sidelink">
                 <Link className="sideclick" to={tohome}><Home size="2vw"/></Link>

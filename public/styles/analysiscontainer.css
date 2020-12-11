@@ -1,36 +1,156 @@
 .analysistextcontainer {
 
-    width: 90;
-    margin-left: 5%;
-    margin-top: 5%;
+    position: absolute;
+    width: 45%;
+    top: 10%;
+    max-height: 85%;
+    left: 2.5%;
+    padding-right: 1%;
+    overflow: scroll;
+    text-justify: inter-word;
+    text-align: justify;
 }
 
 .analysistext {
 
     font-family: 'PT Serif';
-    font-size: 2vw;
+    font-size: 25px;
+    text-justify: inter-word;
+    border: 1px transparent;
+    border-radius: 5px;
+    text-align: justify;
 
 }
 
-.analysisprogress {
+.texthover {
 
-    width: 80%;
-    margin-left: 10%;
-    margin-top: 5%;
+    border: 1px solid green;
+    border-radius: 5px;
+}
 
+.analysisanswerinput {
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid black;
+    font-size: 23px;
+}
+
+.analysisanswerinput:focus {
+
+    border: 0;
+    outline: 0;
+    border-bottom: 1px solid black;
+
+}
+
+.backline {
+
+    position: absolute;
+    top: 50%;
+    height: 1px;
+    background: black;
+    width: 100%;
+    left: 0%;
+}
+
+.analysisanswerinputarea {
+
+    width: 100%;
+    height: 2.5em;
+    font-size: 23px;
+    border-bottom: 1px solid;
+    padding: 0;
+    background: linear-gradient(180deg, 
+        rgba(0,0,0,0) calc(45%), 
+        black calc(45.5%), 
+        rgba(0,0,0,0) calc(45% + 1px)
+    );
+
+}
+
+.summaryarea {
+
+    width: 100%;
+    font-size: 23px;
+    background: transparent;
+
+    border: 0;
+    outline: 0;
+
+    height: 60vh;
+}
+
+.summaryarea:focus {
+
+    outline: 0;
+    border: 0;
 }
 
 .analysisquestioncontainer {
 
-    width: 80%;
-    margin-left: 10%;
-    margin-top: 5%;
+    width: 45%;
+    position: absolute;
+    top: 10%;
+    height: 85%;
+    left: 52.5%;
 }
 
-.analysisquestion {
+.analysismainquestion {
 
-    color: grey;
+    font-weight: bold;
     font-family: 'Open Sans';
     text-align: center;
-    font-size: 2vw;
+    font-size: 25px;
+}
+
+.analysisanswertext {
+
+    display: inline-block;
+    font-family: 'Open Sans';
+    font-size: 23px;
+
+}
+
+.subquestioncontainer {
+
+    margin-top: 5%;
+
+}
+
+.subquestion {
+
+    font-size: 23px;
+    margin-bottom: 3%;
+}
+
+.subanswer {
+
+    margin-bottom: 3%;
+}
+
+.analysisinteraction {
+
+    color: grey;
+    text-align: center;
+}
+
+.backbutton {
+
+    position: absolute;
+    top: 1em;
+    left: 2em;
+}
+
+.forwardbutton {
+
+    position: absolute;
+    top: 1em;
+    right: 2em;
+}
+
+.nextpagebutton {
+
+    position: absolute;
+    bottom: 1em;
+    right: 1em;
 }

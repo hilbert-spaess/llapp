@@ -1,0 +1,30 @@
+.tutorcontainer {
+
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 5%;
+}
+
+.tutorusercard {
+
+    width: 10em;
+    height: 5em;
+    font-family: roboto;
+
+    position:relative;
+
+    border: 1px solid black;
+    border-radius: 20px;
+
+    cursor: pointer;
+    
+}
+
+.tutorusercardtext {
+
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

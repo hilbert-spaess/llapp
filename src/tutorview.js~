@@ -1,0 +1,45 @@
+import React from 'react';
+
+export class TutorView extends React.Component {
+
+    render () {
+
+	return (
+
+		<SidebarWrapped
+		    WrappedComponent={TutorView1}/>
+
+	);
+    }
+}
+
+class TutorView1 extends React.Component {
+
+    const {login, getAccessTokenWithPopup} = useAuth0();
+    const opts = {audience: APIHOST};
+    const {error, loading, data, refresh} = useApi(APIHOST + '/api/tutorview', {}, opts);
+
+    const getTokenAndTryAgain = async () => {
+        await getAccessTokenWithPopup(opts);
+        refresh()
+  };
+    console.log("to do: cached data");
+    if (loading) {
+        return <div></div>;
+    }
+    if (error) {
+        if (error.error === 'consent_required') {
+      return (
+        <button onClick={getTokenAndTryAgain}>Consent to reading users</button>
+      );
+    }
+    return <div>Oops {error.message}</div>;
+    }
+    if (data.displayType == "newUser") {
+        return <Redirect to="/newusertest"/>;
+    }
+    return (
+         <TutorContainer
+        data={data}/>
+        );
+}   

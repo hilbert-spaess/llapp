@@ -1,0 +1,17 @@
+import React from 'React';
+
+export class AnalysisContainer extends React.Component {
+
+    render () {
+
+	return (
+
+	    <div>
+		<TextContainer
+		    data={this.props.data.currentChunk}/>
+		<QuestionContainer
+		    data={this.props.data.currentChunk.questions}/>
+	    </div>
+	);
+    }
+}

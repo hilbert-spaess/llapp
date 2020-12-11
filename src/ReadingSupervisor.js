@@ -15,6 +15,8 @@ import {CheckCircle, Type, AlignLeft, Eye} from 'react-feather';
 import {FillGapsContainer} from './LearningContainer.js';
 import {AnalysisContainer} from './analysiscontainer.js';
 import {ImproveContainer} from './improvecontainer.js';
+import {DeviceContainer} from './devicecontainer.js';
+import {TutorAnalysisContainer} from './tutoranalysiscontainer.js';
 import {Line} from 'rc-progress';
 
 function range(start, end) {
@@ -28,7 +30,7 @@ export class LearningSupervisor extends React.Component {
         const {data, type, nextList} = this.props.location;
         
         return (
-            <SidebarWrapped doesRemember={false}  WrappedComponent={LearningSupervisor1} data={data} type={type} nextList={nextList}/>
+            <SidebarWrapped doesRemember={false}  WrappedComponent={LearningSupervisor1} thin={true} data={data} type={type} nextList={nextList}/>
             );
     }
 };
@@ -96,11 +98,11 @@ const LearningContainerData = (props) => {
     };
     
     if (props.data !== undefined) {
-        
+        console.log(props.data.answers);
         return <LearningContainerUpdatable
             allChunks= {props.data.read_data.allChunks}
-            type={props.type}
-            metadata={{progress: props.data.read_data.today_progress, lives: props.data.read_data.lives, review_data: props.data.review_data, nextList: props.nextList}}   
+		   type={props.type}
+		   metadata={{progress: props.data.read_data.today_progress, lives: props.data.read_data.lives, review_data: props.data.review_data, nextList: props.nextList, course_id: props.data.read_data.course_id, answers: props.data.read_data.answers}}   
             status = {props.data.read_data.status}
                />;  
     }
@@ -124,7 +126,7 @@ const LearningContainerData = (props) => {
         <LearningContainerUpdatable
           allChunks = {data.allChunks}
           type= {props.type}
-          metadata={{progress: data.today_progress, review_data: data.review_data, nextList: props.nextList}}
+            metadata={{progress: data.today_progress, review_data: data.review_data, nextList: props.nextList, course_id: data.course_id, answers: data.answers}}
           status = {data.status}
         />          
         </div>
@@ -215,7 +217,7 @@ class LearningContainerUpdatable extends React.Component {
         return (
             
             <LearningContainerLogging
-              metadata={{progress: progress, lives: this.state.lives, review_data: this.props.metadata.review_data, parcelData: this.state.parcelData, handleNext: this.handleNext}}
+		metadata={{progress: progress, lives: this.state.lives, review_data: this.props.metadata.review_data, parcelData: this.state.parcelData, handleNext: this.handleNext, course_id: this.props.metadata.course_id, answers: this.props.metadata.answers}}
               data={{currentChunk: this.props.allChunks[this.state.currentChunkNo], allChunks: this.props.allChunks, currentChunkNo: this.state.currentChunkNo}}
                 type = {this.props.type}
                 status = {this.state.status}
@@ -254,16 +256,12 @@ const LearningContainerLogging = (props) => {
 
 	return (
 	    <div className="fillgapscard">
-		<div style={{marginTop: "5%"}}>
-	    <ProgressLine
-		progress={props.metadata.progress}/>
-		</div>
 		
 	    <LearningContainer
 		type={props.type}
 			status={props.status}
-			data = {{currentChunk: props.data.currentChunk}}
-		metadata = {{handleNext: handleNext, progress: props.metadata.progress, currentChunkNo: props.metadata.currentChunkNo, lives: props.metadata.lives}}/>
+		data = {{currentChunk: props.data.currentChunk, course_id: props.data.course_id}}
+		metadata = {{handleNext: handleNext, progress: props.metadata.progress, currentChunkNo: props.metadata.currentChunkNo, lives: props.metadata.lives, course_id: props.metadata.course_id, answers: props.metadata.answers}}/>
 	    </div>
 	);
     } else if (loading) {
@@ -281,7 +279,20 @@ class LearningContainer extends React.Component {
 
     render () {
 
-	    if (this.props.data.currentChunk.mechanism == "analysis") {
+	if (this.props.data.currentChunk.mechanism == "analysis") {
+
+	    if (this.props.type == "tutor") {
+
+		return (
+
+		    <TutorAnalysisContainer
+			type={this.props.type}
+			status={this.props.status}
+			data={this.props.data}
+			metadata={this.props.metadata}
+		    />
+		);
+	    } else {
 
 	    return (
 
@@ -292,6 +303,7 @@ class LearningContainer extends React.Component {
 		    metadata = {this.props.metadata}
 		/>
 	    );
+	    }
 	} else if (this.props.data.currentChunk.mechanism == "improve") {
 
 	    return (
@@ -305,6 +317,16 @@ class LearningContainer extends React.Component {
 	    );
 		
 
+	} else if (this.props.data.currentChunk.mechanism == "device") {
+
+	    return (
+
+		<DeviceContainer
+		    type={this.props.type}
+		    status={this.props.status}
+		    data={this.props.data}
+		    metadata={this.props.metadata}/>
+	    );
 	} else {
 
         return (

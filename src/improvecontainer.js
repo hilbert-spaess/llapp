@@ -1,4 +1,5 @@
 import React from 'react';
+import {RefreshCcw} from 'react-feather';
 
 export class ImproveContainer extends React.Component {
 
@@ -118,8 +119,9 @@ class RefreshButton extends React.Component {
     render () {
 
 	return (
-
-	    <button onClick={this.props.handleClick}>Refresh</button>
+	    <div className="improverefreshbutton">
+		<RefreshCcw onClick={this.props.handleClick}/>
+	    </div>
 
 	);
     }

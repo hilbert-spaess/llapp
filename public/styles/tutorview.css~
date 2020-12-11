@@ -1,0 +1,6 @@
+.tutorcontainer {
+
+    width: 90%;
+    left: 5%;
+    top: 5%;
+}

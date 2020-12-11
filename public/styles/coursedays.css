@@ -1,0 +1,38 @@
+.coursecardcontainer {
+
+    width: 95%;
+    margin-left: 2.5%;
+    margin-top: 5%;
+
+}
+
+.coursecard {
+
+    position: relative;
+
+    height: 15em;
+    width: 20em;
+    border-radius: 20px;
+    margin-left: 5vw;
+    margin-right: 5vw;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+
+     -webkit-box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2), inset 0px 10px 30px 5px rgba(255, 255, 255, 1);
+	-moz-box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2), inset 0px 10px 30px 5px rgba(255, 255, 255, 1);
+	box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2), inset 0px 10px 30px 5px rgba(255, 255, 255, 1);
+	background: inherit;
+
+	cursor: pointer;
+}
+
+.coursetitle {
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    font-size: 2em;
+    font-family: 'Open Sans';
+}
