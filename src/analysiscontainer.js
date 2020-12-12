@@ -9,7 +9,7 @@ import {APIHOST} from './api_config.js';
 
 export class AnalysisContainer extends React.Component {
 
-    state = {answeredCorrect: -1, currentPage: 0, maxPage: 0,  answers: {}, questions: {}}
+    state = {answeredCorrect: -1, currentPage: 0, maxPage: 0,  answers: this.props.metadata.answers, questions: {}}
     
     handleNext = (event) => {
 
@@ -361,6 +361,21 @@ class Subquestion extends React.Component {
     state = {values: {},
 	     currentInteraction: Object.keys(this.props.data.i)[0]}
 
+    componentDidMount () {
+
+	const keys = Object.keys(this.props.data.i);
+	for (var i =0; i < keys.length; i++) {
+
+	    if (this.props.data.i[keys[i]].mode == "free" || this.props.data.i[keys[i]].mode == "filled") {
+
+		var newvalues = this.state.values;
+		newvalues[keys[i]] = this.props.freeAnswers[this.props.data.i[keys[i]].id];
+		this.setState({values: newvalues});
+
+	    }
+	}
+    }
+
     handleSubmit = (event) => {
 	event.preventDefault();
 	this.props.onSubmit({values: this.state.values,
@@ -425,7 +440,7 @@ class Subquestion extends React.Component {
 
 				   
 
-	    else if (!this.props.done && keys.includes(i.toString())) {
+	    else if (!this.props.done && keys.includes(i.toString()) && (!Object.keys(this.props.freeAnswers).includes(this.props.data.i[i].id))) {
 
 		if (this.props.data.i[i].mode == "text") {
 
