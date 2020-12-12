@@ -14,7 +14,7 @@
 .analysistext {
 
     font-family: 'PT Serif';
-    font-size: 25px;
+    font-size: 1.3vw;
     text-justify: inter-word;
     border: 1px transparent;
     border-radius: 5px;
@@ -32,7 +32,7 @@
     background: transparent;
     border: 0;
     border-bottom: 1px solid black;
-    font-size: 25px;
+    font-size: 1.2vw;
     font-family: 'PT Sans';
 }
 
@@ -72,7 +72,7 @@
 .summaryarea {
 
     width: 100%;
-    font-size: 25px;
+    font-size: 1.2vw;
     background: transparent;
     font-family: 'PT Sans';
 
@@ -107,14 +107,14 @@
     font-weight: bold;
     font-family: 'Open Sans';
     text-align: center;
-    font-size: 25px;
+    font-size: 1.3vw;
 }
 
 .analysisanswertext {
 
     display: inline-block;
     font-family: 'PT Sans';
-    font-size: 25px;
+    font-size: 1.2vw;
 
 }
 
