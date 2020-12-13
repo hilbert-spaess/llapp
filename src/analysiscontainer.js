@@ -10,6 +10,38 @@ import {APIHOST} from './api_config.js';
 export class AnalysisContainer extends React.Component {
 
     state = {answeredCorrect: -1, currentPage: 0, maxPage: 0,  answers: this.props.metadata.answers, questions: {}}
+
+    componentDidMount () {
+
+	var newquestions = [];
+
+	for (var i =0; i <this.props.data.currentChunk.questions.length; i++) {
+
+	    var keys = Object.keys(this.props.data.currentChunk.questions[i].i);
+
+	    var outcome = true;
+
+	    for (var j =0; j < keys.length; j++) {
+
+		console.log(Object.keys(this.props.metadata.answers));
+
+		console.log(this.props.data.currentChunk.questions[i].i[keys[j]].id);
+
+		if (!Object.keys(this.props.metadata.answers).includes(this.props.data.currentChunk.questions[i].i[keys[j]].id.toString())) {
+		    console.log("henloe");
+		    outcome = false;
+
+		}
+
+	    }
+
+	    newquestions.push(outcome);
+
+	}
+	console.log(newquestions);
+	this.setState({questions: newquestions});
+
+    }
     
     handleNext = (event) => {
 
@@ -20,29 +52,40 @@ export class AnalysisContainer extends React.Component {
 
     handleSubmit = (data) => {
 
-	console.log(data);
+	
 
 	const keys = Object.keys(data.i);
 
 	for (var i = 0; i< keys.length; i++) {
+
+	    console.log(data.values);
+	    console.log(this.state.answers);
 	    
 	    var newfree = this.state.answers;
 	    newfree[data.i[keys[i]].id] = data.values[keys[i]];
 	    var newquestions = this.state.questions;
-	    newquestions[data.id] = 1
+	    newquestions[this.state.currentPage] = true;
 	    this.setState({answers: newfree, questions: newquestions});
 
 	}
+
+	
 	
 
     }
 
     nextPage = () => {
+	"decide whether done or not";
+
+	console.log("hemlo");
+	console.log(this.state.done);
 
 	console.log(this.state.currentPage);
 	console.log(this.props.data.currentChunk.questions.length);
 
 	if (this.state.currentPage < this.props.data.currentChunk.questions.length -1 ) {
+
+	    this.setState({done: 1});
 
 	    const c = this.state.currentPage
 
@@ -50,7 +93,7 @@ export class AnalysisContainer extends React.Component {
 
 	    if (c+1 >= this.state.maxPage) {
 
-		this.setState({maxPage: c+1});
+		this.setState({done: 0, maxPage: c+1});
 
 	    }
 
@@ -66,7 +109,7 @@ export class AnalysisContainer extends React.Component {
 
 	if (this.state.currentPage > 0) {
 
-	    this.setState({currentPage: this.state.currentPage - 1});
+	    this.setState({done: 1, currentPage: this.state.currentPage - 1});
 
 	}
     }
@@ -77,10 +120,9 @@ export class AnalysisContainer extends React.Component {
 
     }
 
-    handleEdit = (id) => {
-
+    handleEdit = () => {
 	var newquestions = this.state.questions;
-	newquestions[id] = 0;
+	newquestions[this.state.currentPage] = 0;
 	this.setState({questions: newquestions});
 
     }
@@ -105,13 +147,13 @@ export class AnalysisContainer extends React.Component {
 	    questions={this.state.questions}
 	    currentPage={this.state.currentPage}
 	    nextPage={this.nextPage}
-	    done={this.state.maxPage >= this.state.currentPage}
 	    handleSubmit={this.handleSubmit}
 		    handleEdit={this.handleEdit}
 		    parcelData={{answers: this.state.answers, course_id: this.props.metadata.course_id}}
 		    maxPage={this.state.maxPage}
 		    handleBack={this.handleBack}
-		    handleForward={this.handleForward}
+		    handleForward={this.nextPage}
+		    done={this.state.questions[this.state.currentPage]}
 	    />
 
 	);
@@ -132,8 +174,8 @@ const AnalysisContainerLogging = (props) => {
                                           'Access-Control-Request-Method': 'POST'}}};
     const {error, loading, data, refresh} = useApi(APIHOST + '/api/analysislog', payload, opts);
 
-    const nextPage = async () => {
-	props.nextPage();
+    const handleSubmit = async (data) => {
+	await props.handleSubmit(data);
 	refresh();
     }
 	
@@ -143,18 +185,18 @@ const AnalysisContainerLogging = (props) => {
 	    <div>
 		{props.currentPage > 0 && <BackButton
 					      onClick={props.handleBack}/>}
-		{(props.currentPage < props.maxPage) && <ForwardButton
-								      onClick={props.handleForward}/>}
+		{(props.done) && <ForwardButton color={(props.currentPage == props.maxPage) ? "green" : "black"}
+								      onClick={props.nextPage}/>}
 		<TextContainer
 		    data={props.data}/>
 		<QuestionContainer
 		    main_questions={props.data.main_questions}
 		    freeAnswers={props.freeAnswers}
 		    questions={props.questions}
-		    page_data={props.data.questions[props.currentPage]}
-		    nextPage={nextPage}
+		    data={props.data.questions[props.currentPage]}
+		    maxed={(props.currentPage == props.maxPage)}
 		    done={props.done}
-		    handleSubmit={props.handleSubmit}
+		    handleSubmit={handleSubmit}
 		    handleEdit={props.handleEdit}/>
 	    </div>
     );
@@ -281,75 +323,42 @@ class TextWord extends React.Component {
 
 class QuestionContainer extends React.Component {
 
-    state = {currentQuestion: 1,
-	     limbo: 0}
 
     handleSubmit = (data) => {
 
 	this.props.handleSubmit(data);
 
-	if (this.state.currentQuestion < this.props.page_data.length) {
-
-	    this.setState({currentQuestion: this.state.currentQuestion + 1});
-
-	} else if (data.m == "summary") {
-
-	    this.nextPage();
-
-	} else {
-
-	    this.setState({limbo: 1});
-
-	}
     }
 
     nextPage = () => {
 
-	this.setState({currentQuestion: 1, limbo: 0});
 	this.props.nextPage();
 
     }
 
-    handleEdit = (id) => {
+    handleEdit = () => {
 	
-	this.setState({currentQuestion: this.props.page_data.length,
-		       limbo: 0});
-	this.props.handleEdit(id);
+	this.props.handleEdit();
 
     }
 
     render () {
 
-	const subQuestions = [];
-
-	console.log(this.props.page_data);
-	console.log(this.state.currentQuestion);
-
-
-	for (var i = 0; i < this.props.page_data.length; i++) {
-	    
-	    console.log(i);
-	    if (this.props.questions[this.props.page_data[i].id] == 1 || i < this.state.currentQuestion) {
-	    subQuestions.push(<Subquestion
-				  data={this.props.page_data[i]}
-				  questiondata={this.props.questions[this.props.page_data[i].id]}
-				  questions={this.props.questions}
-				  done={(this.props.questions[this.props.page_data[i].id] == 1) || (i >= this.state.currentQuestion)}
-				  questionNo={i}
-				  handleEdit = {this.handleEdit}
-				  freeAnswers={this.props.freeAnswers}
-				  onSubmit={this.handleSubmit}/>);
-	    }
-	}
+	console.log(this.props.done);
 
 	return (
 
 	    <div className="analysisquestioncontainer">
 		<div className="analysismainquestion">
-		    {this.props.main_questions[this.props.page_data[0].t]}
+		    {this.props.main_questions[this.props.data.t]}
 		</div>
-		{subQuestions}
-		    {(this.state.limbo) ? <button className="nextpagebutton" onClick={this.nextPage}>Continue</button> : <div></div>}
+		<Subquestion
+		    data={this.props.data}
+		    questions={this.props.questions}
+		    answers={this.props.freeAnswers}
+		    handleEdit={this.handleEdit}
+		    done={this.props.done}
+		    onSubmit={this.handleSubmit}/>
 	    </div>
 
 	);
@@ -365,14 +374,9 @@ class Subquestion extends React.Component {
 
 	const keys = Object.keys(this.props.data.i);
 	for (var i =0; i < keys.length; i++) {
-
-	    if (this.props.data.i[keys[i]].mode == "free" || this.props.data.i[keys[i]].mode == "filled") {
-
-		var newvalues = this.state.values;
-		newvalues[keys[i]] = this.props.freeAnswers[this.props.data.i[keys[i]].id];
-		this.setState({values: newvalues});
-
-	    }
+	    var newvalues = this.state.values;
+	    newvalues[keys[i]] = this.props.answers[this.props.data.i[keys[i]].id];
+	    this.setState({values: newvalues});
 	}
     }
 
@@ -398,14 +402,20 @@ class Subquestion extends React.Component {
 
     }
 
-    handleEdit = (i) => {
+    handleEdit = () => {
 
-	console.log("henlo");
 	var newvalues = this.state.values;
-	console.log(this.props.data.i);
-	console.log(i);
-	newvalues[i] = this.props.freeAnswers[this.props.data.i[i].id];
-	this.props.handleEdit(this.props.data.id);
+	var keys = Object.keys(this.props.data.i);
+
+	for (var i = 0; i < keys.length; i++) {
+
+	    newvalues[keys[i]] = this.props.answers[this.props.data.i[keys[i]].id];
+
+	}
+
+	this.setState({values: newvalues});
+
+	this.props.handleEdit();
 
     }
 
@@ -415,61 +425,55 @@ class Subquestion extends React.Component {
 	} else {
 	    var answerWords = [];
 	}
+	var doneWords = [];
 	const answer_words = this.props.data.a.split(" ");
 	const keys = Object.keys(this.props.data.i);
 	const punct = [".", ",", ":", ";", "?", "!"];
 
-	console.log(this.state.values);
-	console.log(this.props.data.i);
+	console.log(answerWords);
 
 	for (var i = 0; i < answer_words.length; i++) {
 
 	    if (this.props.data.m == "summary") {
 
 		if (keys.includes(i.toString()) && this.props.data.i[i].mode=="filled") {
-		    console.log(this.props.freeAnswers);
-		    console.log(this.props.data.i[i]);
-		    answerWords += this.props.freeAnswers[this.props.data.i[i].id] + " "
+		    
+		    answerWords += this.props.answers[this.props.data.i[i].id] + " ";
 
 		} else {
 
-		    answerWords += answer_words[i] + " "
+		    answerWords += answer_words[i] + " ";
 
 		}
 	    }
 
-				   
+	    else if (!this.props.done) {
 
-	    else if (!this.props.done && keys.includes(i.toString()) && (!Object.keys(this.props.freeAnswers).includes(this.props.data.i[i].id))) {
+		if (keys.includes(i.toString())) {
 
-		if (this.props.data.i[i].mode == "text") {
+		    if (this.props.data.i[i].mode == "text") {
 
-		    answerWords.push(<div className="analysisanswertext"><Text>"</Text></div>);
-									     answerWords.push(<input className="analysisanswerinput" onFocus={this.handleFocus} style={{width: (this.props.data.i[i].a.length + 1).toString() + "ch"}} type="text" onChange={this.handleInputChange} name={i.toString()}/>);
-		    answerWords.push(<div className="analysisanswertext"><Text>"</Text></div>);
-
-		} else if (this.props.data.i[i].mode == "finish") {
-
-		    answerWords.push(<textarea name={i.toString()}  onFocus={this.handleFocus}  rows="2"  onChange={this.handleInputChange} className="analysisanswerinputarea"/>);
-		    break;
-		} else if (this.props.data.i[i].mode == "free") {
+			answerWords.push(<div className="analysisanswertext"><Text>"</Text></div>);
+			answerWords.push(<input className="analysisanswerinput" onFocus={this.handleFocus} style={{width: (this.props.data.i[i].a.length + 1).toString() + "ch"}} type="text" placeholder={this.props.answers[this.props.data.i[i].id]} onChange={this.handleInputChange} name={i.toString()}/>);
+			answerWords.push(<div className="analysisanswertext"><Text>"</Text></div>);					 } else if (this.props.data.i[i].mode == "free") {
 
 		    const x = i;
 
-		    answerWords.push(<textarea name={i.toString()} rows="2"  onFocus={this.handleFocus}   onChange={this.handleInputChange} className="analysisanswerinput analysisanswerinputarea">{this.props.freeAnswers[this.props.data.i[x].id]}</textarea>);
+		    answerWords.push(<textarea name={i.toString()} rows="2"  onFocus={this.handleFocus}   onChange={this.handleInputChange} className="analysisanswerinput analysisanswerinputarea">{this.props.answers[this.props.data.i[x].id]}</textarea>);
 
 		} else if (this.props.data.i[i].mode == "filled") {
 
-		    answerWords.push(<div className="analysisanswertext"><Text>{this.props.freeAnswers[this.props.data.i[i].id]}</Text></div>);
+		    answerWords.push(<div className="analysisanswertext"><Text>{this.props.answers[this.props.data.i[i].id]}</Text></div>);
 
 		}
 
-		    else {
+		else {
 
-			answerWords.push(<input name={i.toString()}  onFocus={this.handleFocus}  className="analysisanswerinput" style={{width: (this.props.data.i[i].a.length + 1).toString() + "ch"}} type="text" onChange={this.handleInputChange}/>);
+			answerWords.push(<input name={i.toString()}  onFocus={this.handleFocus}  className="analysisanswerinput" style={{width: (this.props.data.i[i].a.length + 1).toString() + "ch"}} type="text" onChange={this.handleInputChange} placeholder={this.props.answers[this.props.data.i[i].id]}/>);
 
-		    }
+		}
 
+		    
 		if (this.props.data.i[i].a != undefined && punct.includes(this.props.data.i[i].a.charAt(this.props.data.i[i].a.length - 1))) {
 		    console.log("henlo");
 
@@ -479,10 +483,19 @@ class Subquestion extends React.Component {
 				     </div>
 							    );
 		}
+		}
 
-		answerWords.push(<div className="analysisanswertext"><Text>{" "}</Text></div>);
+		else {
 
-	    } else {
+		    answerWords.push(<div className="analysisanswertext"><Text>{answer_words[i]}</Text></div>);
+
+		}
+		    
+		answerWords.push(<div className="analysisanswertext"><Text>{" "}</Text></div>);	
+			
+	    }
+
+	    else if (this.props.done) {
 
 		if (keys.includes(i.toString())) {
 
@@ -491,29 +504,33 @@ class Subquestion extends React.Component {
 			const x = i;
 
 			
-			answerWords.push(<div className="analysisanswertext" style={{textDecoration: "underline"}}><Text>{this.props.freeAnswers[this.props.data.i[x].id]}</Text> <Edit style={{cursor: "pointer"}} name={i} onClick={() => this.handleEdit(x)}/>
+			answerWords.push(<div className="analysisanswertext" style={{textDecoration: "underline"}}><Text>{this.props.answers[this.props.data.i[i].id]}</Text>
 				     </div>
-				    );
+					);
+			doneWords.push(<div className="analysisanswertext" style={{textDecoration: "underline"}}><Text>{this.props.data.i[i].a}</Text></div>);
 		    } else {
 
 			if (this.props.data.i[i].mode == "text") {
 
 		    answerWords.push(<div className="analysisanswertext"><Text>
-									     {"\"" + this.props.data.i[i].a + "\""}
+									     {"\"" + this.props.answers[this.props.data.i[i].id] + "\""}
 									 </Text>
 				     </div>
 				    );
+			    doneWords.push(<div className="analysisanswertext"><Text>
+									       {"\"" + this.props.data.i[i].a + "\""}</Text></div>);
 			} else {
 
 			    		    answerWords.push(<div className="analysisanswertext"><Text>
-									     {this.props.data.i[i].a}
+									     {this.props.answers[this.props.data.i[i].id]}
 									 </Text>
 				     </div>
 							    );
+			    doneWords.push(<div className="analysisanswertext"><Text>{this.props.data.i[i].a}</Text></div>);
 			}
-		    }
+		    
 
-			
+		    }
 		}
 
 		else {
@@ -522,16 +539,17 @@ class Subquestion extends React.Component {
 		answerWords.push(<div className="analysisanswertext"><Text>
 				     {answer_words[i]}
 								     </Text></div>);
+		doneWords.push(<div className="analysisanswertext"><Text>
+				     {answer_words[i]}
+								     </Text></div>);
 		}
 
-		if (keys.includes(i.toString())) {
-		    console.log(this.props.data.i[i].a);
-		}
+		answerWords.push(<div className="analysisanswertext"><Text>{" "}</Text></div>);
+		doneWords.push(<div className="analysisanswertext"><Text>{" "}</Text></div>);
 
-
-	    answerWords.push(<div className="analysisanswertext"><Text>{" "}</Text></div>);
 	    }
-	}
+    }
+
 
 
 	if (this.props.done) {
@@ -587,12 +605,27 @@ class Subquestion extends React.Component {
 	    }
 	    }
 	}
-	
+
+	var question = this.props.data.q.split("\n");
+	var Question=[];
+	for (var i =0; i < question.length; i++){
+	    Question.push(<div className="subquestion">{question[i]}</div>);
+	}
+
+	if (Object.keys(this.props.data).includes("d")) {
+	    var donetext = this.props.data.d;
+	} else if (this.props.data.m == "filler") {
+	    var donetext = "";
+	} else {
+	    var donetext = "Here's our sample answer to this question:";
+	}
+	    
 
 	return (
 	    <div className="subquestioncontainer">
+		{Object.keys(this.props.data.i).length > 0 && <Edit style={{marginBottom: "5%", cursor: "pointer"}} onClick={this.handleEdit} size={30}/>}
 		<div className="subquestion">
-		    {(this.props.questionNo+1).toString() + ". " + this.props.data.q}
+		    {Question}
 		</div>
 		{(this.props.data.m == "summary") &&
 		 <textarea className="summaryarea">
@@ -609,7 +642,12 @@ class Subquestion extends React.Component {
 		<div className="analysisinteraction">
 		    {interaction}
 		</div>
+		<div>
 		{!this.props.done && <button className="subquestionsubmit" onClick={this.handleSubmit}>Submit</button>}
+		    {(this.props.done && this.props.data.m != "summary") ? <div className="subquestion">{donetext}</div> : <div></div>}
+		</div>
+		{(this.props.done && this.props.data.m != "summary") ? <div className="subanswer"><Text className="analysisanswertext">{doneWords}</Text></div> : <div></div>}
+		
 	    </div>
 
 	);

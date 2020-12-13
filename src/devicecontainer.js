@@ -1,5 +1,6 @@
 import React from 'react';
 import {Text} from 'react-native';
+import {ArrowRight} from 'react-feather';
 
 export class DeviceContainer extends React.Component {
 
@@ -32,11 +33,21 @@ class TextContainer extends React.Component {
 
     render () {
 
+	if (Object.keys(this.props.data).includes("text")) {
+
+	    var text="\"" + this.props.data.text + "\"";
+
+	} else {
+
+	    var text = "";
+
+	}
+
 	return (
 
 	    <div className="devicetextcontainer">
 		<div className="devicetext">
-		    {this.props.data.text}
+		    {text}
 		</div>
 	    </div>
 	);
@@ -45,13 +56,29 @@ class TextContainer extends React.Component {
 
 class QuestionContainer extends React.Component {
 
-    state = {values: Object.keys(this.props.data.i).map(x => ""),
+    state = {value: "",
 	     currentInteraction: 0,
-	     done: 0}
+	     done: 0,
+	     correct: 0}
 
     onSubmit = () => {
 
+	this.setState({value: "", done: 0, correct: 0});
 	this.props.handleNext();
+
+    }
+
+    handleChange = (event) => {
+
+	this.setState({value: event.target.value});
+
+    }
+
+    handleSubmit = (event) => {
+	event.preventDefault();
+	console.log(event.target.value);
+	console.log(this.props.data.a);
+	this.setState({done: 1, correct: (this.state.value == this.props.data.a)});
 
     }
 
@@ -60,19 +87,47 @@ class QuestionContainer extends React.Component {
 	var answerWords = [];
 	const answer_words = this.props.data.q.split(" ");
 	const keys = Object.keys(this.props.data.i);
+	const punct = [".", ",", ":", ";", "?", "!"];
 
 	for (var i = 0; i < answer_words.length; i++) {
 
-	    if (!this.state.done && keys.includes(i.toString())) {
+	    if (keys.includes(i.toString())) {
 
-		answerWords.push(<input className="deviceanswerinput" style={{width: (answer_words[i].length + 2).toString() + "ch"}} type="text" value={this.state.values[i]}/>);
+		if (!this.state.done) {
+		    answerWords.push(<input type="text" className="deviceanswerinput" style={{width: (answer_words[i].length + 2).toString() + "ch"}} value={this.state.value} onChange={this.handleChange}/>);
+		    		if (punct.includes(answer_words[i].charAt(answer_words[i].length - 1))) {
+		    console.log("henlo");
 
-	    } else {
+					    answerWords.push(<div className="deviceanswertext"><Text>
+												     {answer_words[i].charAt(answer_words[i].length - 1) + " "}
+									 </Text>
+				     </div>
+							    );
+		}
+		} else {
+		    answerWords.push(<div style={{color: (this.state.correct) ? "green" : "red"}} className="deviceanswertext"><Text>{answer_words[i] + " "}</Text></div>);
+		}
+	    }
+
+	    else {
 
 		answerWords.push(<div className="deviceanswertext"><Text>
 								       {answer_words[i] + " "}
 								   </Text></div>);
 	    }
+	}
+		   
+
+	var interaction = "";
+
+	if (this.props.data.i[keys[0]].mode=="devicefill") {
+
+	    var interaction = "Fill in the gap with a literary device.";
+
+	} else if (this.props.data.i[keys[0]].mode=="choose") {
+
+	    var interaction = this.props.data.i[keys[0]].choices.join(" | ");
+
 	}
 		
 
@@ -81,11 +136,16 @@ class QuestionContainer extends React.Component {
 	    <div className="devicequestioncontainer">
 		<div className="devicequestion">
 		    <Text className="deviceanswertext">
-			{answerWords}
+			<form className="commentForm" onSubmit={this.handleSubmit}>
+			    {answerWords}
+			</form>
 		    </Text>
 		</div>
+		<div className="deviceinteraction">
+		    {interaction}
+		</div>
 		<div>
-		    <button onClick={this.onSubmit}>Submit</button>
+		    {(this.state.done == 0) ? <div></div> : <ArrowRight size={50} style={{position: "fixed", top: "5%", right: "5%", cursor: "pointer"}} onClick={this.onSubmit}/>}
 		</div>
 	    </div>
 

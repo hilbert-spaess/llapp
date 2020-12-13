@@ -1,0 +1,10 @@
+.promptcontainer {
+
+    position: absolute;
+    width: 45%;
+    top: 10%;
+    max-height: 85%;
+    left: 2.5%;
+    padding-right: 1%;
+    overflow: scroll;
+}

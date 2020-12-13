@@ -1,0 +1,12 @@
+import React from 'react';
+import {Line} from 'rc-progress';
+import {Text} from 'react-native';
+import {ArrowLeft, ArrowRight, Edit} from 'react-feather';
+import {useApi} from './use-api.js';
+import { useAuth0 } from '@auth0/auth0-react';
+import {Redirect} from 'react-router-dom';
+import {APIHOST} from './api_config.js';
+
+export class WritingContainer extends React.Component {
+
+    state = {answers: this.props.metadata.answers, id: this.props.data.id}

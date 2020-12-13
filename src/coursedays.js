@@ -25,22 +25,22 @@ export class CourseDays extends React.Component {
 
 class CourseDays1 extends React.Component {
 
-    state = {active: null}
+    state = {day: null}
 
     handleStart = (i) => {
 
-	this.setState({active: i});
+	this.setState({day: i});
 
     }
 
     render () {
 
-	if (this.state.active != null) {
+	if (this.state.day != null) {
 
 	    return (
 
 		<CourseLoader
-		    id={this.state.active}
+		    id={this.state.day}
 		    data={this.props.data}/>
 
 	    );
@@ -122,13 +122,50 @@ const CourseLoader = (props) => {
 
 class CourseLoad extends React.Component {
 
+    state = {key: null}
+
+    handleClick = (i) => {
+
+	this.setState({key: i});
+
+    }
+
     render () {
+
+	if (this.state.key == null) {
+
+	    console.log(this.props.data);
+
+	    var keyCards = [];
+
+	    for (var i = 0; i < Object.keys(this.props.data.allChunks).length; i++) {
+
+		keyCards.push(<CourseCard
+				  id={i}
+				  title={Object.keys(this.props.data.allChunks)[i]}
+				  handleClick={this.handleClick}/>);
+	    }
+
+	    return (
+
+	    <div className="coursecardcontainer">
+		<Row style={{justifyContent: "center"}}>
+		    {keyCards}
+		</Row>
+	    </div>
+
+	    );
+
+	}
 
 	console.log(this.props.data.allChunks);
 
+	var newdata = this.props.data;
+	newdata.allChunks = this.props.data.allChunks[Object.keys(this.props.data.allChunks)[this.state.key]];
+
 	return (
 
-	    <Redirect to={{pathname: "/read", data: {read_data: this.props.data}, type: (this.props.data.data.mode == "tutor") ? "tutor" : "daily_reading"}}/>
+	    <Redirect to={{pathname: "/read", data: {read_data: newdata}, type: (this.props.data.data.mode == "tutor") ? "tutor" : "daily_reading"}}/>
 
 	);
     }

@@ -31,7 +31,7 @@ export class Sidebar extends React.Component {
 	return (
         
 	    <div className={(this.props.thin == true) ? "sidenav sidenavthin" : "sidenav"}>
-		<div className="sidelogo">RiceCake</div>
+		<div className="sidelogo">{this.props.thin ? "R" : "RiceCake"} </div>
               <div className="sidelink">
                 <Link className="sideclick" to={tohome}><Home size="2vw"/></Link>
               </div>

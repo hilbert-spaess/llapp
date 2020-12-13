@@ -1,0 +1,49 @@
+.promptcontainer {
+
+    position: absolute;
+    width: 45%;
+    top: 10%;
+    max-height: 85%;
+    left: 2.5%;
+    padding-right: 1%;
+    overflow: scroll;
+}
+
+.prompttext {
+
+    font-family: 'PT Serif';
+    font-size: 1.3vw;
+    border: 1px transparent;
+    text-align: justify;
+}
+
+.prompttitle {
+
+    margin-bottom: 5vh;
+    font-size: 1.3vw;
+    font-weight:bold;
+}
+
+.entrytext {
+
+    font-family: 'PT Sans';
+    width: 45%;
+    position: absolute;
+    top: 10%;
+    height: 85%;
+    left: 52.5%;
+
+    padding: 10px;
+}
+
+.entrytext {
+
+    font-size: 1.2vw;
+}
+
+.writingsubmit {
+
+    position: absolute;
+    top: 5%;
+    right: 5%;
+}

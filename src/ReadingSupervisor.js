@@ -16,6 +16,7 @@ import {FillGapsContainer} from './LearningContainer.js';
 import {AnalysisContainer} from './analysiscontainer.js';
 import {ImproveContainer} from './improvecontainer.js';
 import {DeviceContainer} from './devicecontainer.js';
+import {WritingContainer} from './writingcontainer.js';
 import {TutorAnalysisContainer} from './tutoranalysiscontainer.js';
 import {Line} from 'rc-progress';
 
@@ -269,8 +270,7 @@ const LearningContainerLogging = (props) => {
     } else {
     
         return (
-            <div> <LearningSummaryContainer
-                handleSummary={handleSummary}/></div>
+            <Redirect to="/coursedays"/>
             );
     }
 }
@@ -304,6 +304,16 @@ class LearningContainer extends React.Component {
 		/>
 	    );
 	    }
+	} else if (this.props.data.currentChunk.mechanism == "writing") {
+
+	    return (
+
+		<WritingContainer
+		    type={this.props.type}
+		    status={this.props.status}
+		    data={this.props.data}
+		    metadata={this.props.metadata}/>
+	    );
 	} else if (this.props.data.currentChunk.mechanism == "improve") {
 
 	    return (
