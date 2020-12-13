@@ -80,7 +80,7 @@
     border: 0;
     outline: 0;
 
-    height: 60vh;
+    height: 50vh;
 }
 
 .summaryarea:focus {
@@ -162,4 +162,13 @@
     position: absolute;
     bottom: 1em;
     right: 1em;
+}
+
+.subquestionsubmit {
+
+    background-color: white;
+    color: green;
+    padding: 10px;
+    border-radius: 10px;
+
 }

@@ -1,10 +1,14 @@
 import React from 'react';
 import {Text} from 'react-native';
 import {ArrowRight} from 'react-feather';
+import {useApi} from './use-api.js';
+import { useAuth0 } from '@auth0/auth0-react';
+import {Redirect} from 'react-router-dom';
+import {APIHOST} from './api_config.js';
 
 export class DeviceContainer extends React.Component {
 
-    state = {answeredCorrect: 1}
+    state = {answeredCorrect: 1, answers: this.props.metadata.answers}
 
     handleNext = (event) => {
 
@@ -12,21 +16,77 @@ export class DeviceContainer extends React.Component {
 	    metadata: {answeredCorrect: this.state.answeredCorrect,
 		       type: this.props.type}});
     }
+
+    handleSubmit = (data) => {
+
+	var newanswers = this.state.answers;
+
+	newanswers[data.id] = data.value;
+
+	this.setState({answers: newanswers});
+
+    }
 				      
 
     render () {
 
+	var done = this.state.answers[this.props.data.currentChunk.question.id] != undefined;
+	var correct = done && this.state.answers[this.props.data.currentChunk.question.id].toLowerCase() == this.props.data.currentChunk.question.a.toLowerCase();
+
 	return (
 
-	    <div>
-		<TextContainer
-		    data={this.props.data.currentChunk}/>
-		<QuestionContainer
-		    data={this.props.data.currentChunk.question}
-		    handleNext={this.handleNext}/>
-	    </div>
+	    <DeviceContainerLogging
+		data={this.props.data.currentChunk}
+		handleNext={this.handleNext}
+		handleSubmit={this.handleSubmit}
+		done={done}
+		correct={correct}
+		answers={this.state.answers}
+		parcelData={{answers: this.state.answers, course_id: this.props.metadata.course_id}}/>
+
 	);
     }
+}
+
+const DeviceContainerLogging = (props) => {
+
+    const payload=props.parcelData;
+    const {login, getAccessTokenWithPopup } = useAuth0();
+    const opts = {audience: APIHOST, 
+                  fetchOptions: {method: 'post',
+                                 body: payload,
+                                 headers: {'Access-Control-Allow-Credentials': 'true',
+                                           'Access-Control-Allow-Origin': '*',
+                                           'Accept': 'application/json',
+                                            'Content-Type': 'application/json',
+                                          'Access-Control-Request-Method': 'POST'}}};
+    const {error, loading, data, refresh} = useApi(APIHOST + '/api/analysislog', payload, opts);
+
+    const handleSubmit = async (data) => {
+	await props.handleSubmit(data);
+	refresh();
+    }
+
+    const handleNext = () => {
+
+	props.handleNext();
+
+    }
+
+    return (
+
+	<div>
+	    <TextContainer
+		data={props.data}/>
+	    <QuestionContainer
+		data={props.data.question}
+		handleNext={handleNext}
+		handleSubmit={handleSubmit}
+		answers={props.answers}
+		done={props.done}
+		correct={props.correct}/>
+	</div>
+    );
 }
 
 class TextContainer extends React.Component {
@@ -57,14 +117,14 @@ class TextContainer extends React.Component {
 class QuestionContainer extends React.Component {
 
     state = {value: "",
-	     currentInteraction: 0,
+	     check: 0,
 	     done: 0,
-	     correct: 0}
+	     correct: null}
+	
 
     onSubmit = () => {
-
-	this.setState({value: "", done: 0, correct: 0});
-	this.props.handleNext();
+	this.setState({value: ""});
+	this.props.handleNext({});
 
     }
 
@@ -78,7 +138,7 @@ class QuestionContainer extends React.Component {
 	event.preventDefault();
 	console.log(event.target.value);
 	console.log(this.props.data.a);
-	this.setState({done: 1, correct: (this.state.value == this.props.data.a)});
+	this.props.handleSubmit({id: this.props.data.id, value: this.state.value});
 
     }
 
@@ -93,7 +153,7 @@ class QuestionContainer extends React.Component {
 
 	    if (keys.includes(i.toString())) {
 
-		if (!this.state.done) {
+		if (!this.props.done) {
 		    answerWords.push(<input type="text" className="deviceanswerinput" style={{width: (answer_words[i].length + 2).toString() + "ch"}} value={this.state.value} onChange={this.handleChange}/>);
 		    		if (punct.includes(answer_words[i].charAt(answer_words[i].length - 1))) {
 		    console.log("henlo");
@@ -105,7 +165,7 @@ class QuestionContainer extends React.Component {
 							    );
 		}
 		} else {
-		    answerWords.push(<div style={{color: (this.state.correct) ? "green" : "red"}} className="deviceanswertext"><Text>{answer_words[i] + " "}</Text></div>);
+		    answerWords.push(<div style={{color: (this.props.correct) ? "green" : "red"}} className="deviceanswertext"><Text>{answer_words[i] + " "}</Text></div>);
 		}
 	    }
 
@@ -141,14 +201,36 @@ class QuestionContainer extends React.Component {
 			</form>
 		    </Text>
 		</div>
-		<div className="deviceinteraction">
-		    {interaction}
-		</div>
+		<InteractionCard
+		interaction={interaction}
+		    done={this.props.done}
+		    handleSubmit={this.onSubmit}/>
 		<div>
-		    {(this.state.done == 0) ? <div></div> : <ArrowRight size={50} style={{position: "fixed", top: "5%", right: "5%", cursor: "pointer"}} onClick={this.onSubmit}/>}
 		</div>
 	    </div>
 
+	);
+    }
+}
+
+class InteractionCard extends React.Component {
+
+    componentDidUpdate () {
+        
+        if (this.props.done==true) {
+	setTimeout(() => {try {this.nameInput.focus();} catch (e) {console.log("Error");}}, 200);
+        }
+    }
+
+    render () {
+
+	return (
+	    <>
+		<div className="deviceinteraction">
+		    {this.props.interaction}
+		</div>
+	        <button className="nextbuttonlimbo" type="submit" autoFocus ref = {(c) => {this.nameInput=c;}} onClick={this.props.handleSubmit}></button>
+	    </>
 	);
     }
 }

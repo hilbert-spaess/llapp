@@ -46,7 +46,7 @@ function App() {
         >
         <Router history={history}>
         <Switch>
-            <ProtectedRoute path="/home" component={Launch} exact/>
+            <ProtectedRoute path="/home" component={CourseDays} exact/>
             <ProtectedRoute path="/read" component={LearningSupervisor}/>
             <ProtectedRoute path="/vocab" component={MyVocabContainer}/>
             <ProtectedRoute path="/newuser" component={NewUserTest}/>

@@ -48,16 +48,6 @@ daynotification {
 
     background-color: red;
     color: white;
-    border-radius: 50%;
 
-}
-
-.daynotificationtext {
-
-    position: absolute;
-    
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
 }
 	  

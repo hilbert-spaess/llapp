@@ -16,11 +16,37 @@ export class CourseDays extends React.Component {
 	return (
 
 	    <SidebarWrapped
-		WrappedComponent={CourseDays1}
+		WrappedComponent={CourseDaysLoader}
 		data={data}/>
 
 	);
     }
+}
+
+const CourseDaysLoader = (props) => {
+
+    const {login, getAccessTokenWithPopup } = useAuth0();
+    const opts = {audience: APIHOST, 
+                  fetchOptions: {method: 'post',
+                                 headers: {'Access-Control-Allow-Credentials': 'true',
+                                           'Access-Control-Allow-Origin': '*',
+                                           'Accept': 'application/json',
+                                            'Content-Type': 'application/json',
+                                          'Access-Control-Request-Method': 'POST'}}};
+    const {error, loading, data, refresh} = useApi(APIHOST + '/api/coursedays', {}, opts);
+
+    if (loading) {
+	return <div></div>;
+    }
+    if (error) {
+	return <div>Oops {error.message}</div>;
+    }
+    console.log(data);
+    return (
+	<CourseDays1
+	    data={props.data}
+	    daydata={data}/>
+    );
 }
 
 class CourseDays1 extends React.Component {
@@ -41,7 +67,8 @@ class CourseDays1 extends React.Component {
 
 		<CourseLoader
 		    id={this.state.day}
-		    data={this.props.data}/>
+		    data={this.props.data}
+		    notifications={this.props.daydata.notifications[this.state.day - 1]}/>
 
 	    );
 
@@ -49,7 +76,7 @@ class CourseDays1 extends React.Component {
 
 	var courseCards = [];
 
-	for (var i = 1; i < 6; i++) {
+	for (var i = 1; i < this.props.daydata.days + 1; i++) {
 
 	    courseCards.push(<CourseCard
 				 id={i}
@@ -84,6 +111,10 @@ class CourseCard extends React.Component {
 		<div className="coursetitle">
 		    {this.props.title}
 		</div>
+		{this.props.notification > 0 ? <div className="notification">
+						   <div className="centerno">
+						   {this.props.notification}
+					       </div></div> : <div></div>}
 	    </div>
 	);
     }
@@ -115,7 +146,8 @@ const CourseLoader = (props) => {
     }
     return (
          <CourseLoad
-        data={data}/>
+             data={data}
+	     notifications={props.notifications}/>
         );
 }   
 
@@ -132,6 +164,8 @@ class CourseLoad extends React.Component {
 
     render () {
 
+	console.log(this.props.notifications);
+
 	if (this.state.key == null) {
 
 	    console.log(this.props.data);
@@ -140,10 +174,14 @@ class CourseLoad extends React.Component {
 
 	    for (var i = 0; i < Object.keys(this.props.data.allChunks).length; i++) {
 
+		var notification = this.props.notifications[Object.keys(this.props.data.allChunks)[i].charAt(0)];
+		console.log(notification);
+
 		keyCards.push(<CourseCard
 				  id={i}
 				  title={Object.keys(this.props.data.allChunks)[i]}
-				  handleClick={this.handleClick}/>);
+				  handleClick={this.handleClick}
+				  notification={notification}/>);
 	    }
 
 	    return (

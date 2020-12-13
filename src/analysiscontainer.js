@@ -623,7 +623,7 @@ class Subquestion extends React.Component {
 
 	return (
 	    <div className="subquestioncontainer">
-		{Object.keys(this.props.data.i).length > 0 && <Edit style={{marginBottom: "5%", cursor: "pointer"}} onClick={this.handleEdit} size={30}/>}
+		{Object.keys(this.props.data.i).length > 0 && <Edit style={{marginBottom: "5%", color: "green",  cursor: "pointer"}} onClick={this.handleEdit} size={30}/>}
 		<div className="subquestion">
 		    {Question}
 		</div>
