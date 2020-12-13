@@ -204,7 +204,7 @@ class LearningContainerUpdatable extends React.Component {
     };
     
     handleNext = (parcelData) => {
-        if (this.props.type != "daily_reading") {
+        if (this.props.type != "daily_reading" && this.props.type != "tutor") {
             this.handleNextQuick(parcelData);
         }
         this.handleNextDaily(parcelData);
@@ -312,7 +312,8 @@ class LearningContainer extends React.Component {
 		    type={this.props.type}
 		    status={this.props.status}
 		    data={this.props.data}
-		    metadata={this.props.metadata}/>
+		    metadata={this.props.metadata}
+		    tutor={this.props.type == "tutor"}/>
 	    );
 	} else if (this.props.data.currentChunk.mechanism == "improve") {
 
@@ -335,7 +336,8 @@ class LearningContainer extends React.Component {
 		    type={this.props.type}
 		    status={this.props.status}
 		    data={this.props.data}
-		    metadata={this.props.metadata}/>
+		    metadata={this.props.metadata}
+		    tutor={this.props.type == "tutor"}/>
 	    );
 	} else {
 

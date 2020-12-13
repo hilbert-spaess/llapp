@@ -181,7 +181,7 @@ class CourseLoad extends React.Component {
 				  id={i}
 				  title={Object.keys(this.props.data.allChunks)[i]}
 				  handleClick={this.handleClick}
-				  notification={notification}/>);
+				  notification={(this.props.data.data.mode == "tutor") ? 0 : notification}/>);
 	    }
 
 	    return (

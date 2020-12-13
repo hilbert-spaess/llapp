@@ -30,7 +30,8 @@ export class WritingContainer extends React.Component {
 		metadata={this.props.metadata}
 		answer={this.state.answers[this.props.data.currentChunk.id]}
 		handleSubmit={this.handleSubmit}
-		parcelData={{answers: this.state.answers, course_id: this.props.metadata.course_id}}/>
+		parcelData={{answers: this.state.answers, course_id: this.props.metadata.course_id}}
+		tutor={this.props.tutor}/>
 	);
     }
 }
@@ -64,7 +65,8 @@ const WritingContainerLogging = (props) => {
 		metadata={props.metadata}/>
 	    <EntryContainer
 		answer={props.answer}
-		onSubmit={handleSubmit}/>
+		onSubmit={handleSubmit}
+		tutor={props.tutor}/>
 	</div>
     );
 }
@@ -122,7 +124,7 @@ class EntryContainer extends React.Component {
 	    <div className="entrycontainer">
 		<textarea  value={this.state.value} className="entrytext" onChange={this.handleChange}/>
 	    </div>
-		<button className="writingsubmit" onClick={this.onSubmit}>Save</button>
+		{!this.props.tutor ? <button className="writingsubmit" onClick={this.onSubmit}>Save</button> : <div></div>}
 	    </>
 	    
 	    

@@ -39,9 +39,11 @@ export class DeviceContainer extends React.Component {
 		data={this.props.data.currentChunk}
 		handleNext={this.handleNext}
 		handleSubmit={this.handleSubmit}
-		done={done}
+		done={done || this.props.tutor}
 		correct={correct}
 		answers={this.state.answers}
+		tutor={this.props.tutor}
+		answer={this.state.answers[this.props.data.currentChunk.question.id]}
 		parcelData={{answers: this.state.answers, course_id: this.props.metadata.course_id}}/>
 
 	);
@@ -84,7 +86,9 @@ const DeviceContainerLogging = (props) => {
 		handleSubmit={handleSubmit}
 		answers={props.answers}
 		done={props.done}
-		correct={props.correct}/>
+		correct={props.correct}
+		answer={props.answer}
+		tutor={props.tutor}/>
 	</div>
     );
 }
@@ -165,7 +169,7 @@ class QuestionContainer extends React.Component {
 							    );
 		}
 		} else {
-		    answerWords.push(<div style={{color: (this.props.correct) ? "green" : "red"}} className="deviceanswertext"><Text>{answer_words[i] + " "}</Text></div>);
+		    answerWords.push(<div style={{color: (this.props.correct) ? "green" : "red"}} className="deviceanswertext"><Text>{(this.props.tutor) ? this.props.answer + " " : answer_words[i] + " "}</Text></div>);
 		}
 	    }
 

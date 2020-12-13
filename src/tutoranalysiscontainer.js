@@ -36,7 +36,7 @@ export class TutorAnalysisContainer extends React.Component {
 		    data={this.props.data.currentChunk}/>
 		<QuestionContainer
 		    main_questions={this.props.data.currentChunk.main_questions}
-		    page_data={this.props.data.currentChunk.questions[this.state.currentPage]}
+		    data={this.props.data.currentChunk.questions[this.state.currentPage]}
 		    answers={this.props.metadata.answers}/>
 	    </div>
 
@@ -91,26 +91,17 @@ class QuestionContainer extends React.Component {
     render () {
 
 	console.log(this.props.answers);
-
-	const subQuestions = [];
-
-	for (var i = 0; i < this.props.page_data.length; i++) {
-
-	    subQuestions.push(<Subquestion
-				  data={this.props.page_data[i]}
-				  answers={this.props.answers}
-				  questionNo={i}/>);
-
-	}
 				  
-
 	return (
 
 	    <div className="analysisquestioncontainer">
 		<div className="analysismainquestion">
-		    {this.props.main_questions[this.props.page_data[0].t]}
+		    {this.props.main_questions[this.props.data.t]}
 		</div>
-		{subQuestions}
+		<Subquestion
+		    data={this.props.data}
+		    answers={this.props.answers}/>
+		
 	    </div>
 	    
 
@@ -130,63 +121,100 @@ class Subquestion extends React.Component {
 	const answer_words = this.props.data.a.split(" ");
 	const keys = Object.keys(this.props.data.i);
 	const punct = [".", ",", ":", ";", "?", "!"];
+	var doneWords = [];
 
 	for (var i = 0; i < answer_words.length; i++) {
 
 	    if (this.props.data.m == "summary") {
 
-		if (keys.includes(i.toString()) && this.props.data.i[i].mode == "filled") {
-
+		if (keys.includes(i.toString()) && this.props.data.i[i].mode=="filled") {
+		    
 		    answerWords += this.props.answers[this.props.data.i[i].id] + " ";
+
 		} else {
 
 		    answerWords += answer_words[i] + " ";
+
 		}
 	    }
 
 	    else {
+
 		if (keys.includes(i.toString())) {
 
 		    if (this.props.data.i[i].mode == "free") {
 
 			const x = i;
 
-			answerWords.push(<div className="analysisanswertext" style={{textDecoration: "underline"}}><Text>{this.props.answers[this.props.data.i[x].id]}</Text></div>);
+			
+			answerWords.push(<div className="analysisanswertext" style={{textDecoration: "underline"}}><Text>{this.props.answers[this.props.data.i[i].id]}</Text>
+				     </div>
+					);
+			doneWords.push(<div className="analysisanswertext" style={{textDecoration: "underline"}}><Text>{this.props.data.i[i].a}</Text></div>);
+		    } else {
 
-		    } else if (this.props.data.i[i].mode == "text") {
+			if (this.props.data.i[i].mode == "text") {
 
 		    answerWords.push(<div className="analysisanswertext"><Text>
-									     {"\"" + this.props.data.i[i].a + "\""}
+									     {"\"" + this.props.answers[this.props.data.i[i].id] + "\""}
 									 </Text>
 				     </div>
 				    );
-		    } else {
-				 answerWords.push(<div className="analysisanswertext"><Text>
-									     {this.props.data.i[i].a}
+			    doneWords.push(<div className="analysisanswertext"><Text>
+									       {"\"" + this.props.data.i[i].a + "\""}</Text></div>);
+			} else {
+
+			    		    answerWords.push(<div className="analysisanswertext"><Text>
+									     {this.props.answers[this.props.data.i[i].id]}
 									 </Text>
 				     </div>
-			);
+							    );
+			    doneWords.push(<div className="analysisanswertext"><Text>{this.props.data.i[i].a}</Text></div>);
 			}
-	    }
+		    
 
-	    else {
+		    }
+		}
+
+		else {
+
 
 		answerWords.push(<div className="analysisanswertext"><Text>
 				     {answer_words[i]}
 								     </Text></div>);
-	    }
+		doneWords.push(<div className="analysisanswertext"><Text>
+				     {answer_words[i]}
+								     </Text></div>);
+		}
 
-	answerWords.push(<div className="analysisanswertext"><Text>{" "}</Text></div>)
+		answerWords.push(<div className="analysisanswertext"><Text>{" "}</Text></div>);
+		doneWords.push(<div className="analysisanswertext"><Text>{" "}</Text></div>);
+
 	    }
 	}
-    
+
+	var question = this.props.data.q.split("\n");
+	var Question=[];
+	for (var i =0; i < question.length; i++){
+	    Question.push(<div className="subquestion">{question[i]}</div>);
+	}
+
+	 if (Object.keys(this.props.data).includes("d")) {
+	    var donetext = this.props.data.d;
+	} else if (this.props.data.m == "filler") {
+	    var donetext = "";
+	} else {
+	    var donetext = "Here's our sample answer to this question:";
+	}
+
 
     return (
 
-	<div className="subquestioncontainer">
-	    <div className="subquestion">
-		{(this.props.questionNo+1).toString() + ". " + this.props.data.q}
-	    </div>
+	    <div className="subquestioncontainer">
+		{Object.keys(this.props.data.i).length > 0 && <Edit style={{marginBottom: "5%", color: "green",  cursor: "pointer"}} onClick={this.handleEdit} size={30}/>}
+		<div className="subquestion">
+		    {Question}
+		</div>
 		{(this.props.data.m == "summary") &&
 		 <textarea className="summaryarea">
 		     {answerWords}
@@ -198,7 +226,11 @@ class Subquestion extends React.Component {
 		    </Text>
 		    
 		 </div>}
-	</div>
+		{this.props.data.m != "summary" ? <>
+		<div className="subquestion">{donetext}</div>
+		 <div className="subanswer"><Text className="analysisanswertext">{doneWords}</Text></div></> : <div></div>}
+		
+	    </div>
     );
     }
 }
