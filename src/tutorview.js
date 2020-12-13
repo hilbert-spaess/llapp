@@ -4,6 +4,7 @@ import {useAuth0} from '@auth0/auth0-react';
 import {APIHOST} from './api_config.js';
 import {Redirect} from 'react-router-dom';
 import {useApi} from './use-api.js';
+import {Row} from 'react-bootstrap';
 
 export class TutorView extends React.Component {
 
@@ -82,7 +83,9 @@ class TutorContainer extends React.Component {
 	return (
 
 	    <div className="tutorcontainer">
-		{users}
+		<Row style={{justifyContent: "center"}}>
+		    {users}
+		</Row>
 	    </div>
 	);
     }
@@ -100,7 +103,7 @@ class UserCard extends React.Component {
 
 	return (
 
-	    <div onClick={this.handleChoose} className="tutorusercard">
+	    <div onClick={this.handleChoose} className="coursecard">
 		<div className="tutorusercardtext">
 		    {this.props.data.email}
 		</div>
