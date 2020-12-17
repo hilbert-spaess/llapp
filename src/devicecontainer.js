@@ -1,6 +1,7 @@
 import React from 'react';
 import {Text} from 'react-native';
-import {ArrowRight} from 'react-feather';
+import {ArrowRight, BookOpen, Edit3} from 'react-feather';
+import {Card, Button, Row, Col, Container, Modal, ProgressBar} from 'react-bootstrap';
 import {useApi} from './use-api.js';
 import { useAuth0 } from '@auth0/auth0-react';
 import {Redirect} from 'react-router-dom';
@@ -8,7 +9,7 @@ import {APIHOST} from './api_config.js';
 
 export class DeviceContainer extends React.Component {
 
-    state = {answeredCorrect: 1, answers: this.props.metadata.answers}
+    state = {answeredCorrect: 1, answers: this.props.metadata.answers, limbo: 0}
 
     handleNext = (event) => {
 
@@ -23,7 +24,13 @@ export class DeviceContainer extends React.Component {
 
 	newanswers[data.id] = data.value;
 
-	this.setState({answers: newanswers});
+	this.setState({answers: newanswers, limbo: 1});
+
+    }
+
+    handleCloseDialog = () => {
+
+	this.setState({limbo: 0});
 
     }
 				      
@@ -38,8 +45,10 @@ export class DeviceContainer extends React.Component {
 	    <DeviceContainerLogging
 		data={this.props.data.currentChunk}
 		handleNext={this.handleNext}
+		handleCloseDialog={this.handleCloseDialog}
 		handleSubmit={this.handleSubmit}
 		done={done || this.props.tutor}
+		limbo={this.state.limbo}
 		correct={correct}
 		answers={this.state.answers}
 		tutor={this.props.tutor}
@@ -81,6 +90,7 @@ const DeviceContainerLogging = (props) => {
 	    <TextContainer
 		data={props.data}/>
 	    <QuestionContainer
+		limbo={props.limbo}
 		data={props.data.question}
 		handleNext={handleNext}
 		handleSubmit={handleSubmit}
@@ -88,7 +98,8 @@ const DeviceContainerLogging = (props) => {
 		done={props.done}
 		correct={props.correct}
 		answer={props.answer}
-		tutor={props.tutor}/>
+		tutor={props.tutor}
+		handleCloseDialog={props.handleCloseDialog}/>
 	</div>
     );
 }
@@ -123,6 +134,7 @@ class QuestionContainer extends React.Component {
     state = {value: "",
 	     check: 0,
 	     done: 0,
+	     answerCard: false,
 	     correct: null}
 	
 
@@ -140,8 +152,6 @@ class QuestionContainer extends React.Component {
 
     handleSubmit = (event) => {
 	event.preventDefault();
-	console.log(event.target.value);
-	console.log(this.props.data.a);
 	this.props.handleSubmit({id: this.props.data.id, value: this.state.value});
 
     }
@@ -192,12 +202,22 @@ class QuestionContainer extends React.Component {
 
 	    var interaction = this.props.data.i[keys[0]].choices.join(" | ");
 
+	} else if (this.props.data.i[keys[0]].mode == "definition") {
+
+	    var interaction = this.props.data.def;
+
 	}
 		
 
 	return (
 
 	    <div className="devicequestioncontainer">
+		<Modal centered dialogClassName="answercardmodal" show={this.props.limbo} onHide={this.props.handleCloseDialog}>
+		    <AnswerCard
+			word={this.props.data.a.toLowerCase()}
+		    handleHide={this.props.handleCloseDialog}
+		    specificInteraction={this.props.data}/>
+		</Modal>
 		<div className="devicequestion">
 		    <Text className="deviceanswertext">
 			<form className="commentForm" onSubmit={this.handleSubmit}>
@@ -238,3 +258,118 @@ class InteractionCard extends React.Component {
 	);
     }
 }
+
+class AnswerCard extends React.Component {
+                                                         
+    componentDidUpdate (prevProps) {
+        
+        console.log(this.props.show);
+        
+        if (prevProps.show == false && this.props.show == true) {
+            console.log("big FAT HEMLO");
+            setTimeout(() => {this.nameInput.focus();}, 200);
+            
+                                                                                          
+        }
+    }
+    
+
+    render () {
+        
+	var colour="#003153";
+	var fontcolour="white";
+	var full=true;
+        
+     return (
+	    <div>
+	     <div className="colourbar"style={{backgroundColor: colour, color: fontcolour}}>
+<div className="vocabdisplay">{this.props.word}</div><SecondInput handleHide={this.props.handleHide}/>
+</div>
+         <div className="answercarddef">
+        <BookOpen style={{marginRight: "1em"}}/>
+            {"def" in this.props.specificInteraction && this.props.specificInteraction["def"]}
+</div>
+<hr></hr>
+{("samples" in this.props.specificInteraction) && 
+       <div className="answercardsamples" style={{marginTop: "1em", marginLeft: "0.5em", marginBottom: "2em"}}> <SampleSentences samples={this.props.specificInteraction["samples"]}/></div>}
+</div>
+
+	); 
+                                                                                                                          }
+}
+
+class SecondInput extends React.Component {
+  constructor(props) {
+    super(props);
+    this.innerRef = React.createRef();
+  }
+    
+  state = {show: false};
+
+  componentDidMount() {
+    // Add a timeout here
+    setTimeout(() => {
+        try {this.setState({show: true}); this.innerRef.current.focus();} catch (e) {console.log("Error");}}, 400);
+    }
+    
+    handleHide = (event) => {
+        this.props.handleHide();
+        event.preventDefault();
+    }
+
+  render() {
+      
+    return (
+        <div style={{fontFamily: "PT Serif"}}> {this.state.show &&
+        <form className="commentForm" onSubmit={this.handleHide}>
+        <button className="nextbuttonlimbo2" type="submit" autoFocus ref={this.innerRef}/>
+            </form>}</div>
+    );
+  }
+}
+
+class SampleSentences extends React.Component {
+    
+    render () {
+        
+        var words = [];
+        
+        var punct = [".",",",";","!","?",":", "'s", "n't", "n’t", "’s"];
+        
+        if (this.props.samples.length > 0) {
+            
+            
+        
+            var sentencearray = this.props.samples[0][0].split("#");
+            var loc = this.props.samples[0][1];
+            console.log(sentencearray);
+            console.log(loc);
+            
+            for (var i =0; i < sentencearray.length; i++) {
+                if ((punct.includes(sentencearray[i]))) {
+                    var spc = "";
+                } else {
+                    var spc = " ";
+                }
+                if (i==0) {
+                    var spc = "";
+                }
+                if (i == loc) {
+                    words.push(<Text style={{fontWeight: "bold", wordBreak: "keep-all", display: "inline-block", overflowWrap: "normal"}}>{spc + sentencearray[i]}</Text>);
+                } else {
+                    words.push(<Text style={{wordBreak: "keep-all", display: "inline-block", overflowWrap: "normal"}}>{spc + sentencearray[i]}</Text>);
+                }
+            };
+        }
+
+        
+        return (
+            
+<Text style={{wordBreak: "keep-all", wordWrap: "normal", overflowWrap: "normal", fontSize: "1.5vw", textAlign: "center", fontStyle: "italic", fontFamily: "Open Sans"}}>
+             <Edit3 style={{marginRight: "1em"}}/> {this.props.samples.length > 0 && words}
+    </Text>
+        );
+    }
+}
+
+

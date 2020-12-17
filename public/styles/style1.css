@@ -187,8 +187,8 @@ body {
     
     background-color: #048a81;
     position: fixed;
-    right: 0;
-    bottom: 0;
+    right: 1vw;
+    bottom: 2.5vh;
     margin-top: 1em;
     width: 100px;
     height: 100px;
