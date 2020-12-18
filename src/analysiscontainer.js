@@ -249,25 +249,41 @@ class TextContainer extends React.Component {
 
     render () {
 
-	const words = this.props.data.text.split(" ");
+	const paras = this.props.data.text.split("\n");
+
+	console.log(paras.length);
+
 	var Words = [];
 
-	for (var i = 0; i < words.length; i++) {
+	for (var j = 0; j < paras.length; j++){
 
-	    Words.push(<TextWord
-			   word={words[i]}/>);
+	    const words = paras[j].split(" ");
+
+	    for (var i = 0; i < words.length; i++) {
+
+	    	Words.push(<div className="analysistext" style={{"display": "inline-block", "fontFamily": "roboto"}}>
+			       <Text className="analysistext" style={{"fontFamily": "PT Serif", "fontSize": "1.3vw", "textJustify": "inter-word", "textAlign": "justify"}}>
+			       {words[i] + " "}
+		    </Text>
+			   </div>);		
+
+	    }
+
+	    Words.push(<br></br>);
 
 	}
 
+	console.log(Words.length);
+
 	return (
 
-	    <div className="analysistextcontainer">
-		<div className="analysistext">
-			{this.props.data.text}
+		<div className="analysistextcontainer">
+		    <div className="analysistext">
+			{Words}
+		    </div>
 		</div>
-	    </div>
 
-	);
+	    );
     }
 }
 
@@ -451,7 +467,7 @@ class Subquestion extends React.Component {
 
 		if (keys.includes(i.toString())) {
 
-		    if (this.props.data.i[i].mode == "text") {
+		    if (this.props.data.i[i].mode == "text" || this.props.data.i[i].mode == "textsyn") {
 
 			answerWords.push(<div className="analysisanswertext"><Text>"</Text></div>);
 			answerWords.push(<input className="analysisanswerinput" onFocus={this.handleFocus} style={{width: (this.props.data.i[i].a.length + 1).toString() + "ch"}} type="text" placeholder={this.props.answers[this.props.data.i[i].id]} onChange={this.handleInputChange} name={i.toString()}/>);
@@ -581,6 +597,11 @@ class Subquestion extends React.Component {
 	    case "text":
 
 		var interaction = "Choose appropriate quotes from the text.";
+		break;
+
+	    case "textsyn":
+
+		var interaction = "Choose a quote from the text meaning: " + this.props.data.i[this.state.currentInteraction].s;
 		break;
 
 	    case "choose":
