@@ -22,7 +22,7 @@ export class DeviceContainer extends React.Component {
 
 	var newanswers = this.state.answers;
 
-	newanswers[data.id] = data.value;
+	newanswers[data.id] = data.value.trim();
 
 	this.setState({answers: newanswers, limbo: 1});
 

@@ -62,7 +62,8 @@ export class AnalysisContainer extends React.Component {
 	    console.log(this.state.answers);
 	    
 	    var newfree = this.state.answers;
-	    newfree[data.i[keys[i]].id] = data.values[keys[i]];
+	    newfree[data.i[keys[i]].id] = data.values[keys[i]].trim();
+	    console.log(data.values[keys[i]].trim())
 	    var newquestions = this.state.questions;
 	    newquestions[this.state.currentPage] = true;
 	    this.setState({answers: newfree, questions: newquestions});
@@ -279,7 +280,7 @@ class TextContainer extends React.Component {
 
 		<div className="analysistextcontainer">
 		    <div className="analysistext">
-			{Words}
+			{this.props.data.text}
 		    </div>
 		</div>
 
@@ -473,9 +474,15 @@ class Subquestion extends React.Component {
 			answerWords.push(<input className="analysisanswerinput" onFocus={this.handleFocus} style={{width: (this.props.data.i[i].a.length + 1).toString() + "ch"}} type="text" placeholder={this.props.answers[this.props.data.i[i].id]} onChange={this.handleInputChange} name={i.toString()}/>);
 			answerWords.push(<div className="analysisanswertext"><Text>"</Text></div>);					 } else if (this.props.data.i[i].mode == "free") {
 
-		    const x = i;
+			    const x = i;
 
-		    answerWords.push(<textarea name={i.toString()} rows="2"  onFocus={this.handleFocus}   onChange={this.handleInputChange} className="analysisanswerinput analysisanswerinputarea">{this.props.answers[this.props.data.i[x].id]}</textarea>);
+			    if (this.props.data.i[i].freelines == 4) {
+				
+				answerWords.push(<textarea name={i.toString()} rows="4"  onFocus={this.handleFocus}   onChange={this.handleInputChange} className="analysisanswerinput analysisanswerinputarea4">{this.props.answers[this.props.data.i[x].id]}</textarea>);
+
+			    } else {
+				answerWords.push(<textarea name={i.toString()} rows="2"  onFocus={this.handleFocus}   onChange={this.handleInputChange} className="analysisanswerinput analysisanswerinputarea">{this.props.answers[this.props.data.i[x].id]}</textarea>);
+			    }
 
 		} else if (this.props.data.i[i].mode == "filled") {
 
@@ -665,9 +672,9 @@ class Subquestion extends React.Component {
 		</div>
 		<div>
 		{!this.props.done && <button className="subquestionsubmit" onClick={this.handleSubmit}>Submit</button>}
-		    {(this.props.done && this.props.data.m != "summary") ? <div className="subquestion">{donetext}</div> : <div></div>}
+		    {(this.props.done && this.props.data.m != "summary" && this.props.data.m != "noanswer") ? <div className="subquestion">{donetext}</div> : <div></div>}
 		</div>
-		{(this.props.done && this.props.data.m != "summary") ? <div className="subanswer"><Text className="analysisanswertext">{doneWords}</Text></div> : <div></div>}
+		{(this.props.done && this.props.data.m != "summary" && this.props.data.m != "noanswer") ? <div className="subanswer"><Text className="analysisanswertext">{doneWords}</Text></div> : <div></div>}
 		
 	    </div>
 

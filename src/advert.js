@@ -33,18 +33,42 @@ class Advert1 extends React.Component {
 
             return (
 
-                <div>Hemlo</div>
+                <MobileAdvert/>
 
             );
         } else {
 
             return (
 
-                <div>Henlo</div>
+                <DesktopAdvert/>
 
             );
         }
 
+    }
+}
+
+class MobileAdvert extends React.Component {
+
+    render () {
+
+        return (
+
+            <div>Henlo</div>
+
+        );
+    }
+}
+
+class DesktopAdvert extends React.Component {
+
+    render () {
+
+        return (
+
+            <div>Hemlo</div>
+
+        );
     }
 }
 
