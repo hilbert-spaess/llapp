@@ -22,6 +22,7 @@ import {Register} from './register.js';
 import {DisplayLists} from './lists.js';
 import {CourseDays} from './coursedays.js';
 import {TutorView} from './tutorview.js';
+import {Advert} from './advert.js';
 
 export const history = createBrowserHistory();
 
@@ -58,6 +59,7 @@ function App() {
             <Route path="/login" component={Login}/>
             <Route path="/signup" component={Signup}/>
             <Route path="/" component={Landing} exact/>
+	    <Route path="/advert" component={Advert}/>
         </Switch>
         </Router>
         </Auth0Provider>
