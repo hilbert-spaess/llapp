@@ -27,7 +27,7 @@ class Advert1 extends React.Component {
 
     render () {
 
-        const isMobile = window.innerWidth <= 500;
+        const isMobile = window.innerWidth <= 1000;
 
         if (isMobile) {
 
