@@ -72,17 +72,60 @@ class ForwardButton extends React.Component {
 
 class TextContainer extends React.Component {
 
+    state = {hover: this.props.data.text.split(" ").map(x => "no"),
+	     select: this.props.data.text.split(" ").map(x => "no"),
+	     selectQuestion: this.props.selectQuestion,
+	     selected: false}
+
+    mouseEnter = (i) => {
+
+	if (this.state.selectQuestion && !this.state.selected) {
+
+	    var newhover = this.state.hover;
+	    newhover[i] = "yes";
+	    this.setState({hover: newhover});
+	}
+    }
+
     render () {
+
+	const paras = this.props.data.text.split("\n");
+
+	console.log(paras.length);
+
+	var Words = [];
+
+	for (var j = 0; j < paras.length; j++){
+
+	    const words = paras[j].split(" ");
+
+	    for (var i = 0; i < words.length; i++) {
+
+	    	Words.push(<div className="analysistext" style={{"display": "inline-block", "fontFamily": "roboto"}}>
+			       <Text className="analysistext" style={{"fontFamily": "PT Serif", "fontSize": "1.3vw", "textJustify": "inter-word", "textAlign": "justify"}}>
+			       {words[i] + " "}
+		    </Text>
+			   </div>);		
+
+	    }
+
+	    Words.push(<br></br>);
+
+	}
+
+	console.log(Words.length);
+	console.log(this.props.data.text.split()[0] == "\"By");
+	console.log(this.props.data.text.split()[0]);
 
 	return (
 
-	    <div className="analysistextcontainer">
-		<div className="analysistext">
-		    {this.props.data.text}
+		<div className="analysistextcontainer">
+		    <div className="analysistext">
+			{this.props.data.text.split(" ")[0] == "\"By" ? Words : this.props.data.text}
+		    </div>
 		</div>
-	    </div>
 
-	);
+	    );
     }
 }
 
