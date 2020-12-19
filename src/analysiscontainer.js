@@ -275,12 +275,14 @@ class TextContainer extends React.Component {
 	}
 
 	console.log(Words.length);
+	console.log(this.props.data.text.split()[0] == "\"By");
+	console.log(this.props.data.text.split()[0]);
 
 	return (
 
 		<div className="analysistextcontainer">
 		    <div className="analysistext">
-			{this.props.data.text}
+			{this.props.data.text.split(" ")[0] == "\"By" ? Words : this.props.data.text}
 		    </div>
 		</div>
 
