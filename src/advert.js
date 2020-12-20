@@ -1,6 +1,8 @@
 import React, {useRef} from 'react';
 import ReactDOM from 'react-dom';
 import {Link} from 'react-router-dom';
+import alexim from './zhengtao.jpg';
+import lizzie from './lizzie.jpg';
 import {useApi} from './use-api.js';
 import {Redirect} from 'react-router-dom';
 import {APIHOST} from './api_config.js';
@@ -56,7 +58,7 @@ class MobileAdvert extends React.Component {
 
                 <div style={{overflow: "scroll"}}>
 		    <nav className="navbar navbar-custom navbar-expand" style={{backgroundColor: "transparent", height: "10vh", marginLeft: "5%", marginRight: "5%"}}>
-			      <a href="/" style={{fontSize: "20px"}}>RiceCake</a>
+			      <a href="/" style={{fontSize: "6vw"}}>RiceCake</a>
         <ul className="navbar-nav ml-auto">
           <li className="nav-item signloglink">
             <Link style={{color: "green", marginRight: "1em"}} to="/signup">Sign Up </Link>
@@ -82,11 +84,58 @@ class MobileAdvert extends React.Component {
     <div className="bg-circle-2 bg-circle"></div>
     <div className="bg-circle-3 bg-circle"></div>
     <div className="bg-circle-4 bg-circle"></div>
-  </header>
+                  </header>
+                  <Faces/>
 		</div>
             
 		    
 
+        );
+         }
+      }
+         
+
+class Faces extends React.Component {
+
+    render () {
+
+        return (
+
+            <div>
+              <Face
+                im={alexim}
+                name={"Alex"}
+                description={["University of Cambridge", "Clare College","Natural Sciences degree"]}/>
+                            <Face
+                              im={lizzie}
+                              name={"Lizzie"}
+                              description={["University of Cambridge", "Clare College","Natural Sciences degree"]}/>
+            </div>
+
+        );
+    }
+}
+
+class Face extends React.Component {
+
+    render () {
+
+        var Descriptions = [];
+
+        for (var i =0; i < this.props.description.length; i++) {
+            Descriptions.push(<div>{this.props.description[i]}</div>);
+        }
+            
+
+        return (
+
+            <div style={{textAlign: "center", paddingTop: "5vh"}}>
+              <div style={{textAlign:"center", justifyContent:"center"}}>
+            <img style={{width: "auto", "height": "30vh"}} src={this.props.im}/>
+            </div>
+              <div style={{marginTop: "2vh", fontWeight: "bold", fontSize: "4vw"}}>{this.props.name}</div>
+              <div>{Descriptions}</div>
+            </div>
         );
     }
 }
