@@ -62,8 +62,7 @@ export class AnalysisContainer extends React.Component {
 	    console.log(this.state.answers);
 	    
 	    var newfree = this.state.answers;
-	    newfree[data.i[keys[i]].id] = data.values[keys[i]].trim();
-	    console.log(data.values[keys[i]].trim())
+	    newfree[data.i[keys[i]].id] = data.values[keys[i]] == undefined ? undefined : data.values[keys[i]].trim();
 	    var newquestions = this.state.questions;
 	    newquestions[this.state.currentPage] = true;
 	    this.setState({answers: newfree, questions: newquestions});
@@ -258,19 +257,11 @@ class TextContainer extends React.Component {
 
 	for (var j = 0; j < paras.length; j++){
 
-	    const words = paras[j].split(" ");
-
-	    for (var i = 0; i < words.length; i++) {
-
-	    	Words.push(<div className="analysistext" style={{"display": "inline-block", "fontFamily": "roboto"}}>
-			       <Text className="analysistext" style={{"fontFamily": "PT Serif", "fontSize": "1.3vw", "textJustify": "inter-word", "textAlign": "justify"}}>
-			       {words[i] + " "}
-		    </Text>
-			   </div>);		
-
-	    }
-
-	    Words.push(<br></br>);
+	    Words.push(
+			   <div className="analysistext">
+			       {paras[j]}
+			   </div>
+		      );
 
 	}
 
@@ -280,10 +271,10 @@ class TextContainer extends React.Component {
 
 	return (
 
-		<div className="analysistextcontainer">
-		    <div className="analysistext">
-			{this.props.data.text.split(" ")[0] == "\"By" ? Words : this.props.data.text}
-		    </div>
+	    <div className="analysistextcontainer">
+
+		{Words}
+
 		</div>
 
 	    );
