@@ -90,7 +90,10 @@ class MobileAdvert extends React.Component {
                     <Faces/>
 		    <SellingPoint
 		    example={<ExampleSentences/>}
-		    title={"Vocabulary drills"}/>
+			title={"Vocabulary drills"}/>
+		    <SellingPoint
+	    example={<WritingExercise/>}
+	    title={"Writing Exercises"}/>
 		</div>
             
 		    
@@ -105,11 +108,24 @@ class SellingPoint extends React.Component {
 
 	return (
 
-	    <div style={{width: "100%", height: "30vh", fontSize: "4vw", padding: "10px"}}>
+	    <div style={{width: "100%", height: "40vh", fontSize: "4vw", padding: "10px"}}>
 		<div style={{fontSize: "6vw"}}>{this.props.title}</div>
-		<div style={{width: "80%", marginLeft: "10%", borderRadius: "20px", backgroundColor: "white", marginTop: "2vh"}}>
+		<div style={{width: "80%", marginLeft: "10%", borderRadius: "20px", backgroundColor: "white", marginTop: "2vh", padding: "20px"}}>
 		    {this.props.example}
 		</div>
+	    </div>
+	);
+    }
+}
+
+class WritingExercise extends React.Component {
+
+    render () {
+
+	return (
+
+	    <div style={{fontFamily: "lora"}}>
+		Where was she going?
 	    </div>
 	);
     }
