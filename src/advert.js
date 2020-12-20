@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import {Link} from 'react-router-dom';
 import alexim from './zhengtao.jpg';
 import lizzie from './lizzie.jpg';
+import jacob from './jacob.jpg';
 import {useApi} from './use-api.js';
 import {Redirect} from 'react-router-dom';
 import {APIHOST} from './api_config.js';
@@ -101,16 +102,23 @@ class Faces extends React.Component {
 
         return (
 
-            <div>
+            <>
               <Face
                 im={alexim}
+                bc={"lightgreen"}
                 name={"Alex"}
                 description={["University of Cambridge", "Clare College","Natural Sciences degree"]}/>
                             <Face
-                              im={lizzie}
+                              im={jacob}
+                              bc={"white"}
+                              name={"Jacob"}
+                              description={["University of Cambridge", "Clare College","Natural Sciences degree"]}/>
+                                    <Face
+                                      im={lizzie}
+                                      bc={"lightblue"}
                               name={"Lizzie"}
                               description={["University of Cambridge", "Clare College","Natural Sciences degree"]}/>
-            </div>
+            </>
 
         );
     }
@@ -128,13 +136,15 @@ class Face extends React.Component {
             
 
         return (
-
-            <div style={{textAlign: "center", paddingTop: "5vh"}}>
-              <div style={{textAlign:"center", justifyContent:"center"}}>
-            <img style={{width: "auto", "height": "30vh"}} src={this.props.im}/>
+            <div style={{backgroundColor: this.props.bc, overflow: "hidden", width:"100%", height: "30%", paddingBottom: "5vh"}}>
+              <div style={{textAlign: "center", paddingTop: "5vh"}}>
+                <div style={{float: "left",  width: "50%", paddingLeft: "10vw", textAlign:"left"}}>
+                <img style={{width: "35vw", "height": "30vh"}} src={this.props.im}/>
+              </div>
+                <div style={{float: "right", paddingTop: "2vh", width: "50%", left: "50%"}}>
+            <div style={{fontWeight: "bold", fontSize: "6vw"}}>{this.props.name}</div><div style={{marginTop: "1vh", fontSize: "4vw"}}>{Descriptions}</div>
             </div>
-              <div style={{marginTop: "2vh", fontWeight: "bold", fontSize: "4vw"}}>{this.props.name}</div>
-              <div>{Descriptions}</div>
+            </div>
             </div>
         );
     }
