@@ -84,7 +84,7 @@ h2 {
 }
 
 header.masthead {
-     padding-top: calc(7rem + 72px);
+  padding-top: calc(7rem + 72px);
   position: relative;
   overflow: hidden;
   padding-top: 0;

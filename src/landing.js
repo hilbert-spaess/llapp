@@ -126,7 +126,7 @@ class InstitutionCard extends React.Component {
     }
 }
    
-class ExampleSentences extends React.Component {
+export class ExampleSentences extends React.Component {
     
     state = {word1s: ["ambivalent", "compliment"],
              word2s: ["ambiguous", "complement"],

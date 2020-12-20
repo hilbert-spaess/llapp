@@ -9,6 +9,7 @@ import {Redirect} from 'react-router-dom';
 import {APIHOST} from './api_config.js';
 import {Card, Container, Row, Col, Nav, Navbar, Form, FormControl, Popover, OverlayTrigger, Overlay, Toast} from 'react-bootstrap';
 import {Auth0Provider, useAuth0, withAuthenticationRequired} from '@auth0/auth0-react';
+import {ExampleSentences} from './landing.js';
 
 export const Advert = () => {
 
@@ -58,7 +59,7 @@ class MobileAdvert extends React.Component {
         return (
 
                 <div style={{overflow: "scroll"}}>
-		    <nav className="navbar navbar-custom navbar-expand" style={{backgroundColor: "transparent", height: "10vh", marginLeft: "5%", marginRight: "5%"}}>
+		    <nav className="navbar navbar-custom navbar-expand" style={{backgroundColor: "#f5f5f5", height: "10vh", width: "100%", position: "fixed", "top": 0, "zIndex": 2, overflow: "hidden", paddingLeft: "5vw", paddingRight:"5vw"}}>
 			      <a href="/" style={{fontSize: "6vw"}}>RiceCake</a>
         <ul className="navbar-nav ml-auto">
           <li className="nav-item signloglink">
@@ -69,10 +70,10 @@ class MobileAdvert extends React.Component {
           </li>
         </ul>
   </nav>
-                  <header className="masthead text-white">
+                    <header className="masthead text-white" style={{"z":0}} >
     <div className="masthead-content">
     <Row>
-      <div style={{width: "70vw", marginLeft: "10vw", marginTop: "5vh"}}>
+      <div style={{width: "70vw", marginLeft: "10vw", marginTop: "15vh"}}>
         <h2 className="masthead-heading mb-0" style={{fontSize: "8vw"}}>Weekly tutoring. Daily exercises.</h2>
         <h3 className="masthead-subheading mb-0" style={{marginTop: "3vh", fontSize: "6vw"}}>Improve your written English quickly and intelligently.</h3>
             <div align="left">
@@ -86,7 +87,10 @@ class MobileAdvert extends React.Component {
     <div className="bg-circle-3 bg-circle"></div>
     <div className="bg-circle-4 bg-circle"></div>
                   </header>
-                  <Faces/>
+                    <Faces/>
+		    <SellingPoint
+		    example={<ExampleSentences/>}
+		    title={"Vocabulary drills"}/>
 		</div>
             
 		    
@@ -94,7 +98,23 @@ class MobileAdvert extends React.Component {
         );
          }
       }
-         
+
+class SellingPoint extends React.Component {
+
+    render () {
+
+	return (
+
+	    <div style={{width: "100%", height: "30vh", fontSize: "4vw", padding: "10px"}}>
+		<div style={{fontSize: "6vw"}}>{this.props.title}</div>
+		<div style={{width: "80%", marginLeft: "10%", borderRadius: "20px", backgroundColor: "white", marginTop: "2vh"}}>
+		    {this.props.example}
+		</div>
+	    </div>
+	);
+    }
+}
+	    
 
 class Faces extends React.Component {
 
