@@ -74,7 +74,7 @@ class MobileAdvert extends React.Component {
     <div className="masthead-content">
     <Row>
       <div style={{width: "70vw", marginLeft: "10vw", marginTop: "15vh"}}>
-        <h2 className="masthead-heading mb-0" style={{fontSize: "8vw"}}>Weekly tutoring. Daily exercises.</h2>
+        <h2 className="masthead-heading mb-0" style={{fontSize: "8vw"}}>Weekly tutoring. Online exercises.</h2>
         <h3 className="masthead-subheading mb-0" style={{marginTop: "3vh", fontSize: "6vw"}}>Improve your written English quickly and intelligently.</h3>
             <div align="left">
         <Link align="left" to="/signup" className="btn btn-primary btn-xl rounded-pill mt-5">Sign up now</Link>
@@ -90,10 +90,10 @@ class MobileAdvert extends React.Component {
                     <Faces/>
 		    <SellingPoint
 		    example={<ExampleSentences/>}
-			title={"Vocabulary drills"}/>
+			title={"Learn vocab through usage"}/>
 		    <SellingPoint
-	    example={<WritingExercise/>}
-	    title={"Writing Exercises"}/>
+	    example={<AnalysisExercise/>}
+	    title={"Analyse classic texts"}/>
 		</div>
             
 		    
@@ -118,18 +118,24 @@ class SellingPoint extends React.Component {
     }
 }
 
-class WritingExercise extends React.Component {
+class AnalysisExercise extends React.Component {
+
+    state = {val: "The repetition of the word \"grey\" and the fact that this colour was to be \"seen everywhere\" highlights the dullness of their surroundings. The colour epitomises the remoteness and uniformity of where they live."}
 
     render () {
 
 	return (
 
 	    <div style={{fontFamily: "lora"}}>
-		Where was she going?
+		<div style={{backgroundColor: "#f2eecb", fontSize: "3vw", marginBottom: "2vh"}}>
+		    The sun had baked the plowed land into a grey mass, with little cracks running through it. Even the grass was not green, for the sun had burned the tops of the long blades until they were the same grey colour to be seen everywhere.
+		    </div>
+		{this.state.val}
 	    </div>
 	);
     }
 }
+
 	    
 
 class Faces extends React.Component {
