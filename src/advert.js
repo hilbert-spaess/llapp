@@ -1,7 +1,7 @@
 import React, {useRef} from 'react';
 import ReactDOM from 'react-dom';
 import {Link} from 'react-router-dom';
-import alexim from './zhengtao.jpg';
+import zhengtao from './zhengtao.jpg';
 import lizzie from './lizzie.jpg';
 import jacob from './jacob.jpg';
 import {useApi} from './use-api.js';
@@ -58,7 +58,7 @@ class MobileAdvert extends React.Component {
 
         return (
 
-                <div style={{overflow: "scroll"}}>
+                <div>
 		    <nav className="navbar navbar-custom navbar-expand" style={{backgroundColor: "#f5f5f5", height: "10vh", width: "100%", position: "fixed", "top": 0, "zIndex": 2, overflow: "hidden", paddingLeft: "5vw", paddingRight:"5vw"}}>
 			      <a href="/" style={{fontSize: "6vw"}}>RiceCake</a>
         <ul className="navbar-nav ml-auto">
@@ -89,11 +89,30 @@ class MobileAdvert extends React.Component {
                   </header>
                     <Faces/>
 		    <SellingPoint
+			bc={["white", "#b5e7a0"]}
+			height={"40vh"}
 		    example={<ExampleSentences/>}
 			title={"Learn vocab through usage"}/>
 		    <SellingPoint
+			bc={["#b5e7a0", "white"]}
+			height={"60vh"}
 	    example={<AnalysisExercise/>}
-	    title={"Analyse classic texts"}/>
+			title={"Build confidence analysing text"}/>
+		    <header className="masthead text-white" style={{"z":0}} >
+    <div className="masthead-content">
+    <Row>
+      <div style={{width: "70vw", marginLeft: "10vw", marginTop: "5vh"}}>
+          <h2 className="masthead-heading mb-0" style={{fontSize: "8vw"}}>Get in touch with Alex to start learning with us.</h2>
+	  <h3 className="masthead-subheading mb-0" style={{marginTop: "3vh", fontSize: "6vw"}}>Alex 李政陶</h3>
+	  <h3 className="masthead-subheading mb-0" style={{marginTop: "3vh", fontSize: "6vw"}}>Wx: lzt_oxford</h3>
+        </div>
+    </Row>
+    </div>
+    <div className="bg-circle-1 bg-circle"></div>
+    <div className="bg-circle-2 bg-circle"></div>
+    <div className="bg-circle-3 bg-circle"></div>
+    <div className="bg-circle-4 bg-circle"></div>
+                </header>
 		</div>
             
 		    
@@ -108,12 +127,25 @@ class SellingPoint extends React.Component {
 
 	return (
 
-	    <div style={{width: "100%", height: "40vh", fontSize: "4vw", padding: "10px"}}>
+	    <div style={{width: "100%", height: this.props.height, fontSize: "4vw", padding: "10px", background: "linear-gradient(0deg, " + this.props.bc[1] + " 0%, " + this.props.bc[0] + " 100%)"}}>
 		<div style={{fontSize: "6vw"}}>{this.props.title}</div>
 		<div style={{width: "80%", marginLeft: "10%", borderRadius: "20px", backgroundColor: "white", marginTop: "2vh", padding: "20px"}}>
 		    {this.props.example}
 		</div>
 	    </div>
+	);
+    }
+}
+
+class Contact extends React.Component {
+
+    render () {
+
+	return (
+
+	    <div style={{width: "100%"}}>
+	    <div></div></div>
+
 	);
     }
 }
@@ -146,20 +178,20 @@ class Faces extends React.Component {
 
             <>
               <Face
-                im={alexim}
-                bc={"lightgreen"}
+                  im={zhengtao}
+                  bc={["#b5e7a0", "white"]}
                 name={"Alex"}
-                description={["University of Cambridge", "Clare College","Natural Sciences degree"]}/>
+                description={["University of Cambridge", "Clare College","Natural Sciences graduate"]}/>
                             <Face
-                              im={jacob}
-                              bc={"white"}
+				im={jacob}
+				bc={["white", "#b5e7a0"]}
                               name={"Jacob"}
-                              description={["University of Cambridge", "Clare College","Natural Sciences degree"]}/>
+                              description={["University of Cambridge", "Trinity College","Maths graduate"]}/>
                                     <Face
                                       im={lizzie}
-                                      bc={"lightblue"}
+					bc={["#b5e7a0", "white"]}
                               name={"Lizzie"}
-                              description={["University of Cambridge", "Clare College","Natural Sciences degree"]}/>
+                              description={["UCL", "Geography graduate"]}/>
             </>
 
         );
@@ -178,12 +210,12 @@ class Face extends React.Component {
             
 
         return (
-            <div style={{backgroundColor: this.props.bc, overflow: "hidden", width:"100%", height: "30%", paddingBottom: "5vh"}}>
+            <div style={{background: "linear-gradient(0deg, " + this.props.bc[1] + " 0%, " + this.props.bc[0] + " 100%)", overflow: "hidden", width:"100%", height: "30%", paddingBottom: "5vh"}}>
               <div style={{textAlign: "center", paddingTop: "5vh"}}>
-                <div style={{float: "left",  width: "50%", paddingLeft: "10vw", textAlign:"left"}}>
-                <img style={{width: "35vw", "height": "30vh"}} src={this.props.im}/>
+                <div style={{float: "left",  width: "50%", paddingLeft: "5vw", textAlign:"left"}}>
+                    <img style={{width: "35vw", "height": "auto"}} src={this.props.im}/>
               </div>
-                <div style={{float: "right", paddingTop: "2vh", width: "50%", left: "50%"}}>
+                  <div style={{float: "right", paddingTop: "2vh", width: "50%", left: "50%", paddingRight: "5vw"}}>
             <div style={{fontWeight: "bold", fontSize: "6vw"}}>{this.props.name}</div><div style={{marginTop: "1vh", fontSize: "4vw"}}>{Descriptions}</div>
             </div>
             </div>
