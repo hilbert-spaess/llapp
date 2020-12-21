@@ -54,6 +54,22 @@ class Advert1 extends React.Component {
 
 class MobileAdvert extends React.Component {
 
+    constructor(props) {
+
+	super(props);
+
+	this.myDivToFocus = React.createRef();
+
+    }
+
+    handleContact = () => {
+
+	console.log("hemlo");
+	this.myDivToFocus.current.scrollIntoView({
+	    behaviour: "smooth"});
+
+    }
+
     render () {
 
         return (
@@ -63,10 +79,7 @@ class MobileAdvert extends React.Component {
 			      <a href="/" style={{fontSize: "6vw"}}>RiceCake</a>
         <ul className="navbar-nav ml-auto">
           <li className="nav-item signloglink">
-            <Link style={{color: "green", marginRight: "1em"}} to="/signup">Sign Up </Link>
-          </li>
-          <li className="nav-item signloglink">
-            <Link style={{color: "green"}} to="/login">Log In</Link>
+              <Link style={{color: "green", marginRight: "1em", fontSize: "3vw"}} onClick={this.handleContact}>Contact us</Link>
           </li>
         </ul>
   </nav>
@@ -77,7 +90,7 @@ class MobileAdvert extends React.Component {
         <h2 className="masthead-heading mb-0" style={{fontSize: "8vw"}}>Weekly tutoring. Online exercises.</h2>
         <h3 className="masthead-subheading mb-0" style={{marginTop: "3vh", fontSize: "6vw"}}>Improve your written English quickly and intelligently.</h3>
             <div align="left">
-        <Link align="left" to="/signup" className="btn btn-primary btn-xl rounded-pill mt-5">Sign up now</Link>
+		<Link align="left" onClick={this.handleContact} className="btn btn-primary btn-xl rounded-pill mt-5">Contact us</Link>
             </div>
         </div>
     </Row>
@@ -101,8 +114,8 @@ class MobileAdvert extends React.Component {
 		    <header className="masthead text-white" style={{"z":0}} >
     <div className="masthead-content">
     <Row>
-      <div style={{width: "70vw", marginLeft: "10vw", marginTop: "5vh"}}>
-          <h2 className="masthead-heading mb-0" style={{fontSize: "8vw"}}>Get in touch with Alex to start learning with us.</h2>
+	<div ref={this.myDivToFocus} style={{width: "70vw", marginLeft: "10vw", marginTop: "5vh"}}>
+            <h2 className="masthead-heading mb-0" style={{fontSize: "8vw", marginTop: "5vh"}}>Get in touch with Alex to start learning with us.</h2>
 	  <h3 className="masthead-subheading mb-0" style={{marginTop: "3vh", fontSize: "6vw"}}>Alex 李政陶</h3>
 	  <h3 className="masthead-subheading mb-0" style={{marginTop: "3vh", fontSize: "6vw"}}>Wx: lzt_oxford</h3>
         </div>
