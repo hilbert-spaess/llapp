@@ -269,7 +269,7 @@ class Subquestion extends React.Component {
 		    </Text>
 		    
 		 </div>}
-		{this.props.data.m != "summary" ? <>
+		{this.props.data.m != "summary" && this.props.data.m != "noanswer" ? <>
 		<div className="subquestion">{donetext}</div>
 		 <div className="subanswer"><Text className="analysisanswertext">{doneWords}</Text></div></> : <div></div>}
 		
