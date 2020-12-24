@@ -103,7 +103,7 @@ const LearningContainerData = (props) => {
         return <LearningContainerUpdatable
             allChunks= {props.data.read_data.allChunks}
 		   type={props.type}
-		   metadata={{progress: props.data.read_data.today_progress, lives: props.data.read_data.lives, review_data: props.data.review_data, nextList: props.nextList, course_id: props.data.read_data.course_id, answers: props.data.read_data.answers}}   
+		   metadata={{progress: props.data.read_data.today_progress, lives: props.data.read_data.lives, review_data: props.data.review_data, nextList: props.nextList, course_id: props.data.read_data.course_id, answers: props.data.read_data.answers, handleBack: props.data.handleBack}}   
             status = {props.data.read_data.status}
                />;  
     }
@@ -127,7 +127,7 @@ const LearningContainerData = (props) => {
         <LearningContainerUpdatable
           allChunks = {data.allChunks}
           type= {props.type}
-            metadata={{progress: data.today_progress, review_data: data.review_data, nextList: props.nextList, course_id: data.course_id, answers: data.answers}}
+            metadata={{progress: data.today_progress, review_data: data.review_data, nextList: props.nextList, course_id: data.course_id, answers: data.answers, handleBack: props.data.handleBack}}
           status = {data.status}
         />          
         </div>
@@ -218,7 +218,7 @@ class LearningContainerUpdatable extends React.Component {
         return (
             
             <LearningContainerLogging
-		metadata={{progress: progress, lives: this.state.lives, review_data: this.props.metadata.review_data, parcelData: this.state.parcelData, handleNext: this.handleNext, course_id: this.props.metadata.course_id, answers: this.props.metadata.answers}}
+		metadata={{progress: progress, lives: this.state.lives, review_data: this.props.metadata.review_data, parcelData: this.state.parcelData, handleNext: this.handleNext, course_id: this.props.metadata.course_id, answers: this.props.metadata.answers, handleBack: this.props.metadata.handleBack}}
               data={{currentChunk: this.props.allChunks[this.state.currentChunkNo], allChunks: this.props.allChunks, currentChunkNo: this.state.currentChunkNo}}
                 type = {this.props.type}
                 status = {this.state.status}
@@ -262,7 +262,7 @@ const LearningContainerLogging = (props) => {
 		type={props.type}
 			status={props.status}
 		data = {{currentChunk: props.data.currentChunk, course_id: props.data.course_id}}
-		metadata = {{handleNext: handleNext, progress: props.metadata.progress, currentChunkNo: props.metadata.currentChunkNo, lives: props.metadata.lives, course_id: props.metadata.course_id, answers: props.metadata.answers}}/>
+		metadata = {{handleNext: handleNext, progress: props.metadata.progress, currentChunkNo: props.metadata.currentChunkNo, lives: props.metadata.lives, course_id: props.metadata.course_id, answers: props.metadata.answers, handleBack: props.metadata.handleBack}}/>
 	    </div>
 	);
     } else if (loading) {
@@ -277,6 +277,12 @@ const LearningContainerLogging = (props) => {
 
 class LearningContainer extends React.Component {
 
+    handleBack = () => {
+
+	console.log("bemlow2");
+	this.props.metadata.handleBack();
+    }
+
     render () {
 
 	if (this.props.data.currentChunk.mechanism == "analysis") {
@@ -290,6 +296,7 @@ class LearningContainer extends React.Component {
 			status={this.props.status}
 			data={this.props.data}
 			metadata={this.props.metadata}
+			handleBack={this.handleBack}
 		    />
 		);
 	    } else {

@@ -6,6 +6,7 @@ import {useApi} from './use-api.js';
 import {APIHOST} from './api_config.js';
 import {Redirect} from 'react-router-dom';
 import {LearningSupervisor1} from './ReadingSupervisor.js';
+import {ArrowLeft} from 'react-feather';
 
 export class CourseDays extends React.Component {
 
@@ -17,7 +18,8 @@ export class CourseDays extends React.Component {
 
 	    <SidebarWrapped
 		WrappedComponent={CourseDaysLoader}
-		data={data}/>
+		data={data}
+		thin={true}/>
 
 	);
     }
@@ -51,11 +53,24 @@ const CourseDaysLoader = (props) => {
 
 class CourseDays1 extends React.Component {
 
-    state = {day: null}
+    state = {day: null,
+	     keyno: null}
 
     handleStart = (i) => {
 
 	this.setState({day: i});
+
+    }
+
+    handleBack = () => {
+
+	this.setState({day: null});
+
+    }
+
+    switchKey = (i) => {
+	console.log("switchkey");
+	this.setState({keyno: i});
 
     }
 
@@ -68,7 +83,10 @@ class CourseDays1 extends React.Component {
 		<CourseLoader
 		    id={this.state.day}
 		    data={this.props.data}
-		    notifications={this.props.daydata.notifications[this.state.day - 1]}/>
+		    notifications={this.props.daydata.notifications[this.state.day - 1]}
+		    handleBack={this.handleBack}
+		    keyno={this.state.keyno}
+		    switchKey={this.switchKey}/>
 
 	    );
 
@@ -84,14 +102,47 @@ class CourseDays1 extends React.Component {
 				 handleClick={this.handleStart}/>);
 	}
 
+	console.log(this.props.data);
+
 	return (
 
 	    <div className="coursecardcontainer">
+		{this.props.data != undefined && this.props.data.mode=="tutor" && <TutorBack/>}
 		<Row style={{justifyContent: "center"}}>
 		    {courseCards}
 		</Row>
 	    </div>
 	);
+    }
+}
+
+class TutorBack extends React.Component {
+
+    state = {return: 0}
+
+    handleClick= () => {
+
+	this.setState({return: 1});
+
+    }
+
+    render () {
+
+	if (this.state.return) {
+
+	    return (
+
+		<Redirect to="/tutors"/>
+
+	    );
+	}
+
+	return (
+
+	    <ArrowLeft style={{position: "fixed", cursor: "pointer"}} size={30} onClick={this.handleClick}/>
+
+	);
+
     }
 }
 
@@ -147,26 +198,34 @@ const CourseLoader = (props) => {
     return (
          <CourseLoad
              data={data}
-	     notifications={props.notifications}/>
+	     notifications={props.notifications}
+	     handleBack={props.handleBack}
+	     keyno={props.keyno}
+	     switchKey={props.switchKey}/>
         );
 }   
 
 
 class CourseLoad extends React.Component {
 
-    state = {key: null}
-
     handleClick = (i) => {
 
-	this.setState({key: i});
+	this.props.switchKey(i);
+
+    }
+
+    handleBack = () => {
+	this.props.switchKey(null);
+	this.forceUpdate();
 
     }
 
     render () {
 
 	console.log(this.props.notifications);
+	console.log(this.props.keyno);
 
-	if (this.state.key == null) {
+	if (this.props.keyno == null) {
 
 	    console.log(this.props.data);
 
@@ -186,7 +245,9 @@ class CourseLoad extends React.Component {
 
 	    return (
 
-	    <div className="coursecardcontainer">
+		<div className="coursecardcontainer">
+		    <CourseBack
+			handleBack={this.props.handleBack}/>
 		<Row style={{justifyContent: "center"}}>
 		    {keyCards}
 		</Row>
@@ -199,14 +260,27 @@ class CourseLoad extends React.Component {
 	console.log(this.props.data.allChunks);
 
 	var newdata = this.props.data;
-	newdata.allChunks = this.props.data.allChunks[Object.keys(this.props.data.allChunks)[this.state.key]];
+	newdata.allChunks = this.props.data.allChunks[Object.keys(this.props.data.allChunks)[this.props.keyno]];
 
 	return (
 
-	    <Redirect to={{pathname: "/read", data: {read_data: newdata}, type: (this.props.data.data.mode == "tutor") ? "tutor" : "daily_reading"}}/>
+		<LearningSupervisor1
+		    data={{read_data: newdata, handleBack: this.handleBack}}
+		    type={(this.props.data.data.mode == "tutor") ? "tutor" : "daily_reading"}/>
 
 	);
     }
 }
 
+class CourseBack extends React.Component {
+
+    render () {
+
+	return (
+
+	    <ArrowLeft style={{position: "fixed"}} size={30} onClick={this.props.handleBack}/>
+
+	);
+    }
+}
     

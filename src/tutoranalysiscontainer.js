@@ -28,6 +28,7 @@ export class TutorAnalysisContainer extends React.Component {
 	return (
 
 	    <div>
+	      <ArrowLeft style={{position: "fixed", color: "blue", cursor: "pointer", bottom: "5%", left: "5%"}} onClick={this.props.handleBack} size={30}/>
 		{this.state.currentPage > 0 && <BackButton
 					      onClick={this.handleBack}/>}
 		{(this.state.currentPage < this.props.data.currentChunk.questions.length-1) && <ForwardButton
