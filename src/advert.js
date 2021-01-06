@@ -10,6 +10,7 @@ import {APIHOST} from './api_config.js';
 import {Card, Container, Row, Col, Nav, Navbar, Form, FormControl, Popover, OverlayTrigger, Overlay, Toast} from 'react-bootstrap';
 import {Auth0Provider, useAuth0, withAuthenticationRequired} from '@auth0/auth0-react';
 import {ExampleSentences} from './landing.js';
+import ReactFullpage from "@fullpage/react-fullpage";
 
 export const Advert = () => {
 
@@ -50,6 +51,71 @@ class Advert1 extends React.Component {
         }
 
     }
+}
+
+const DesktopAdvert = () => (
+  <ReactFullpage
+    sectionsColor={["#282c34", "#ff5f45", "#0798ec"]}
+    onLeave={(origin, destination, direction) => {
+      console.log("onLeave event", { origin, destination, direction });
+    }}
+    render={({ state, fullpageApi }) => {
+      console.log("render prop change", state, fullpageApi); // eslint-disable-line no-console
+
+      return (
+        <div>
+          <DesktopHeader />
+	  <DesktopFaces/>
+          <MySection content={"Slide up!"} />
+        </div>
+      );
+    }}
+  />
+);
+
+class DesktopHeader extends React.Component {
+
+    render () {
+
+	return (
+	    <div className="section">
+		<nav className="navbar navbar-custom navbar-expand" style={{backgroundColor: "transparent", height: "10vh", width: "100%", position: "fixed", "top": 0, "zIndex": 2, overflow: "hidden", paddingLeft: "5vw", paddingRight:"5vw", color: "white"}}>
+		    <a href="/" style={{fontSize: "2vw", color: "white"}}>RiceCake</a>
+        <ul className="navbar-nav ml-auto">
+          <li className="nav-item signloglink">
+              <Link style={{marginRight: "1em", fontSize: "1vw", color: "white"}} onClick={this.handleContact}>Contact us</Link>
+          </li>
+        </ul>
+  </nav>
+    <Row>
+      <div style={{width: "40vw", marginLeft: "10vw", marginTop: "25vh"}}>
+          <h2 className="masthead-heading mb-0" style={{fontSize: "4vw", color: "white"}}>Flexible tutoring. Regular exercises.</h2>
+          <h3 className="masthead-subheading mb-0" style={{marginTop: "3vh", fontSize: "2vw", color: "grey"}}>Improve your written English quickly and intelligently.</h3>
+            <div align="left">
+		<Link align="left" onClick={this.handleContact} className="btn btn-primary btn-xl rounded-pill mt-5">Contact us</Link>
+            </div>
+      </div>
+	<div style={{width: "40vw", height: "40vh", position: "absolute", left: "50vw", top: "50vh", transform: "translateY(-50%)", backgroundColor: "#f5f5f5", color: "black", padding: "1em", fontSize: "1.6vw", marginLeft: "5%", borderRadius: "10px"}}>{<ExampleSentences/>}</div>
+    </Row>
+    <div className="bg-circle-1 bg-circle"></div>
+    <div className="bg-circle-2 bg-circle"></div>
+    <div className="bg-circle-3 bg-circle"></div>
+    <div className="bg-circle-4 bg-circle"></div>
+		</div>
+	);
+    }
+}
+
+	
+
+class MySection extends React.Component {
+  render() {
+    return (
+      <div className="section">
+        <h3>{this.props.content}</h3>
+      </div>
+    );
+  }
 }
 
 class MobileAdvert extends React.Component {
@@ -134,7 +200,7 @@ class MobileAdvert extends React.Component {
          }
 }
 
-class DesktopAdvert extends React.Component {
+class DesktopAdvert1 extends React.Component {
 
     constructor(props) {
 
@@ -326,7 +392,7 @@ class Faces extends React.Component {
 
         return (
 
-            <>
+            <div className="section">
               <Face
                   im={zhengtao}
                   bc={["#b5e7a0", "white"]}
@@ -342,7 +408,7 @@ class Faces extends React.Component {
 					bc={["#b5e7a0", "white"]}
                               name={"Lizzie"}
                               description={["UCL", "Geography graduate"]}/>
-            </>
+            </div>
 
         );
     }
@@ -354,8 +420,7 @@ class DesktopFaces extends React.Component {
 
         return (
 
-            <div className="desktopfaces">
-		<Row style={{justifyContent: "center"}}>
+            <div className="section">
               <DesktopFace
                   im={zhengtao}
                   bc={["#b5e7a0", "white"]}
@@ -371,7 +436,6 @@ class DesktopFaces extends React.Component {
 					bc={["#b5e7a0", "white"]}
                               name={"Lizzie"}
 					description={["UCL", "Geography graduate"]}/>
-		    </Row>
             </div>
 
         );
@@ -417,9 +481,9 @@ class DesktopFace extends React.Component {
 
         return (
             <div style={{ overflow: "hidden", width:"30%", height: "30%", paddingBottom: "5vh"}}>
-              <div style={{textAlign: "center", paddingTop: "5vh"}}>
+              <div style={{textAlign: "center", paddingTop: "2vh"}}>
                 <div>
-                    <img style={{width: "15vw", "height": "auto"}} src={this.props.im}/>
+                    <img style={{width: "auto", "height": "30vh"}} src={this.props.im}/>
               </div>
                   <div style={{paddingTop: "2vh"}}>
             <div style={{fontWeight: "bold", fontSize: "2.5vw"}}>{this.props.name}</div><div style={{marginTop: "1vh", fontSize: "2vw"}}>{Descriptions}</div>
