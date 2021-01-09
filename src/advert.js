@@ -55,7 +55,7 @@ class Advert1 extends React.Component {
 
 const DesktopAdvert = () => (
   <ReactFullpage
-    sectionsColor={["#282c34", "#ff5f45", "#0798ec"]}
+    sectionsColor={["#282c34", "white", "#0798ec"]}
     onLeave={(origin, destination, direction) => {
       console.log("onLeave event", { origin, destination, direction });
     }}
@@ -425,17 +425,17 @@ class DesktopFaces extends React.Component {
                   im={zhengtao}
                   bc={["#b5e7a0", "white"]}
                 name={"Alex"}
-                description={["University of Cambridge", "Clare College","Natural Sciences graduate"]}/>
+                description={" is a recent graduate of Clare College, Cambridge. He has designed our English curriculum, in particular our work on comprehension, interpretation and analysis. He has experience working with Chinese students adapting to a native curriculum. (fun stuff?)"}/>
                             <DesktopFace
 				im={jacob}
 				bc={["white", "#b5e7a0"]}
                               name={"Jacob"}
-                              description={["University of Cambridge", "Trinity College","Maths graduate"]}/>
+				description={" is a recent graduate of Trinity College, Cambridge. He runs our online English exercise platform, which delivers lesson content for tutors and tutees. He is interested in using Spaced Repetition techniques to improve vocabulary."}/>
                                     <DesktopFace
                                       im={lizzie}
 					bc={["#b5e7a0", "white"]}
                               name={"Lizzie"}
-					description={["UCL", "Geography graduate"]}/>
+					description={" is a recent graduate from UCL. She helps build and deliver our lesson content, in particular analysis of poetry."}/>
             </div>
 
         );
@@ -480,14 +480,18 @@ class DesktopFace extends React.Component {
             
 
         return (
-            <div style={{ overflow: "hidden", width:"30%", height: "30%", paddingBottom: "5vh"}}>
+            <div style={{ overflow: "hidden", width:"100%", height: "30vh", paddingBottom: "5vh"}}>
               <div style={{textAlign: "center", paddingTop: "2vh"}}>
                 <div>
-                    <img style={{width: "auto", "height": "30vh"}} src={this.props.im}/>
+                    <img style={{paddingLeft: "5vw", float: "left", width: "auto", "height": "30vh"}} src={this.props.im}/>
               </div>
-                  <div style={{paddingTop: "2vh"}}>
-            <div style={{fontWeight: "bold", fontSize: "2.5vw"}}>{this.props.name}</div><div style={{marginTop: "1vh", fontSize: "2vw"}}>{Descriptions}</div>
-            </div>
+		  <div style={{paddingRight: "5vw", width: "80vw", float: "right", height: "30vh", color: "black"}}>
+		      <div style={{textAlign: "left", fontSize: "1.5vw"}}>
+			  <span style={{fontWeight:"bold"}}>{this.props.name}</span>
+			  {this.props.description}
+		      </div>
+		      
+		  </div>
             </div>
             </div>
         );
