@@ -11,6 +11,7 @@ import {Card, Container, Row, Col, Nav, Navbar, Form, FormControl, Popover, Over
 import {Auth0Provider, useAuth0, withAuthenticationRequired} from '@auth0/auth0-react';
 import {ExampleSentences} from './landing.js';
 import ReactFullpage from "@fullpage/react-fullpage";
+import {ChevronUp, ChevronDown} from 'react-feather';
 
 export const Advert = () => {
 
@@ -53,27 +54,156 @@ class Advert1 extends React.Component {
     }
 }
 
-const DesktopAdvert = () => (
+class DesktopAdvert extends React.Component {
+
+    constructor(props) {
+
+	super(props);
+
+ 	this.myDivToFocus = React.createRef();
+
+    }
+
+    handleContact = () => {
+
+        console.log("hemlo");
+	this.myDivToFocus.current.scrollIntoView({
+	    behaviour: "smooth"});
+
+    }
+        
+
+    render () {
+
+        return (
+    
   <ReactFullpage
-    sectionsColor={["#282c34", "white", "#0798ec"]}
+    sectionsColor={["#282c34", "white", "#0798ec", "#282c34"]}
     onLeave={(origin, destination, direction) => {
       console.log("onLeave event", { origin, destination, direction });
     }}
     render={({ state, fullpageApi }) => {
-      console.log("render prop change", state, fullpageApi); // eslint-disable-line no-console
+        console.log("render prop change", state, fullpageApi); // eslint-disable-line no-console
+
 
       return (
         <div>
-          <DesktopHeader />
+          <DesktopHeader
+            handleContact = {this.handleContact}/>
 	  <DesktopFaces/>
-          <MySection content={"Slide up!"} />
+          <DesktopSellingPoints/>
+          <div className="section" ref={this.myDivToFocus}>
+          <ContactUs/>
+          </div>
         </div>
       );
     }}
   />
-);
+        );
+    }
+}
+
+class MobileAdvert extends React.Component {
+
+    constructor(props) {
+
+	super(props);
+
+ 	this.myDivToFocus = React.createRef();
+
+    }
+
+    handleContact = () => {
+
+        console.log("hemlo");
+	this.myDivToFocus.current.scrollIntoView({
+	    behaviour: "smooth"});
+
+    }
+        
+
+    render () {
+
+        return (
+    
+  <ReactFullpage
+    sectionsColor={["#282c34", "white", "#0798ec", "#282c34"]}
+    onLeave={(origin, destination, direction) => {
+      console.log("onLeave event", { origin, destination, direction });
+    }}
+    render={({ state, fullpageApi }) => {
+        console.log("render prop change", state, fullpageApi); // eslint-disable-line no-console
+
+
+      return (
+        <div>
+          <MobileHeader
+            handleContact = {this.handleContact}/>
+	  <DesktopFaces/>
+          <DesktopSellingPoints/>
+          <div className="section" ref={this.myDivToFocus}>
+          <ContactUs/>
+          </div>
+        </div>
+      );
+    }}
+  />
+        );
+    }
+}
 
 class DesktopHeader extends React.Component {
+
+    handleContact = () => {
+
+        this.props.handleContact();
+
+    }
+
+    render () {
+
+	return (
+	    <div className="section">
+		<nav className="navbar navbar-custom navbar-expand" style={{backgroundColor: "transparent", height: "10vh", width: "100%", position: "fixed", "top": 0, "zIndex": 2, overflow: "hidden", paddingLeft: "5vw", paddingRight:"5vw", color: "white"}}>
+		    <a href="/" style={{fontSize: "2vw", color: "white"}}>RiceCake</a>
+        <ul className="navbar-nav ml-auto">
+          <li className="nav-item signloglink">
+              <Link style={{marginRight: "1em", fontSize: "1vw", color: "white"}}>中文</Link>
+          </li>
+           <li className="nav-item signloglink">
+              <Link style={{marginRight: "1em", fontSize: "1vw", color: "white"}}>Contact us</Link>
+          </li>
+        </ul>
+  </nav>
+    <Row>
+      <div style={{width: "40vw", marginLeft: "10vw", marginTop: "25vh"}}>
+          <h2 className="masthead-heading mb-0" style={{fontSize: "4vw", color: "white"}}>Flexible tutoring. Regular exercises.</h2>
+        <h3 className="masthead-subheading mb-0" style={{marginTop: "3vh", fontSize: "2vw", color: "grey"}}>Improve your written English quickly and intelligently.</h3>
+        <h3 className="masthead-subheading mb-0" style={{marginTop: "3vh", fontSize: "1.5vw", color: "grey"}}>Contact Alex to start learning with us.</h3>
+        <h3 className="masthead-subheading mb-0" style={{marginTop: "1vh", fontSize: "1.5vw", color: "grey"}}>Wx: lzt_oxford</h3>
+
+            <div align="left">
+            </div>
+      </div>
+	<div style={{width: "40vw", height: "40vh", position: "absolute", left: "50vw", top: "50vh", transform: "translateY(-50%)", backgroundColor: "#f5f5f5", color: "black", padding: "1em", fontSize: "1.6vw", marginLeft: "5%", borderRadius: "10px"}}>{<ExampleSentences/>}</div>
+    </Row>
+    <div className="bg-circle-1 bg-circle"></div>
+    <div className="bg-circle-2 bg-circle"></div>
+    <div className="bg-circle-3 bg-circle"></div>
+              <div className="bg-circle-4 bg-circle"></div>
+              <div style={{color: "white", position: "absolute", bottom: "10vh", left: "50vw", transform: "translateY(-50%)"}}><ChevronDown size={30}/></div>
+		</div>
+	);
+    }
+}
+
+class MobileHeader extends React.Component {
+
+    handleContact = () => {
+
+        this.props.handleContact();
+
+    }
 
     render () {
 
@@ -88,19 +218,21 @@ class DesktopHeader extends React.Component {
         </ul>
   </nav>
     <Row>
-      <div style={{width: "40vw", marginLeft: "10vw", marginTop: "25vh"}}>
-          <h2 className="masthead-heading mb-0" style={{fontSize: "4vw", color: "white"}}>Flexible tutoring. Regular exercises.</h2>
-          <h3 className="masthead-subheading mb-0" style={{marginTop: "3vh", fontSize: "2vw", color: "grey"}}>Improve your written English quickly and intelligently.</h3>
+      <div style={{width: "70vw", marginLeft: "10vw", marginTop: "25vh"}}>
+          <h2 className="masthead-heading mb-0" style={{fontSize: "6vw", color: "white"}}>Flexible tutoring. Regular exercises.</h2>
+        <h3 className="masthead-subheading mb-0" style={{marginTop: "3vh", fontSize: "3vw", color: "grey"}}>Improve your written English quickly and intelligently.</h3>
+        <h3 className="masthead-subheading mb-0" style={{marginTop: "3vh", fontSize: "2vw", color: "grey"}}>Contact Alex to start learning with us.</h3>
+        <h3 className="masthead-subheading mb-0" style={{marginTop: "1vh", fontSize: "2vw", color: "grey"}}>Alex 李政陶</h3>6
+        <h3 className="masthead-subheading mb-0" style={{marginTop: "1vh", fontSize: "2vw", color: "grey"}}>Wx: lzt_oxford</h3>
             <div align="left">
-		<Link align="left" onClick={this.handleContact} className="btn btn-primary btn-xl rounded-pill mt-5">Contact us</Link>
             </div>
       </div>
-	<div style={{width: "40vw", height: "40vh", position: "absolute", left: "50vw", top: "50vh", transform: "translateY(-50%)", backgroundColor: "#f5f5f5", color: "black", padding: "1em", fontSize: "1.6vw", marginLeft: "5%", borderRadius: "10px"}}>{<ExampleSentences/>}</div>
     </Row>
     <div className="bg-circle-1 bg-circle"></div>
     <div className="bg-circle-2 bg-circle"></div>
     <div className="bg-circle-3 bg-circle"></div>
-    <div className="bg-circle-4 bg-circle"></div>
+              <div className="bg-circle-4 bg-circle"></div>
+              <div style={{color: "white", position: "absolute", bottom: "10vh", left: "50vw", transform: "translateY(-50%)"}}><ChevronDown size={30}/></div>
 		</div>
 	);
     }
@@ -118,7 +250,7 @@ class MySection extends React.Component {
   }
 }
 
-class MobileAdvert extends React.Component {
+class MobileAdvert1 extends React.Component {
 
     constructor(props) {
 
@@ -211,6 +343,8 @@ class DesktopAdvert1 extends React.Component {
     }
 
     handleContact = () => {
+
+        this.props.handleContact();
 
 	console.log("hemlo");
 	this.myDivToFocus.current.scrollIntoView({
@@ -308,30 +442,83 @@ class SellingPoint extends React.Component {
     }
 }
 
+class DesktopSellingPoints extends React.Component {
+
+    render () {
+
+        return (
+            <div className="section">
+            <DesktopSellingPoint
+		    	bc={["white", "#b5e7a0"]}
+			heading={"Don't start from a blank page."}
+			subheading={"Build up answers to interpretation, analysis, and creative writing questions with our help."}
+			order={1}
+			example={<DesktopScaffold/>}/>
+		    <DesktopSellingPoint
+		    	bc={["white", "#b5e7a0"]}
+		      heading={"Learn vocab through usage"}
+                      subheading={"Acquire technical terms, connective words, and useful essay phrases to spruce up your writing."}
+                      	example={<ExampleSentences/>}
+			order={0}/>
+		    <DesktopSellingPoint
+		    	bc={["white", "#b5e7a0"]}
+			heading={"Analyse classic texts and poems"}
+			subheading={"After working through exercises, discuss tricky texts with our tutors."}
+		      order={1}
+            example={<DeskAnalysisExercise/>}/>
+            </div>
+	);
+    }
+}
+
 class DesktopSellingPoint extends React.Component {
 
     render () {
 
 	return (
 
-	    <div style={{width: "100%", fontSize: "2vw", padding: "10px", background: "linear-gradient(0deg, " + this.props.bc[1] + " 0%, " + this.props.bc[0] + " 100%)"}}>
+	    <div style={{width: "100%", fontSize: "2vw", background: "transparent", height: "30vh"}}>
 		{this.props.order ? 
-		 <Row style={{paddingTop:"10vh", paddingBottom:"10vh"}}>
-        <div style={{width: "40vw", marginLeft: "10vw"}}>
-            <h2 className="masthead-heading mb-0" style={{fontSize: "3.5vw"}}>{this.props.heading}</h2>
-            <h3 className="masthead-subheading mb-0" style={{marginTop: "3vh", fontSize: "2.5vw"}}>{this.props.subheading}</h3>
+		 <Row>
+                   <div style={{width: "40vw", marginLeft: "10vw", paddingTop: "3vh"}}>
+            <h2 className="masthead-heading mb-0" style={{fontSize: "2.5vw"}}>{this.props.heading}</h2>
+            <h3 className="masthead-subheading mb-0" style={{marginTop: "3vh", fontSize: "2vw"}}>{this.props.subheading}</h3>
         </div>
-		     <div style={{width: "40vw", backgroundColor: "#f5f5f5", color: "black", padding: "1em", fontSize: "1.6vw", marginLeft: "5%", borderRadius: "10px"}}>{this.props.example}</div>
+		   <div style={{width: "40vw", backgroundColor: "#f5f5f5", color: "black", padding: "1em", fontSize: "1.3vw", marginLeft: "5%", borderRadius: "10px", height: "80%"}}>{this.props.example}</div>
 		</Row> :
-		<Row style={{paddingTop:"10vh", paddingBottom:"10vh"}}>		   
-		    <div style={{marginLeft: "10vw",width: "40vw", backgroundColor: "#f5f5f5", color: "black", padding: "1em", fontSize: "1.6vw", borderRadius: "10px"}}>{this.props.example}</div>
-							    <div style={{width: "40vw", marginLeft: "10vw"}}>
-								<h2 className="masthead-heading mb-0" style={{fontSize: "3.5vw"}}>{this.props.heading}</h2>
-								<h3 className="masthead-subheading mb-0" style={{marginTop: "3vh", fontSize: "2.5vw"}}>{this.props.subheading}</h3>
+		<Row>		   
+		  <div style={{width: "40vw", marginLeft: "10vw", backgroundColor: "#f5f5f5", color: "black", padding: "1em", fontSize: "1.3vw", borderRadius: "10px"}}>{this.props.example}</div>
+		  <div style={{width: "40vw", marginLeft: "7vw", paddingTop: "2vh"}}>
+								<h2 className="masthead-heading mb-0" style={{fontSize: "2.5vw"}}>{this.props.heading}</h2>
+								<h3 className="masthead-subheading mb-0" style={{marginTop: "3vh", fontSize: "2vw"}}>{this.props.subheading}</h3>
         </div>
 		</Row>}
 	    </div>
 	);
+    }
+}
+
+class ContactUs extends React.Component {
+
+    render () {
+
+        return (
+
+            <div className="masthead" style={{color: "white"}}>
+              <Row style={{color: "white", position: "absolute", top: "50vh", transform: "translateY(-50%)"}}>
+	<div ref={this.myDivToFocus} style={{width: "70vw", marginLeft: "10vw", marginTop: "5vh"}}>
+          <h2 className="masthead-heading mb-0" style={{color: "white",fontSize: "3vw", marginTop: "5vh"}}>Get in touch with Alex to start learning with us.</h2>
+	  <h3 className="masthead-subheading mb-0" style={{marginTop: "3vh", fontSize: "2.5vw"}}>Alex 李政陶</h3>
+	  <h3 className="masthead-subheading mb-0" style={{marginTop: "3vh", fontSize: "2.5vw"}}>Wx: lzt_oxford</h3>
+        </div>
+                  </Row>
+                  <div className="bg-circle-1 bg-circle"></div>
+    <div className="bg-circle-2 bg-circle"></div>
+    <div className="bg-circle-3 bg-circle"></div>
+              <div className="bg-circle-4 bg-circle"></div>
+              
+            </div>
+        );
     }
 }
 
@@ -366,6 +553,8 @@ class AnalysisExercise extends React.Component {
     }
 }
 
+
+
 class DeskAnalysisExercise extends React.Component {
 
     state = {val: "The repetition of the word \"grey\" and the fact that this colour was to be \"seen everywhere\" highlights the dullness of their surroundings. The colour epitomises the remoteness and uniformity of where they live."}
@@ -375,12 +564,48 @@ class DeskAnalysisExercise extends React.Component {
 	return (
 
 	    <div style={{fontFamily: "lora"}}>
-		<div style={{backgroundColor: "#f2eecb", fontSize: "1.5vw", marginBottom: "2vh"}}>
+		<div style={{backgroundColor: "#f2eecb", fontSize: "1.3vw", marginBottom: "2vh"}}>
 		    The sun had baked the plowed land into a grey mass, with little cracks running through it. Even the grass was not green, for the sun had burned the tops of the long blades until they were the same grey colour to be seen everywhere.
 		    </div>
-		{this.state.val}
 	    </div>
 	);
+    }
+}
+
+class DesktopScaffold extends React.Component {
+
+    state = {val: 0}
+
+    componentDidMount = () => {
+
+        let timerId = setInterval(() => this.handleStep(), 3000);
+
+    }
+
+    handleStep = () => {
+
+        if (this.state.val == 2){
+
+            this.setState({val: 0});
+
+        } else {
+
+            this.setState({val: this.state.val + 1});
+
+        }
+    }
+
+    render () {
+
+        const vals = ["Watson presents Sherlock as precise and careful.", "Watson presents Sherlock as precise and careful, describing him as the \'most perfect reasoning and observing machine that the world has seen\'.", "Watson presents Sherlock as precise and careful, describing him as the \'most perfect reasoning and observing machine that the world has seen\'. The metaphor depicts Sherlock as an inanimate object, highlighting his inhuman abilities."];
+
+        return (
+
+            <div style={{fontFamily: "lora"}}>
+              {vals[this.state.val]}
+            </div>
+
+        );
     }
 }
 
