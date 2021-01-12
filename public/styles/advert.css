@@ -4,3 +4,19 @@
     background: linear-gradient(0deg, #b5e7a0 100%, white 100%);
 
 }
+
+#section3 {
+    background: linear-gradient(#16537f, #1b6696);
+}
+
+#section4 {
+    background: linear-gradient(#1b6696, #1f79ae);
+}
+
+#section5 {
+    background: linear-gradient(#1f79ae, #228dc6);
+}
+
+#section6 {
+    background: linear-gradient(#228dc6, #228dc6);
+}

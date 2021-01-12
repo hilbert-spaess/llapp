@@ -9,7 +9,6 @@ import {Redirect} from 'react-router-dom';
 import {APIHOST} from './api_config.js';
 import {Card, Container, Row, Col, Nav, Navbar, Form, FormControl, Popover, OverlayTrigger, Overlay, Toast} from 'react-bootstrap';
 import {Auth0Provider, useAuth0, withAuthenticationRequired} from '@auth0/auth0-react';
-import {ExampleSentences} from './landing.js';
 import ReactFullpage from "@fullpage/react-fullpage";
 import {ChevronUp, ChevronDown} from 'react-feather';
 
@@ -55,6 +54,8 @@ class Advert1 extends React.Component {
 }
 
 class DesktopAdvert extends React.Component {
+    
+    state = {chinese: false}
 
     constructor(props) {
 
@@ -71,6 +72,10 @@ class DesktopAdvert extends React.Component {
 	    behaviour: "smooth"});
 
     }
+    
+    handleChinese = () => {
+        this.setState({chinese: !this.state.chinese});
+    }
         
 
     render () {
@@ -78,7 +83,7 @@ class DesktopAdvert extends React.Component {
         return (
     
   <ReactFullpage
-    sectionsColor={["#282c34", "white", "#0798ec", "#282c34"]}
+    anchors = {['section1', 'section2', 'section3', 'section4', 'section5', 'section6']}
     onLeave={(origin, destination, direction) => {
       console.log("onLeave event", { origin, destination, direction });
     }}
@@ -89,12 +94,33 @@ class DesktopAdvert extends React.Component {
       return (
         <div>
           <DesktopHeader
+          chinese={this.state.chinese}
+handleChinese={this.handleChinese}
             handleContact = {this.handleContact}/>
-	  <DesktopFaces/>
-          <DesktopSellingPoints/>
-          <div className="section" ref={this.myDivToFocus}>
+	  <DesktopFaces
+chinese={this.state.chinese}/>
+          <DesktopSellingPoint
+		    	bc={["#16537f", "#1b6696"]}
+			heading={this.state.chinese ? "不愁脑子一片空白" : "Don't start from a blank page."}
+			subheading={this.state.chinese ? "根据我们提供的提示和架构，学习如何清晰地表达自己对文段的见解" : "Build up answers to interpretation, analysis, and creative writing questions with our help."}
+			order={1}
+            chinese={this.state.chinese}
+			example={<DesktopScaffold/>}/>
+		    <DesktopSellingPoint
+		    	bc={["#1b6696", "#1f79ae"]}
+		      heading={this.state.chinese ? "活学活用，点滴积累" : "Learn vocab through usage"}
+                      subheading={this.state.chinese ? "无论是新单词还是新的修辞手法，我们都希望通过运用和练习来掌握，再也不要背单词了" : "Acquire technical terms, connective words, and useful essay phrases to spruce up your writing."}
+                      	example={<ExampleSentences/>}
+			order={0}
+            chinese={this.state.chinese}/>
+		    <DesktopSellingPoint
+		    	bc={["#1f79ae", "#228dc6"]}
+			heading={this.state.chinese ? "课上讨论，灵活拓展" : "Analyse classic texts and poems"}
+			subheading={this.state.chinese ? "在课前练习的基础上，进一步拓展，思考文章背景及作者观点，完成深层次理解" : "After working through exercises, discuss tricky texts with our tutors."}
+		      order={1}
+            example={<DeskAnalysisExercise/>}
+            chinese={this.state.chinese}/>
           <ContactUs/>
-          </div>
         </div>
       );
     }}
@@ -140,7 +166,6 @@ class MobileAdvert extends React.Component {
           <MobileHeader
             handleContact = {this.handleContact}/>
 	  <DesktopFaces/>
-          <DesktopSellingPoints/>
           <div className="section" ref={this.myDivToFocus}>
           <ContactUs/>
           </div>
@@ -161,31 +186,33 @@ class DesktopHeader extends React.Component {
     }
 
     render () {
+        
+        const heading1 = !this.props.chinese ? "Flexible tutoring. Regular exercises" : "灵活教学，一对一定制课程 以新的眼光看待学习英语"
+        
+        const heading2 = !this.props.chinese ? "Improve your English intelligently with our online courses." : "沉浸式学习方法，点滴积累，巧妙提高听说读写，你也可以融会贯通！"
+        
+        const heading3 = !this.props.chinese ? "→ Contact Alex to start learning with us." : "→ 联系Alex， 跟我们一起学英文"
 
 	return (
-	    <div className="section">
+	    <div className="section" style={{background: "linear-gradient(#083152, #104268)"}}>
 		<nav className="navbar navbar-custom navbar-expand" style={{backgroundColor: "transparent", height: "10vh", width: "100%", position: "fixed", "top": 0, "zIndex": 2, overflow: "hidden", paddingLeft: "5vw", paddingRight:"5vw", color: "white"}}>
 		    <a href="/" style={{fontSize: "2vw", color: "white"}}>RiceCake</a>
         <ul className="navbar-nav ml-auto">
           <li className="nav-item signloglink">
-              <Link style={{marginRight: "1em", fontSize: "1vw", color: "white"}}>中文</Link>
-          </li>
-           <li className="nav-item signloglink">
-              <Link style={{marginRight: "1em", fontSize: "1vw", color: "white"}}>Contact us</Link>
+              <Link onClick={this.props.handleChinese} style={{ marginRight: "1em", fontSize: "1.3vw", color: "white", cursor: "pointer"}}>{this.props.chinese ? "English" : "中文"}</Link>
           </li>
         </ul>
   </nav>
     <Row>
       <div style={{width: "40vw", marginLeft: "10vw", marginTop: "25vh"}}>
-          <h2 className="masthead-heading mb-0" style={{fontSize: "4vw", color: "white"}}>Flexible tutoring. Regular exercises.</h2>
-        <h3 className="masthead-subheading mb-0" style={{marginTop: "3vh", fontSize: "2vw", color: "grey"}}>Improve your written English quickly and intelligently.</h3>
-        <h3 className="masthead-subheading mb-0" style={{marginTop: "3vh", fontSize: "1.5vw", color: "grey"}}>Contact Alex to start learning with us.</h3>
-        <h3 className="masthead-subheading mb-0" style={{marginTop: "1vh", fontSize: "1.5vw", color: "grey"}}>Wx: lzt_oxford</h3>
+          <h2 className="masthead-heading mb-0" style={{fontSize: "4vw", color: "white"}}>{heading1}</h2>
+        <h3 className="masthead-subheading mb-0" style={{marginTop: "3vh", fontSize: "2vw", color: "grey"}}>{heading2}</h3>
+        <h3 href="#section6" className="masthead-subheading mb-0" style={{marginTop: "3vh", fontSize: "1.5vw", color: "grey"}}><a href="#section6">{heading3}</a></h3>
 
             <div align="left">
             </div>
       </div>
-	<div style={{width: "40vw", height: "40vh", position: "absolute", left: "50vw", top: "50vh", transform: "translateY(-50%)", backgroundColor: "#f5f5f5", color: "black", padding: "1em", fontSize: "1.6vw", marginLeft: "5%", borderRadius: "10px"}}>{<ExampleSentences/>}</div>
+	<div style={{width: "40vw", height: "40vh", position: "absolute", left: "50vw", top: "50vh", transform: "translateY(-50%)", backgroundColor: "#f5f5f5", color: "black", padding: "1em", fontSize: "1.6vw", marginLeft: "5%", borderRadius: "10px"}}>{<HeaderSentences/>}</div>
     </Row>
     <div className="bg-circle-1 bg-circle"></div>
     <div className="bg-circle-2 bg-circle"></div>
@@ -442,61 +469,35 @@ class SellingPoint extends React.Component {
     }
 }
 
-class DesktopSellingPoints extends React.Component {
-
-    render () {
-
-        return (
-            <div className="section">
-            <DesktopSellingPoint
-		    	bc={["white", "#b5e7a0"]}
-			heading={"Don't start from a blank page."}
-			subheading={"Build up answers to interpretation, analysis, and creative writing questions with our help."}
-			order={1}
-			example={<DesktopScaffold/>}/>
-		    <DesktopSellingPoint
-		    	bc={["white", "#b5e7a0"]}
-		      heading={"Learn vocab through usage"}
-                      subheading={"Acquire technical terms, connective words, and useful essay phrases to spruce up your writing."}
-                      	example={<ExampleSentences/>}
-			order={0}/>
-		    <DesktopSellingPoint
-		    	bc={["white", "#b5e7a0"]}
-			heading={"Analyse classic texts and poems"}
-			subheading={"After working through exercises, discuss tricky texts with our tutors."}
-		      order={1}
-            example={<DeskAnalysisExercise/>}/>
-            </div>
-	);
-    }
-}
-
 class DesktopSellingPoint extends React.Component {
 
     render () {
 
-	return (
-
-	    <div style={{width: "100%", fontSize: "2vw", background: "transparent", height: "30vh"}}>
+        return (
+        
+	    <div className="section" style={{width: "100%", fontSize: "2vw", background: "linear-gradient(" + this.props.bc[0] + "," + this.props.bc[1] + ")", height: "30vh"}}>
 		{this.props.order ? 
 		 <Row>
-                   <div style={{width: "40vw", marginLeft: "10vw", paddingTop: "3vh"}}>
+                   <div style={{width: "40vw", marginTop: "50vh",transform: "translateY(-50%)", marginLeft: "10vw", paddingTop: "3vh"}}>
             <h2 className="masthead-heading mb-0" style={{fontSize: "2.5vw"}}>{this.props.heading}</h2>
             <h3 className="masthead-subheading mb-0" style={{marginTop: "3vh", fontSize: "2vw"}}>{this.props.subheading}</h3>
         </div>
-		   <div style={{width: "40vw", backgroundColor: "#f5f5f5", color: "black", padding: "1em", fontSize: "1.3vw", marginLeft: "5%", borderRadius: "10px", height: "80%"}}>{this.props.example}</div>
+		   <div style={{width: "40vw", height: "40vh", position: "absolute", left: "50vw", top: "50vh", transform: "translateY(-50%)", backgroundColor: "#f5f5f5", color: "black", padding: "1em", fontSize: "1.3vw", marginLeft: "5%", borderRadius: "10px"}}>{this.props.example}</div>
 		</Row> :
 		<Row>		   
-		  <div style={{width: "40vw", marginLeft: "10vw", backgroundColor: "#f5f5f5", color: "black", padding: "1em", fontSize: "1.3vw", borderRadius: "10px"}}>{this.props.example}</div>
-		  <div style={{width: "40vw", marginLeft: "7vw", paddingTop: "2vh"}}>
+		  <div style={{width: "40vw", marginTop: "50vh",transform: "translateY(-50%)", marginLeft: "10vw", paddingTop: "3vh", height: "40vh", backgroundColor: "#f5f5f5", color: "black", padding: "1em", fontSize: "1.3vw", borderRadius: "10px"}}>{this.props.example}</div>
+		  <div style={{width: "40vw", marginLeft: "5%", position: "absolute", left: "50vw", top: "50vh", transform: "translateY(-50%)", paddingTop: "2vh"}}>
 								<h2 className="masthead-heading mb-0" style={{fontSize: "2.5vw"}}>{this.props.heading}</h2>
 								<h3 className="masthead-subheading mb-0" style={{marginTop: "3vh", fontSize: "2vw"}}>{this.props.subheading}</h3>
         </div>
 		</Row>}
 	    </div>
-	);
-    }
+
+        );
 }
+}
+
+
 
 class ContactUs extends React.Component {
 
@@ -504,7 +505,7 @@ class ContactUs extends React.Component {
 
         return (
 
-            <div className="masthead" style={{color: "white"}}>
+            <div className="section masthead" style={{color: "white", background: "linear-gradient(#228dc6, #228dc6)"}}>
               <Row style={{color: "white", position: "absolute", top: "50vh", transform: "translateY(-50%)"}}>
 	<div ref={this.myDivToFocus} style={{width: "70vw", marginLeft: "10vw", marginTop: "5vh"}}>
           <h2 className="masthead-heading mb-0" style={{color: "white",fontSize: "3vw", marginTop: "5vh"}}>Get in touch with Alex to start learning with us.</h2>
@@ -645,22 +646,27 @@ class DesktopFaces extends React.Component {
 
         return (
 
-            <div className="section">
+            <div className="section" style={{background: "linear-gradient(#104268, #16537f)", paddingTop: "15vh", height: "100vh"}}>
+            <Row style={{justifyContent: "center"}}>
               <DesktopFace
                   im={zhengtao}
                   bc={["#b5e7a0", "white"]}
                 name={"Alex"}
-                description={" is a recent graduate of Clare College, Cambridge. He has designed our English curriculum, in particular our work on comprehension, interpretation and analysis. He has experience working with Chinese students adapting to a native curriculum. (fun stuff?)"}/>
+                alma={this.props.chinese ? "剑桥大学, 克莱尔学院" : "Clare College, Cambridge graduate"}
+                description={this.props.chinese ? "我擅长培养孩子的阅读能力，帮助他们进行条理清晰，层次分明的分析" : "I specialise in helping tutees form well-structured, developed analyses."}/>
                             <DesktopFace
 				im={jacob}
 				bc={["white", "#b5e7a0"]}
                               name={"Jacob"}
-				description={" is a recent graduate of Trinity College, Cambridge. He runs our online English exercise platform, which delivers lesson content for tutors and tutees. He is interested in using Spaced Repetition techniques to improve vocabulary."}/>
+alma={this.props.chinese ? "剑桥大学 三一学院" : "Trinity College, Cambridge graduate"}
+				description={"I build online exercises to help improve English systematically."}/>
                                     <DesktopFace
                                       im={lizzie}
 					bc={["#b5e7a0", "white"]}
                               name={"Lizzie"}
-					description={" is a recent graduate from UCL. She helps build and deliver our lesson content, in particular analysis of poetry."}/>
+alma={this.props.chinese ? "UCL 伦敦大学学院" : "UCL graduate"}
+					description={this.props.chinese ? "我专注训练写作，通过结合孩子的积累，让他们的文字变得更加丰富" : "I focus on developing writing skills and using creativity to enhance students’ answers."}/>
+    </Row>
             </div>
 
         );
@@ -705,15 +711,17 @@ class DesktopFace extends React.Component {
             
 
         return (
-            <div style={{ overflow: "hidden", width:"100%", height: "30vh", paddingBottom: "5vh"}}>
+            <div style={{width:"30vw", paddingBottom: "5vh"}}>
               <div style={{textAlign: "center", paddingTop: "2vh"}}>
                 <div>
-                    <img style={{paddingLeft: "5vw", float: "left", width: "auto", "height": "30vh"}} src={this.props.im}/>
+                    <img style={{width: "auto", "height": "30vh", borderRadius: "20px"}} src={this.props.im}/>
               </div>
-		  <div style={{paddingRight: "5vw", width: "80vw", float: "right", height: "30vh", color: "black"}}>
-		      <div style={{textAlign: "left", fontSize: "1.5vw"}}>
-			  <span style={{fontWeight:"bold"}}>{this.props.name}</span>
-			  {this.props.description}
+		  <div style={{ color: "black"}}>
+		      <div style={{textAlign: "center", fontSize: "1.5vw", marginTop: "5vh"}}>
+			  <div style={{fontWeight: "bold"}}>{this.props.name}</div>
+<div>{this.props.alma}</div>
+<br></br>
+			  <div>{this.props.description}</div>
 		      </div>
 		      
 		  </div>
@@ -721,6 +729,128 @@ class DesktopFace extends React.Component {
             </div>
         );
     }
+}
+
+class HeaderSentences extends React.Component {
+    
+    state = {no: 0,
+             counter: 0,
+             synonyms: ["sad", "elated", "melancholy", "jubilant", "somber", "overjoyed", "dismal", "thrilled", "pessimistic", "ecstatic", "disconsolate", "delighted"]}
+    
+    componentDidMount = () => {
+        
+        let timerId = setInterval(() => this.handleStep(), 1000);
+        
+    }
+    
+    handleStep = () => {
+        
+        if (this.state.no == 0) {
+            
+            if (this.state.counter < this.state.synonyms.length - 1) {
+                
+                this.setState({counter: this.state.counter + 1});
+                
+            }
+            
+            else {
+                
+                this.setState({counter: 0});
+                this.setState({no: 1});
+                
+            }
+        } 
+        
+        if (this.state.no == 1) {
+            
+            this.setState({no: 0});
+            
+        }
+            
+    }
+    render () {
+        
+        return (
+            
+             <div style={{fontFamily: "lora", fontSize: "2vw", position: "relative"}}>
+            <div style={{position: "absolute", top: "10vh", transform: "translateY(-50%)"}}>
+            The tone and word choice of the author indicate that the character was <span style={{color: this.state.counter % 2 == 0 ? "red": "green"}}> {this.state.no == 0 ? this.state.synonyms[this.state.counter] : ""}. </span>
+        </div>
+            </div>
+        
+        );
+    }
+}
+
+            
+            
+
+class ExampleSentences extends React.Component {
+    
+    state = {word1s: ["ambivalent", "compliment"],
+             word2s: ["ambiguous", "complement"],
+             firstsens: [["A good scientist is ", " towards their conclusions, as long as the methodology is correct."], ["I guessed that the ", " was not sincere."]],
+             secondsens: [["If the wording of the contract is ", ", ask for clarification."], ["The soundtrack was a perfect ", " to the action sequence."]],
+             i: 3,
+             j : 3,
+             counter: 0,
+             waiting: 0}
+    
+    componentDidMount = () => {
+        
+        let timerId2 = setInterval(() => this.handleCounts(), 200);
+        
+    }
+    
+    handleCounts = () => {
+        var len1 = this.state.word1s[this.state.counter].length;
+        var len2 = this.state.word2s[this.state.counter].length;
+        
+        if (this.state.i < len1) {
+            this.setState({i: this.state.i + 1});
+        } else if (this.state.waiting < 4 && this.state.j == 3) {
+            this.setState({waiting: this.state.waiting + 1});
+        } else if (this.state.j < len2) {
+            this.setState({j : this.state.j + 1, waiting: 0});
+        } else if (this.state.waiting < 7) {
+             this.setState({waiting: this.state.waiting + 1});
+        } else {
+            this.setState({i: 3, j: 3, counter: (this.state.counter + 1) % (this.state.word1s.length), waiting: 0});
+        }
+    }
+    
+    render () {
+        
+        var firstsens = [["A good scientist is ", " towards their conclusions, as long as the methodology is correct."]];
+        
+        var secondsens = [["If the wording of the contract is ", ", ask for clarification."]];
+        
+        if (this.state.i >= this.state.word1s[this.state.counter].length) {
+            
+            var color1 = "green";
+            
+        } else {
+            
+            var color1 = "black";
+        }
+        
+        if (this.state.j >= this.state.word2s[this.state.counter].length) {
+            
+            var color2 = "green";
+            
+        } else {
+            
+            var color2 = "black";
+            
+        }
+
+        return (
+        
+            <div style={{fontFamily: "lora"}}>{this.state.firstsens[this.state.counter][0]}<input spellcheck="false" className="workinput" type="text"  key = {this.props.showDialog} autocomplete="off" value={this.state.word1s[this.state.counter].slice(0,this.state.i)} style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", flex: "none", display: "inline-block", border: "0", width: (this.state.word1s[this.state.counter].length).toString() + "ch", borderTop: "0", outlineTop: "0", lineHeight: "20px", borderBottom: "1px solid grey", textAlign: "left", color: color1}}/>{this.state.firstsens[this.state.counter][1]}<br></br> <br></br>
+            {this.state.secondsens[this.state.counter][0]}<input spellcheck="false" className="workinput" type="text"  key = {this.props.showDialog} autocomplete="off" value={this.state.word2s[this.state.counter].slice(0,this.state.j)} style={{backgroundColor: "transparent", outline: "0", wordBreak: "keep-all", flex: "none", display: "inline-block", border: "0", width: (this.state.word2s[this.state.counter].length).toString() + "ch", borderTop: "0", outlineTop: "0", lineHeight: "20px", borderBottom: "1px solid grey", textAlign: "left", color: color2}}/>{this.state.secondsens[this.state.counter][1]}</div>
+
+        );
+}
 }
 
 
